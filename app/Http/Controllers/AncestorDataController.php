@@ -319,8 +319,6 @@ class AncestorDataController extends Controller
     //}
     public function update(UpdateAncestorDataRequest $request, $ancestorData)
     {
-        //info($request->all());
-
         DB::beginTransaction();
 
         try {
@@ -338,22 +336,21 @@ class AncestorDataController extends Controller
             $this->formatDate($validatedData, 'date_of_birth');
             $this->formatDate($validatedData, 'date_of_death');
 
-            if(isset($validatedData['travel_to_sa'])){
+            if (isset($validatedData['travel_to_sa'])) {
                 $ancestorData->has_spouse = $validatedData['travel_to_sa'];
-
-                $ancestorData->save();
             }
 
             $ancestorData->update($validatedData);
 
             if ($ancestorData->source_of_arrival == 1 || $ancestorData->source_of_arrival == 2) {
                 $ancestorData->mode_of_travel_id = $request->input('mode_of_travel_id');
+
                 $ancestorData->save();
             } else {
-                $this->saveTravelDetails($ancestorData, $validatedData, $request);
+                $this->updateTravelDetails($ancestorData, $validatedData, $request);
+                $ancestorData->mode_of_travel_id = null;
+                $ancestorData->save();
             }
-
-            //info($request->input('travel_to_sa'));
 
             DB::commit();
 
@@ -372,6 +369,27 @@ class AncestorDataController extends Controller
                 "message" => "An error occurred while updating AncestorData. Please try again later.",
             ], 500);
         }
+    }
+    private function updateTravelDetails($ancestorData, $validatedData, $request)
+    {
+        // Check if a record already exists for the ancestor
+        $travelDetailData = AncestorLocalTravelDetail::where('ancestor_id', $ancestorData->id)->first();
+
+        // If no record exists, create a new one
+        if (!$travelDetailData) {
+            $travelDetailData = new AncestorLocalTravelDetail();
+            $travelDetailData->ancestor_id = $ancestorData->id;
+        }
+
+        if (isset($validatedData['arrival_date_in_sa'])) {
+            $travelDetailData->travel_date = Carbon::createFromFormat('Y-m-d', $validatedData['arrival_date_in_sa'])->format('Y-m-d');
+        }
+
+        if (isset($validatedData['evidence_of_arrival'])) {
+            $travelDetailData->description = $validatedData['evidence_of_arrival'];
+        }
+
+        $travelDetailData->save();
     }
 
     /**
