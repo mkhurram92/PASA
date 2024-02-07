@@ -69,107 +69,6 @@ class AncestorDataController extends Controller
      * @param  \App\Http\Requests\StoreAncestorDataRequest  $request
      * @return \Illuminate\Http\Response
      */
-    /**public function store(StoreAncestorDataRequest $request)
-    {
-        $validatedData = $request->validated();
-
-        if (isset($validatedData['date_of_birth'])) {
-            $validatedData['date_of_birth'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validatedData['date_of_birth'])
-                ->format('Y-m-d');
-        }
-        if (isset($validatedData['date_of_death'])) {
-            $validatedData['date_of_death'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validatedData['date_of_death'])
-                ->format('Y-m-d');
-        }
-
-        DB::beginTransaction();
-
-        try {
-            // Create AncestorData
-            $ancestorData = AncestorData::create($validatedData);
-
-            // Check the radio button selection and set has_spouse accordingly
-            if ($request->input('travel_to_sa') === 'yes') {
-                $ancestorData->has_spouse = 1;
-                $insert_spouse = 1;
-            } elseif ($request->input('travel_to_sa') === 'no') {
-                $ancestorData->has_spouse = 0;
-                $insert_spouse = 0;
-            }
-
-            // Save the AncestorData with the updated has_spouse value
-            $ancestorData->save();
-
-            if ($insert_spouse == 1) {
-                $ancestor_spouse = new AncestorSpouse();
-                $ancestor_spouse->ancestor_id = $ancestorData->id;
-                $ancestor_spouse->marriage_date = $request->input('marriage_date');
-                $ancestor_spouse->spouse_family_name = $request->input('spouse_family_name');
-                $ancestor_spouse->spouse_given_name = $request->input('spouse_given_name');
-                $ancestor_spouse->spouse_birth_date = $request->input('spouse_date_of_birth');
-                $ancestor_spouse->spouse_death_date = $request->input('spouse_date_of_death');
-
-                $ancestor_spouse->save();
-            }
-
-            if ($validatedData['source_of_arrival'] == 1 || $validatedData['source_of_arrival'] == 2) {
-                $internationalTravelData = new AncestorInternationalTravelDetail();
-                $internationalTravelData->ancestor_id = $ancestorData->id;
-
-                // Extracting ship name and year from the selected option
-                //$selectedOption = $validatedData['mode_of_travel_native_bith'];
-                //list($shipName, $year) = explode(' - ', $selectedOption);
-                // Find the ship by name (assuming 'name' is the column in your 'ships' table)
-                //$ship = Ship::where('name', $shipName)->first();
-                //if ($ship) {
-                // If ship is found, save its ID to the internationalTravelData
-
-                $internationalTravelData->ship_id =  1; //$request->input('mode_of_arrival_select2');
-
-                $internationalTravelData->save();
-                //}
-            } else {
-
-
-                $localTravelDetailData = new AncestorLocalTravelDetail();
-                $localTravelDetailData->ancestor_id = $ancestorData->id;
-
-                if (isset($validatedData['arrival_date_in_sa'])) {
-                    $validatedData['arrival_date_in_sa'] = \Carbon\Carbon::createFromFormat('d/m/Y', $validatedData['arrival_date_in_sa'])->format('Y-m-d');
-
-                    $localTravelDetailData->travel_date = $validatedData['arrival_date_in_sa'];
-                }
-
-                if (isset($validatedData['evidence_of_arrival'])) {
-                    $localTravelDetailData->description = $validatedData['evidence_of_arrival'];
-                }
-
-                $localTravelDetailData->save();
-            }
-
-            // Commit the transaction
-            DB::commit();
-
-            // Return a response indicating success, a message, and a redirect route
-            return response()->json([
-                "status" => true,
-                "message" => "Ancestor Details Saved Successfully",
-                "redirectTo" => route("ancestor-data.index")
-            ]);
-        } catch (\Exception $e) {
-            // Rollback the transaction on exception
-            DB::rollback();
-
-            // Log the exception for further investigation
-            Log::error($e->getMessage());
-
-            // Return a JSON response with an error message
-            return response()->json([
-                "status" => false,
-                "message" => "An error occurred while creating AncestorData. Please try again later.",
-            ], 500);
-        }
-    }**/
 
     public function store(StoreAncestorDataRequest $request)
     {
@@ -240,6 +139,30 @@ class AncestorDataController extends Controller
         $ancestorSpouse->save();
     }
 
+
+    private function updateAncestorSpouse($ancestorData, $request)
+    {
+        // Find the existing AncestorSpouse record based on the ancestor ID
+        $ancestorSpouse = AncestorSpouse::where('ancestor_id', $ancestorData->id)->first();
+
+        if ($ancestorSpouse) {
+            // Update the existing record with the new data
+            $ancestorSpouse->fill($request->only(['marriage_date', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
+            $ancestorSpouse->save();
+        } else {
+            // Create a new record
+            AncestorSpouse::create([
+                'ancestor_id' => $ancestorData->id,
+                'marriage_date' => $request->input('marriage_date'),
+                'spouse_family_name' => $request->input('spouse_family_name'),
+                'spouse_given_name' => $request->input('spouse_given_name'),
+                'spouse_birth_date' => $request->input('spouse_birth_date'),
+                'spouse_death_date' => $request->input('spouse_death_date'),
+            ]);
+        }
+    }
+
+
     private function saveTravelDetails($ancestorData, $validatedData, $request)
     {
         $travelDetailData = new AncestorLocalTravelDetail();
@@ -274,9 +197,6 @@ class AncestorDataController extends Controller
             ]
         )->find($ancestorData);
 
-        //dd($ancestor->localTravelDetails);
-        //dd($ancestor?->localTravelDetails?->description);
-
         return view('page.ancestor-data.view', compact('ancestor'));
     }
 
@@ -310,13 +230,6 @@ class AncestorDataController extends Controller
      * @param  \App\Models\AncestorData  $ancestorData
      * @return \Illuminate\Http\Response
      */
-    //public function update(UpdateAncestorDataRequest $request, $ancestorData)
-    //{
-    //    $ancestorData = AncestorData::find($ancestorData);
-    //    $ancestorData->update($request->validated());
-
-    //    return response()->json(["status" => true, "message" => "AncestorData updated successfully", "redirectTo" => route("ancestor-data.index")]);
-    //}
     public function update(UpdateAncestorDataRequest $request, $ancestorData)
     {
         DB::beginTransaction();
@@ -343,13 +256,19 @@ class AncestorDataController extends Controller
             $ancestorData->update($validatedData);
 
             if ($ancestorData->source_of_arrival == 1 || $ancestorData->source_of_arrival == 2) {
-                $ancestorData->mode_of_travel_id = $request->input('mode_of_travel_id');
 
-                $ancestorData->save();
+                $ancestorData->mode_of_travel_id = $request->input('mode_of_travel_id');
             } else {
                 $this->updateTravelDetails($ancestorData, $validatedData, $request);
+
                 $ancestorData->mode_of_travel_id = null;
-                $ancestorData->save();
+            }
+
+            $ancestorData->save();
+
+            if (isset($validatedData['travel_to_sa'])) {
+
+                $this->updateAncestorSpouse($ancestorData, $request);
             }
 
             DB::commit();
@@ -357,7 +276,8 @@ class AncestorDataController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => "AncestorData updated successfully",
-                "redirectTo" => route("ancestor-data.index")
+                //"redirectTo" => route("ancestor-data.index")
+                "redirectTo" => url("ancestor-data/{$ancestorData->id}")
             ]);
         } catch (\Exception $e) {
             DB::rollback();
@@ -370,6 +290,7 @@ class AncestorDataController extends Controller
             ], 500);
         }
     }
+
     private function updateTravelDetails($ancestorData, $validatedData, $request)
     {
         // Check if a record already exists for the ancestor

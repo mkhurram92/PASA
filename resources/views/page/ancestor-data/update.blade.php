@@ -308,7 +308,7 @@
                                                             <input class="form-control fc-datepicker" type="text"
                                                                 placeholder="Birth Date"
                                                                 value="{{ $ancestor?->spouse_details?->spouse_birth_date }}"
-                                                                name="spouse_date_of_birth">
+                                                                name="spouse_birth_date" id="spouse_birth_date">
                                                         </div>
                                                     </div>
 
@@ -327,7 +327,7 @@
                                                             <input class="form-control fc-datepicker" type="text"
                                                                 placeholder="Death Date"
                                                                 value="{{ $ancestor?->spouse_details?->spouse_death_date }}"
-                                                                name="spouse_date_of_death">
+                                                                name="spouse_death_date" id="spouse_death_date">
                                                         </div>
                                                     </div>
 
