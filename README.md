@@ -1,3 +1,3 @@
-# ancestor.pioneerssa.org.au
+Pioneers Association of South Australia
 
 Project Belongs to Pioneers SA.
