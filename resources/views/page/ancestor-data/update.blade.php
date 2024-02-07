@@ -194,6 +194,10 @@
                                                             </select>
                                                         </div>
                                                     </div>
+
+                                                    <input type="hidden" name="mode_of_travel_id"
+                                                        id="mode_of_travel_id" value="" />
+
                                                     <div class="mb-3 row" id="first_date_section">
                                                         <label class="col-md-4 form-label">Arrival Date in SA <span
                                                                 class="text-danger"></span></label>

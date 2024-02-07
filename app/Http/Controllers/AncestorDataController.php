@@ -319,6 +319,8 @@ class AncestorDataController extends Controller
     //}
     public function update(UpdateAncestorDataRequest $request, $ancestorData)
     {
+        //info($request->all());
+
         DB::beginTransaction();
 
         try {
@@ -336,6 +338,12 @@ class AncestorDataController extends Controller
             $this->formatDate($validatedData, 'date_of_birth');
             $this->formatDate($validatedData, 'date_of_death');
 
+            if(isset($validatedData['travel_to_sa'])){
+                $ancestorData->has_spouse = $validatedData['travel_to_sa'];
+
+                $ancestorData->save();
+            }
+
             $ancestorData->update($validatedData);
 
             if ($ancestorData->source_of_arrival == 1 || $ancestorData->source_of_arrival == 2) {
@@ -345,11 +353,7 @@ class AncestorDataController extends Controller
                 $this->saveTravelDetails($ancestorData, $validatedData, $request);
             }
 
-            $this->updateHasSpouse($ancestorData, $request);
-
-            if ($ancestorData->has_spouse) {
-                $this->updateAncestorSpouse($ancestorData, $request);
-            }
+            //info($request->input('travel_to_sa'));
 
             DB::commit();
 
@@ -369,20 +373,6 @@ class AncestorDataController extends Controller
             ], 500);
         }
     }
-
-    private function updateAncestorSpouse($ancestorData, $request)
-    {
-        $ancestorSpouse = $ancestorData->spouseDetails;
-
-        if (!$ancestorSpouse) {
-            $ancestorSpouse = new AncestorSpouse();
-            $ancestorSpouse->ancestor_id = $ancestorData->id;
-        }
-
-        $ancestorSpouse->fill($request->only(['marriage_date', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
-        $ancestorSpouse->save();
-    }
-
 
     /**
      * Remove the specified resource from storage.
