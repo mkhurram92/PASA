@@ -3,6 +3,32 @@
 <!-- app-content start-->
 <div class="app-content main-content">
     <div class="side-app">
+        <style>
+            /* Increase the size of the day cells */
+            .ui-datepicker-calendar td {
+                font-size: 22px;
+                /* Adjust the padding as needed */
+            }
+
+            .ui-datepicker-calendar a {
+                font-size: 22px !important;
+
+                /* Adjust the padding as needed */
+            }
+
+            /* Increase the size of the month/year dropdowns */
+            .ui-datepicker select.ui-datepicker-year,
+            .ui-datepicker select.ui-datepicker-month {
+                font-size: 22px;
+                /* Adjust the font size as needed */
+            }
+
+            .ui-datepicker-calendar {
+                width: 300px;
+                height: 300px;
+                /* Set the height to 100% */
+            }
+        </style>
         <div class="container-fluid main-container">
 
             <!--Page header-->
@@ -176,6 +202,15 @@
     <script>
         var dt_ship_elem = $("#ship-table"),
             dt_ship = "";
+
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true, // Customize the date format as needed
+            changeYear: true,
+            yearRange: 'c-2000:c+nn'
+        });
     </script>
     @include('page.mode-of-arrivals.scripts')
 @endsection
