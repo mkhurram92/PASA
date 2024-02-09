@@ -35,8 +35,8 @@ class AncestorDataController extends Controller
         $occupation = Occupation::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($occupation, '');
 
-        $gender = Gender::orderBy('name', 'asc')->pluck('name')->toArray();
-        array_unshift($gender, '');
+        $gender_name = Gender::orderBy('name', 'asc')->pluck('name')->toArray();
+        array_unshift($gender_name, '');
 
         $country = Countries::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($country, '');
@@ -49,7 +49,7 @@ class AncestorDataController extends Controller
 
         $ancestor = AncestorData::with('occupation_relation', 'Gender', 'Ships', 'departureCountry', 'state', 'sourceOfArrival')->get();
 
-        return $request->render('page.ancestor-data.index', compact('ancestor', 'state', 'occupation', 'gender', 'country', 'ship', 'source_of_arrivals'));
+        return $request->render('page.ancestor-data.index', compact('ancestor', 'state', 'occupation', 'gender_name', 'country', 'ship', 'source_of_arrivals'));
     }
 
     /**
@@ -161,7 +161,6 @@ class AncestorDataController extends Controller
             ]);
         }
     }
-
 
     private function saveTravelDetails($ancestorData, $validatedData, $request)
     {

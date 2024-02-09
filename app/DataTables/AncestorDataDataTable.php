@@ -22,77 +22,6 @@ class AncestorDataDataTable extends DataTable
         $this->can_edit = Auth::user()->can("ancestor-edit");
     }
     /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
-    {
-        return (new EloquentDataTable($query))
-            ->editColumn("created_at", function ($ancestorData) {
-                return date("d, F, Y h:i A", strtotime($ancestorData->created_at));
-            })
-            ->editColumn("mode_of_travel_native_bith", function ($ancestorData) {
-                return $ancestorData?->mode_of_travel?->ship?->name_of_ship . "-" . $ancestorData?->mode_of_travel?->year;
-            })
-            ->editColumn("date_of_birth", function ($ancestorData) {
-                return $ancestorData?->date_of_birth ?? "N/A";
-            })
-            ->editColumn("gender", function ($ancestorData) {
-                return ucwords($ancestorData?->Gender?->name ?? "N/A");
-            })
-            ->editColumn("ancestor_surname", function ($ancestorData) {
-                return ucwords($ancestorData?->ancestor_surname ?? "N/A");
-            })
-            ->addColumn("source_of_arrival", function ($ancestorData) {
-                return $ancestorData?->sourceOfArrival?->name ?? "N/A";
-            })
-            ->editColumn("from", function ($ancestorData) {
-                return $ancestorData?->county?->name;
-            })
-            ->editColumn("occupation", function ($ancestorData) {
-                return $ancestorData?->occupation_relation?->name ?? "N/A";
-            })
-            ->addColumn('action', function ($ancestor) {
-                $html = "<div class='d-flex'>";
-                if ($this->can_view) {
-                    $html .= '<a href="' . route('ancestor-data.show', ['ancestor_datum' => $ancestor?->id]) . '"
-                           class="btn btn-default btn_visible view-record" style="margin-right: 5px;">View Ancestor</a>';
-                }
-                if ($this->can_edit) {
-                    $html .= '<a href="' . route('ancestor-data.edit', ['ancestor_datum' => $ancestor?->id]) . '"
-                        class="btn btn-primary edit-record" style="margin-right: 5px;">Edit Ancestor</a>';
-                }
-                $html .= '</div>';
-                return $html;
-            })
-            ->rawColumns(["action"])
-            ->setRowId('id');
-    }
-
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\AncestorData $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query(AncestorData $model): QueryBuilder
-    {
-        return $model->newQuery()->latest()->with(['mode_of_travel', 'mode_of_travel.ship', 'sourceOfArrival', 'Gender'])->when(!empty(request()->date), function ($q) {
-            $dates = explode("-", request()->date);
-            $carbonDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]));
-            $startDate = $carbonDate->format('Y-m-d');
-
-            $carbonDate = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]));
-            $endDate = $carbonDate->format('Y-m-d');
-
-            $q->whereDate('created_at', ">=", $startDate);
-            $q->whereDate('created_at', "<=", $endDate);
-        });
-    }
-
-    /**
      * Optional method if you want to use html builder.
      *
      * @return \Yajra\DataTables\Html\Builder
@@ -100,20 +29,7 @@ class AncestorDataDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('ancestor-data-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            //->dom('Bfrtip')
-            ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
+            ->setTableId('ancestor-data-table');
     }
 
     /**
@@ -127,7 +43,7 @@ class AncestorDataDataTable extends DataTable
             Column::make('id')->title('#'), // Use 'id' as the field for the first column
             Column::make('ancestor_surname')->title('Surname'),
             Column::make('given_name')->title('Given Name'),
-            Column::make('gender')->title('Gender'),
+            Column::make('gender.name')->title('Gender'),
             Column::make('ships.name_of_ship')->title('Arrival Ship'),
             Column::make('departure_country')->title('Country of Origin'),
             Column::make('occupation_relation.name')->title('Occupation')

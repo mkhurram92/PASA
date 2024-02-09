@@ -178,7 +178,7 @@
          var ancestorData = @json($ancestor);
          var state = @json($state);
          var occulation = @json($occupation);
-         var gender = @json($gender);
+         var gender_name = @json($gender_name);
          var country = @json($country);
          var ship = @json($ship);
          var source_of_arrival = @json($source_of_arrivals);
@@ -220,7 +220,7 @@
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Search by Gender',
                      headerFilterParams: {
-                         values: gender
+                         values: gender_name
                      },
                      formatter: function(cell, formatterParams, onRendered) {
                          var genderValue = cell.getValue();
@@ -231,8 +231,7 @@
                          } else if (genderValue === 'Female') {
                              style = 'color: red;';
                          }
-                         var formattedValue = '<span style="' + style + '">' + genderValue +
-                             '</span>';
+                         var formattedValue = '<span style="' + style + '">' + genderValue + '</span>';
 
                          return formattedValue;
                      }
@@ -255,65 +254,6 @@
                          values: source_of_arrival
                      }
                  },
-                 /**{
-                     title: "Arrival Ship",
-                     field: "ships.name_of_ship",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Arrival Ship',
-                     headerFilterParams: {
-                         values: ship
-                     }
-                 },
-                 {
-                     title: "Country of Origin",
-                     field: "departure_country.name",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Country of Origin',
-                     headerFilterParams: {
-                         values: country
-                     }
-                 },
-                 {
-                     title: "Arrival State",
-                     field: "state.name",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Arrival State',
-                     headerFilterParams: {
-                         values: state
-                     },
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var stateValue = cell.getValue();
-
-                         var style = '';
-                         if (stateValue === 'South Australia') {
-                             style = 'color: green;';
-                         } else if (stateValue === 'New South Wales') {
-                             style = 'color: magenta;';
-                         } else if (stateValue === 'Victoria') {
-                             style = 'color: blue;';
-                         } else if (stateValue === 'Western Australia') {
-                             style = 'color: red;';
-                         } else if (stateValue === 'Tasmania') {
-                             style = 'color: pink;';
-                         } else if (stateValue === 'Queensland') {
-                             style = 'color: purple;';
-                         } else if (stateValue === 'Northern Territory') {
-                             style = 'color: orange;';
-                         } else if (stateValue === 'Australian Capital Territory') {
-                             style = 'color: turquoise;';
-                         }
-                         var formattedValue = '<span style="' + style + '">' + stateValue +
-                             '</span>';
-
-                         return formattedValue;
-                     }
-                 },**/
                  {
                      title: "Occupation",
                      field: "occupation_relation.name",
@@ -338,9 +278,6 @@
                              '<button class="fa fa-eye view-button" onclick="redirectToView(' +
                              id +
                              ')"></button>' +
-                             //'<button class="pe-7s-pen btn-icon-wrapper edit-button" onclick="redirectToEdit(' +
-                             //id +
-                             //')"></button>' +
                              '</div>';
                      }
                  }
@@ -351,8 +288,6 @@
          });
 
          function printData() {
-             //console.log("Print button clicked");
-
              table.print(false, true);
          }
 
