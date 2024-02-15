@@ -54,7 +54,7 @@
              height: 45px;
              border: none;
              border-radius: 5px;
-             background-color: #0d6efd;
+             background-color: #3498db;
              color: white;
              cursor: pointer;
          }
@@ -83,7 +83,7 @@
          }
 
          .button-container button.view-button {
-             background-color: #2ecc71;
+             background-color: #3498db;
              /* Green color for View button */
              color: #fff;
          }
@@ -277,7 +277,7 @@
                          return '<div class="button-container">' +
                              '<button class="fa fa-eye view-button" onclick="redirectToView(' +
                              id +
-                             ')"></button>' +
+                             ')"> View</button>' +
                              '</div>';
                      }
                  }
