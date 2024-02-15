@@ -115,6 +115,7 @@ class SubscribeMemberController extends Controller
         ];
 
         $validator = Validator::make($request->all(), $needToValidate);
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors(), "values" => $request->all()], 422);
         }
@@ -131,6 +132,7 @@ class SubscribeMemberController extends Controller
         $member->username = $request->username;
         $member->member_type_id = $request->member_type_id;
         $member->member_status_id = $request->member_status_id;
+        
         $member->save();
         
         $member->address()->updateOrCreate([], [

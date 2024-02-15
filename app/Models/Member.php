@@ -61,7 +61,6 @@ class Member extends Model
     }
 
     //Coded by Mirza
-
     public function contact()
     {
         return $this->hasOne(MembersContact::class);

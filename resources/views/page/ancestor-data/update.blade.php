@@ -432,7 +432,7 @@
             dateFormat: 'yy-mm-dd',
             changeMonth: true, // Customize the date format as needed
             changeYear: true,
-            yearRange: 'c-2000:c+nn'
+            yearRange: 'c-250:c+nn'
         });
     </script>
 
