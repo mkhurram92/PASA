@@ -77,10 +77,13 @@ class SubscribeMemberController extends Controller
     public function viewMember($id)
     {
         $member = Member::find($id);
+        
         $data['state_name'] = Helper::getState($member?->state);
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
+        $data['membership_types'] = MembershipType::all();
+        $data['membership_status'] = MemberShipStatus::all();
 
         return view('page.members.view-member', compact('member', 'data'));
     }

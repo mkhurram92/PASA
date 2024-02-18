@@ -70,4 +70,8 @@ class Member extends Model
     {
         return $this->hasOne(MembersAddress::class);
     }
+    public function title()
+    {
+        return $this->belongsTo(Title::class, 'title_id');
+    }
 }
