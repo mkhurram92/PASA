@@ -15,4 +15,8 @@ class MembersContact extends Model
         'phone',
     ];
 
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id');
+    }
 }

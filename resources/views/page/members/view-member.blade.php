@@ -138,7 +138,7 @@
                                             <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    placeholder="" value="{{ $member?->initials }}"
+                                                    placeholder="" value="{{ $member?->address?->unit_no }}"
                                                     name="initials" readonly disabled>
                                             </div>
                                         </div>
@@ -147,7 +147,7 @@
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
                                                     placeholder="Enter Post Nominal"
-                                                    value="{{ $member?->post_nominal }}" name="post_nominal" readonly
+                                                    value="{{ $member?->address?->number_street }}" readonly
                                                     disabled>
                                             </div>
                                         </div>
@@ -155,7 +155,7 @@
                                             <label class="col-md-4 form-label">City / Town / Suburb</label>
                                             <div class="col-md-8">
                                                 <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->date_of_birth }}" name="date_of_birth" readonly
+                                                    value="{{ $member?->address?->suburb }}" readonly
                                                     disabled>
                                             </div>
                                         </div>
@@ -163,7 +163,7 @@
                                             <label class="col-md-4 form-label">State / County</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Suburb"
-                                                    value="{{ $member?->suburb }}, {{ $data['state_name'] ?? '' }}"
+                                                    value="{{ $member?->address?->state_id }}"
                                                     readonly disabled>
                                             </div>
                                         </div>
@@ -171,7 +171,7 @@
                                             <label class="col-md-4 form-label">Country</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Suburb"
-                                                    value="{{ $member?->suburb }}, {{ $data['state_name'] ?? '' }}"
+                                                    value="{{ $member?->address?->country_id }}"
                                                     readonly disabled>
                                             </div>
                                         </div>
@@ -179,7 +179,7 @@
                                             <label class="col-md-4 form-label">Post Code</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Post Code"
-                                                    value="{{ $member?->post_code }}" readonly disabled>
+                                                    value="{{ $member?->address?->post_code }}" readonly disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@
                                             <label class="col-md-4 form-label">Home Phone</label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    placeholder="Enter Initials" value="{{ $member?->initials }}"
+                                                    placeholder="Enter Initials" value="{{ $member?->contact?->phone }}"
                                                     name="initials" readonly disabled>
                                             </div>
                                         </div>
@@ -196,21 +196,23 @@
                                             <label class="col-md-4 form-label">Mobile Phone</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Mobile"
-                                                    value="{{ $member?->mobile }}" readonly disabled>
+                                                    value="{{ $member?->contact?->mobile }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Email</label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    value="{{ $member?->email }}" readonly disabled>
+                                                    value="{{ $member?->contact?->email }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">General
                                                 Notes</label>
                                             <div class="col-md-8">
-                                                <textarea class="form-control" name="general_notes" rows="5" placeholder="General Notes" readonly disabled>{{ $member?->additionalInfo?->general_notes }}</textarea>
+                                                <textarea class="form-control" name="general_notes" 
+                                                rows="5" placeholder="General Notes" 
+                                                readonly disabled>{{ $member?->additionalInfo?->general_notes }}</textarea>
                                             </div>
                                         </div>
                                     </div>
