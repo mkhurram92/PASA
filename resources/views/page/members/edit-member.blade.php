@@ -28,6 +28,19 @@
                 height: 300px;
                 /* Set the height to 100% */
             }
+            .form-control{
+                background-color :white;
+                font-size:medium;
+                color: black;
+            }
+            .form-label {
+                font-size: medium;
+            }
+            .select2{
+                background-color :white;
+                font-size:medium;
+                color: black;
+            }
         </style>
         <div class="container-fluid main-container">
 
