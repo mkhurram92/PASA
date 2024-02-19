@@ -47,7 +47,7 @@ class PaymentController extends Controller
                 );
                 $res = json_encode($get_payement_intent, JSON_PRETTY_PRINT);
                 $intentStatusMap = [
-                    'requires_payment_method' => 'Payment requires a valid payment method.',
+                    'requires_payment_method' => 'Payment requires a valid payment method',
                     'requires_confirmation' => 'Payment requires confirmation.',
                     'requires_action' => 'Payment requires additional action from the customer.',
                     'processing' => 'Payment is being processed.',
