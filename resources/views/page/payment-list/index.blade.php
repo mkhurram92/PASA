@@ -137,6 +137,7 @@
          // Create Tabulator
          var table = new Tabulator("#payment_list", {
              data: myData,
+             height: "500px",
              layout: "fitColumns",
              columns: [{
                      title: "Name",

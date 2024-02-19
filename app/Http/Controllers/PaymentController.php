@@ -30,6 +30,9 @@ class PaymentController extends Controller
 
     public function index2(Request $request)
     {
+        $paymentTypeOptions = PaymentType::pluck('name')->toArray();
+        array_unshift($paymentTypeOptions, '');
+        
         $user = User::with(['roles'])->find(auth()->id());
         $subscribers = Subscription::wherecreatedBy($user->id)->get();
         $data = [];
@@ -67,7 +70,7 @@ class PaymentController extends Controller
             }
         }
 
-        return view("page.payment-list.index", compact('data'));
+        return view("page.payment-list.index", compact('data', 'paymentTypeOptions'));
     }
 
     // public function index2(Request $request){
