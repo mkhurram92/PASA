@@ -78,7 +78,7 @@ class SubscribeMemberController extends Controller
     {
         $member = Member::find($id);
 
-        $data['state_name'] = Helper::getState($member?->state);
+        $data['state_name'] = Helper::getState($member?->address?->state);
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
@@ -92,14 +92,14 @@ class SubscribeMemberController extends Controller
     {
         $member = Member::find($id);
         $data['titles'] = Title::all();
-        $data['state_name'] = Helper::getState($member?->state);
+        $data['state_name'] = Helper::getState($member?->address?->state);
         $data['states'] = States::all();
         $data['membership_status'] = MemberShipStatus::all();
         $data['membership_types'] = MembershipType::all();
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
-
+        
         return view('page.members.edit-member', compact('member', 'data'));
     }
 
@@ -114,7 +114,9 @@ class SubscribeMemberController extends Controller
             'initials' => 'required',
             'date_of_birth' => 'required',
             'username' => 'required|min:5',
-            'journal' => 'required'
+            'journal' => 'required',
+            'state'   => 'required',
+            'country' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $needToValidate);
@@ -135,6 +137,7 @@ class SubscribeMemberController extends Controller
         $member->username = $request->username;
         $member->member_type_id = $request->member_type_id;
         $member->member_status_id = $request->member_status_id;
+        $member->journal = $request->journal;
 
         $member->save();
 
@@ -142,6 +145,8 @@ class SubscribeMemberController extends Controller
             'unit_no' => $request->unit_no,
             'number_street' => $request->number_street,
             'suburb' => $request->suburb,
+            'state_id' => $request->state,
+            'country_id' => 14,
             'post_code' => $request->post_code,
         ]);
 

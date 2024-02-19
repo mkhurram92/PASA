@@ -74,4 +74,5 @@ class Member extends Model
     {
         return $this->belongsTo(Title::class, 'title_id');
     }
+    
 }

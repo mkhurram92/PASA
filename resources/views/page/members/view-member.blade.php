@@ -147,13 +147,13 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">State / County</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Suburb" value="{{ $member?->address?->state_id }}" readonly disabled>
+                                                <input type="text" class="form-control" placeholder="Suburb" value="{{ $member?->address?->state?->name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Country</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Suburb" value="{{ $member?->address?->country_id }}" readonly disabled>
+                                                <input type="text" class="form-control" placeholder="Country" value="{{ $member?->address?->country?->name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

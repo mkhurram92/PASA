@@ -181,7 +181,7 @@
                                             <div class="col-md-8">
                                                 <select name="state" class="form-control form-select select2" id="state">
                                                     @forelse ($data['states'] as $state)
-                                                    <option value="{{ $state?->id }}" @if ($state?->id == $member?->state) selected @endif>
+                                                    <option value="{{ $state?->id }}" @if ($state?->id == $member?->address?->state_id) selected @endif>
                                                         {{ $state?->name }}
                                                     </option>
                                                     @empty
