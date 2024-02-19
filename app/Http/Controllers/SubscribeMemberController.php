@@ -196,7 +196,7 @@ class SubscribeMemberController extends Controller
         $member->update(['approved_at' => now()]);
 
         $usr = ModelsUser::create([
-            "email" => $member->email,
+            "email" => $member->contact->email,
             "password" => $member->password,
             "name" => $member->given_name . " " . $member->family_name
         ]);

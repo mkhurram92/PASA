@@ -37,58 +37,8 @@ class MemberFormWizard extends Controller
                 'given_name' => 'required',
                 'family_name' => 'required',
                 'preferred_name' => 'required'
-                //'number_street' => 'required',
-                //'suburb' => 'required',
-                //'state' => 'required|exists:states,id',
-                //'country' => 'required',
-                //'post_code' => 'required',
-                //"partner_name" => "required"
             ];
 
-            // switch ($step) {
-            //     case 0:
-            //         $needToValidate = [
-            //             'username' => 'required|min:5|unique:members,username',
-            //             'password' => 'required|confirmed|min:5',
-            //             'email' => 'required|email|confirmed|unique:members,email',
-            //             'title' => 'required',
-            //             'given_name' => 'required',
-            //             'family_name' => 'required',
-            //             'preferred_name' => 'required',
-            //             'date_of_birth' => 'nullable',
-            //             'gender' => 'required|exists:genders,id',
-            //             'number_street' => 'required',
-            //             'suburb' => 'required',
-            //             'state' => 'required|exists:states,id',
-            //             'country' => 'required',
-            //             'post_code' => 'required',
-            //             'phone' => 'nullable',
-            //             'mobile' => 'nullable',
-            //         ];
-            //         break;
-            //     case 1:
-            //         $needToValidate = [
-            //             "gender" => "required|in:male,female",
-            //             "full_name" => "required",
-            //             "place_of_origin" => "nullable",
-            //             "place_of_arrival" => "required|exists:ports,id",
-            //             "name_of_the_ship" => "required|exists:mode_of_arrivals,id",
-            //             "partner_name" => "required"
-            //         ];
-            //         if ($values['gender'] == "female") {
-            //             $needToValidate['maiden_name'] = "required";
-            //         }
-            //         break;
-            //     case 2:
-            //         $needToValidate = [];
-            //         break;
-            //     case 3:
-            //         $needToValidate = [];
-            //         break;
-            //     default:
-            //         abort(503, "Invalid type", ["Content-Type" => "application/json"]);
-            //         break;
-            // }
             $validator = Validator::make($values, $needToValidate);
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors(), "values" => $values], 422);
@@ -115,19 +65,27 @@ class MemberFormWizard extends Controller
                         "preferred_name" => $values['preferred_name'],
                         'date_of_birth' => !empty($values['date_of_birth']) ? date('Y-m-d', strtotime($values['date_of_birth'])) : null,
                         "gender" => $values['gender'],
-                        //"number_street" => $values['number_street'],
-                        //"suburb" => $values['suburb'],
-                        //"state" => $values['state'],
-                        //"country" => $values['country'],
-                        //"post_code" => $values['post_code'],
-                        //"phone" => $values['phone'],
-                        //"mobile" => $values['mobile'],
-                        "email" => $values['email'],
                         "member_type_id" => 1,
                         "journal" => (int) $values['journal_preferred_delivery'],
                         "member_status_id" => 1,
                     ]);
+
                     if ($Member?->id) {
+                        $Member->address()->updateOrCreate([], [
+                            'unit_no' => 1,
+                            'number_street' => $values['number_street'],
+                            'suburb' => $values['suburb'],
+                            'state_id' => $values['state'],
+                            'country_id' => 14,
+                            'post_code' => $values['post_code'],
+                        ]);
+
+                        $Member->contact()->updateOrCreate([], [
+                            'email' => $values['email'],
+                            'mobile' => $values['mobile'],
+                            'phone' => $values['phone'],
+                        ]);
+
                         foreach ($values as $key => $value) {
                             if ($values['pioneer_parents'] == 1) {
                                 MemberPedigree::updateOrCreate(['member_id' => $Member->id], [
