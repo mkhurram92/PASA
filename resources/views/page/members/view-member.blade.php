@@ -286,7 +286,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-6 form-label">Journal<span class="tx-danger">*</span></label>
+                                            <label class="col-md-6 form-label">Journal</label>
                                             <div class="col-md-6">
                                                 <span id="journalStatus" class="custom-font"></span>
                                             </div>
