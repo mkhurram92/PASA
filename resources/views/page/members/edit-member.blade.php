@@ -165,7 +165,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">PO Box<span class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Street Name<span class="tx-danger">*</span></label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="PO Box" value="{{ $member?->address?->number_street }}" name="number_street">
                                             </div>

@@ -37,11 +37,11 @@ class MemberFormWizard extends Controller
                 'given_name' => 'required',
                 'family_name' => 'required',
                 'preferred_name' => 'required',
-                'number_street' => 'required',
-                'suburb' => 'required',
-                'state' => 'required|exists:states,id',
-                'country' => 'required',
-                'post_code' => 'required',
+                //'number_street' => 'required',
+                //'suburb' => 'required',
+                //'state' => 'required|exists:states,id',
+                //'country' => 'required',
+                //'post_code' => 'required',
                 "partner_name" => "required"
             ];
 
@@ -115,16 +115,17 @@ class MemberFormWizard extends Controller
                         "preferred_name" => $values['preferred_name'],
                         'date_of_birth' => !empty($values['date_of_birth']) ? date('Y-m-d', strtotime($values['date_of_birth'])) : null,
                         "gender" => $values['gender'],
-                        "number_street" => $values['number_street'],
-                        "suburb" => $values['suburb'],
-                        "state" => $values['state'],
-                        "country" => $values['country'],
-                        "post_code" => $values['post_code'],
-                        "phone" => $values['phone'],
-                        "mobile" => $values['mobile'],
+                        //"number_street" => $values['number_street'],
+                        //"suburb" => $values['suburb'],
+                        //"state" => $values['state'],
+                        //"country" => $values['country'],
+                        //"post_code" => $values['post_code'],
+                        //"phone" => $values['phone'],
+                        //"mobile" => $values['mobile'],
                         "email" => $values['email'],
                         "member_type_id" => 1,
                         "journal" => (int) $values['journal_preferred_delivery'],
+                        "member_status_id" => 1,
                     ]);
                     if ($Member?->id) {
                         foreach ($values as $key => $value) {

@@ -38,7 +38,7 @@ class SubscribeMemberController extends Controller
 
     public function index(Request $request)
     {
-        $members = Member::with('membershipType','membershipStatus')->get();
+        $members = Member::with('membershipType', 'membershipStatus')->get();
         $membershipTypeOptions = MembershipType::pluck('name')->toArray();
         array_unshift($membershipTypeOptions, '');
 
@@ -77,7 +77,7 @@ class SubscribeMemberController extends Controller
     public function viewMember($id)
     {
         $member = Member::find($id);
-        
+
         $data['state_name'] = Helper::getState($member?->state);
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
@@ -107,7 +107,7 @@ class SubscribeMemberController extends Controller
     {
         $needToValidate = [
             'title' => 'required',
-            'title_detail' => 'required',
+            //'title_detail' => 'required',
             'family_name' => 'required',
             'given_name' => 'required',
             'preferred_name' => 'required',
@@ -135,9 +135,9 @@ class SubscribeMemberController extends Controller
         $member->username = $request->username;
         $member->member_type_id = $request->member_type_id;
         $member->member_status_id = $request->member_status_id;
-        
+
         $member->save();
-        
+
         $member->address()->updateOrCreate([], [
             'unit_no' => $request->unit_no,
             'number_street' => $request->number_street,
@@ -145,14 +145,14 @@ class SubscribeMemberController extends Controller
             'post_code' => $request->post_code,
         ]);
 
-        
+
         $member->contact()->updateOrCreate([], [
             'email' => $request->email,
             'mobile' => $request->mobile,
             'phone' => $request->phone,
         ]);
 
-        
+
         AdditionalMemberInfos::updateOrCreate(['member_id' => $member->id], [
             'member_id' => $member->id,
             'membership_number' => $request->membership_number,
@@ -179,7 +179,11 @@ class SubscribeMemberController extends Controller
                 'availability' => $request->availability
             ]);
         }
-        return response()->json(["status" => true, "message" => "Member Updated successfully", "redirectTo" => route("members.index")]);
+        return response()->json([
+            "status" => true,
+            "message" => "Member Updated successfully",
+            "redirectTo" => route("members.view-member", ['id' => $member->id])
+        ]);
     }
 
     public function update(Member $member)
