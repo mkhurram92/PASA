@@ -4,7 +4,7 @@
         <h3> Payment Information</h3>
         <div class="row">
             <div class="col-md-4 my-2">
-                <label class="form-control-label">Journal Preferred Delivery: </label>
+                <label class="form-control-label">Journal Preferred Delivery</label>
                 <select name="journal_preferred_delivery" class="form-control form-select select2"
                     id="journal_preferred_delivery">
                     <option value="0" selected>Email</option>
@@ -15,15 +15,15 @@
                 id="preferred_delivery_price">
             <div class="col-md-8 d-flex">
                 <div class="col-md-3 my-2">
-                    <label class="form-control-label">Membership Fee : </label>
+                    <label class="form-control-label">Membership Fee</label>
                     <h4 id="membership_fee_block">${{ number_format($subsription_plan->email_price, 2) }} (Email)</h4>
                 </div>
                 <div class="col-md-3 my-2">
-                    <label class="form-control-label">New Member : </label>
+                    <label class="form-control-label">New Member</label>
                     <h4 id="new_member_block">$20.00</h4>
                 </div>
                 <div class="col-md-3 my-2">
-                    <label class="form-control-label">Total : </label>
+                    <label class="form-control-label">Total</label>
                     <h4 id="total_block">${{ number_format($subsription_plan->email_price + 20, 2) }}</h4>
                 </div>
             </div>

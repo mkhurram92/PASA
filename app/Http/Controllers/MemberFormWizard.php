@@ -31,18 +31,18 @@ class MemberFormWizard extends Controller
             $step = $data['step'];
             $needToValidate = [
                 'username' => 'required|min:5|unique:members,username',
-                'password' => 'required|confirmed|min:5',
+                //'password' => 'required|confirmed|min:5',
                 'email' => 'required|email|confirmed|unique:members,email',
                 'title' => 'required',
                 'given_name' => 'required',
                 'family_name' => 'required',
-                'preferred_name' => 'required',
+                'preferred_name' => 'required'
                 //'number_street' => 'required',
                 //'suburb' => 'required',
                 //'state' => 'required|exists:states,id',
                 //'country' => 'required',
                 //'post_code' => 'required',
-                "partner_name" => "required"
+                //"partner_name" => "required"
             ];
 
             // switch ($step) {
@@ -108,7 +108,7 @@ class MemberFormWizard extends Controller
                 if ($payment->status == "succeeded") {
                     $Member = Member::create([
                         "username" => $values['username'],
-                        "password" => $values['password'],
+                        //"password" => $values['password'],
                         "title_id" => $values['title'],
                         "given_name" => $values['given_name'],
                         "family_name" => $values['family_name'],
@@ -228,7 +228,7 @@ class MemberFormWizard extends Controller
                             'place_of_origin' => $values['place_of_origin'],
                             'place_of_arrival' => $values['place_of_arrival'],
                             'name_of_the_ship' => $values['name_of_the_ship'],
-                            'partner_name' => $values['partner_name'],
+                            //'partner_name' => $values['partner_name'],
                             'date_of_birth' => !empty($values['ancestor_date_of_birth']) ? date('Y-m-d', strtotime($values['ancestor_date_of_birth'])) : null,
                             'date_of_death' => !empty($values['date_of_death']) ? date('Y-m-d', strtotime($values['date_of_death'])) : null,
                         ]);

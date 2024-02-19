@@ -200,14 +200,6 @@
                     headerFilterPlaceholder: 'Filter by Family Name'
                 },
                 {
-                    title: 'Email Address',
-                    field: 'email',
-                    hozAlign: "center",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Email'
-                },
-                {
                     title: 'Approval Date',
                     field: 'approved_at',
                     hozAlign: "center",

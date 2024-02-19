@@ -25,7 +25,7 @@ class MemberRequest extends FormRequest
     {
         return [
             "username" => 'required|unique:members,username',
-            "password" => ['required', 'confirmed'],
+            //"password" => ['required', 'confirmed'],
             "title" => 'required',
             "given_name" => 'required',
             "family_name" => 'required',
