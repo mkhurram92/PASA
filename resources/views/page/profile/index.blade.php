@@ -3,6 +3,21 @@
 <!-- app-content start-->
 <div class="app-content main-content">
     <div class="side-app">
+        <style>
+            .form-control[readonly] {
+                font-size: medium;
+                color: black;
+            }
+
+            .form-label {
+                font-size: medium;
+            }
+
+            .custom-font {
+                font-size: medium;
+                color: black;
+            }
+        </style>
         <div class="container-fluid main-container mt-5">
             <div class="row my-5">
                 <div class="col-12">
@@ -10,130 +25,335 @@
                         <div class="alert alert-success">{{ session('message') }}</div>
                     @endif
                 </div>
-                {{-- <div class="col-md-12"> --}}
-                {{-- <a href="{{ route('JuniorForm') }}" class="btn btn-primary">Add Junior</a> --}}
-                {{-- @if (empty($member?->partner_id))
-                        <a href="{{ route('ParterForm') }}" class="btn btn-primary">Add Partner</a>
-                    @endif --}}
-                {{-- </div> --}}
             </div>
             <div class="panel panel-primary">
-                <div class=" tab-menu-heading p-0 bg-light">
+                <div class=" tab-menu-heading p-0">
                     <div class="tabs-menu1 ">
                         <!-- Tabs -->
                         <ul class="nav panel-tabs">
                             <li class=""><a href="#tab5" class="active" data-bs-toggle="tab">Profile</a></li>
                             <li><a href="#tab6" data-bs-toggle="tab">Ancestor</a></li>
                             <li><a href="#tab7" data-bs-toggle="tab">Padigree</a></li>
-                            {{-- @if ($juniors->isNotEmpty())
-                                <li><a href="#juniorTab" data-bs-toggle="tab">Juniors</a></li>
-                            @endif --}}
-                            {{-- @if (!empty($member?->partner_id))
-                                <li><a href="#tab8" data-bs-toggle="tab">Partner</a></li>
-                            @endif --}}
                         </ul>
                     </div>
                 </div>
                 <div class="panel-body tabs-menu-body">
                     <div class="tab-content">
                         <div class="tab-pane active " id="tab5">
-                            <div class="card-header justify-content-between">
-                                <h3 class="card-title">Member</h3>
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h3 class="card-title">Member Personal Details</h3>
+                                <div>
+                                    <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
+                                        <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
+                                    </a>
+                                </div>
                             </div>
                             <div class="card-body p-0">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">User Name</label>
-                                                <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="User name"
-                                                        value="{{ $member?->username }}" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Email</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Title</label>
+                                                <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        value="{{ $member?->email }}" readonly disabled>
+                                                        value="{{ $member?->title?->name }}" readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Title</label>
-                                                <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="Country"
-                                                        value="{{ $member?->title }}" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Given Name</label>
-                                                <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="Given Name"
-                                                        value="{{ $member?->given_name }}" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Family Name</label>
-                                                <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="Family Name"
+                                                <label class="col-md-4 form-label">Family Name</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" type="text"
                                                         value="{{ $member?->family_name }}" readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Preferred Name</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Given Name</label>
+                                                <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Preferred Name"
+                                                        value="{{ $member?->given_name }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Preferred Name</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" type="text"
                                                         value="{{ $member?->preferred_name }}" readonly disabled>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Date of Birth</label>
-                                                <div class="col-md-9">
-                                                    <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY"
-                                                        type="text" value="{{ $member?->date_of_birth }}" readonly
+                                                <label class="col-md-4 form-label">Initials</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" type="text"
+                                                        value="{{ $member?->initials }}" name="initials" readonly
                                                         disabled>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
-                                                <label class="col-md-3 form-label">Street Number</label>
-                                                <div class="col-md-9">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Post Nominal</label>
+                                                <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Street Number"
-                                                        value="{{ $member?->number_street }}" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Suburb</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" placeholder="Suburb"
-                                                        value="{{ $member?->suburb }}" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">State</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" placeholder="State"
-                                                        value="{{ $data['state_name'] ?? '' }}" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Post Code</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Post Code" value="{{ $member?->post_code }}"
+                                                        value="{{ $member?->post_nominal }}" name="post_nominal"
                                                         readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Mobile</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" placeholder="Mobile"
-                                                        value="{{ $member?->mobile }}" readonly disabled>
+                                                <label class="col-md-4 form-label">Birth Date</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control fc-datepicker" type="text"
+                                                        value="{{ $member?->date_of_birth }}" readonly disabled>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h3 class="card-title">Member Contact Details</h3>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Unit / Apartment No.
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control fc-datepicker" type="text"
+                                                        value="{{ $member?->address?->unit_no }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-md-4 form-label">Street Name</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" type="text"
+                                                        value="{{ $member?->address?->number_street }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">City / Town / Suburb</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                        value="{{ $member?->address?->suburb }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">State / County</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                    value="{{ $member?->address?->state?->name }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Country</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                    value="{{ $member?->address?->country?->name }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Post Code</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                    value="{{ $member?->address?->post_code }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Home Phone</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                        value="{{ $member?->contact?->phone }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Mobile Phone</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                        value="{{ $member?->contact?->mobile }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Email</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control"
+                                                        value="{{ $member?->contact?->email }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">General
+                                                    Notes</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="general_notes" rows="5" readonly disabled>{{ $member?->additionalInfo?->general_notes }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h3 class="card-title">Membership Details</h3>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Membership
+                                                    Number</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" type="text" placeholder="Membership Number" value="{{ $member?->additionalInfo?->membership_number }}" name="membership_number" readonly disabled>
+                                                </div>
+                                            </div>
+    
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">User Name</label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" type="text" placeholder="User name" value="{{ $member?->username }}" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Membership Type </label>
+                                                <div class="col-md-8">
+                                                    <select name="member_type_id" class="form-control form-select select2" id="member_type_id" readonly disabled>
+                                                        @forelse ($data['membership_types'] as $type)
+                                                        <option value="{{ $type?->id }}" @if ($type?->id == $member?->member_type_id) selected @endif>
+                                                            {{ $type?->name }}
+                                                        </option>
+                                                        @empty
+                                                        <option value="">Select Membership Type
+                                                        </option>
+                                                        @endforelse
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Membership Status
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <select name="member_status_id" class="form-control form-select select2" id="member_status_id" readonly disabled>
+                                                        @forelse ($data['membership_status'] as $status)
+                                                        <option value="{{ $status?->id }}" @if ($status?->id == $member?->member_status_id) selected @endif>
+                                                            {{ $status?->name }}
+                                                        </option>
+                                                        @empty
+                                                        <option value="">Select Membership Status
+                                                        </option>
+                                                        @endforelse
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-8 form-label">Date Membership
+                                                    Commenced (Membership Approval Date) </label>
+                                                <div class="col-md-4">
+                                                    <input class="form-control fc-datepicker" type="text" value="{{ $member?->approved_at }}" name="date_membership_approved" readonly disabled>
+                                                </div>
+                                            </div>
+    
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Date Membership Ended
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_end }}" name="date_membership_end" readonly disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">End Status
+                                                    Notes</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="end_status_notes" rows="3" placeholder="" readonly disabled>{{ $member?->additionalInfo?->end_status_notes }}</textarea>
+                                                </div>
+                                            </div>
+    
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Key Holder</label>
+                                                <div class="col-md-8">
+                                                    <span id="displayStatus" class="custom-font"></span>
+                                                </div>
+                                            </div>
+    
+                                            @if ($member?->additionalInfo?->key_holder == 1)
+                                            <div class="mb-3 row key_held">
+                                                <label class="col-md-4 form-label">Key Held</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="key_held" readonly disabled rows="3" placeholder="Key Held">{{ $member?->additionalInfo?->key_held }}</textarea>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-6 form-label">Journal</label>
+                                                <div class="col-md-6">
+                                                    <span id="journalStatus" class="custom-font"></span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-6 form-label">Registration form received</label>
+                                                <div class="col-md-6">
+                                                    <span id="registrationFormStatus" class="custom-font"></span>
+                                                </div>
+                                            </div>
+    
+                                            <div class="mb-3 row">
+                                                <label class="col-md-6 form-label">Signed Confidentiality agreement received</label>
+                                                <div class="col-md-6">
+                                                    <span id="signedAgreementStatus" class="custom-font"></span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-6 form-label">Volunteer</label>
+                                                <div class="col-md-6">
+                                                    <span id="volunteerStatus" class="custom-font"></span>
+                                                </div>
+                                            </div>
+    
+                                            @if ($member?->additionalInfo?->volunteer == 1)
+                                            <div class="volunteer_details">
+                                                <div class="mb-3 row">
+                                                    <label class="col-md-4 form-label">Experience</label>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->experience }}" name="experience" readonly disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-md-4 form-label">Health
+                                                        Issues</label>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->health_issues }}" name="health_issues" readonly disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-md-4 form-label">Contact
+                                                        received</label>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->contact }}" name="contact" readonly disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-md-4 form-label">Skills</label>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->skills }}" name="skills" readonly disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-md-4 form-label">Availability</label>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->availability }}" name="availability" readonly disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label class="col-md-4 form-label">Volunteer Skills and
+                                                        Working Preferences</label>
+                                                    <div class="col-md-8">
+                                                        <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3" placeholder="">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +385,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Place of Arrival</label>
+                                                <label class="col-md-3 form-label">Arrival Place in SA</label>
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text"
                                                         placeholder="Place of Arrival"
@@ -183,7 +403,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Date of Death</label>
+                                                <label class="col-md-3 form-label">Death Date</label>
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text"
                                                         placeholder="Date of Death"
@@ -332,249 +552,6 @@
                                 @endif
                             @endif
                         </div>
-                        {{-- @if ($juniors->isNotEmpty())
-                            <div class="tab-pane " id="juniorTab">
-                                <table class="table table-light" id="juniorsTable">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Date of birth</th>
-                                            <th>Gender</th>
-                                            <th>Start date</th>
-                                            <th>End date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($juniors as $index => $junior)
-                                            <tr>
-                                                <td>{{ $index + 1 }}</td>
-                                                <td>{{ $junior->given_name ?? 'N/A' }}</td>
-                                                <td>{{ $junior->date_of_birth ?? 'N/A' }}</td>
-                                                <td>{{ ucwords($junior->withGender->name ?? 'N/A') }}</td>
-                                                <td>{{ $junior->withSubscription?->start_date ?? 'N/A' }}</td>
-                                                <td>{{ $junior->withSubscription?->end_date ?? 'N/A' }}</td>
-                                                <td>
-                                                    <a href="" class="btn btn-primary btn-sm">Edit</a>
-                                                    <a href="{{ route('JuniorSiblings', ['junior' => $junior?->id]) }}"
-                                                        class="btn btn-primary btn-sm show-siblings">Siblings</a>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                        @endforelse
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Date of birth</th>
-                                            <th>Gender</th>
-                                            <th>Start date</th>
-                                            <th>End date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        @endif --}}
-                        {{-- @if (!empty($member?->partner_id))
-                            <div class="tab-pane " id="tab8">
-                                <form action="{{ route('UpdatePartnerMemberFormWizard') }}" method="POST">
-                                    <div class="row">
-                                        <div class="col-12 text-right">
-                                            <button type="submit" class="btn btn-primary">Update</button>
-                                        </div>
-                                    </div>
-                                    <section>
-                                        @csrf
-                                        @method('PATCH')
-                                        <div class="row">
-                                            <div class="col-md-12 d-flex justify-content-between">
-                                                <h3 class="mb-0">Partner Information</h3>
-                                            </div>
-                                            <div class="col-md-4 my-2">
-                                                <label class="form-control-label">Username: <span
-                                                        class="tx-danger">*</span></label>
-                                                <input class="form-control" id="username" name="username"
-                                                    value="{{ $member?->partner_member?->username }}"
-                                                    placeholder="Enter username" required="" type="text">
-                                            </div>
-                                            <div class="col-md-4 my-2">
-                                                <label class="form-control-label">Password: </label>
-                                                <input class="form-control" id="password" name="password"
-                                                    value="" placeholder="Leave blank to use current"
-                                                    type="password">
-                                            </div>
-                                            <div class="col-md-4 my-2">
-                                                <label class="form-control-label">Confirmation Password: </label>
-                                                <input class="form-control" id="password_confirmation"
-                                                    name="password_confirmation" value=""
-                                                    placeholder="Leave blank to use current" type="password">
-                                            </div>
-                                            <div class="col-md-4 my-2">
-                                                <label class="form-control-label">Email: <span
-                                                        class="tx-danger">*</span></label>
-                                                <input class="form-control" id="email" name="email"
-                                                    value="{{ $member?->partner_member?->email }}"
-                                                    placeholder="Enter Email" required="" type="text">
-                                            </div>
-                                            <div class="col-md-4 my-2">
-                                                <label class="form-control-label">Confirmation Email: <span
-                                                        class="tx-danger">*</span></label>
-                                                <input class="form-control" id="email_confirmation"
-                                                    name="email_confirmation"
-                                                    value="{{ $member?->partner_member?->email }}"
-                                                    placeholder="Enter Same Email" required="" type="email">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <h3> Application Personal Details</h3>
-                                            <div class="col-12">
-                                                <div class="row">
-                                                    <div class="col-md-2 my-2">
-                                                        <label class="form-control-label">Title: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <select name="title"
-                                                            class="form-control form-select select2" id="title">
-                                                            <option value="Mr."
-                                                                {{ $member?->partner_member?->title == 'Mr.' ? 'selected' : '' }}>
-                                                                Mr.</option>
-                                                            <option value="Mrs."
-                                                                {{ $member?->partner_member?->title == 'Mrs.' ? 'selected' : '' }}>
-                                                                Mrs.</option>
-                                                            <option value="Miss."
-                                                                {{ $member?->partner_member?->title == 'Miss.' ? 'selected' : '' }}>
-                                                                Miss.</option>
-                                                            <option value="Ms."
-                                                                {{ $member?->partner_member?->title == 'Ms.' ? 'selected' : '' }}>
-                                                                Ms.</option>
-                                                            <option value="Dr."
-                                                                {{ $member?->partner_member?->title == 'Dr.' ? 'selected' : '' }}>
-                                                                Dr.</option>
-                                                            <option value="Sir."
-                                                                {{ $member?->partner_member?->title == 'Sir.' ? 'selected' : '' }}>
-                                                                Sir.</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-5 my-2">
-                                                        <label class="form-control-label">Given name: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="given_name" name="given_name"
-                                                            value="{{ $member?->partner_member?->given_name }}"
-                                                            placeholder="Enter given name" required=""
-                                                            type="text">
-                                                    </div>
-                                                    <div class="col-md-5 my-2">
-                                                        <label class="form-control-label">Family Name: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="family_name"
-                                                            name="family_name"
-                                                            value="{{ $member?->partner_member?->family_name }}"
-                                                            placeholder="Enter Family name" required=""
-                                                            type="text">
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Preferred Name: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="preferred_name"
-                                                            name="preferred_name"
-                                                            value="{{ $member?->partner_member?->preferred_name }}"
-                                                            placeholder="Enter Preferred Name" required=""
-                                                            type="text">
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Date of Birth: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="date_of_birth"
-                                                            name="date_of_birth"
-                                                            value="{{ $member?->partner_member?->date_of_birth }}"
-                                                            placeholder="Enter Date of Birth" required=""
-                                                            type="date">
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Gender: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <select name="gender"
-                                                            class="form-control form-select select2" id="gender">
-                                                            @forelse ($genders as $gender)
-                                                                <option value="{{ $gender->id }}"
-                                                                    @if ($member?->partner_member?->gender == $gender->id)  @endif>
-                                                                    {{ ucwords($gender->name) }}</option>
-                                                            @empty
-                                                                <option value="">Select option</option>
-                                                            @endforelse
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Number & Street: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="number_street"
-                                                            name="number_street"
-                                                            value="{{ $member?->partner_member?->number_street }}"
-                                                            placeholder="Enter Number & Street" required=""
-                                                            type="text">
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Suburb: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="suburb" name="suburb"
-                                                            value="{{ $member?->partner_member?->suburb }}"
-                                                            placeholder="Enter Suburb" required="" type="text">
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">State: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <select name="state"
-                                                            class="form-control form-select select2" id="state">
-                                                            @forelse ($states as $state)
-                                                                <option value="{{ $state?->id }}"
-                                                                    @if ($state?->id == $member?->partner_member?->state)  @endif>
-                                                                    {{ $state?->name }}</option>
-                                                            @empty
-                                                                <option value="">Select state</option>
-                                                            @endforelse
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Country: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <select name="country"
-                                                            class="form-control form-select select2" id="country">
-                                                            <option value="Australia" selected>Australia</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Post Code/Zip: <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="post_code" name="post_code"
-                                                            value="{{ $member?->partner_member?->post_code }}"
-                                                            placeholder="Enter Post Code/Zip" required=""
-                                                            type="text">
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Phone (Home): <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="phone" name="phone"
-                                                            value="{{ $member?->partner_member?->phone }}"
-                                                            placeholder="Enter Phone (Home)" required=""
-                                                            type="text">
-                                                    </div>
-                                                    <div class="col-md-6 my-2">
-                                                        <label class="form-control-label">Phone (Mobile): <span
-                                                                class="tx-danger">*</span></label>
-                                                        <input class="form-control" id="mobile" name="mobile"
-                                                            value="{{ $member?->partner_member?->mobile }}"
-                                                            placeholder="Enter Phone (Mobile)" required=""
-                                                            type="text">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </form>
-                            </div>
-                        @endif --}}
                     </div>
                 </div>
             </div>
@@ -599,6 +576,26 @@
                     }
                 })
         })
+
+        document.addEventListener('DOMContentLoaded', function() {
+        var displayStatus = document.getElementById('displayStatus');
+        var volunteerStatus = document.getElementById('volunteerStatus');
+        var registrationFormStatus = document.getElementById('registrationFormStatus');
+        var signedAgreementStatus = document.getElementById('signedAgreementStatus');
+        var journalStatus = document.getElementById('journalStatus');
+
+        // Initial display based on the value
+        displayStatus.textContent = @if($member?->additionalInfo?->key_holder== 1)
+        'Yes'
+        @else 'No'
+        @endif;
+        
+        volunteerStatus.textContent = @if ($member?->additionalInfo?->volunteer == 1) 'Yes' @else 'No' @endif;
+        registrationFormStatus.textContent = @if ($member?->additionalInfo?->registration_form_received == 1) 'Yes' @else 'No' @endif;
+        signedAgreementStatus.textContent = @if ($member?->additionalInfo?->signed_agreement == 1) 'Yes' @else 'No' @endif;
+        journalStatus.textContent = @if ($member?->journal == 0) 'Emailed' @else 'Posted' @endif;
+
+    });
     </script>
 @endsection
 <!-- app-content end-->

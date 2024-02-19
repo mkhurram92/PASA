@@ -12,6 +12,9 @@ use App\Models\MemberJunior;
 use App\Models\States;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\MembershipType;
+use App\Models\MemberShipStatus;
+
 
 class DashboardController extends Controller
 {
@@ -99,11 +102,20 @@ class DashboardController extends Controller
     function profile(Request $request)
     {
         $user = auth()->user();
-        $member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
+        //$member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
+        $member = Member::with(['partner_member', 'pedigree', 'ancestor', 'contact'])
+            ->whereHas('contact', function ($query) use ($user) {
+                $query->where('email', $user->email);
+            })
+            ->first();
+
         $data['state_name'] = Helper::getState($member?->state);
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
+        $data['membership_types'] = MembershipType::all();
+        $data['membership_status'] = MemberShipStatus::all();
+
         $member_id = $member?->id;
         $juniors = MemberJunior::with(['withGender', 'withSubscription'])->where("member_id", $member_id)->whereNull("member_junior_id")->latest()->get();
         $genders = Gender::get();
@@ -114,7 +126,12 @@ class DashboardController extends Controller
     function juniors()
     {
         $user = auth()->user();
-        $member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
+        //$member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
+        $member = Member::with(['partner_member', 'pedigree', 'ancestor', 'contact'])
+            ->whereHas('contact', function ($query) use ($user) {
+                $query->where('email', $user->email);
+            })
+            ->first();
         $member_id = $member?->id;
         $juniors = MemberJunior::with(['withGender', 'withSubscription'])->where("member_id", $member_id)->whereNull("member_junior_id")->latest()->get();
         return view("page.profile.juniors", compact('juniors'));
@@ -123,7 +140,13 @@ class DashboardController extends Controller
     function partner()
     {
         $user = auth()->user();
-        $member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
+        //$member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
+        $member = Member::with(['partner_member', 'pedigree', 'ancestor', 'contact'])
+            ->whereHas('contact', function ($query) use ($user) {
+                $query->where('email', $user->email);
+            })
+            ->first();
+
         $member_id = $member?->id;
         $genders = Gender::get();
         $states = States::get();
