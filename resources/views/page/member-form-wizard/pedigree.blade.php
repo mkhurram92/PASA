@@ -26,28 +26,28 @@
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Birth Date</label>
                 <div class="input-group">
-                    <input id="father_dob_1" type="date" class="form-control me-3" placeholder="Date of Birth"
+                    <input id="father_dob_1" type="date" class="form-control me-3" placeholder="Birth Date"
                         name="main_father_dob">
                 </div>
             </div>
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Birth Place</label>
                 <div class="input-group">
-                    <input id="main_father_pob" type="text" class="form-control" placeholder="Place of Birth"
+                    <input id="main_father_pob" type="text" class="form-control" placeholder="Birth Place"
                         name="main_father_pob">
                 </div>
             </div>
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Death Date</label>
                 <div class="input-group">
-                    <input id="father_dod_1" type="date" class="form-control me-3" placeholder="Date of Death"
+                    <input id="father_dod_1" type="date" class="form-control me-3" placeholder="Death Date"
                         name="main_father_dod">
                 </div>
             </div>
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Death Place</label>
                 <div class="input-group">
-                    <input id="main_father_pod" type="text" class="form-control" placeholder="Place of Death"
+                    <input id="main_father_pod" type="text" class="form-control" placeholder="Death Place"
                         name="main_father_pod">
                 </div>
             </div>
@@ -61,14 +61,14 @@
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Marriage Date</label>
                 <div class="input-group">
-                    <input id="main_father_dom" type="date" class="form-control me-3" placeholder="Date of Marriage"
+                    <input id="main_father_dom" type="date" class="form-control me-3" placeholder="Marriage Date"
                         name="main_father_dom">
                 </div>
             </div>
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Marriage Place</label>
                 <div class="input-group">
-                    <input id="main_father_pom" type="text" class="form-control" placeholder="Place of Marriage"
+                    <input id="main_father_pom" type="text" class="form-control" placeholder="Marriage Place"
                         name="main_father_pom">
                 </div>
             </div>
@@ -84,28 +84,28 @@
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Birth Date</label>
                 <div class="input-group">
-                    <input id="mother_dob_1" type="date" class="form-control me-3" placeholder="Date of Birth"
+                    <input id="mother_dob_1" type="date" class="form-control me-3" placeholder="Birth Date"
                         name="main_mother_dob">
                 </div>
             </div>
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Birth Place</label>
                 <div class="input-group">
-                    <input id="main_mother_pob" type="text" class="form-control" placeholder="Place of Birth"
+                    <input id="main_mother_pob" type="text" class="form-control" placeholder="Birth Place"
                         name="main_mother_pob">
                 </div>
             </div>
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Death Date</label>
                 <div class="input-group">
-                    <input id="mother_dod_1" type="date" class="form-control me-3" placeholder="Date of Death"
+                    <input id="mother_dod_1" type="date" class="form-control me-3" placeholder="Death Date"
                         name="main_mother_dod">
                 </div>
             </div>
             <div class="mb-2 mb-sm-0">
                 <label class="form-label">Death Place</label>
                 <div class="input-group">
-                    <input id="main_mother_pod" type="text" class="form-control" placeholder="Place of Death"
+                    <input id="main_mother_pod" type="text" class="form-control" placeholder="Death Place"
                         name="main_mother_pod">
                 </div>
             </div>

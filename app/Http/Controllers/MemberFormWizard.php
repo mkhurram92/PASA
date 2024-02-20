@@ -103,6 +103,12 @@ class MemberFormWizard extends Controller
 
                                     'date_of_marriage' => !empty($values['main_father_dom']) ? date('Y-m-d', strtotime($values['main_father_dom'])) : null,
                                     'place_of_marriage' => !empty($values['main_father_pom']) ? $values['main_father_pom'] : null,
+
+                                    'm_birth_date' => !empty($values['main_mother_dob']) ? date('Y-m-d', strtotime($values['main_mother_dob'])) : null,
+                                    'm_birth_place' => !empty($values['main_mother_pob']) ? $values['main_mother_pob'] : null,
+
+                                    'm_death_date' => !empty($values['main_mother_dod']) ? date('Y-m-d', strtotime($values['main_mother_dod'])) : null,
+                                    'm_death_place' => !empty($values['main_mother_pod']) ? $values['main_mother_pod'] : null,
                                 ]);
                             } else {
                                 MemberPedigree::updateOrCreate(['member_id' => $Member->id], [
@@ -112,11 +118,20 @@ class MemberFormWizard extends Controller
                                     'f_name' => $values['main_father_name'],
                                     'm_name' => $values['main_mother_name'],
 
-                                    'date_of_birth' => !empty($values['main_mother_dob']) ? date('Y-m-d', strtotime($values['main_mother_dob'])) : null,
-                                    'place_of_birth' => !empty($values['main_mother_pob']) ? $values['main_mother_pob'] : null,
+                                    'date_of_birth' => !empty($values['main_father_dob']) ? date('Y-m-d', strtotime($values['main_father_dob'])) : null,
+                                    'place_of_birth' => !empty($values['main_father_pob']) ? $values['main_father_pob'] : null,
 
-                                    'date_of_death' => !empty($values['main_mother_dod']) ? date('Y-m-d', strtotime($values['main_mother_dod'])) : null,
-                                    'place_of_death' => !empty($values['main_mother_pod']) ? $values['main_mother_pod'] : null,
+                                    'date_of_death' => !empty($values['main_father_dod']) ? date('Y-m-d', strtotime($values['main_father_dod'])) : null,
+                                    'place_of_death' => !empty($values['main_father_pod']) ? $values['main_father_pod'] : null,
+
+                                    'date_of_marriage' => !empty($values['main_father_dom']) ? date('Y-m-d', strtotime($values['main_father_dom'])) : null,
+                                    'place_of_marriage' => !empty($values['main_father_pom']) ? $values['main_father_pom'] : null,
+
+                                    'm_birth_date' => !empty($values['main_mother_dob']) ? date('Y-m-d', strtotime($values['main_mother_dob'])) : null,
+                                    'm_birth_place' => !empty($values['main_mother_pob']) ? $values['main_mother_pob'] : null,
+
+                                    'm_death_date' => !empty($values['main_mother_dod']) ? date('Y-m-d', strtotime($values['main_mother_dod'])) : null,
+                                    'm_death_place' => !empty($values['main_mother_pod']) ? $values['main_mother_pod'] : null,
                                 ]);
                             }
                         }
@@ -155,7 +170,13 @@ class MemberFormWizard extends Controller
                                                 'place_of_death' => !empty($sub_father_pod[$key]) ? $sub_father_pod[$key] : null,
 
                                                 'date_of_marriage' => !empty($sub_father_dom[$key]) ? date('Y-m-d', strtotime($sub_father_dom[$key])) : null,
-                                                'place_of_marriage' => !empty($sub_father_pom[$key]) ? $sub_father_pom[$key] : null
+                                                'place_of_marriage' => !empty($sub_father_pom[$key]) ? $sub_father_pom[$key] : null,
+
+                                                'm_birth_date' => !empty($sub_mother_dob[$key]) ? date('Y-m-d', strtotime($sub_mother_dob[$key])) : null,
+                                                'm_birth_place' => !empty($sub_mother_pob[$key]) ? $sub_mother_pob[$key] : null,
+
+                                                'm_death_date' => !empty($sub_mother_dod[$key]) ? date('Y-m-d', strtotime($sub_mother_dod[$key])) : null,
+                                                'm_death_place' => !empty($sub_mother_pod[$key]) ? $sub_mother_pod[$key] : null
                                             ]
                                         );
                                     } else {
@@ -168,11 +189,20 @@ class MemberFormWizard extends Controller
                                                 'f_name' => $sub_father_name[$key],
                                                 'm_name' => $sub_mother_name[$key],
 
-                                                'date_of_birth' => !empty($sub_mother_dob[$key]) ? date('Y-m-d', strtotime($sub_mother_dob[$key])) : null,
-                                                'place_of_birth' => !empty($sub_mother_pob[$key]) ? $sub_mother_pob[$key] : null,
+                                                'date_of_birth' => !empty($sub_father_dob[$key]) ? date('Y-m-d', strtotime($sub_father_dob[$key])) : null,
+                                                'place_of_birth' => !empty($sub_father_pob[$key]) ? $sub_father_pob[$key] : null,
 
-                                                'date_of_death' => !empty($sub_mother_dod[$key]) ? date('Y-m-d', strtotime($sub_mother_dod[$key])) : null,
-                                                'place_of_death' => !empty($sub_mother_pod[$key]) ? $sub_mother_pod[$key] : null
+                                                'date_of_death' => !empty($sub_father_dod[$key]) ? date('Y-m-d', strtotime($sub_father_dod[$key])) : null,
+                                                'place_of_death' => !empty($sub_father_pod[$key]) ? $sub_father_pod[$key] : null,
+
+                                                'date_of_marriage' => !empty($sub_father_dom[$key]) ? date('Y-m-d', strtotime($sub_father_dom[$key])) : null,
+                                                'place_of_marriage' => !empty($sub_father_pom[$key]) ? $sub_father_pom[$key] : null,
+
+                                                'm_birth_date' => !empty($sub_mother_dob[$key]) ? date('Y-m-d', strtotime($sub_mother_dob[$key])) : null,
+                                                'm_birth_place' => !empty($sub_mother_pob[$key]) ? $sub_mother_pob[$key] : null,
+
+                                                'm_death_date' => !empty($sub_mother_dod[$key]) ? date('Y-m-d', strtotime($sub_mother_dod[$key])) : null,
+                                                'm_death_place' => !empty($sub_mother_pod[$key]) ? $sub_mother_pod[$key] : null
                                             ]
                                         );
                                     }
