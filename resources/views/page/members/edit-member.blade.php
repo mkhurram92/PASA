@@ -289,7 +289,7 @@
                                             <label class="col-md-8 form-label">Date Membership
                                                 Commenced (Membership Approval Date) </label>
                                             <div class="col-md-4">
-                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_approved }}" name="date_membership_approved">
+                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_approved }}" readonly disabled name="date_membership_approved">
                                             </div>
                                         </div>
 

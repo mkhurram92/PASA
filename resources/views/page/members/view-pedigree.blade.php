@@ -3,8 +3,22 @@
 <!-- app-content start-->
 <div class="app-content main-content">
     <div class="side-app">
-        <div class="container-fluid main-container">
-
+        <style>
+            .row{
+                margin-bottom:1rem;
+            }
+            .form-control-label{
+                font-size: 16px;
+                font-weight: 500;
+            }
+            .form-control[:read-only]{
+                font-size:16px;
+            }
+            .col-md-2{
+                margin-top: 1rem;
+            }
+        </style>
+        <div class="container-fluid main-container">\
             <!--Page header-->
             <div class="page-header">
                 <div class="page-leftheader">

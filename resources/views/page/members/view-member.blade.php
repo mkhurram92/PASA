@@ -58,8 +58,9 @@
                                 <a class="btn btn-info" href="{{ route('members.index') }}">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
-                                @if (!$member?->approved_at)
-                                <form id="curdForm" name="curdForm" class="form-horizontal " method="POST" action="{{ route('members.update', ['member' => $member?->id]) }}">
+
+                                @if (!$member?->additionalInfo?->date_membership_approved)
+                                <form id="curdForm" name="curdForm" class="form-horizontal" method="POST" action="{{ route('members.update', ['member' => $member?->id]) }}">
                                     @csrf
                                     @method('PUT')
                                     <button class="btn btn-success close-modal">Approve</button>
@@ -249,7 +250,7 @@
                                             <label class="col-md-8 form-label">Date Membership
                                                 Commenced (Membership Approval Date) </label>
                                             <div class="col-md-4">
-                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->approved_at }}" name="date_membership_approved" readonly disabled>
+                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_approved }}" name="date_membership_approved" readonly disabled>
                                             </div>
                                         </div>
 

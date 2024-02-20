@@ -99,7 +99,7 @@ class SubscribeMemberController extends Controller
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
-        
+
         return view('page.members.edit-member', compact('member', 'data'));
     }
 
@@ -171,7 +171,7 @@ class SubscribeMemberController extends Controller
             'key_holder' => (int)$request->key_holder,
             'key_held' => $request->key_held,
             'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
-            'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
+            //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
         ]);
         $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
         if ($volunteerEnable && $volunteerEnable->volunteer == 1) {
@@ -193,8 +193,11 @@ class SubscribeMemberController extends Controller
 
     public function update(Member $member)
     {
-        $member->update(['approved_at' => now()]);
-
+        AdditionalMemberInfos::updateOrCreate(
+            ['member_id' => $member->id],
+            ['date_membership_approved' => now()]
+        );
+        
         $usr = ModelsUser::create([
             "email" => $member->contact->email,
             "password" => $member->password,
@@ -205,6 +208,14 @@ class SubscribeMemberController extends Controller
         $usr->assignRole("user");
         // Mail::to($member->email)->send(new ApprovalEmail($member));
 
-        return response()->json(["status" => true, "message" => "Member Approved successfully", "redirectTo" => route("members.index")]);
+        //return response()->json(["status" => true, 
+        //"message" => "Member Approved successfully", 
+        //"redirectTo" => route("members.index")]);
+        //    "redirectTo" => route("members.view-member", ['id' => $member->id])
+        return response()->json([
+            "status" => true,
+            "message" => "Member Updated successfully",
+            "redirectTo" => route("members.view-member", ['id' => $member->id])
+        ]);
     }
 }
