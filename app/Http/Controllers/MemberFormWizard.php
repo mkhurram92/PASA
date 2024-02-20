@@ -32,7 +32,7 @@ class MemberFormWizard extends Controller
             $needToValidate = [
                 'username' => 'required|min:5|unique:members,username',
                 //'password' => 'required|confirmed|min:5',
-                'email' => 'required|email|confirmed|unique:members,email',
+                //'email' => 'required|email|confirmed|unique:members,email',
                 'title' => 'required',
                 'given_name' => 'required',
                 'family_name' => 'required',
