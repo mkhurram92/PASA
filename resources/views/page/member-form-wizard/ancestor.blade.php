@@ -48,16 +48,6 @@
                 @endforelse
             </select>
         </div>
-        <div class="col-md-4 my-2">
-            <label class="form-control-label">Birth Date</label>
-            <input class="form-control" id="ancestor_date_of_birth" name="ancestor_date_of_birth"
-                value="{{ old('ancestor_date_of_birth') }}" placeholder="Enter Date of Birth" type="date">
-        </div>
-        <div class="col-md-4 my-2">
-            <label class="form-control-label">Death Date</label>
-            <input class="form-control" id="ancestor_date_of_death" name="date_of_death"
-                value="{{ old('date_of_death') }}" placeholder="Enter Date of Death" type="date">
-        </div>
     </div>
 </section>
 
