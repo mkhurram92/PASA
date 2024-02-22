@@ -3,59 +3,53 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use app\Models\Transaction;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::all();
-        return view('page.transactions.index', compact('transactions'));
+        $transactions = Transaction::with('glCode')->get();
+        return view('page.transaction.index', compact('transactions'));
+    
     }
 
     public function create()
     {
-        return view('page.transactions.create');
+        // Add logic if needed, e.g., fetching G/L codes for dropdown
+
+        return view('page.transaction.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'description' => 'required|string',
-            'transaction_date' => 'required|date',
-        ]);
+        // Validate the request
 
         Transaction::create($request->all());
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction created successfully');
-    }
-
-    public function show(Transaction $transaction)
-    {
-        return view('page.transactions.show', compact('transaction'));
+        return redirect()->route('transactions.index')->with('success', 'Transaction created successfully!');
     }
 
     public function edit(Transaction $transaction)
     {
-        return view('page.transactions.edit', compact('transaction'));
+        // Add logic if needed, e.g., fetching G/L codes for dropdown
+
+        return view('page.transaction.edit', compact('transaction'));
     }
 
     public function update(Request $request, Transaction $transaction)
     {
-        $request->validate([
-            'description' => 'required|string',
-            'transaction_date' => 'required|date',
-        ]);
+        // Validate the request
 
         $transaction->update($request->all());
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully');
+        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully!');
     }
 
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully');
+        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully!');
     }
 }

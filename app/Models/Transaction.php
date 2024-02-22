@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    use HasFactory;
-    protected $fillable = ['description', 'transaction_date'];
+    protected $fillable = ['amount', 'gl_code_id', 'description', 'date'];
 
-    public function entries()
+    public function glCode()
     {
-        return $this->hasMany(Entry::class);
+        return $this->belongsTo(GlCode::class);
     }
 }

@@ -31,10 +31,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\MembersContactController;
 use App\Http\Controllers\AncestorInternationalTravelDetailController;
 use App\Http\Controllers\AncestorSpouseController;
-
-use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\EntryController;
+use App\Http\Controllers\GlCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -137,9 +135,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('get-ship-first-date', [ModeOfArrivalsController::class, "getShipFirstDate"])->name("get-ship-first-date");
 
     //Finance Module
-    Route::resource('accounts', AccountController::class);
     Route::resource('transactions', TransactionController::class);
-    Route::resource('entries', EntryController::class);
-    Route::get('/entries/report', [EntryController::class, 'generateReport'])->name('entries.report');
-
+    Route::resource('gl-codes', GlCodeController::class);
 });
