@@ -19,7 +19,7 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">Account List</h3>
+                     <h3 class="page-title">Entries List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
@@ -27,7 +27,7 @@
                      </a>
                  </div>
              </div>
-             <a href="{{ route('entries.create') }}" class="btn btn-success">Create Account</a>
+             <a href="{{ route('entries.create') }}" class="btn btn-success">Create Entry</a>
 
     <table class="table">
         <thead>
