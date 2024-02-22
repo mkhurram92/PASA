@@ -1,10 +1,33 @@
-{{-- resources/views/entries/index.blade.php --}}
-@extends('layouts.app')
+ <!-- External CSS -->
+ <link href="https://unpkg.com/tabulator-tables@5.1.5/dist/css/tabulator.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-@section('content')
-    <h2>Entries</h2>
-    <a href="{{ route('entries.create') }}" class="btn btn-success">Create Entry</a>
-    <a href="{{ route('entries.report') }}">Generate Report</a>
+ <!-- External JavaScript Libraries -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://unpkg.com/tabulator-tables@5.1.5/dist/js/tabulator.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+ <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+ @include('layout.header')
+ @include('layout.sidebar')
+ <!-- app-content start-->
+ <div class="app-content main-content">
+     <div class="side-app">
+         <div class="container-fluid main-container">
+             <div class="page-header">
+                 <div class="page-leftheader">
+                     <h3 class="page-title">Account List</h3>
+                 </div>
+                 <div class="card-header d-flex justify-content-between align-items-center">
+                     <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
+                         <i class="fa fa-plus-circle" style="font-size:24px;"></i>
+                     </a>
+                 </div>
+             </div>
+             <a href="{{ route('accounts.create') }}" class="btn btn-success">Create Account</a>
 
     <table class="table">
         <thead>
@@ -38,4 +61,5 @@
             @endforeach
         </tbody>
     </table>
-@endsection
+
+@include('layout.footer')
