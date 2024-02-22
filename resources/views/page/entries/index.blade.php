@@ -27,7 +27,7 @@
                      </a>
                  </div>
              </div>
-             <a href="{{ route('accounts.create') }}" class="btn btn-success">Create Account</a>
+             <a href="{{ route('entries.create') }}" class="btn btn-success">Create Account</a>
 
     <table class="table">
         <thead>
