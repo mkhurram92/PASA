@@ -157,7 +157,9 @@
 
  @section('scripts')
      <script>
-         var gl_Codes = <?php echo json_encode($glCodes); ?>;
+         var gl_Codes = @json($glCodes);
+         console.log(@json($glCodes));
+
          var table = new Tabulator("#gl-code-table", {
              data: gl_Codes,
              layout: "fitColumns",
@@ -166,16 +168,16 @@
                      field: "id"
                  },
                  {
-                    title: "Code",
-                    field: "code",
-                },
+                     title: "Code",
+                     field: "code",
+                 },
                  {
                      title: "Name",
                      field: "name"
                  },
                  {
                      title: "Parent G/L Code",
-                     field: "parent_id"
+                     field: "glCodesParent.code"
                  }
              ]
          });

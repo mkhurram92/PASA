@@ -4,52 +4,65 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\GlCode;
+use App\Models\GlCodesParent;
 
 class GlCodeController extends Controller
 {
     public function index()
     {
-        $glCodes = GlCode::with('parentCode')->get();
+        //$glCodes = GlCode::with('glCodesParent')->get();
+
+        $glCodes = GlCode::with('glCodesParent')->get();
 
         return view('page.gl_codes.index', compact('glCodes'));
     }
 
     public function create()
     {
-        // Add logic if needed, e.g., fetching parent G/L codes for dropdown
+        $parentGlCodes = GlCode::whereNull('parent_id')->get();
 
-        return view('page.gl_codes.create');
+        return view('page.gl_codes.create', compact('parentGlCodes'));
     }
 
     public function store(Request $request)
     {
-        // Validate the request
+        $maxCode = GlCode::where('parent_id', $request->input('parent_id'))->max('code');
+        $nextCode = is_numeric($maxCode) ? $maxCode + 10 : 10;
 
-        GlCode::create($request->all());
+        // Create a new GlCode instance
+        $glCode = new GlCode([
+            'code' => $nextCode,
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'parent_id' => $request->input('parent_id'),
+        ]);
 
-        return redirect()->route('gl-codes.index')->with('success', 'G/L Code created successfully!');
+        $glCode->save();
+
+        return response()->json([
+            "status" => true,
+            "message" => "GL Code Added Successfully",
+            "redirectTo" => url("gl_codes")
+        ]);
     }
 
     public function edit(GlCode $glCode)
     {
-        // Add logic if needed, e.g., fetching parent G/L codes for dropdown
 
         return view('page.gl_codes.edit', compact('glCode'));
     }
 
     public function update(Request $request, GlCode $glCode)
     {
-        // Validate the request
-
         $glCode->update($request->all());
 
-        return redirect()->route('gl-codes.index')->with('success', 'G/L Code updated successfully!');
+        return redirect()->route('gl_codes.index')->with('success', 'G/L Code updated successfully!');
     }
 
     public function destroy(GlCode $glCode)
     {
         $glCode->delete();
 
-        return redirect()->route('gl-codes.index')->with('success', 'G/L Code deleted successfully!');
+        return redirect()->route('gl_codes.index')->with('success', 'G/L Code deleted successfully!');
     }
 }

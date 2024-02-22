@@ -33,6 +33,7 @@ use App\Http\Controllers\AncestorInternationalTravelDetailController;
 use App\Http\Controllers\AncestorSpouseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\GlCodeController;
+use App\Http\Controllers\GlCodesParentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -135,6 +136,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('get-ship-first-date', [ModeOfArrivalsController::class, "getShipFirstDate"])->name("get-ship-first-date");
 
     //Finance Module
-    Route::resource('transactions', TransactionController::class);
-    Route::resource('gl-codes', GlCodeController::class);
+    Route::resource('transaction', TransactionController::class);
+    Route::resource('gl_codes', GlCodeController::class);
+    Route::resource('gl_codes_parent', GlCodesParentController::class);
+    
+    //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
+    
 });
