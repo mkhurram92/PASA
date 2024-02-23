@@ -139,7 +139,7 @@
  @section('scripts')
      <script>
          var gl_Codes = <?php echo json_encode($glCodes); ?>;
-         var glCodeName = <?php echo json_encode($glCodeName); ?>;
+
          var gl_Codes_Parent = <?php echo json_encode($formattedResults); ?>;
 
          var table = new Tabulator("#gl-code-table", {
@@ -157,10 +157,7 @@
                      field: "name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterParams: {
-                         values: glCodeName
-                     }
+                     headerFilter: "input"
                  },
                  {
                      title: "Description",
