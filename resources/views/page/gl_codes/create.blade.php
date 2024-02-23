@@ -76,11 +76,13 @@
                                                         class="text-danger"></span></label>
 
                                                 <div class="col-md-9">
-                                                    <select name="parent_id" id="parent_id" class="form-control">
-                                                        <option value="">None</option>
+                                                    <select name="parent_id" id="parent_id" class="form-control"
+                                                        required>
+                                                        <option value=""></option>
                                                         @foreach ($parentGlCodes as $parentGlCode)
                                                             <option value="{{ $parentGlCode->id }}">
-                                                                {{ $parentGlCode->name }}</option>
+                                                                {{ $parentGlCode->code }} - {{ $parentGlCode->name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -92,8 +94,7 @@
                                                         class="text-danger"></span></label>
 
                                                 <div class="col-md-9">
-                                                    <textarea name="description" id="description" class="form-control">
-                                                        </textarea>
+                                                    <textarea name="description" id="description" class="form-control"></textarea>
                                                 </div>
                                             </div>
                                         </div>

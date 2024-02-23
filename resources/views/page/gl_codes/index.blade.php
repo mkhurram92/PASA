@@ -137,45 +137,52 @@
  </div>
 
  @section('scripts')
-     <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
-
-     <link rel="stylesheet" href="{{ asset('node_modules/sweetalert2/dist/sweetalert2.min.css') }}">
-
      <script>
          var gl_Codes = <?php echo json_encode($glCodes); ?>;
+         var glCodeName = <?php echo json_encode($glCodeName); ?>;
+         var gl_Codes_Parent = <?php echo json_encode($formattedResults); ?>;
+
          var table = new Tabulator("#gl-code-table", {
              data: gl_Codes,
              layout: "fitColumns",
              columns: [{
-                     title: "ID",
-                     field: "id"
-                 },
-                 {
                      title: "Code",
                      field: "code",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "input"
                  },
                  {
                      title: "Name",
-                     field: "name"
+                     field: "name",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select",
+                     headerFilterParams: {
+                         values: glCodeName
+                     }
+                 },
+                 {
+                     title: "Description",
+                     field: "description",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "input"
                  },
                  {
                      title: "Parent G/L Code",
-                     field: "parent_id"
+                     field: "parent_id",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select",
+                     headerFilterParams: {
+                         values: gl_Codes_Parent
+                     }
                  }
-             ]
-         });
-
-         document.addEventListener('DOMContentLoaded', function() {
-             // Add a click event listener to the "Add a GL Code" button
-             document.getElementById('add-record').addEventListener('click', function() {
-                 // Display a SweetAlert when the button is clicked
-                 Swal.fire({
-                     title: 'GL Code Added!',
-                     text: 'Your GL Code has been successfully added.',
-                     icon: 'success',
-                     confirmButtonText: 'OK',
-                 });
-             });
+             ],
+             pagination: 'local',
+             paginationSize: 20,
+             placeholder: "No Data Available"
          });
      </script>
  @endsection

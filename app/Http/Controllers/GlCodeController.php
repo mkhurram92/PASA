@@ -5,27 +5,58 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GlCode;
 use App\Models\GlCodesParent;
+use Illuminate\Support\Facades\Validator;
 
 class GlCodeController extends Controller
 {
     public function index()
     {
-        //$glCodes = GlCode::with('glCodesParent')->get();
+        $glCodesParents = GlCodesParent::orderBy('id', 'asc')->get(['code', 'name']);
+
+        $formattedResults = $glCodesParents->map(function ($glCodeParent) {
+            return $glCodeParent->code . ' - ' . $glCodeParent->name;
+        })->toArray();
+
+        array_unshift($formattedResults, '');
+
+        $glCodeName = GlCode::orderBy('id', 'asc')->pluck('name')->toArray();
+        array_unshift($glCodeName, '');
 
         $glCodes = GlCode::with('glCodesParent')->get();
 
-        return view('page.gl_codes.index', compact('glCodes'));
+        return view('page.gl_codes.index', compact('glCodes', 'formattedResults', 'glCodeName'));
     }
 
     public function create()
     {
-        $parentGlCodes = GlCode::whereNull('parent_id')->get();
+        $parentGlCodes = GlCodesParent::OrderBy('code')->get();
 
         return view('page.gl_codes.create', compact('parentGlCodes'));
     }
 
     public function store(Request $request)
     {
+        $rules = [
+            'name' => 'required|string|max:255',
+            'parent_id' => 'required|exists:gl_codes,id',
+        ];
+
+        // Custom validation messages
+        $messages = [
+            'parent_id.exists' => 'The selected parent code is invalid.',
+        ];
+
+        // Validate the request
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->first(),
+            ]);
+        }
+
         $maxCode = GlCode::where('parent_id', $request->input('parent_id'))->max('code');
         $nextCode = is_numeric($maxCode) ? $maxCode + 10 : 10;
 

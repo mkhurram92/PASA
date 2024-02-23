@@ -195,7 +195,8 @@
                                                                 class="text-danger"></span></label>
 
                                                         <div class="col-md-8">
-                                                            <textarea class="form-control" id="evidence_of_arrival" name="evidence_of_arrival" rows="6" maxlength="300"></textarea>
+                                                            <textarea class="form-control" id="evidence_of_arrival" 
+                                                            name="evidence_of_arrival" rows="6" maxlength="300"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
