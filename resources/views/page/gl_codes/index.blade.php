@@ -107,25 +107,6 @@
              </div>
              <div class="row">
                  <div class="col-md-12 p-12">
-                     @if ($errors->any() || session('error') || session('success'))
-                         <div class="card">
-                             <div class="card-body">
-                                 @if ($errors->any())
-                                     <div class="alert alert-danger">
-                                         {{ $errors->first() }}
-                                     </div>
-                                 @elseif(session('error'))
-                                     <div class="alert alert-danger">
-                                         {{ session('error') }}
-                                     </div>
-                                 @elseif(session('success'))
-                                     <div class="alert alert-success">
-                                         {{ session('success') }}
-                                     </div>
-                                 @endif
-                             </div>
-                         </div>
-                     @endif
                      <div class="card">
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
@@ -156,6 +137,10 @@
  </div>
 
  @section('scripts')
+     <script src="{{ asset('node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+
+     <link rel="stylesheet" href="{{ asset('node_modules/sweetalert2/dist/sweetalert2.min.css') }}">
+
      <script>
          var gl_Codes = <?php echo json_encode($glCodes); ?>;
          var table = new Tabulator("#gl-code-table", {
@@ -166,9 +151,9 @@
                      field: "id"
                  },
                  {
-                    title: "Code",
-                    field: "code",
-                },
+                     title: "Code",
+                     field: "code",
+                 },
                  {
                      title: "Name",
                      field: "name"
@@ -178,6 +163,19 @@
                      field: "parent_id"
                  }
              ]
+         });
+
+         document.addEventListener('DOMContentLoaded', function() {
+             // Add a click event listener to the "Add a GL Code" button
+             document.getElementById('add-record').addEventListener('click', function() {
+                 // Display a SweetAlert when the button is clicked
+                 Swal.fire({
+                     title: 'GL Code Added!',
+                     text: 'Your GL Code has been successfully added.',
+                     icon: 'success',
+                     confirmButtonText: 'OK',
+                 });
+             });
          });
      </script>
  @endsection

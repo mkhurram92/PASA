@@ -46,26 +46,15 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                {{ $errors->first() }}
-                            </div>
-                        @elseif(session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @elseif(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        <form class="form-horizontal" action="{{ route('gl_codes.store') }}" method="POST">
+                        <form class="form-horizontal" id="gl_save_form" action="{{ route('gl_codes.store') }}"
+                            method="POST">
+                            @csrf
                             <div class="card-header justify-content-between">
                                 <h3 class="card-title">Create G/L Code</h3>
                                 <div class="text-right">
-                                    <input type="submit" class="btn btn-primary btn-block"
-                                        data-bs-effect="effect-slide-in-right" value="Save G/L Code">
+                                    <button type="button" class="btn btn-primary btn-block" id="submitBtn">
+                                        Save G/L Code
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-body p-0">
@@ -118,5 +107,92 @@
         </div>
     </div>
 </div>
+@section('scripts')
+    <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
-@include('layout.footer')
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Submit the form using AJAX
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('gl_codes.store') }}',
+                data: $('#gl_save_form').serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    // Check if the submission was successful
+                    if (response.status) {
+                        // Show SweetAlert for success
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            timer: 10000,
+                            timerProgressBar: true,
+                        }).then((result) => {
+                            // Redirect if needed
+                            if (response.redirectTo) {
+                                window.location.href = response.redirectTo;
+                            }
+                        });
+                    } else {
+                        // Show SweetAlert for failure with detailed error message
+                        Swal.fire({
+                            title: 'Error!',
+                            text: response.message,
+                            icon: 'error',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            //timer: 10000,
+                            //timerProgressBar: true,
+                        }).then(() => {
+                            // Check if there is a specific exception message
+                            let exceptionMessage = "";
+                            if (response.exception) {
+                                exceptionMessage = response.exception;
+                            }
+
+                            // Show additional alert with exception (if available)
+                            if (exceptionMessage) {
+                                Swal.fire({
+                                    title: 'Exception Details',
+                                    html: `<p>${exceptionMessage}</p>`,
+                                    icon: 'error',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                });
+                            }
+                        });
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle AJAX error and get detailed error message
+                    let errorMessage = "An error occurred while processing your request.";
+
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    } else if (xhr.statusText) {
+                        errorMessage = xhr.statusText;
+                    }
+
+                    // Show SweetAlert for AJAX error with specific error message
+                    Swal.fire({
+                        title: 'Error!',
+                        text: errorMessage,
+                        icon: 'error',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        //timer: 10000,
+                        //timerProgressBar: true,
+                    });
+                }
+            });
+        });
+    </script>
+
+    @include('layout.footer')

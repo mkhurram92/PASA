@@ -11,11 +11,14 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
-        "axios": "^0.25",
+        "axios": "^1.6.7",
         "bootstrap": "^5.2.3",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "sass": "^1.56.1"
+    },
+    "dependencies": {
+        "sweetalert2": "^11.6.13"
     }
 }
