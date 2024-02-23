@@ -22,9 +22,11 @@ class GlCodeController extends Controller
         $glCodeName = GlCode::orderBy('id', 'asc')->pluck('name')->toArray();
         array_unshift($glCodeName, '');
 
+        $glCodeSubCode = GlCode::selectRaw('CONCAT(parent_id, " - ", code) as parent_code')->get();
+        
         $glCodes = GlCode::with('glCodesParent')->get();
 
-        return view('page.gl_codes.index', compact('glCodes', 'formattedResults', 'glCodeName'));
+        return view('page.gl_codes.index', compact('glCodes', 'formattedResults', 'glCodeName', 'glCodeSubCode'));
     }
 
     public function create()
@@ -37,7 +39,7 @@ class GlCodeController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255', // Adjust the max length as needed
             'parent_id' => 'required|exists:gl_codes,id',
         ];
 

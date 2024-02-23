@@ -139,21 +139,50 @@
  @section('scripts')
      <script>
          var gl_Codes = <?php echo json_encode($glCodes); ?>;
-
          var gl_Codes_Parent = <?php echo json_encode($formattedResults); ?>;
 
          var table = new Tabulator("#gl-code-table", {
              data: gl_Codes,
              layout: "fitColumns",
              columns: [{
-                     title: "Code",
+                     title: "Parent G/L Code",
+                     field: "parent_id",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select",
+                     headerFilterParams: {
+                         values: Object.values(gl_Codes_Parent)
+                     },
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var parentId = cell.getValue();
+
+                         var parentName = gl_Codes_Parent[parentId] || "";
+
+                         return parentName;
+                     }
+                 },
+                 {
+                     title: "Sub G/L Code",
                      field: "code",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "input"
+                     headerFilter: "input",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var parentId = cell.getRow().getData().parent_id;
+                         var subCode = cell.getValue();
+
+                         var parentName = gl_Codes_Parent[parentId] || "";
+                         var concatenatedCode = parentName + " - " + subCode;
+
+                         // Extracting only the necessary parts (1000 - 10)
+                         var displayCode = concatenatedCode.split(' - ')[0] + '-' + subCode;
+
+                         return displayCode;
+                     }
                  },
+
                  {
-                     title: "Name",
+                     title: "Sub G/L Name",
                      field: "name",
                      hozAlign: "center",
                      vertAlign: "middle",
@@ -165,16 +194,6 @@
                      hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input"
-                 },
-                 {
-                     title: "Parent G/L Code",
-                     field: "parent_id",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterParams: {
-                         values: gl_Codes_Parent
-                     }
                  }
              ],
              pagination: 'local',
