@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreMemberRequest;
 
 class SubscribeMemberController extends Controller
 {
@@ -59,7 +60,7 @@ class SubscribeMemberController extends Controller
         return view('page.members.index', compact('members', 'membershipTypeOptions', 'membershipStatusOptions'));
     }
 
-    public function store(Request $request)
+    public function store(StoreMemberRequest $request)
     {
         try {
             $member = Member::create([
@@ -75,6 +76,15 @@ class SubscribeMemberController extends Controller
                 'member_type_id' => $request->member_type_id,
                 'member_status_id' => $request->member_status_id,
                 'journal' => $request->journal,
+            ]);
+
+            $member->address()->updateOrCreate([], [
+                'unit_no' => $request->unit_no,
+                'number_street' => $request->number_street,
+                'suburb' => $request->suburb,
+                'state_id' => $request->state,
+                'country_id' => 14,
+                'post_code' => $request->post_code,
             ]);
 
             return response()->json([

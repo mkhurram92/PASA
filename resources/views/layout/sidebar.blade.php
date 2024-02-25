@@ -78,7 +78,7 @@
                 @canany(['membership-list'])
                     <li class="slide @if (Route::is('gl_codes.create', 'gl_codes.index')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
-                            <i class="fa fa-user fa-2x mx-3"></i>
+                            <i class="fa fa-bank fa-2x mx-3"></i>
                             <span class="side-menu__label">Finance</span><i class="angle fe fe-chevron-right"></i></a>
                         <ul class="slide-menu @if (Route::is('gl_codes.create', 'gl_codes.index')) open @endif">
                             @can('membership-list')
@@ -93,11 +93,11 @@
                     </li>
                 @endcanany
                 @canany(['membership-list'])
-                    <li class="slide @if (Route::is('ancestor-data.create', 'ancestor-data.index')) is-expanded @endif">
+                    <li class="slide @if (Route::is('members.create', 'members.index')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-user fa-2x mx-3"></i>
                             <span class="side-menu__label">Memberships</span><i class="angle fe fe-chevron-right"></i></a>
-                        <ul class="slide-menu @if (Route::is('ancestor-data.create', 'ancestor-data.index')) open @endif">
+                        <ul class="slide-menu @if (Route::is('members.create', 'members.index')) open @endif">
                             @can('membership-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('members.index')) active @endif"

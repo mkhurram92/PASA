@@ -43,20 +43,6 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                {{ $errors->first() }}
-                            </div>
-                        @elseif(session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @elseif(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
                         <form class="form-horizontal" id="member_save_form" action="{{ route('members.store') }}"
                             method="POST">
                             <div class="card-header justify-content-between">
