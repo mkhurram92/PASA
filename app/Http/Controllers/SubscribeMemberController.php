@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
-
+use Illuminate\Support\Facades\DB;
 
 class SubscribeMemberController extends Controller
 {
@@ -34,6 +34,17 @@ class SubscribeMemberController extends Controller
     }
     public function create()
     {
+        //$member = Member::find($id);
+        $data['titles'] = Title::all();
+        //$data['state_name'] = Helper::getState($member?->address?->state);
+        $data['states'] = States::all();
+        $data['membership_status'] = MemberShipStatus::all();
+        $data['membership_types'] = MembershipType::all();
+        //$data['gender_name'] = Helper::getGender();
+        //$data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
+        //$data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
+
+        return view('page.members.create', compact(('data')));
     }
 
     public function index(Request $request)
@@ -48,15 +59,34 @@ class SubscribeMemberController extends Controller
         return view('page.members.index', compact('members', 'membershipTypeOptions', 'membershipStatusOptions'));
     }
 
-    public function store(MemberRequest $request)
+    public function store(Request $request)
     {
         try {
-            $member = Member::create($request->validated());
-            return response()->json(["status" => true, "message" => "Member created"]);
+            $member = Member::create([
+                'title_id' => $request->title,
+                'title_detail' => $request->title_detail,
+                'family_name' => $request->family_name,
+                'given_name' => $request->given_name,
+                'preferred_name' => $request->preferred_name,
+                'initials' => $request->initials,
+                'post_nominal' => $request->post_nominal ?? null,
+                'date_of_birth' => !empty($request->date_of_birth) ? date('Y-m-d', strtotime($request->date_of_birth)) : null,
+                'username' => $request->username,
+                'member_type_id' => $request->member_type_id,
+                'member_status_id' => $request->member_status_id,
+                'journal' => $request->journal,
+            ]);
+
+            return response()->json([
+                "status" => true,
+                "message" => "Member Created Successfully",
+                "redirectTo" => route("members.view-member", ['id' => $member->id])
+            ]);
         } catch (\Exception $e) {
-            return response()->json(["status" => false, "message" => "Unable to Created Member"]);
+            return response()->json(["status" => false, "message" => $e->getMessage()]);
         }
     }
+
     public function subscribe(MemberRequest $request)
     {
         Member::create($request->validated());
@@ -191,31 +221,66 @@ class SubscribeMemberController extends Controller
         ]);
     }
 
+    //public function update(Member $member)
+    //{
+    //    AdditionalMemberInfos::updateOrCreate(
+    //        ['member_id' => $member->id],
+    //        ['date_membership_approved' => now()]
+    //    );
+
+    //    $usr = ModelsUser::create([
+    //        "email" => $member->contact->email,
+    //        "password" => $member->password,
+    //        "name" => $member->given_name . " " . $member->family_name
+    //    ]);
+    //$get_subscription = Subscription::where('user_id', $member->id)->first();
+    //$get_subscription->update(['created_by' => $usr->id]);
+    //    $usr->assignRole("user");
+    // Mail::to($member->email)->send(new ApprovalEmail($member));
+
+    //    return response()->json([
+    //        "status" => true,
+    //        "message" => "Member Updated successfully",
+    //        "redirectTo" => route("members.view-member", ['id' => $member->id])
+    //    ]);
+
+    //}
+
     public function update(Member $member)
     {
-        AdditionalMemberInfos::updateOrCreate(
-            ['member_id' => $member->id],
-            ['date_membership_approved' => now()]
-        );
-        
-        $usr = ModelsUser::create([
-            "email" => $member->contact->email,
-            "password" => $member->password,
-            "name" => $member->given_name . " " . $member->family_name
-        ]);
-        $get_subscription = Subscription::where('user_id', $member->id)->first();
-        $get_subscription->update(['created_by' => $usr->id]);
-        $usr->assignRole("user");
-        // Mail::to($member->email)->send(new ApprovalEmail($member));
+        try {
+            DB::beginTransaction();
 
-        //return response()->json(["status" => true, 
-        //"message" => "Member Approved successfully", 
-        //"redirectTo" => route("members.index")]);
-        //    "redirectTo" => route("members.view-member", ['id' => $member->id])
-        return response()->json([
-            "status" => true,
-            "message" => "Member Updated successfully",
-            "redirectTo" => route("members.view-member", ['id' => $member->id])
-        ]);
+            AdditionalMemberInfos::updateOrCreate(
+                ['member_id' => $member->id],
+                ['date_membership_approved' => now()]
+            );
+
+            $usr = ModelsUser::create([
+                "email" => $member->contact->email,
+                "password" => $member->password,
+                "name" => $member->given_name . " " . $member->family_name
+            ]);
+
+            $usr->assignRole("user");
+            // Mail::to($member->email)->send(new ApprovalEmail($member));
+
+            DB::commit();
+
+            return response()->json([
+                "status" => true,
+                "message" => "Member Updated successfully",
+                "redirectTo" => route("members.view-member", ['id' => $member->id])
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            // Handle the exception as needed
+            return response()->json([
+                "status" => false,
+                "message" => "Error updating member",
+                "error" => $e->getMessage(),
+            ]);
+        }
     }
 }

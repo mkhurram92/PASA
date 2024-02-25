@@ -106,11 +106,21 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('membership-create')
+                            {{-- @can('membership-create')
                                 <li class="sub-slide">
                                     {{-- @if (Route::is('ancestor-data.create')) active @endif --}}
-                                    {{-- {{ route('ancestor-data.create') }} --}}
+                                    {{-- {{ route('ancestor-data.create') }}
                                     <a class="sub-side-menu__item mx-5 " data-bs-toggle="sub-slide" href="">
+                                        <span class="sub-side-menu__label">Add</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            --}}
+
+                            @can('membership-create')
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item mx-5 @if (Route::is('members.create')) active @endif"
+                                        data-bs-toggle="sub-slide" href="{{ route('members.create') }}">
                                         <span class="sub-side-menu__label">Add</span>
                                     </a>
                                 </li>
