@@ -37,7 +37,7 @@ class StoreMemberRequest extends FormRequest
             "username" => 'required|unique:members,username',
             "phone" => 'nullable',
             "mobile" => 'nullable',
-            "email" => 'required',
+            "email" => 'required|email|unique:members_contacts,email',
         ];
     }
 
