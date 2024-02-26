@@ -220,7 +220,7 @@
                                                     *</span></label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    placeholder="Email Address"  name="email">
+                                                    placeholder="Email Address" id="email" name="email">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

@@ -78,7 +78,7 @@ class SubscribeMemberController extends Controller
                 'journal' => $request->journal,
             ]);
 
-            $member->address()->updateOrCreate([], [
+            $member->address()->updateOrCreate(['member_id' => $member->id], [
                 'unit_no' => $request->unit_no,
                 'number_street' => $request->number_street,
                 'suburb' => $request->suburb,
@@ -86,7 +86,38 @@ class SubscribeMemberController extends Controller
                 'country_id' => 14,
                 'post_code' => $request->post_code,
             ]);
+            $member->contact()->updateOrCreate(['member_id' => $member->id], [
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+                'phone' => $request->phone,
+            ]);
 
+            AdditionalMemberInfos::updateOrCreate(['member_id' => $member->id], [
+                'member_id' => $member->id,
+                'membership_number' => $request->membership_number,
+                'general_notes' => $request->general_notes,
+                'end_status_notes' => $request->end_status_notes,
+                'partner_member' => (int)$request->partner_member,
+                'volunteer' => (int)$request->volunteer,
+                'volunteer_skills_working' => $request->volunteer_skills_working,
+                'registration_form_received' => (int)$request->registration_form_received,
+                'signed_agreement' => (int)$request->signed_agreement,
+                'key_holder' => (int)$request->key_holder,
+                'key_held' => $request->key_held,
+                'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
+                //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
+            ]);
+            $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
+            if ($volunteerEnable && $volunteerEnable->volunteer == 1) {
+                VolunteerDetail::updateOrCreate(['member_id' => $member->id], [
+                    'member_id' => $member->id,
+                    'experience' => $request->experience,
+                    'health_issues' => $request->health_issues,
+                    'contact' => $request->contact,
+                    'skills' => $request->skills,
+                    'availability' => $request->availability
+                ]);
+            }
             return response()->json([
                 "status" => true,
                 "message" => "Member Created Successfully",
