@@ -47,27 +47,31 @@
                             </div>
                         @endif
 
-                        @if (count($member->pedigree) > 0)
-                            <div class="card-header justify-content-between">
-                                <h3 class="card-title">Pioneer Member's Pedigree Chart</h3>
-                                <div>
-                                    <a class="btn btn-danger" href="{{ route('members.index') }}">
-                                        <i class="fa fa-home" style="font-size:20px;"> Home</i>
-                                    </a>
+                        <div class="card-header justify-content-between">
+                            <h3 class="card-title">Pioneer Member's Pedigree Chart</h3>
+                            <div>
+                                <a class="btn btn-danger" href="{{ route('members.index') }}">
+                                    <i class="fa fa-home" style="font-size:20px;"> Home</i>
+                                </a>
+                                @if (count($member->pedigree) > 0)
                                     <a class="btn btn-success mr-2" href="">
                                         <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
                                     </a>
-                                    <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
-                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                    </a>
-                                </div>
+                                @endif
+                                <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
+                                    <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                </a>
                             </div>
+                        </div>
+                        @if (count($member->pedigree) > 0)
                             <div class="card-body p-0">
                                 <div class="card-body">
                                     @foreach ($member->pedigree as $pedigree)
                                         <div class="row mb-3">
                                             <div class="col-md-4">
-                                                <a class="form-control-label" style="color: #022ff8; font-size:16px">Generation x {{ $pedigree->pedigree_level + 1 }}</a>
+                                                <a class="form-control-label"
+                                                    style="color: #022ff8; font-size:16px">Generation x
+                                                    {{ $pedigree->pedigree_level + 1 }}</a>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -132,8 +136,10 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Marriage Place</label>
-                                                <input class="form-control" type="text" placeholder="Marriage Place"
-                                                    value="{{ $pedigree->place_of_marriage ?? '' }}" readonly disabled>
+                                                <input class="form-control" type="text"
+                                                    placeholder="Marriage Place"
+                                                    value="{{ $pedigree->place_of_marriage ?? '' }}" readonly
+                                                    disabled>
                                             </div>
                                         </div>
                                         <br>
@@ -141,19 +147,18 @@
                                     @endforeach
                                 </div>
                             </div>
+                        @else
+                            <div class="card">
+                                <div class="card-header justify-content-between">
+                                    <h3 class="card-title">No Pedigrees Available</h3>
+                                </div>
+                            </div>
+                        @endif
                     </div>
-                @else
-                    <div class="card">
-                        <div class="card-header justify-content-between">
-                            <h3 class="card-title">No Pedigrees Available</h3>
-                        </div>
-                    </div>
-                    @endif
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <!-- MODAL EFFECTS -->

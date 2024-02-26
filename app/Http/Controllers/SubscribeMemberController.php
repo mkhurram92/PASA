@@ -182,12 +182,19 @@ class SubscribeMemberController extends Controller
             'family_name' => 'required',
             'given_name' => 'required',
             'preferred_name' => 'required',
-            'initials' => 'required',
-            'date_of_birth' => 'required',
-            'username' => 'required|min:5',
+            'date_of_birth' => 'nullable',
+
+            'number_street' => 'required',
+            'suburb' => 'required',
+            'state' => 'required',
+            'country' => 'required',
+            'post_code' => 'required',
+
+            "phone" => 'nullable',
+            "mobile" => 'nullable',
+            //"email" => 'required|email|unique:members_contacts,email',,
             'journal' => 'required',
-            'state'   => 'required',
-            'country' => 'required'
+
         ];
 
         $validator = Validator::make($request->all(), $needToValidate);
@@ -205,7 +212,7 @@ class SubscribeMemberController extends Controller
         $member->initials = $request->initials;
         $member->post_nominal = $request->post_nominal ?? NULL;
         $member->date_of_birth = !empty($request->date_of_birth) ? date('Y-m-d', strtotime($request->date_of_birth)) : null;
-        $member->username = $request->username;
+        //$member->username = $request->username;
         $member->member_type_id = $request->member_type_id;
         $member->member_status_id = $request->member_status_id;
         $member->journal = $request->journal;

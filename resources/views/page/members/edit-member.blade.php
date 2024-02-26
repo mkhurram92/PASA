@@ -131,7 +131,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Initials <span class="tx-danger">*</span></label>
+                                                <label class="col-md-4 form-label">Initials</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text" placeholder="Enter Initials" value="{{ $member?->initials }}" name="initials">
                                                 </div>
@@ -222,7 +222,7 @@
                                             <label class="col-md-4 form-label">Email Address<span class="tx-danger">
                                                     *</span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Email Address" value="{{ $member?->contact?->email }}" name="email">
+                                                <input class="form-control" type="text" placeholder="Email Address" value="{{ $member?->contact?->email }}" name="email" disabled readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -251,7 +251,7 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Username <span class="tx-danger">*</span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="User Name" value="{{ $member?->username }}" name="username">
+                                                <input class="form-control" type="text" placeholder="User Name" value="{{ $member?->username }}" name="username" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

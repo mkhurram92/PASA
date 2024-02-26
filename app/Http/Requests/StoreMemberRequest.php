@@ -38,6 +38,7 @@ class StoreMemberRequest extends FormRequest
             "phone" => 'nullable',
             "mobile" => 'nullable',
             "email" => 'required|email|unique:members_contacts,email',
+            'journal' => 'required',
         ];
     }
 
@@ -56,6 +57,7 @@ class StoreMemberRequest extends FormRequest
             'country.required' => 'The country field is required.',
             'post_code.required' => 'The post code field is required.',
             'email.required' => 'The email field is required.',
+            'journal' => 'Journal delivery method is required',
         ];
     }
 }
