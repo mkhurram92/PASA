@@ -45,6 +45,8 @@ class GlCodeController extends Controller
 
         // Custom validation messages
         $messages = [
+            'name.required' => 'Code name field is required',
+            'parent_id.required' => 'Parent code field is required',
             'parent_id.exists' => 'The selected parent code is invalid.',
         ];
 
