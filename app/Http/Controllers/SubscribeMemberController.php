@@ -35,15 +35,10 @@ class SubscribeMemberController extends Controller
     }
     public function create()
     {
-        //$member = Member::find($id);
         $data['titles'] = Title::all();
-        //$data['state_name'] = Helper::getState($member?->address?->state);
         $data['states'] = States::all();
         $data['membership_status'] = MemberShipStatus::all();
         $data['membership_types'] = MembershipType::all();
-        //$data['gender_name'] = Helper::getGender();
-        //$data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
-        //$data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
 
         return view('page.members.create', compact(('data')));
     }
@@ -178,7 +173,6 @@ class SubscribeMemberController extends Controller
     {
         $needToValidate = [
             'title' => 'required',
-            //'title_detail' => 'required',
             'family_name' => 'required',
             'given_name' => 'required',
             'preferred_name' => 'required',
@@ -190,9 +184,8 @@ class SubscribeMemberController extends Controller
             'country' => 'required',
             'post_code' => 'required',
 
-            "phone" => 'nullable',
-            "mobile" => 'nullable',
-            //"email" => 'required|email|unique:members_contacts,email',,
+            'phone' => 'nullable',
+            'mobile' => 'nullable',
             'journal' => 'required',
 
         ];
@@ -230,7 +223,7 @@ class SubscribeMemberController extends Controller
 
 
         $member->contact()->updateOrCreate([], [
-            'email' => $request->email,
+            ///'email' => $request->email,
             'mobile' => $request->mobile,
             'phone' => $request->phone,
         ]);
@@ -248,7 +241,7 @@ class SubscribeMemberController extends Controller
             'signed_agreement' => (int)$request->signed_agreement,
             'key_holder' => (int)$request->key_holder,
             'key_held' => $request->key_held,
-            'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
+            //'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
             //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
         ]);
         $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
@@ -299,9 +292,18 @@ class SubscribeMemberController extends Controller
         try {
             DB::beginTransaction();
 
+            //AdditionalMemberInfos::updateOrCreate(
+            //    ['member_id' => $member->id],
+            //    ['date_membership_approved' => now()],
+            //    ['date_membership_end' => now()],
+            //);
+
             AdditionalMemberInfos::updateOrCreate(
                 ['member_id' => $member->id],
-                ['date_membership_approved' => now()]
+                [
+                    'date_membership_approved' => now(),
+                    'date_membership_end' => now()->addYear(),
+                ]
             );
 
             $usr = ModelsUser::create([

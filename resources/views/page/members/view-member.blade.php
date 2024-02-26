@@ -75,25 +75,25 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Title</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Country" value="{{ $member?->title?->name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->title?->name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Family Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Family Name" value="{{ $member?->family_name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->family_name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Given Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Given Name" value="{{ $member?->given_name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->given_name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Preferred Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Preferred Name" value="{{ $member?->preferred_name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->preferred_name }}" readonly disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -101,19 +101,19 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Initials</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Enter Initials" value="{{ $member?->initials }}" name="initials" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->initials }}" name="initials" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Post Nominal</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Enter Post Nominal" value="{{ $member?->post_nominal }}" name="post_nominal" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->post_nominal }}" name="post_nominal" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Birth Date</label>
                                             <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text" value="{{ $member?->date_of_birth }}" readonly disabled>
+                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->date_of_birth }}" readonly disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -130,13 +130,13 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="" value="{{ $member?->address?->unit_no }}" name="initials" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->address?->unit_no }}" name="unit_no" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Street Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Enter Post Nominal" value="{{ $member?->address?->number_street }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->address?->number_street }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -148,19 +148,19 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">State / County</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Suburb" value="{{ $member?->address?->state?->name }}" readonly disabled>
+                                                <input type="text" class="form-control" value="{{ $member?->address?->state?->name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Country</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Country" value="{{ $member?->address?->country?->name }}" readonly disabled>
+                                                <input type="text" class="form-control" value="{{ $member?->address?->country?->name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Post Code</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Post Code" value="{{ $member?->address?->post_code }}" readonly disabled>
+                                                <input type="text" class="form-control" value="{{ $member?->address?->post_code }}" readonly disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -168,13 +168,13 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Home Phone</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Enter Initials" value="{{ $member?->contact?->phone }}" name="initials" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->contact?->phone }}" name="phone" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Mobile Phone</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Mobile" value="{{ $member?->contact?->mobile }}" readonly disabled>
+                                                <input type="text" class="form-control" value="{{ $member?->contact?->mobile }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -187,7 +187,9 @@
                                             <label class="col-md-4 form-label">General
                                                 Notes</label>
                                             <div class="col-md-8">
-                                                <textarea class="form-control" name="general_notes" rows="5" placeholder="General Notes" readonly disabled>{{ $member?->additionalInfo?->general_notes }}</textarea>
+                                                <textarea class="form-control" name="general_notes" rows="5" readonly disabled>
+                                                    {{ $member?->additionalInfo?->general_notes }}
+                                                </textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -205,14 +207,15 @@
                                             <label class="col-md-4 form-label">Membership
                                                 Number</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Membership Number" value="{{ $member?->additionalInfo?->membership_number }}" name="membership_number" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->additionalInfo?->membership_number }}" 
+                                                name="membership_number" readonly disabled>
                                             </div>
                                         </div>
 
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">User Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="User name" value="{{ $member?->username }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->username }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -265,7 +268,7 @@
                                             <label class="col-md-4 form-label">End Status
                                                 Notes</label>
                                             <div class="col-md-8">
-                                                <textarea class="form-control" name="end_status_notes" rows="3" placeholder="" readonly disabled>{{ $member?->additionalInfo?->end_status_notes }}</textarea>
+                                                <textarea class="form-control" name="end_status_notes" rows="3" readonly disabled>{{ $member?->additionalInfo?->end_status_notes }}</textarea>
                                             </div>
                                         </div>
 
@@ -280,7 +283,7 @@
                                         <div class="mb-3 row key_held">
                                             <label class="col-md-4 form-label">Key Held</label>
                                             <div class="col-md-8">
-                                                <textarea class="form-control" name="key_held" readonly disabled rows="3" placeholder="Key Held">{{ $member?->additionalInfo?->key_held }}</textarea>
+                                                <textarea class="form-control" name="key_held" readonly disabled rows="3">{{ $member?->additionalInfo?->key_held }}</textarea>
                                             </div>
                                         </div>
                                         @endif
@@ -317,40 +320,40 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Experience</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->experience }}" name="experience" readonly disabled>
+                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->experience }}" name="experience" readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Health
                                                     Issues</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->health_issues }}" name="health_issues" readonly disabled>
+                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->health_issues }}" name="health_issues" readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Contact
                                                     received</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->contact }}" name="contact" readonly disabled>
+                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->contact }}" name="contact" readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Skills</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->skills }}" name="skills" readonly disabled>
+                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->skills }}" name="skills" readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Availability</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->availability }}" name="availability" readonly disabled>
+                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->availability }}" name="availability" readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Volunteer Skills and
                                                     Working Preferences</label>
                                                 <div class="col-md-8">
-                                                    <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3" placeholder="">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
+                                                    <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3" >{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
                                                 </div>
                                             </div>
                                         </div>

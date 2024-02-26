@@ -297,7 +297,7 @@
                                             <label class="col-md-4 form-label">Date Membership Ended
                                             </label>
                                             <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_end }}" name="date_membership_end">
+                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_end }}" disabled readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

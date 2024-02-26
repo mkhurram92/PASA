@@ -71,7 +71,7 @@
                                                                 {{ $title?->name }}
                                                             </option>
                                                         @empty
-                                                            <option >Select Title</option>
+                                                            <option>Select Title</option>
                                                         @endforelse
                                                         <option value="Other">Other.</option>
                                                     </select>
@@ -86,8 +86,8 @@
                                                 <label class="col-md-4 form-label">Family Name <span
                                                         class="tx-danger">*</span></label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Family Name" id="family_name" 
-                                                        name="family_name" >
+                                                    <input class="form-control" type="text" placeholder="Family Name"
+                                                        id="family_name" name="family_name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -103,8 +103,8 @@
                                                         class="tx-danger">*</span></label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Preferred Name" 
-                                                        name="preferred_name" id="preferred_name">
+                                                        placeholder="Preferred Name" name="preferred_name"
+                                                        id="preferred_name">
                                                 </div>
                                             </div>
                                         </div>
@@ -113,22 +113,21 @@
                                                 <label class="col-md-4 form-label">Initials</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Initials"  name="initials">
+                                                        placeholder="Enter Initials" name="initials">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Post Nominal</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Post Nominal" 
-                                                        name="post_nominal">
+                                                        placeholder="Enter Post Nominal" name="post_nominal">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Birth Date</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control fc-datepicker" type="text"
-                                                         name="date_of_birth">
+                                                        name="date_of_birth">
                                                 </div>
                                             </div>
                                         </div>
@@ -146,7 +145,7 @@
                                                     class="tx-danger">*</span></label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    placeholder="Unit/Apartment No."  name="unit_no">
+                                                    placeholder="Unit/Apartment No." name="unit_no">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -154,7 +153,7 @@
                                                     class="tx-danger">*</span></label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="PO Box"
-                                                     name="number_street">
+                                                    name="number_street">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -162,7 +161,7 @@
                                                     class="tx-danger">*</span></label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Suburb"
-                                                     name="suburb">
+                                                    name="suburb">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -176,7 +175,7 @@
                                                             {{ $state?->name }}
                                                         </option>
                                                     @empty
-                                                        <option >Select States</option>
+                                                        <option>Select States</option>
                                                     @endforelse
                                                 </select>
                                             </div>
@@ -196,7 +195,7 @@
                                                     class="tx-danger">*</span></label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Post Code"
-                                                     name="post_code">
+                                                    name="post_code">
                                             </div>
                                         </div>
                                     </div>
@@ -205,14 +204,14 @@
                                             <label class="col-md-4 form-label">Home Phone</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Home Phone"
-                                                     name="phone">
+                                                    name="phone">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Mobile Phone</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Mobile Phone"
-                                                     name="mobile">
+                                                    name="mobile">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -244,8 +243,7 @@
                                                 Number</label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    placeholder="Membership Number" 
-                                                    name="membership_number">
+                                                    placeholder="Membership Number" name="membership_number">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -253,7 +251,7 @@
                                                     class="tx-danger">*</span></label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="User Name"
-                                                     name="username">
+                                                    name="username">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -266,7 +264,7 @@
                                                             {{ $type?->name }}
                                                         </option>
                                                     @empty
-                                                        <option >Select Membership Type
+                                                        <option>Select Membership Type
                                                         </option>
                                                     @endforelse
                                                 </select>
@@ -277,14 +275,13 @@
                                             </label>
                                             <div class="col-md-8">
                                                 <select name="member_status_id"
-                                                    class="form-control form-select select2" id="member_status_id"
-                                                    readonly disabled>
+                                                    class="form-control form-select select2" id="member_status_id">
                                                     @forelse ($data['membership_status'] as $status)
                                                         <option value="{{ $status?->id }}">
                                                             {{ $status?->name }}
                                                         </option>
                                                     @empty
-                                                        <option >Select Membership Status
+                                                        <option>Select Membership Status
                                                         </option>
                                                     @endforelse
                                                 </select>
@@ -378,8 +375,7 @@
                                                 <label class="col-md-4 form-label">Experience</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Experience" 
-                                                        name="experience">
+                                                        placeholder="Enter Experience" name="experience">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -387,8 +383,7 @@
                                                     Issues</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Health Issues" 
-                                                        name="health_issues">
+                                                        placeholder="Enter Health Issues" name="health_issues">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -396,22 +391,21 @@
                                                     received</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Contact"  name="contact">
+                                                        placeholder="Enter Contact" name="contact">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Skills</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Skills"  name="skills">
+                                                        placeholder="Enter Skills" name="skills">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Availability</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Availability" 
-                                                        name="availability">
+                                                        placeholder="Enter Availability" name="availability">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">

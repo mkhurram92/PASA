@@ -53,11 +53,11 @@
                                 <a class="btn btn-danger" href="{{ route('members.index') }}">
                                     <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                 </a>
-                                @if (count($member->pedigree) > 0)
+                                {{--@if (count($member->pedigree) > 0)
                                     <a class="btn btn-success mr-2" href="">
                                         <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
                                     </a>
-                                @endif
+                                @endif--}}
                                 <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
