@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class GlCodesParent extends Model
 {
     protected $table = 'gl_codes_parent';
-    protected $fillable = ['id', 'code', 'name'];
+    protected $fillable = ['id', 'name'];
 
     public function glCodes()
     {

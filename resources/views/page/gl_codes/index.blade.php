@@ -100,7 +100,7 @@
                      <h3 class="page-title">GL Codes List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="{{ route('gl_codes.create') }}" id="add-record">
+                     <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"> Add a GL Code</i>
                      </a>
                  </div>
@@ -135,58 +135,27 @@
          </div>
      </div>
  </div>
-
+ <div id="crud"></div>
  @section('scripts')
      <script>
          var gl_Codes = <?php echo json_encode($glCodes); ?>;
-         var gl_Codes_Parent = <?php echo json_encode($formattedResults); ?>;
-
+         console.log(gl_Codes);
          var table = new Tabulator("#gl-code-table", {
              data: gl_Codes,
              layout: "fitColumns",
              columns: [{
-                     title: "Parent G/L Code",
-                     field: "parent_id",
+                     title: "Parent G/L Name",
+                     field: "gl_codes_parent.name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterParams: {
-                         values: Object.values(gl_Codes_Parent)
-                     },
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var parentId = cell.getValue();
-
-                         var parentName = gl_Codes_Parent[parentId] || "";
-
-                         return parentName;
-                     }
+                     headerFilter: "select"
                  },
-                 {
-                     title: "Sub G/L Code",
-                     field: "code",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var parentId = cell.getRow().getData().parent_id;
-                         var subCode = cell.getValue();
-
-                         var parentName = gl_Codes_Parent[parentId] || "";
-                         var concatenatedCode = parentName + " - " + subCode;
-
-                         // Extracting only the necessary parts (1000 - 10)
-                         var displayCode = concatenatedCode.split(' - ')[0] + '-' + subCode;
-
-                         return displayCode;
-                     }
-                 },
-
                  {
                      title: "Sub G/L Name",
                      field: "name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "input"
+                     headerFilter: "select"
                  },
                  {
                      title: "Description",
@@ -194,12 +163,44 @@
                      hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input"
+                 },
+                 {
+                     title: "When Created",
+                     field: "created_at",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "input"
+                 },
+                 {
+                     title: "Action",
+                     field: "actions",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     width: "8%",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var id = cell.getData().id;
+
+                         // Add buttons for each row
+                         return '<div class="button-container">' +
+                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                             '"></button>' +
+                             '</div>';
+                     }
                  }
+                 
              ],
              pagination: 'local',
              paginationSize: 20,
              placeholder: "No Data Available"
          });
+
+         $('#create-record').click(function() {
+            $.get("{{ route('gl_codes.create') }}", form => {
+                $('#crud').html(form.html);
+                $('#crud').find(".modal").modal('show');
+            });
+        });
+
      </script>
  @endsection
  @include('layout.footer')

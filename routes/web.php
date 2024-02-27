@@ -34,6 +34,8 @@ use App\Http\Controllers\AncestorSpouseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\GlCodeController;
 use App\Http\Controllers\GlCodesParentController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\TransactionTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,7 +141,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('transaction', TransactionController::class);
     Route::resource('gl_codes', GlCodeController::class);
     Route::resource('gl_codes_parent', GlCodesParentController::class);
-    
+    Route::resource('accounts', AccountController::class);
+    Route::resource('transaction_types', TransactionTypeController::class);
+
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     
 });

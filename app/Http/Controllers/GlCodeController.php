@@ -11,29 +11,20 @@ class GlCodeController extends Controller
 {
     public function index()
     {
-        $glCodesParents = GlCodesParent::orderBy('id', 'asc')->get(['code', 'name']);
-
-        $formattedResults = $glCodesParents->map(function ($glCodeParent) {
-            return $glCodeParent->code . ' - ' . $glCodeParent->name;
-        })->toArray();
-
-        array_unshift($formattedResults, '');
-
-        $glCodeName = GlCode::orderBy('id', 'asc')->pluck('name')->toArray();
-        array_unshift($glCodeName, '');
-
-        $glCodeSubCode = GlCode::selectRaw('CONCAT(parent_id, " - ", code) as parent_code')->get();
-        
         $glCodes = GlCode::with('glCodesParent')->get();
-
-        return view('page.gl_codes.index', compact('glCodes', 'formattedResults', 'glCodeName', 'glCodeSubCode'));
+      
+        return view('page.gl_codes.index', compact('glCodes'));
     }
 
     public function create()
     {
-        $parentGlCodes = GlCodesParent::OrderBy('code')->get();
+        //$parentGlCodes = GlCodesParent::OrderBy('name')->get();
 
-        return view('page.gl_codes.create', compact('parentGlCodes'));
+        //return view('page.gl_codes.create', compact('parentGlCodes'));
+
+        $html = view("models.glcode-create")->render();
+        return response()->json(["status" => true, "html" => $html]);
+
     }
 
     public function store(Request $request)
@@ -61,12 +52,8 @@ class GlCodeController extends Controller
             ]);
         }
 
-        $maxCode = GlCode::where('parent_id', $request->input('parent_id'))->max('code');
-        $nextCode = is_numeric($maxCode) ? $maxCode + 10 : 10;
-
         // Create a new GlCode instance
         $glCode = new GlCode([
-            'code' => $nextCode,
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'parent_id' => $request->input('parent_id'),
@@ -99,5 +86,10 @@ class GlCodeController extends Controller
         $glCode->delete();
 
         return redirect()->route('gl_codes.index')->with('success', 'G/L Code deleted successfully!');
+    }
+    public function show(GlCode $glCode)
+    {
+        $html = view("models.glcode-view", compact('glCode'))->render();
+        return response()->json(["status" => true, "html" => $html]);
     }
 }

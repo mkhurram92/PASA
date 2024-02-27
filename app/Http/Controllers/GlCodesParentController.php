@@ -32,7 +32,6 @@ class GlCodesParentController extends Controller
     {
         // Validate input data
         $validatedData = $request->validate([
-            'code' => 'required|max:10',
             'name' => 'required|max:255',
             // ... other validation rules
         ]);
@@ -56,7 +55,6 @@ class GlCodesParentController extends Controller
     {
         // Validate input data
         $validatedData = $request->validate([
-            'code' => 'required|max:10',
             'name' => 'required|max:255',
             // ... other validation rules
         ]);

@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\Models\Transaction;
+use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with('glCode')->get();
-        return view('page.transaction.index', compact('transactions'));
-    
+        $transaction = Transaction::with('glCode', 'account', 'transactionType', 'glCode.glCodesParent')->get();
+
+        return view('page.transaction.index', compact('transaction'));
     }
 
     public function create()
@@ -27,7 +27,7 @@ class TransactionController extends Controller
 
         Transaction::create($request->all());
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction created successfully!');
+        return redirect()->route('transaction.index')->with('success', 'Transaction created successfully!');
     }
 
     public function edit(Transaction $transaction)
@@ -43,13 +43,13 @@ class TransactionController extends Controller
 
         $transaction->update($request->all());
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully!');
+        return redirect()->route('transaction.index')->with('success', 'Transaction updated successfully!');
     }
 
     public function destroy(Transaction $transaction)
     {
         $transaction->delete();
 
-        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully!');
+        return redirect()->route('transaction.index')->with('success', 'Transaction deleted successfully!');
     }
 }

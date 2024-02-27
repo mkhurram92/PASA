@@ -97,35 +97,16 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">GL Codes List</h3>
+                     <h3 class="page-title">Transaction List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="{{ route('ancestor-data.create') }}" id="add-record">
-                         <i class="fa fa-plus-circle" style="font-size:24px;"> Add a GL Code</i>
+                     <a class="btn btn-primary" href="{{ route('transaction.create') }}" id="add-record">
+                         <i class="fa fa-plus-circle" style="font-size:24px;"> Add a Transaction</i>
                      </a>
                  </div>
              </div>
              <div class="row">
                  <div class="col-md-12 p-12">
-                     @if ($errors->any() || session('error') || session('success'))
-                         <div class="card">
-                             <div class="card-body">
-                                 @if ($errors->any())
-                                     <div class="alert alert-danger">
-                                         {{ $errors->first() }}
-                                     </div>
-                                 @elseif(session('error'))
-                                     <div class="alert alert-danger">
-                                         {{ session('error') }}
-                                     </div>
-                                 @elseif(session('success'))
-                                     <div class="alert alert-success">
-                                         {{ session('success') }}
-                                     </div>
-                                 @endif
-                             </div>
-                         </div>
-                     @endif
                      <div class="card">
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
@@ -154,56 +135,86 @@
          </div>
      </div>
  </div>
-
- @section('script')
+ @section('scripts')
      <script>
-         document.addEventListener('DOMContentLoaded', function() {
-             var table = new Tabulator("#transaction-table", {
-                 data: @json($transactions),
-                 layout: "fitColumns",
-                 columns: [{
-                         title: "ID",
-                         field: "id"
-                     },
-                     {
-                         title: "Amount",
-                         field: "amount",
-                         formatter: "money"
-                     },
-                     {
-                         title: "G/L Code",
-                         field: "gl_code.code"
-                     },
-                     {
-                         title: "Description",
-                         field: "description"
-                     },
-                     {
-                         title: "Date",
-                         field: "date",
-                         sorter: "date",
-                         formatter: "datetime"
-                     },
-                     {
-                         title: "Actions",
-                         formatter: "rownum",
-                         align: "center",
-                         width: 100,
-                         cellClick: function(e, cell) {
-                             // Handle row actions (edit/delete) if needed
-                         }
-                     },
-                 ],
-                 selectable: 1,
-                 pagination: "local",
-                 paginationSize: 10,
-                 paginationSizeSelector: [10, 25, 50, 100],
-                 rowClick: function(e, row) {
-                     // Handle row click event if needed
+         var gl_Codes = <?php echo json_encode($transaction); ?>;
+
+         console.log("Transaction Data:", gl_Codes);
+
+         var table = new Tabulator("#transaction-table", {
+             data: gl_Codes,
+             layout: "fitColumns",
+             columns: [{
+                     title: "Parent Account",
+                     field: "gl_code.gl_codes_parent.name",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select"
                  },
-             });
+                 {
+                     title: "Sub Account",
+                     field: "gl_code.name",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select"
+                 },
+                 {
+                     title: "Transaction Type",
+                     field: "transaction_type.name",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select"
+                 },
+                 {
+                     title: "Amount",
+                     field: "amount",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "input"
+                 },
+                 {
+                     title: "Transaction Account",
+                     field: "account.name",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select"
+                 },
+                 {
+                     title: "Description",
+                     field: "description",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "input"
+                 },
+                 {
+                     title: "Creation Date",
+                     field: "created_at",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "input"
+                 },
+                 {
+                     title: "Action",
+                     field: "actions",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     width: "8%",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var id = cell.getData().id;
+
+                         // Add buttons for each row
+                         return '<div class="button-container">' +
+                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                             '"></button>' +
+                             '</div>';
+                     }
+                 }
+
+             ],
+             pagination: 'local',
+             paginationSize: 20,
+             placeholder: "No Data Available"
          });
      </script>
  @endsection
- <!-- app-content end-->
  @include('layout.footer')

@@ -40,7 +40,7 @@ class SubscribeMemberController extends Controller
         $data['membership_status'] = MemberShipStatus::all();
         $data['membership_types'] = MembershipType::all();
 
-        return view('page.members.create', compact(('data')));
+        return view('page.members.create', compact('data'));
     }
 
     public function index(Request $request)

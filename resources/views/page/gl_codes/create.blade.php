@@ -72,7 +72,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Parent G/L Code<span
+                                                <label class="col-md-3 form-label">Parent G/L Name<span
                                                         class="text-danger"></span></label>
 
                                                 <div class="col-md-9">
@@ -81,7 +81,7 @@
                                                         <option value=""></option>
                                                         @foreach ($parentGlCodes as $parentGlCode)
                                                             <option value="{{ $parentGlCode->id }}">
-                                                                {{ $parentGlCode->code }} - {{ $parentGlCode->name }}
+                                                                {{ $parentGlCode->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>

@@ -41,7 +41,6 @@ class CityController extends Controller
 
     public function create()
     {
-  
         $html = view("models.city-create")->render();
         return response()->json(["status" => true, "html" => $html]);
     }
