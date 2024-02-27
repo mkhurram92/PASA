@@ -48,6 +48,11 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
+                                @if (!$member?->additionalInfo?->date_membership_approved)
+                                <a class="btn btn-success" id="approveButton">
+                                    <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
+                                </a>
+                                @endif
                                 <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
                                     <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
                                 </a>
@@ -58,14 +63,6 @@
                                 <a class="btn btn-info" href="{{ route('members.index') }}">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
-
-                                @if (!$member?->additionalInfo?->date_membership_approved)
-                                <form id="curdForm" name="curdForm" class="form-horizontal" method="POST" action="{{ route('members.update', ['member' => $member?->id]) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <button class="btn btn-success close-modal">Approve</button>
-                                </form>
-                                @endif
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -373,7 +370,46 @@
 <div id="crud"></div>
 @section('scripts')
 @include('plugins.select2')
+
+<link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+<script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+
 <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+            $('#approveButton').on('click', function () {
+                $.ajax({
+                    url: '{{ route('members.update', ['member' => $member?->id]) }}',
+                    method: 'PUT',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                    },
+                    success: function (response) {
+                        if (response && response.status === true) {
+                            Swal.fire({
+                            title: 'Success!',
+                            text: response.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'OK',
+                            timerProgressBar: true,
+                            allowOutsideClick: false,
+                            timer: 10000, 
+                        }).then(() => {
+                            window.location.href = response.redirectTo;
+                        });
+
+                        } else {
+                            console.error('Error updating member:', response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error updating member:', error);
+                    }
+                });
+            });
+        });
+
     document.addEventListener('DOMContentLoaded', function() {
         var displayStatus = document.getElementById('displayStatus');
         var volunteerStatus = document.getElementById('volunteerStatus');

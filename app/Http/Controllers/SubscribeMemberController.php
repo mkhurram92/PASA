@@ -306,7 +306,8 @@ class SubscribeMemberController extends Controller
                 ]
             );
 
-            $usr = ModelsUser::create([
+            $usr = ModelsUser::create(
+                [
                 "email" => $member->contact->email,
                 "password" => $member->password,
                 "name" => $member->given_name . " " . $member->family_name
@@ -319,7 +320,7 @@ class SubscribeMemberController extends Controller
 
             return response()->json([
                 "status" => true,
-                "message" => "Member Updated successfully",
+                "message" => "Member Approved successfully",
                 "redirectTo" => route("members.view-member", ['id' => $member->id])
             ]);
         } catch (\Exception $e) {
