@@ -377,38 +377,49 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-            $('#approveButton').on('click', function () {
-                $.ajax({
-                    url: '{{ route('members.update', ['member' => $member?->id]) }}',
-                    method: 'PUT',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                    },
-                    success: function (response) {
-                        if (response && response.status === true) {
-                            Swal.fire({
-                            title: 'Success!',
-                            text: response.message,
-                            icon: 'success',
-                            showCancelButton: false,
-                            confirmButtonText: 'OK',
-                            timerProgressBar: true,
-                            allowOutsideClick: false,
-                            timer: 10000, 
-                        }).then(() => {
-                            window.location.href = response.redirectTo;
-                        });
-
-                        } else {
-                            console.error('Error updating member:', response.message);
+        $('#approveButton').on('click', function () {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to approve the membership.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, approve it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{ route('members.update', ['member' => $member?->id]) }}',
+                        method: 'PUT',
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                        },
+                        success: function (response) {
+                            if (response && response.status === true) {
+                                Swal.fire({
+                                title: 'Success!',
+                                text: response.message,
+                                icon: 'success',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                timerProgressBar: true,
+                                allowOutsideClick: false,
+                                timer: 10000,
+                            }).then(() => {
+                                window.location.href = response.redirectTo;
+                            });
+                            } else {
+                                console.error('Error updating member:', response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error updating member:', error);
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error updating member:', error);
-                    }
-                });
+                    });
+                }
             });
         });
+    });
 
     document.addEventListener('DOMContentLoaded', function() {
         var displayStatus = document.getElementById('displayStatus');
