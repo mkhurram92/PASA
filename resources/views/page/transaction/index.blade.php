@@ -97,7 +97,7 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">Transaction List</h3>
+                     <h3 class="page-title">Transactions List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary" href="{{ route('transaction.create') }}" id="add-record">
@@ -111,11 +111,10 @@
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                     <option value="10">10</option>
                                      <option value="20">20</option>
-                                     <option value="30">30</option>
                                      <option value="40">40</option>
-                                     <option value="50">50</option>
+                                     <option value="60">60</option>
+                                     <option value="80">80</option>
                                      <option value="100">100</option>
                                  </select>
                                  <label style="padding: 10px;" for="date-range">Date Range:</label>
@@ -138,8 +137,10 @@
  @section('scripts')
      <script>
          var gl_Codes = <?php echo json_encode($transaction); ?>;
-
-         console.log("Transaction Data:", gl_Codes);
+         var gl_code_parent = <?php echo json_encode($gl_code_parent); ?>;
+         var gl_code_sub = <?php echo json_encode($gl_code_sub); ?>;
+         var transaction_type = <?php echo json_encode($transaction_type); ?>;
+         var account_type = <?php echo json_encode($account_type); ?>;
 
          var table = new Tabulator("#transaction-table", {
              data: gl_Codes,
@@ -149,49 +150,88 @@
                      field: "gl_code.gl_codes_parent.name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select"
+                     headerFilter: "select",
+                     headerFilterPlaceholder: 'Filter by Parent Account',
+                     headerFilterParams: {
+                         values: gl_code_parent
+                     }
                  },
                  {
                      title: "Sub Account",
                      field: "gl_code.name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select"
+                     headerFilter: "select",
+                     headerFilterPlaceholder: 'Filter by Sub Account',
+                     headerFilterParams: {
+                         values: gl_code_sub
+                     }
                  },
                  {
                      title: "Transaction Type",
                      field: "transaction_type.name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select"
+                     headerFilter: "select",
+                     headerFilterPlaceholder: 'Filter by Transaction Type',
+                     headerFilterParams: {
+                         values: transaction_type
+                     },
+                     formatter: function(cell, formatterParams, onRendered) {
+                         // Access the cell value
+                         var transaction_type = cell.getValue();
+
+                         // Add custom styling based on membership type
+                         var style = '';
+                         if (transaction_type === 'Income') {
+                             style = 'color: green;';
+                         } else if (transaction_type === 'Expenditure') {
+                             style = 'color: red;';
+                         }
+                         var formattedValue = '<span style="' + style + '">' + transaction_type + '</span>';
+
+                         // Return the formatted content
+                         return formattedValue;
+                     }
                  },
                  {
                      title: "Amount",
                      field: "amount",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "input"
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Amount'
                  },
                  {
                      title: "Transaction Account",
                      field: "account.name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select"
+                     headerFilter: "select",
+                     headerFilterPlaceholder: 'Filter by Transaction Account',
+                     headerFilterParams: {
+                         values: account_type
+                     }
                  },
                  {
                      title: "Description",
                      field: "description",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "input"
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Description'
                  },
                  {
-                     title: "Creation Date",
+                     title: "Created Date",
                      field: "created_at",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "input"
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Creation Date',
+                     formatter: function(cell) {
+                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD HH:mm:ss');
+                         return formattedDate;
+                     }
                  },
                  {
                      title: "Action",
@@ -213,7 +253,47 @@
              ],
              pagination: 'local',
              paginationSize: 20,
-             placeholder: "No Data Available"
+             placeholder: "No Data Available",
+             initialSort: [{
+                 column: "created_at",
+                 dir: "desc"
+             }]
+         }); 
+         // Add a reset button
+         var resetButton = document.getElementById("reset-button");
+
+
+         resetButton.addEventListener("click", function() {
+             table.clearFilter();
+             table.clearHeaderFilter();
+         });
+
+         $("#pageSizeDropdown").on("change", function() {
+             var selectedPageSize = parseInt($(this).val(), 10);
+             table.setPageSize(selectedPageSize);
+         });
+
+         function printData() {
+             table.print(false, true);
+         }
+         //trigger download of data.csv file
+         document.getElementById("download-csv").addEventListener("click", function() {
+             table.download("csv", "Transaction List.csv");
+         });
+
+         //trigger download of data.xlsx file
+         document.getElementById("download-xlsx").addEventListener("click", function() {
+             table.download("xlsx", "Transaction List.xlsx", {
+                 sheetName: "PASA01"
+             });
+         });
+
+         //trigger download of data.pdf file
+         document.getElementById("download-pdf").addEventListener("click", function() {
+             table.download("pdf", "Transaction List.pdf", {
+                 orientation: "landscape",
+                 title: "Transaction List",
+             });
          });
      </script>
  @endsection

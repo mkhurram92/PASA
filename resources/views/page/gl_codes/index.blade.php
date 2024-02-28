@@ -111,11 +111,10 @@
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                     <option value="10">10</option>
                                      <option value="20">20</option>
-                                     <option value="30">30</option>
                                      <option value="40">40</option>
-                                     <option value="50">50</option>
+                                     <option value="60">60</option>
+                                     <option value="80">80</option>
                                      <option value="100">100</option>
                                  </select>
                                  <label style="padding: 10px;" for="date-range">Date Range:</label>
@@ -139,7 +138,9 @@
  @section('scripts')
      <script>
          var gl_Codes = <?php echo json_encode($glCodes); ?>;
-         console.log(gl_Codes);
+         var gl_code_parent = <?php echo json_encode($gl_code_parent); ?>;
+         var gl_code_sub = <?php echo json_encode($gl_code_sub); ?>;
+
          var table = new Tabulator("#gl-code-table", {
              data: gl_Codes,
              layout: "fitColumns",
@@ -148,14 +149,20 @@
                      field: "gl_codes_parent.name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select"
+                     headerFilter: "select",
+                     headerFilterParams: {
+                         values: gl_code_parent
+                     }
                  },
                  {
                      title: "Sub G/L Name",
                      field: "name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select"
+                     headerFilter: "select",
+                     headerFilterParams: {
+                         values: gl_code_sub
+                     }
                  },
                  {
                      title: "Description",
@@ -165,11 +172,15 @@
                      headerFilter: "input"
                  },
                  {
-                     title: "When Created",
+                     title: "Created Date",
                      field: "created_at",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "input"
+                     headerFilter: "input",
+                     formatter: function(cell) {
+                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD HH:mm:ss');
+                         return formattedDate;
+                     }
                  },
                  {
                      title: "Action",
@@ -191,7 +202,11 @@
              ],
              pagination: 'local',
              paginationSize: 20,
-             placeholder: "No Data Available"
+             placeholder: "No Data Available",
+             initialSort: [{
+                 column: "created_at",
+                 dir: "desc"
+             }]
          });
 
          $('#create-record').click(function() {
@@ -199,7 +214,43 @@
                 $('#crud').html(form.html);
                 $('#crud').find(".modal").modal('show');
             });
-        });
+        }); 
+         // Add a reset button
+         var resetButton = document.getElementById("reset-button");
+
+
+         resetButton.addEventListener("click", function() {
+             table.clearFilter();
+             table.clearHeaderFilter();
+         });
+
+         $("#pageSizeDropdown").on("change", function() {
+             var selectedPageSize = parseInt($(this).val(), 10);
+             table.setPageSize(selectedPageSize);
+         });
+
+         function printData() {
+             table.print(false, true);
+         }
+         //trigger download of data.csv file
+         document.getElementById("download-csv").addEventListener("click", function() {
+             table.download("csv", "Sub GL List.csv");
+         });
+
+         //trigger download of data.xlsx file
+         document.getElementById("download-xlsx").addEventListener("click", function() {
+             table.download("xlsx", "Sub GL List.xlsx", {
+                 sheetName: "PASA01"
+             });
+         });
+
+         //trigger download of data.pdf file
+         document.getElementById("download-pdf").addEventListener("click", function() {
+             table.download("pdf", "Sub GL List.pdf", {
+                 orientation: "landscape",
+                 title: "Sub GL List",
+             });
+         });
 
      </script>
  @endsection

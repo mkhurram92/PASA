@@ -11,9 +11,15 @@ class GlCodeController extends Controller
 {
     public function index()
     {
+        $gl_code_parent = GlCodesParent::orderBy('id', 'asc')->pluck('name')->toArray();
+        array_unshift($gl_code_parent, '');
+
+        $gl_code_sub = GlCode::orderBy('id', 'asc')->pluck('name')->toArray();
+        array_unshift($gl_code_sub, '');
+
         $glCodes = GlCode::with('glCodesParent')->get();
       
-        return view('page.gl_codes.index', compact('glCodes'));
+        return view('page.gl_codes.index', compact('glCodes', 'gl_code_parent', 'gl_code_sub'));
     }
 
     public function create()
