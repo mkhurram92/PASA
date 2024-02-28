@@ -120,8 +120,15 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Sub G/L<span
                                                         class="text-danger"></span></label>
+
                                                 <div class="col-md-8 custom-select-wrapper">
-                                                    <select class="custom-select" id="subGlCodes" name="subGlCodes">
+                                                    <select name="subGlCodes" id="subGlCodes" class="custom-select">
+                                                        <option value=""></option>
+                                                        @foreach ($subGlCodes as $parentGlCode)
+                                                            <option value="{{ $parentGlCode->id }}">
+                                                                {{ $parentGlCode->name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
