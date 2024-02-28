@@ -100,7 +100,7 @@
                      <h3 class="page-title">GL Codes List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
+                     <a class="btn btn-primary" href="{{ route('gl_codes.create') }}" id="add-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"> Add a GL Code</i>
                      </a>
                  </div>
@@ -209,12 +209,12 @@
              }]
          });
 
-         $('#create-record').click(function() {
-            $.get("{{ route('gl_codes.create') }}", form => {
-                $('#crud').html(form.html);
-                $('#crud').find(".modal").modal('show');
-            });
-        }); 
+         //$('#create-record').click(function() {
+        //    $.get("{{ route('gl_codes.create') }}", form => {
+        //        $('#crud').html(form.html);
+        //        $('#crud').find(".modal").modal('show');
+       //     });
+        //}); 
          // Add a reset button
          var resetButton = document.getElementById("reset-button");
 

@@ -18,18 +18,18 @@ class GlCodeController extends Controller
         array_unshift($gl_code_sub, '');
 
         $glCodes = GlCode::with('glCodesParent')->get();
-      
+
         return view('page.gl_codes.index', compact('glCodes', 'gl_code_parent', 'gl_code_sub'));
     }
 
     public function create()
     {
-        //$parentGlCodes = GlCodesParent::OrderBy('name')->get();
+        $parentGlCodes = GlCodesParent::OrderBy('name')->get();
 
-        //return view('page.gl_codes.create', compact('parentGlCodes'));
+        return view('page.gl_codes.create', compact('parentGlCodes'));
 
-        $html = view("models.glcode-create")->render();
-        return response()->json(["status" => true, "html" => $html]);
+        //$html = view("models.glcode-create")->render();
+        //return response()->json(["status" => true, "html" => $html]);
 
     }
 
@@ -92,10 +92,5 @@ class GlCodeController extends Controller
         $glCode->delete();
 
         return redirect()->route('gl_codes.index')->with('success', 'G/L Code deleted successfully!');
-    }
-    public function show(GlCode $glCode)
-    {
-        $html = view("models.glcode-view", compact('glCode'))->render();
-        return response()->json(["status" => true, "html" => $html]);
     }
 }

@@ -31,6 +31,29 @@
                 height: 300px;
                 /* Set the height to 100% */
             }
+
+            /* Custom CSS */
+            .custom-select-wrapper {
+                position: relative;
+                display: inline-block;
+            }
+
+            .custom-select {
+                display: inline-block;
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            .custom-select:after {
+                content: "\25BC";
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+            }
         </style>
         <div class="container-fluid main-container">
 
@@ -62,59 +85,76 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Transaction Type<span
+                                                <label class="col-md-4 form-label">Transaction Type<span
                                                         class="text-danger"></span></label>
-
-                                                <div class="col-md-9">
-                                                    <input class="form-control" type="text"
-                                                        placeholder="Transaction Type" value="" id="name"
-                                                        name="name">
+                                                <div class="col-md-8">
+                                                    @foreach ($transactionType as $transaction_type)
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="transaction_type"
+                                                                id="transaction_type_{{ $transaction_type->id }}"
+                                                                value="{{ $transaction_type->id }}">
+                                                            <label class="form-check-label"
+                                                                for="transaction_type_{{ $transaction_type->id }}">
+                                                                {{ $transaction_type->name }}
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Parent G/L Name<span
+                                                <label class="col-md-4 form-label">Parent G/L<span
                                                         class="text-danger"></span></label>
 
-                                                <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="G/L Name"
-                                                        value="" id="name" name="name">
+                                                <div class="col-md-8 custom-select-wrapper">
+                                                    <select name="parent_id" id="parent_id" class="custom-select">
+                                                        <option value=""></option>
+                                                        @foreach ($parentGlCodes as $parentGlCode)
+                                                            <option value="{{ $parentGlCode->id }}">
+                                                                {{ $parentGlCode->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Sub G/L Name<span
+                                                <label class="col-md-4 form-label">Sub G/L<span
                                                         class="text-danger"></span></label>
-
-                                                <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="G/L Name"
-                                                        value="" id="name" name="name">
+                                                <div class="col-md-8 custom-select-wrapper">
+                                                    <select class="custom-select" id="subGlCodes" name="subGlCodes">
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Account Name<span
+                                                <label class="col-md-4 form-label">Transaction Account<span
                                                         class="text-danger"></span></label>
 
-                                                <div class="col-md-9">
-                                                    <input class="form-control" type="text"
-                                                        placeholder="Account Name" value="" id="name"
-                                                        name="name">
+                                                <div class="col-md-8 custom-select-wrapper">
+                                                    <select name="account_type" id="account_type" class="custom-select">
+                                                        <option value=""></option>
+                                                        @foreach ($accounts as $account)
+                                                            <option value="{{ $account->id }}">
+                                                                {{ $account->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Amount<span
+                                                <label class="col-md-4 form-label">Amount<span
                                                         class="text-danger"></span></label>
-
-                                                <div class="col-md-9">
+                                                <div class="col-md-8">
                                                     <input class="form-control" type="text" placeholder="Amount"
-                                                        value="" id="name" name="name">
+                                                        value="" id="amount" name="amount">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label" for="description">Description<span
+                                                <label class="col-md-4 form-label" for="description">Description<span
                                                         class="text-danger"></span></label>
 
-                                                <div class="col-md-9">
+                                                <div class="col-md-8">
                                                     <textarea name="description" id="description" class="form-control"></textarea>
                                                 </div>
                                             </div>
@@ -135,19 +175,14 @@
 
     <script>
         document.getElementById('submitBtn').addEventListener('click', function(event) {
-            // Prevent the default form submission behavior
             event.preventDefault();
-
-            // Submit the form using AJAX
             $.ajax({
                 type: 'POST',
                 url: '{{ route('transaction.store') }}',
                 data: $('#transaction_save_form').serialize(),
                 dataType: 'json',
                 success: function(response) {
-                    // Check if the submission was successful
                     if (response.status) {
-                        // Show SweetAlert for success
                         Swal.fire({
                             title: 'Success!',
                             text: response.message,
@@ -157,29 +192,22 @@
                             timer: 10000,
                             timerProgressBar: true,
                         }).then((result) => {
-                            // Redirect if needed
                             if (response.redirectTo) {
                                 window.location.href = response.redirectTo;
                             }
                         });
                     } else {
-                        // Show SweetAlert for failure with detailed error message
                         Swal.fire({
                             title: 'Error!',
                             text: response.message,
                             icon: 'error',
                             showCancelButton: false,
                             confirmButtonText: 'OK',
-                            //timer: 10000,
-                            //timerProgressBar: true,
                         }).then(() => {
-                            // Check if there is a specific exception message
                             let exceptionMessage = "";
                             if (response.exception) {
                                 exceptionMessage = response.exception;
                             }
-
-                            // Show additional alert with exception (if available)
                             if (exceptionMessage) {
                                 Swal.fire({
                                     title: 'Exception Details',
@@ -193,7 +221,6 @@
                     }
                 },
                 error: function(xhr, textStatus, errorThrown) {
-                    // Handle AJAX error and get detailed error message
                     let errorMessage = "An error occurred while processing your request.";
 
                     if (xhr.responseJSON && xhr.responseJSON.message) {
@@ -201,20 +228,30 @@
                     } else if (xhr.statusText) {
                         errorMessage = xhr.statusText;
                     }
-
-                    // Show SweetAlert for AJAX error with specific error message
                     Swal.fire({
                         title: 'Error!',
                         text: errorMessage,
                         icon: 'error',
                         showCancelButton: false,
                         confirmButtonText: 'OK',
-                        //timer: 10000,
-                        //timerProgressBar: true,
                     });
                 }
             });
         });
-    </script>
 
-    @include('layout.footer')
+        $(document).ready(function() {
+            $('#amount').on('input', function() {
+                // Allow digits and a single dot
+                $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+
+                // Ensure there's only one dot
+                if ($(this).val().split('.').length > 2) {
+                    var parts = $(this).val().split('.');
+                    $(this).val(parts[0] + '.' + parts.slice(1).join(''));
+                }
+            });
+        });
+    </script>
+@endsection
+
+@include('layout.footer')

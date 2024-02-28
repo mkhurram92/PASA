@@ -32,9 +32,15 @@ class TransactionController extends Controller
 
     public function create()
     {
-        // Add logic if needed, e.g., fetching G/L codes for dropdown
+        $transactionType = TransactionType::OrderBy('name')->get();
 
-        return view('page.transaction.create');
+        $parentGlCodes = GlCodesParent::OrderBy('name')->get();
+        
+        $subGlCodes = GlCode::OrderBy('name')->get();
+
+        $accounts = Account::OrderBy('name')->get();
+
+        return view('page.transaction.create', compact('parentGlCodes', 'subGlCodes','transactionType','accounts'));
     }
 
     public function store(Request $request)

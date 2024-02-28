@@ -145,5 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('transaction_types', TransactionTypeController::class);
 
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
-    
+
+    Route::get('/get-sub-gl-codes/{parent_id}', 'GlCodeController@getSubGlCodes');
+
 });

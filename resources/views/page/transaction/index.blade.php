@@ -214,14 +214,6 @@
                      }
                  },
                  {
-                     title: "Description",
-                     field: "description",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Description'
-                 },
-                 {
                      title: "Created Date",
                      field: "created_at",
                      hozAlign: "center",
