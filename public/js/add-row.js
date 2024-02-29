@@ -19,7 +19,7 @@ $(document).ready(function () {
         var full_name = $('#full_name_' + Number(split_id[1])).val();
 
         if (f_name == '' || m_name == '' || full_name == '') {
-            alert("Please enter father or mother name");
+            alert("Enter Father or Mother name");
             $("#remove_" + nextindex).hide();
         } else {
             var max = 10;
@@ -30,14 +30,14 @@ $(document).ready(function () {
 
                 var htmlString = '<div class="col-sm-6">';
                 htmlString += '<div class="mb-3 mb-sm-0 d-flex align-items-center">';
-                htmlString += '<label class="form-label mb-0 me-2">Father - this is the pioneer Line</label>';
+                htmlString += '<label class="form-label mb-0 me-2">Father - this is the Pioneer line</label>';
                 htmlString += '<input name="pioneer_sub_parents[' + Number(split_id[1] - 2) + ']" id="father_' + nextindex + '" class="radio-input" type="radio" value="1" />';
                 htmlString += '</div>';
                 htmlString += '</div><br><br>'; // Close the first column and start a new one
 
                 htmlString += '<div class="col-sm-6">';
                 htmlString += '<div class="mb-3 mb-sm-0 d-flex align-items-center">';
-                htmlString += '<label class="form-label mb-0 me-2">Mother - this is the pioneer Line</label>';
+                htmlString += '<label class="form-label mb-0 me-2">Mother - this is the Pioneer line</label>';
                 htmlString += '<input id="mother_' + nextindex + '" type="radio" class="radio-input" name="pioneer_sub_parents[' + Number(split_id[1] - 2) + ']" value="0">';
                 htmlString += '</div>';
                 htmlString += '</div><br><br>'; // Close the second column
@@ -53,30 +53,30 @@ $(document).ready(function () {
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Date of Birth</label>';
+                htmlString += '<label class="form-label">Birth Date</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="father_dob_' + nextindex + '" type="date" class="form-control" placeholder="Date of Birth" name="sub_father_dob[]">';
+                htmlString += '<input id="father_dob_' + nextindex + '" type="date" class="form-control" placeholder="Birth Date" name="sub_father_dob[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Place of Birth</label>';
+                htmlString += '<label class="form-label">Birth Place</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="sub_father_pob_' + nextindex + '" type="text" class="form-control" placeholder="Place of Birth" name="sub_father_pob[]">';
+                htmlString += '<input id="sub_father_pob_' + nextindex + '" type="text" class="form-control" placeholder="Birth Place" name="sub_father_pob[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Date of Death</label>';
+                htmlString += '<label class="form-label">Death Date</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="father_dod_' + nextindex + '" type="date" class="form-control" placeholder="Date of Death" name="sub_father_dod[]">';
+                htmlString += '<input id="father_dod_' + nextindex + '" type="date" class="form-control" placeholder="Death Date" name="sub_father_dod[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Place of Death</label>';
+                htmlString += '<label class="form-label">Death Place</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="sub_father_pod_' + nextindex + '" type="text" class="form-control" placeholder="Place of Death" name="sub_father_pod[]">';
+                htmlString += '<input id="sub_father_pod_' + nextindex + '" type="text" class="form-control" placeholder="Death Place" name="sub_father_pod[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
@@ -85,22 +85,22 @@ $(document).ready(function () {
                 htmlString += '<div class="col-sm-3">';
 
                 htmlString += '<div class="mb-3 mb-sm-0 d-flex align-items-center">';
-                htmlString += '<label class="form-label mb-0 me-2">This is my pioneer</label>';
+                htmlString += '<label class="form-label mb-0 me-2">This is my Pioneer </label>';
                 htmlString += '<input id="fatherpioneer_' + nextindex + '" type="radio" class="radio-input ancestor_father" name="ancestor">';
                 htmlString += '</div>';
                 htmlString += '<br>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Date of Marriage</label>';
+                htmlString += '<label class="form-label">Marriage Date</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="sub_father_dom_' + nextindex + '" type="date" class="form-control" placeholder="Date of Marriage" name="sub_father_dom[]">';
+                htmlString += '<input id="sub_father_dom_' + nextindex + '" type="date" class="form-control" placeholder="Marriage Date" name="sub_father_dom[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Place of Marriage</label>';
+                htmlString += '<label class="form-label">Marriage Place</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="sub_father_pom_' + nextindex + '" type="text" class="form-control" placeholder="Place of Marriage" name="sub_father_pom[]">';
+                htmlString += '<input id="sub_father_pom_' + nextindex + '" type="text" class="form-control" placeholder="Marriage Place" name="sub_father_pom[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
@@ -118,30 +118,30 @@ $(document).ready(function () {
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Date of Birth</label>';
+                htmlString += '<label class="form-label">Birth Date</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="mother_dob_' + nextindex + '" type="date" class="form-control" placeholder="Date of Birth" name="sub_mother_dob[]">';
+                htmlString += '<input id="mother_dob_' + nextindex + '" type="date" class="form-control" placeholder="Birth Date" name="sub_mother_dob[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Place of Birth</label>';
+                htmlString += '<label class="form-label">Birth Place</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="sub_mother_pob_' + nextindex + '" type="text" class="form-control" placeholder="Place of Birth" name="sub_mother_pob[]">';
+                htmlString += '<input id="sub_mother_pob_' + nextindex + '" type="text" class="form-control" placeholder="Birth Place" name="sub_mother_pob[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Date of Death</label>';
+                htmlString += '<label class="form-label">Death Date</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="mother_dod_' + nextindex + '" type="date" class="form-control" placeholder="Date of Death" name="sub_mother_dod[]">';
+                htmlString += '<input id="mother_dod_' + nextindex + '" type="date" class="form-control" placeholder="Death Date" name="sub_mother_dod[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
                 htmlString += '<div class="mb-2 mb-sm-0">';
-                htmlString += '<label class="form-label">Place of Death</label>';
+                htmlString += '<label class="form-label">Death Place</label>';
                 htmlString += '<div class="input-group">';
-                htmlString += '<input id="sub_mother_pod_' + nextindex + '" type="text" class="form-control" placeholder="Place of Death" name="sub_mother_pod[]">';
+                htmlString += '<input id="sub_mother_pod_' + nextindex + '" type="text" class="form-control" placeholder="Death Place" name="sub_mother_pod[]">';
                 htmlString += '</div>';
                 htmlString += '</div>';
 
@@ -149,7 +149,7 @@ $(document).ready(function () {
 
                 htmlString += '<div class="col-sm-3">';
                 htmlString += '<div class="mb-3 mb-sm-0 d-flex align-items-center">';
-                htmlString += '<label class="form-label ancestor_mother">This is my pioneer</label>';
+                htmlString += '<label class="form-label ancestor_mother">This is my Pioneer</label>';
                 htmlString += '<input id="motherpioneer_' + nextindex + '" type="radio" class="radio-input ancestor_mother" name="ancestor">';
                 htmlString += '</div>';
                 htmlString += '<br>';

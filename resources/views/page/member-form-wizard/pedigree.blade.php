@@ -3,13 +3,13 @@
     <div class="row element mb-3" id='div_1'>
         <div class="col-sm-6">
             <div class="mb-3 mb-sm-0 d-flex align-items-center">
-                <label class="form-label mb-0 me-2">Applicant's Father - This is the pioneer Line</label>
+                <label class="form-label mb-0 me-2">Applicant's Father - This is the Pioneer line</label>
                 <input name="pioneer_parents" id="father_1" class="radio-input" type="radio" value="1" />
             </div>
         </div>
         <div class="col-sm-6">
             <div class="mb-3 mb-sm-0 d-flex align-items-center">
-                <label class="form-label mb-0 me-2">Applicant's Mother - This is the pioneer Line</label>
+                <label class="form-label mb-0 me-2">Applicant's Mother - This is the Pioneer line</label>
                 <input id="mother" type="radio" class="radio-input" name="pioneer_parents" value="0">
             </div>
         </div>
@@ -54,7 +54,7 @@
         </div>
         <div class="col-sm-3">
             <div class="mb-3 mb-sm-0 d-flex align-items-center">
-                <label class="form-label mb-0 me-2">This is my pioneer</label>
+                <label class="form-label mb-0 me-2">This is my Pioneer </label>
                 <input id="fatherpioneer_1" type="radio" class="radio-input ancestor_father" name="ancestor">
             </div>
             <br>
@@ -112,7 +112,7 @@
         </div>
         <div class="col-sm-3">
             <div class="mb-3 mb-sm-0 d-flex align-items-center">
-                <label class="form-label mb-0 me-2">This is my pioneer</label>
+                <label class="form-label mb-0 me-2">This is my Pioneer </label>
                 <input id="motherpioneer_1" type="radio" class="radio-input ancestor_mother" name="ancestor">
             </div>
             <br>
@@ -123,7 +123,7 @@
             <div class="mb-3 mb-sm-0">
                 <label class="form-label">&nbsp;</label>
                 <div class="input-group">
-                    <button type="button" class="btn btn-primary add123">Add the preceding generation</button>
+                    <button type="button" class="btn btn-primary add123">Add the Preceding Generation</button>
                 </div>
             </div>
         </div>

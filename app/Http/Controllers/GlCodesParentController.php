@@ -11,6 +11,7 @@ class GlCodesParentController extends Controller
     public function index()
     {
         $glCodesParents = GlCodesParent::all();
+        
         return view('gl_codes_parent.index', compact('glCodesParents'));
     }
 

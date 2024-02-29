@@ -15,16 +15,16 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $gl_code_parent = GlCodesParent::orderBy('id', 'asc')->pluck('name')->toArray();
+        $gl_code_parent = GlCodesParent::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($gl_code_parent, '');
 
-        $gl_code_sub = GlCode::orderBy('id', 'asc')->pluck('name')->toArray();
+        $gl_code_sub = GlCode::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($gl_code_sub, '');
 
-        $transaction_type = TransactionType::orderBy('id', 'asc')->pluck('name')->toArray();
+        $transaction_type = TransactionType::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($transaction_type, '');
 
-        $account_type = Account::orderBy('id', 'asc')->pluck('name')->toArray();
+        $account_type = Account::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($account_type, '');
 
         $transaction = Transaction::with('glCode', 'account', 'transactionType', 'glCode.glCodesParent')->get();
@@ -34,13 +34,13 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $transactionType = TransactionType::OrderBy('name')->get();
+        $transactionType = TransactionType::OrderBy('name', 'asc')->get();
 
-        $parentGlCodes = GlCodesParent::OrderBy('name')->get();
+        $parentGlCodes = GlCodesParent::OrderBy('name', 'asc')->get();
 
-        $subGlCodes = GlCode::OrderBy('name')->get();
+        $subGlCodes = GlCode::OrderBy('name', 'asc')->get();
 
-        $accounts = Account::OrderBy('name')->get();
+        $accounts = Account::OrderBy('name', 'asc')->get();
 
         return view('page.transaction.create', compact('parentGlCodes', 'subGlCodes', 'transactionType', 'accounts'));
     }
