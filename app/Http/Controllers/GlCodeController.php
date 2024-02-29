@@ -37,14 +37,13 @@ class GlCodeController extends Controller
     {
         $rules = [
             'name' => 'required|string|max:255', // Adjust the max length as needed
-            'parent_id' => 'required|exists:gl_codes,id',
+            'parent_id' => 'required',
         ];
 
         // Custom validation messages
         $messages = [
             'name.required' => 'Code name field is required',
-            'parent_id.required' => 'Parent code field is required',
-            'parent_id.exists' => 'The selected parent code is invalid.',
+            'parent_id.required' => 'Parent name field is required',
         ];
 
         // Validate the request

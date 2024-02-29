@@ -105,12 +105,29 @@ class TransactionController extends Controller
             ]);
         }
     }
+
+    public function show($transaction_id)
+    {
+        $transaction = Transaction::with(
+            [
+                'glCode', 'account', 'transactionType', 'glCode.glCodesParent'
+            ]
+        )->find($transaction_id);
+
+        return view('page.transaction.view', compact('transaction'));
+    }
     
     public function edit(Transaction $transaction)
     {
-        // Add logic if needed, e.g., fetching G/L codes for dropdown
+        $transactionType = TransactionType::OrderBy('name')->get();
 
-        return view('page.transaction.edit', compact('transaction'));
+        $parentGlCodes = GlCodesParent::OrderBy('name')->get();
+
+        $subGlCodes = GlCode::OrderBy('name')->get();
+
+        $accounts = Account::OrderBy('name')->get();
+        
+        return view('page.transaction.edit', compact('transaction', 'parentGlCodes', 'subGlCodes', 'transactionType', 'accounts'));
     }
 
     public function update(Request $request, Transaction $transaction)
