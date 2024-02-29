@@ -139,8 +139,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Finance Module
     Route::resource('transaction', TransactionController::class);
-    Route::resource('gl_codes', GlCodeController::class);
-    Route::resource('gl_codes_parent', GlCodesParentController::class);
+    Route::resource('gl-codes', GlCodeController::class);
+    Route::resource('gl-codes-parent', GlCodesParentController::class);
     Route::resource('accounts', AccountController::class);
     Route::resource('transaction_types', TransactionTypeController::class);
 

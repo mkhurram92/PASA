@@ -76,11 +76,11 @@
                 {{-- @canany(['payment-list']) --}}
                 {{-- @endcanany --}}
                 @canany(['membership-list'])
-                    <li class="slide @if (Route::is('gl_codes.create', 'gl_codes.index', 'transaction.index')) is-expanded @endif">
+                    <li class="slide @if (Route::is('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-bank fa-2x mx-3"></i>
                             <span class="side-menu__label">Finance</span><i class="angle fe fe-chevron-right"></i></a>
-                        <ul class="slide-menu @if (Route::is('gl_codes.create', 'gl_codes.index', 'transaction.index')) open @endif">
+                        <ul class="slide-menu @if (Route::is('gl-codes-parent.index','gl-codes.create', 'gl-codes.index', 'transaction.index')) open @endif">
                             @can('membership-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('transaction.index')) active @endif"
@@ -91,9 +91,17 @@
                             @endcan
                             @can('membership-list')
                                 <li class="sub-slide">
-                                    <a class="sub-side-menu__item mx-5 @if (Route::is('gl_codes.index')) active @endif"
-                                        data-bs-toggle="sub-slide" href="{{ route('gl_codes.index') }}">
-                                        <span class="sub-side-menu__label">GL Code List</span>
+                                    <a class="sub-side-menu__item mx-5 @if (Route::is('gl-codes-parent.index')) active @endif"
+                                        data-bs-toggle="sub-slide" href="{{ route('gl-codes-parent.index') }}">
+                                        <span class="sub-side-menu__label">Parent GL List</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('membership-list')
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item mx-5 @if (Route::is('gl-codes.index')) active @endif"
+                                        data-bs-toggle="sub-slide" href="{{ route('gl-codes.index') }}">
+                                        <span class="sub-side-menu__label">Sub GL List</span>
                                     </a>
                                 </li>
                             @endcan

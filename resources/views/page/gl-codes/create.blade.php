@@ -46,11 +46,12 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
-                        <form class="form-horizontal" id="gl_save_form" action="{{ route('gl_codes.store') }}"
+                        <form class="form-horizontal" id="gl_save_form" action="{{ route('gl-codes.store') }}"
                             method="POST">
                             @csrf
                             <div class="card-header justify-content-between">
-                                <h3 class="card-title">Create G/L Code</h3>
+                                <h3 class="card-title">Create Sub G/L Name
+                                </h3>
                                 <div class="text-right">
                                     <button type="button" class="btn btn-primary btn-block" id="submitBtn">
                                         Save G/L Code
@@ -63,7 +64,7 @@
                                         <div class="col-lg-6">
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">GL Name<span
+                                                <label class="col-md-3 form-label">Sub G/L Name<span
                                                         class="text-danger"></span></label>
 
                                                 <div class="col-md-9">
@@ -120,7 +121,7 @@
             // Submit the form using AJAX
             $.ajax({
                 type: 'POST',
-                url: '{{ route('gl_codes.store') }}',
+                url: '{{ route('gl-codes.store') }}',
                 data: $('#gl_save_form').serialize(),
                 dataType: 'json',
                 success: function(response) {

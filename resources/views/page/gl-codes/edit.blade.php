@@ -5,7 +5,7 @@
 @section('content')
     <h2>Edit G/L Code</h2>
 
-    <form action="{{ route('gl_codes.update', $glCode->id) }}" method="POST">
+    <form action="{{ route('gl-codes.update', $glCode->id) }}" method="POST">
         @csrf
         @method('PUT')
         {{-- Add your form fields for G/L code editing --}}

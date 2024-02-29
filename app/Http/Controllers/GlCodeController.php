@@ -19,14 +19,14 @@ class GlCodeController extends Controller
 
         $glCodes = GlCode::with('glCodesParent')->get();
 
-        return view('page.gl_codes.index', compact('glCodes', 'gl_code_parent', 'gl_code_sub'));
+        return view('page.gl-codes.index', compact('glCodes', 'gl_code_parent', 'gl_code_sub'));
     }
 
     public function create()
     {
         $parentGlCodes = GlCodesParent::OrderBy('name')->get();
 
-        return view('page.gl_codes.create', compact('parentGlCodes'));
+        return view('page.gl-codes.create', compact('parentGlCodes'));
 
         //$html = view("models.glcode-create")->render();
         //return response()->json(["status" => true, "html" => $html]);
@@ -69,27 +69,28 @@ class GlCodeController extends Controller
         return response()->json([
             "status" => true,
             "message" => "GL Code Added Successfully",
-            "redirectTo" => url("gl_codes")
+            //"redirectTo" => url("gl-codes")
+            "redirectTo" => route("gl-codes.index")
         ]);
     }
 
     public function edit(GlCode $glCode)
     {
 
-        return view('page.gl_codes.edit', compact('glCode'));
+        return view('page.gl-codes.edit', compact('glCode'));
     }
 
     public function update(Request $request, GlCode $glCode)
     {
         $glCode->update($request->all());
 
-        return redirect()->route('gl_codes.index')->with('success', 'G/L Code updated successfully!');
+        return redirect()->route('gl-codes.index')->with('success', 'G/L Code updated successfully!');
     }
 
     public function destroy(GlCode $glCode)
     {
         $glCode->delete();
 
-        return redirect()->route('gl_codes.index')->with('success', 'G/L Code deleted successfully!');
+        return redirect()->route('gl-codes.index')->with('success', 'G/L Code deleted successfully!');
     }
 }

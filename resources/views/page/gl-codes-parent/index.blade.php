@@ -83,7 +83,7 @@
          }
 
          .button-container button.view-button {
-             background-color: #3498db;
+             background-color: #2ecc71;
              /* Green color for View button */
              color: #fff;
          }
@@ -97,11 +97,11 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">GL Codes List</h3>
+                     <h3 class="page-title">Parent G/L List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="{{ route('gl_codes.create') }}" id="add-record">
-                         <i class="fa fa-plus-circle" style="font-size:24px;"> Add a GL Code</i>
+                     <a class="btn btn-primary" href="javascript:void(0)" id="create-parentglcode-record">
+                         <i class="fa fa-plus-circle" style="font-size:24px;"> Add a Parent G/L</i>
                      </a>
                  </div>
              </div>
@@ -111,10 +111,11 @@
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
+                                     <option value="10">10</option>
                                      <option value="20">20</option>
+                                     <option value="30">30</option>
                                      <option value="40">40</option>
-                                     <option value="60">60</option>
-                                     <option value="80">80</option>
+                                     <option value="50">50</option>
                                      <option value="100">100</option>
                                  </select>
                                  <label style="padding: 10px;" for="date-range">Date Range:</label>
@@ -137,32 +138,24 @@
  <div id="crud"></div>
  @section('scripts')
      <script>
-         var gl_Codes = <?php echo json_encode($glCodes); ?>;
-         var gl_code_parent = <?php echo json_encode($gl_code_parent); ?>;
-         var gl_code_sub = <?php echo json_encode($gl_code_sub); ?>;
+         var gl_Codes = @json($glCodesParents);
 
          var table = new Tabulator("#gl-code-table", {
              data: gl_Codes,
              layout: "fitColumns",
              columns: [{
-                     title: "Parent G/L Name",
-                     field: "gl_codes_parent.name",
+                     title: "ID",
+                     field: "id",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterParams: {
-                         values: gl_code_parent
-                     }
+                     headerFilter: "input"
                  },
                  {
-                     title: "Sub G/L Name",
+                     title: "Parent G/L Name",
                      field: "name",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterParams: {
-                         values: gl_code_sub
-                     }
+                     headerFilter: "input"
                  },
                  {
                      title: "Description",
@@ -195,63 +188,43 @@
                          return '<div class="button-container">' +
                              '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
                              '"></button>' +
+                             '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
                              '</div>';
                      }
                  }
-                 
              ],
-             pagination: 'local',
-             paginationSize: 20,
-             placeholder: "No Data Available",
              initialSort: [{
                  column: "created_at",
                  dir: "desc"
              }]
          });
 
-         //$('#create-record').click(function() {
-        //    $.get("{{ route('gl_codes.create') }}", form => {
-        //        $('#crud').html(form.html);
-        //        $('#crud').find(".modal").modal('show');
-       //     });
-        //}); 
-         // Add a reset button
-         var resetButton = document.getElementById("reset-button");
-
-
-         resetButton.addEventListener("click", function() {
-             table.clearFilter();
-             table.clearHeaderFilter();
+         $('#create-parentglcode-record').click(function() {
+             $.get("{{ route('gl-codes-parent.create') }}", form => {
+                 $('#crud').html(form.html);
+                 $('#crud').find(".modal").modal('show');
+             });
          });
 
-         $("#pageSizeDropdown").on("change", function() {
-             var selectedPageSize = parseInt($(this).val(), 10);
-             table.setPageSize(selectedPageSize);
+         // Attach the event listener directly to the table element
+         document.getElementById('gl-code-table').addEventListener("click", function(e) {
+             if (e.target.classList.contains("view-button")) {
+                 var parentId = e.target.getAttribute("data-id");
+                 openViewModal(parentId);
+             } else if (e.target.classList.contains("edit-button")) {
+                 var parentId = e.target.getAttribute("data-id");
+                 openUpdateModal(parentId);
+             }
          });
 
-         function printData() {
-             table.print(false, true);
+         // Function to open the view modal
+         function openViewModal(parentId) {
+             $.get("{{ route('gl-codes-parent.show', ['gl_codes_parent' => '__parentId__']) }}".replace('__parentId__',
+                 parentId), function(response) {
+                 $('#crud').html(response.html);
+                 $('#crud').find(".modal").modal('show');
+             });
          }
-         //trigger download of data.csv file
-         document.getElementById("download-csv").addEventListener("click", function() {
-             table.download("csv", "Sub GL List.csv");
-         });
-
-         //trigger download of data.xlsx file
-         document.getElementById("download-xlsx").addEventListener("click", function() {
-             table.download("xlsx", "Sub GL List.xlsx", {
-                 sheetName: "PASA01"
-             });
-         });
-
-         //trigger download of data.pdf file
-         document.getElementById("download-pdf").addEventListener("click", function() {
-             table.download("pdf", "Sub GL List.pdf", {
-                 orientation: "landscape",
-                 title: "Sub GL List",
-             });
-         });
-
      </script>
  @endsection
  @include('layout.footer')

@@ -10,22 +10,28 @@ class GlCodesParentController extends Controller
 {
     public function index()
     {
-        $glCodesParents = GlCodesParent::all();
+        $glCodesParents = GlCodesParent::get();
         
-        return view('gl_codes_parent.index', compact('glCodesParents'));
+        return view('page.gl-codes-parent.index', compact('glCodesParents'));
     }
 
     // Show a single record
-    public function show($id)
+    public function show(GlCodesParent $gl_codes_parent)
     {
-        $glCodesParent = GlCodesParent::findOrFail($id);
-        return view('gl_codes_parent.show', compact('glCodesParent'));
+        //$glCodesParent = GlCodesParent::findOrFail($id);
+        //return view('gl-codes-parent.show', compact('glCodesParent'));
+
+        $html = view("models.parentgl-view", compact('gl_codes_parent'))->render();
+        return response()->json(["status" => true, "html" => $html]);
     }
 
     // Create a new record (show the form)
     public function create()
     {
-        return view('gl_codes_parent.create');
+        $html = view("models.parentgl-create")->render();
+        return response()->json(["status" => true, "html" => $html]);
+
+        //return view('gl_codes_parent.create');
     }
 
     // Store a new record in the database
@@ -34,6 +40,7 @@ class GlCodesParentController extends Controller
         // Validate input data
         $validatedData = $request->validate([
             'name' => 'required|max:255',
+            'description' =>'nullable'
             // ... other validation rules
         ]);
 
@@ -41,14 +48,20 @@ class GlCodesParentController extends Controller
         GlCodesParent::create($validatedData);
 
         // Redirect to the index page or show success message
-        return redirect()->route('gl_codes_parent.index');
+        //return redirect()->route('gl-codes-parent.index');
+        return response()->json([
+            "status" => true,
+            "message" => "Parent G/L Added Successfully",
+            //"redirectTo" => url("gl-codes")
+            "redirectTo" => route("gl-codes-parent.index")
+        ]);
     }
 
     // Edit a record (show the form)
     public function edit($id)
     {
         $glCodesParent = GlCodesParent::findOrFail($id);
-        return view('gl_codes_parent.edit', compact('glCodesParent'));
+        return view('gl-codes-parent.edit', compact('glCodesParent'));
     }
 
     // Update a record in the database
@@ -65,7 +78,7 @@ class GlCodesParentController extends Controller
         $glCodesParent->update($validatedData);
 
         // Redirect to the index page or show success message
-        return redirect()->route('gl_codes_parent.index');
+        return redirect()->route('gl-codes-parent.index');
     }
 
     // Delete a record
@@ -74,6 +87,6 @@ class GlCodesParentController extends Controller
         GlCodesParent::destroy($id);
 
         // Redirect to the index page or show success message
-        return redirect()->route('gl_codes_parent.index');
+        return redirect()->route('gl-codes-parent.index');
     }
 }
