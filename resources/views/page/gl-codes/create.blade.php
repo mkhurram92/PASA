@@ -31,6 +31,29 @@
                 height: 300px;
                 /* Set the height to 100% */
             }
+            
+            /* Custom CSS */
+            .custom-select-wrapper {
+                position: relative;
+                display: inline-block;
+            }
+
+            .custom-select {
+                display: inline-block;
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            .custom-select:after {
+                content: "\25BC";
+                position: absolute;
+                top: 50%;
+                right: 10px;
+                transform: translateY(-50%);
+            }
         </style>
         <div class="container-fluid main-container">
 
@@ -77,7 +100,7 @@
                                                         class="text-danger"></span></label>
 
                                                 <div class="col-md-9">
-                                                    <select name="parent_id" id="parent_id" class="form-control"
+                                                    <select name="parent_id" id="parent_id" class="custom-select"
                                                         required>
                                                         <option value=""></option>
                                                         @foreach ($parentGlCodes as $parentGlCode)

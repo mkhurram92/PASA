@@ -1,5 +1,3 @@
-<!-- resources/views/page/gl_codes/create.blade.php -->
-
 @include('layout.header')
 @include('layout.sidebar')
 
@@ -121,10 +119,10 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label" for="description">Description<span class="text-danger"></span></label>
+                                            <label class="col-md-4 form-label">Description<span class="text-danger"></span></label>
 
                                             <div class="col-md-8">
-                                                <textarea value="{{$transaction->description}}" class="form-control"  disabled readonly></textarea>
+                                                <textarea class="form-control" disabled readonly>{{ $transaction->description }}</textarea>
                                             </div>
                                         </div>
                                     </div>

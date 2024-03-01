@@ -53,7 +53,7 @@ class TransactionController extends Controller
 
             $rules = [
                 'transaction_type' => 'required',
-                //'parent_id' => 'required|exists:parent_gl_codes,id',
+                'parent_id' => 'required|exists:gl_codes_parent,id',
                 'subGlCodes' => 'required',
                 'account_type' => 'required|exists:accounts,id',
                 'amount' => 'required|numeric',
@@ -62,7 +62,7 @@ class TransactionController extends Controller
             // Custom validation messages
             $messages = [
                 'transaction_type' => 'Transaction type is required',
-                //'parent_id' => 'Parent GL is required',
+                'parent_id' => 'Parent GL is required',
                 'subGlCodes' => 'Sub GL is required',
                 'account_type' => 'Transaction account is required',
                 'amount' => 'Amount field is required',
@@ -83,6 +83,7 @@ class TransactionController extends Controller
                 'gl_code_id' => $request->input('subGlCodes'),
                 'account_id' => $request->input('account_type'),
                 'amount' => $request->input('amount'),
+                'description' => $request->input('description')
             ]);
 
             $transaction->save();
