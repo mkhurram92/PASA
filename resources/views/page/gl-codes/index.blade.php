@@ -83,7 +83,7 @@
          }
 
          .button-container button.view-button {
-             background-color: #3498db;
+             background-color: #2ecc71;
              /* Green color for View button */
              color: #fff;
          }
@@ -100,7 +100,7 @@
                      <h3 class="page-title">Sub G/L List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="{{ route('gl-codes.create') }}" id="add-record">
+                     <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"> Add a Sub G/L</i>
                      </a>
                  </div>
@@ -145,16 +145,6 @@
              data: gl_Codes,
              layout: "fitColumns",
              columns: [{
-                     title: "Parent G/L Name",
-                     field: "gl_codes_parent.name",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterParams: {
-                         values: gl_code_parent
-                     }
-                 },
-                 {
                      title: "Sub G/L Name",
                      field: "name",
                      hozAlign: "center",
@@ -162,6 +152,15 @@
                      headerFilter: "select",
                      headerFilterParams: {
                          values: gl_code_sub
+                     }
+                 }, {
+                     title: "Parent G/L Name",
+                     field: "gl_codes_parent.name",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select",
+                     headerFilterParams: {
+                         values: gl_code_parent
                      }
                  },
                  {
@@ -195,10 +194,10 @@
                          return '<div class="button-container">' +
                              '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
                              '"></button>' +
+                             '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
                              '</div>';
                      }
                  }
-                 
              ],
              pagination: 'local',
              paginationSize: 20,
@@ -245,6 +244,28 @@
              });
          });
 
+         $('#create-record').click(function() {
+             $.get("{{ route('gl-codes.create') }}", form => {
+                 $('#crud').html(form.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         });
+
+         document.getElementById('gl-code-table').addEventListener("click", function(e) {
+             if (e.target.classList.contains("view-button")) {
+                 var glcodeId = e.target.getAttribute("data-id");
+                 openViewModal(glcodeId);
+             }
+         });
+
+         // Function to open the view modal
+         function openViewModal(glcodeId) {
+             $.get("{{ route('gl-codes.show', ['gl_code' => '__glcodeId__']) }}".replace('__glcodeId__', glcodeId), function(
+                 response) {
+                 $('#crud').html(response.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         }
      </script>
  @endsection
  @include('layout.footer')

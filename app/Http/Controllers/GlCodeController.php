@@ -11,10 +11,10 @@ class GlCodeController extends Controller
 {
     public function index()
     {
-        $gl_code_parent = GlCodesParent::orderBy('id', 'asc')->pluck('name')->toArray();
+        $gl_code_parent = GlCodesParent::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($gl_code_parent, '');
 
-        $gl_code_sub = GlCode::orderBy('id', 'asc')->pluck('name')->toArray();
+        $gl_code_sub = GlCode::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($gl_code_sub, '');
 
         $glCodes = GlCode::with('glCodesParent')->get();
@@ -26,52 +26,62 @@ class GlCodeController extends Controller
     {
         $parentGlCodes = GlCodesParent::OrderBy('name')->get();
 
-        return view('page.gl-codes.create', compact('parentGlCodes'));
+        //return view('page.gl-codes.create', compact('parentGlCodes'));
 
-        //$html = view("models.glcode-create")->render();
-        //return response()->json(["status" => true, "html" => $html]);
-
+        $html = view("models.glcode-create", compact('parentGlCodes'))->render();
+        return response()->json(["status" => true, "html" => $html]);
     }
 
     public function store(Request $request)
     {
-        $rules = [
-            'name' => 'required|string|max:255', // Adjust the max length as needed
-            'parent_id' => 'required',
-        ];
+        //    $rules = [
+        //        'name' => 'required|string|max:255',
+        //        'parent_id' => 'required',
+        //        'description' =>'nullable'
+        //    ];
 
         // Custom validation messages
-        $messages = [
-            'name.required' => 'Code name field is required',
-            'parent_id.required' => 'Parent name field is required',
-        ];
+        //    $messages = [
+        //        'name.required' => 'Code name field is required',
+        //        'parent_id.required' => 'Parent name field is required',
+        //    ];
 
         // Validate the request
-        $validator = Validator::make($request->all(), $rules, $messages);
+        //    $validator = Validator::make($request->all(), $rules, $messages);
 
         // Check if validation fails
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validator->errors()->first(),
-            ]);
-        }
+        //    if ($validator->fails()) {
+        //        return response()->json([
+        //            'status' => false,
+        //            'message' => $validator->errors()->first(),
+        //        ]);
+        //    }
 
         // Create a new GlCode instance
+        //    $glCode = new GlCode([
+        //        'name' => $request->input('name'),
+        //        'description' => $request->input('description'),
+        //        'parent_id' => $request->input('parent_id'),
+        //    ]);
+
+        //    $glCode->save();
+
+        //    return response()->json([
+        //        "status" => true,
+        //        "message" => "GL Code Added Successfully",
+        //        //"redirectTo" => url("gl-codes")
+        //        "redirectTo" => route("gl-codes.index")
+        //    ]);
+
+
         $glCode = new GlCode([
-            'name' => $request->input('name'),
+            'name' => $request->input('sub_gl_name'),
             'description' => $request->input('description'),
             'parent_id' => $request->input('parent_id'),
         ]);
-
         $glCode->save();
 
-        return response()->json([
-            "status" => true,
-            "message" => "GL Code Added Successfully",
-            //"redirectTo" => url("gl-codes")
-            "redirectTo" => route("gl-codes.index")
-        ]);
+        return response()->json(["status" => true, "message" => "Sub G/L created successfully"]);
     }
 
     public function edit(GlCode $glCode)
@@ -92,5 +102,10 @@ class GlCodeController extends Controller
         $glCode->delete();
 
         return redirect()->route('gl-codes.index')->with('success', 'G/L Code deleted successfully!');
+    }
+    public function show(GlCode $glCode)
+    {
+        $html = view("models.glcode-view", compact('glCode'))->render();
+        return response()->json(["status" => true, "html" => $html]);
     }
 }
