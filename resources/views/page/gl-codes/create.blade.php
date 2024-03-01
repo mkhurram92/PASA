@@ -77,7 +77,7 @@
                                 </h3>
                                 <div class="text-right">
                                     <button type="button" class="btn btn-primary btn-block" id="submitBtn">
-                                        Save G/L Code
+                                        Save Sub G/L Details
                                     </button>
                                 </div>
                             </div>

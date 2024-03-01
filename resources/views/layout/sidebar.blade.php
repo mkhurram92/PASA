@@ -118,7 +118,7 @@
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('members.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('members.index') }}">
-                                        <span class="sub-side-menu__label">Member List</span>
+                                        <span class="sub-side-menu__label">List</span>
                                     </a>
                                 </li>
                             @endcan
