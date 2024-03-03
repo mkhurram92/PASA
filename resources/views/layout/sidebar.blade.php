@@ -105,6 +105,14 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('membership-list')
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item mx-5 @if (Route::is('accounts.index')) active @endif"
+                                        data-bs-toggle="sub-slide" href="{{ route('accounts.index') }}">
+                                        <span class="sub-side-menu__label">Account List</span>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endcanany

@@ -36,6 +36,8 @@ use App\Http\Controllers\GlCodeController;
 use App\Http\Controllers\GlCodesParentController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionTypeController;
+use App\Http\Controllers\AssetController;
+use App\Http\Controllers\Account;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +145,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('gl-codes-parent', GlCodesParentController::class);
     Route::resource('accounts', AccountController::class);
     Route::resource('transaction_types', TransactionTypeController::class);
+    Route::resource('assets', AssetController::class);
+    Route::resource('accounts', AccountController::class);
 
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     Route::get('/getSubGlCodes/{parentId}', [TransactionController::class, 'getSubGlCodes']);

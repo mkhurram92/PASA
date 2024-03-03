@@ -97,11 +97,11 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">Parent G/L List</h3>
+                     <h3 class="page-title">Account List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="javascript:void(0)" id="create-parentglcode-record">
-                         <i class="fa fa-plus-circle" style="font-size:24px;"> Add a Parent G/L</i>
+                     <a class="btn btn-primary" href="#" id="add-record">
+                         <i class="fa fa-plus-circle" style="font-size:24px;"> Add an Account</i>
                      </a>
                  </div>
              </div>
@@ -127,7 +127,7 @@
                                  <button class="custom-button" id="download-pdf">Download PDF</button>
                                  <button class="custom-button" id="reset-button">Reset Filter</button>
                              </div>
-                             <div id="gl-code-table"></div>
+                             <div id="accounts-table"></div>
                          </div>
                      </div>
                  </div>
@@ -138,10 +138,10 @@
  <div id="crud"></div>
  @section('scripts')
      <script>
-         var gl_Codes = @json($glCodesParents);
+         var account = @json($account);
 
-         var table = new Tabulator("#gl-code-table", {
-             data: gl_Codes,
+         var table = new Tabulator("#accounts-table", {
+             data: account,
              layout: "fitColumns",
              columns: [{
                      title: "ID",
@@ -151,8 +151,15 @@
                      headerFilter: "input"
                  },
                  {
-                     title: "Parent G/L Name",
+                     title: "Account Name",
                      field: "name",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "input"
+                 },
+                 {
+                     title: "Account Balance",
+                     field: "balance",
                      hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input"
@@ -165,8 +172,8 @@
                      headerFilter: "input"
                  },
                  {
-                     title: "Created Date",
-                     field: "created_at",
+                     title: "Updated Date",
+                     field: "updated_at",
                      hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input",
@@ -174,57 +181,13 @@
                          var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD HH:mm:ss');
                          return formattedDate;
                      }
-                 },
-                 {
-                     title: "Action",
-                     field: "actions",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     width: "8%",
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var id = cell.getData().id;
-
-                         // Add buttons for each row
-                         return '<div class="button-container">' +
-                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
-                             '"></button>' +
-                             //'<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
-                             '</div>';
-                     }
                  }
              ],
              initialSort: [{
-                 column: "created_at",
+                 column: "updated_at",
                  dir: "desc"
              }]
          });
-
-         $('#create-parentglcode-record').click(function() {
-             $.get("{{ route('gl-codes-parent.create') }}", form => {
-                 $('#crud').html(form.html);
-                 $('#crud').find(".modal").modal('show');
-             });
-         });
-
-         // Attach the event listener directly to the table element
-         document.getElementById('gl-code-table').addEventListener("click", function(e) {
-             if (e.target.classList.contains("view-button")) {
-                 var parentId = e.target.getAttribute("data-id");
-                 openViewModal(parentId);
-             } else if (e.target.classList.contains("edit-button")) {
-                 var parentId = e.target.getAttribute("data-id");
-                 openUpdateModal(parentId);
-             }
-         });
-
-         // Function to open the view modal
-         function openViewModal(parentId) {
-             $.get("{{ route('gl-codes-parent.show', ['gl_codes_parent' => '__parentId__']) }}".replace('__parentId__',
-                 parentId), function(response) {
-                 $('#crud').html(response.html);
-                 $('#crud').find(".modal").modal('show');
-             });
-         }
      </script>
  @endsection
  @include('layout.footer')
