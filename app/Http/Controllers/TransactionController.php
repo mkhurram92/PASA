@@ -87,7 +87,17 @@ class TransactionController extends Controller
             ]);
 
             $transaction->save();
-
+            
+            $account = Account::find($request->input('account_type'));
+            if ($request->input('transaction_type') == 1) {
+                // Income (credit)
+                $account->balance += $request->input('amount');
+            } elseif ($request->input('transaction_type') == 2) {
+                // Expenditure (debit)
+                $account->balance -= $request->input('amount');
+            }
+            $account->save();
+    
             // Commit the database transaction
             DB::commit();
 
