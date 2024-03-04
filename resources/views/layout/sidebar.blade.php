@@ -43,7 +43,7 @@
                     <a class="side-menu__item  @if (Route::is('payment.list')) active @endif" data-bs-toggle="slide"
                         href="{{ route('payment.list') }}">
                         <i class="fa fa-money fa-2x mx-3"></i>
-                        <span class="side-menu__label">Payments List</span>
+                        <span class="side-menu__label">Payments</span>
                     </a>
                 </li>
                 @if (!$isAdmin)
@@ -224,14 +224,14 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('role-list')
+                            {{--@can('role-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('roles.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('roles.index') }}">
                                         <span class="sub-side-menu__label">Roles</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan--}}
                             @can('cities-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('cities.index')) active @endif"

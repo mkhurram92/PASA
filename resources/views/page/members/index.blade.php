@@ -93,7 +93,7 @@
         }
 
         .button-container button.view-button {
-            background-color: #3498db;
+            background-color: #2ecc71;
             /* Green color for View button */
             color: #fff;
         }

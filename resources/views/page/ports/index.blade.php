@@ -149,7 +149,6 @@
                              <div class="table-responsive">
                                  <div id="ports-table"></div>
                              </div>
-
                          </div>
                      </div>
                  </div>
