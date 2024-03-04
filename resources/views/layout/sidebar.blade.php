@@ -55,7 +55,7 @@
                         </a>
                     </li>
                 @endif
-                @if (!$isAdmin)
+                {{-- @if (!$isAdmin)
                     <li class="slide">
                         <a class="side-menu__item  @if (Route::is('juniors')) active @endif"
                             data-bs-toggle="slide" href="{{ route('juniors') }}">
@@ -73,7 +73,7 @@
                         </a>
                     </li>
                 @endif
-                {{-- @canany(['payment-list']) --}}
+                @canany(['payment-list']) --}}
                 {{-- @endcanany --}}
                 @canany(['membership-list'])
                     <li class="slide @if (Route::is('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent')) is-expanded @endif">

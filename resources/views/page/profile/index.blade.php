@@ -17,6 +17,9 @@
                 font-size: medium;
                 color: black;
             }
+            body{
+                background: white;
+            }
         </style>
         <div class="container-fluid main-container mt-5">
             <div class="row my-5">
@@ -27,7 +30,7 @@
                 </div>
             </div>
             <div class="panel panel-primary">
-                <div class=" tab-menu-heading p-0">
+                <div class="tab-menu-heading p-0">
                     <div class="tabs-menu1 ">
                         <!-- Tabs -->
                         <ul class="nav panel-tabs">

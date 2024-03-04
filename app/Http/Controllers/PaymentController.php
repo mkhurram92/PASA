@@ -32,7 +32,7 @@ class PaymentController extends Controller
     {
         $paymentTypeOptions = PaymentType::pluck('name')->toArray();
         array_unshift($paymentTypeOptions, '');
-        
+
         $user = User::with(['roles'])->find(auth()->id());
         $subscribers = Subscription::wherecreatedBy($user->id)->get();
         $data = [];
