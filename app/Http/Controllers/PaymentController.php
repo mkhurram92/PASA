@@ -7,6 +7,7 @@ use App\Models\Gender;
 use App\Models\PaymentType;
 use App\Models\States;
 use App\Models\Subscription;
+use App\Models\Transaction;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -210,7 +211,13 @@ class PaymentController extends Controller
                     ]
                 ]);
             }
-
+            Transaction::create([
+                'transaction_type_id' => 1,
+                'gl_code_id' => 85,
+                'account_id' => 3,
+                'amount' => $amount,
+                'description' => 'New Applicant'
+            ]);
             // create payment intent
             $res = $stripe->paymentIntents->create([
                 'amount' => $amount * 100,
@@ -256,7 +263,13 @@ class PaymentController extends Controller
                 ]
             ];
             $customer = $stripe->customers->create($customerDetails);
-
+            Transaction::create([
+                'transaction_type_id' => 1,
+                'gl_code_id' => 85,
+                'account_id' => 3,
+                'amount' => $amount,
+                'description' => 'New Applicant'
+            ]);
             // create payment intent
             $res = $stripe->paymentIntents->create([
                 'amount' => $amount * 100,
@@ -317,7 +330,13 @@ class PaymentController extends Controller
                 ]
             ];
             $customer = $stripe->customers->create($customerDetails);
-
+            Transaction::create([
+                'transaction_type_id' => 1,
+                'gl_code_id' => 85,
+                'account_id' => 3,
+                'amount' => $amount,
+                'description' => 'New Applicant'
+            ]);
             // create payment intent
             $res = $stripe->paymentIntents->create([
                 'amount' => $amount * 100,
@@ -374,7 +393,13 @@ class PaymentController extends Controller
                 ]
             ];
             $customer = $stripe->customers->create($customerDetails);
-
+            Transaction::create([
+                'transaction_type_id' => 1,
+                'gl_code_id' => 85,
+                'account_id' => 3,
+                'amount' => $amount,
+                'description' => 'New Applicant'
+            ]);
             // create payment intent
             $res = $stripe->paymentIntents->create([
                 'amount' => $amount * 100,
