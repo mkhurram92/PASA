@@ -146,14 +146,14 @@
              data: gl_Codes,
              layout: "fitColumns",
              columns: [{
-                     title: "Transaction No.",
+                     title: "No.",
                      field: "id",
                      hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input"
-                 }, 
+                 },
                  {
-                     title: "Parent Account",
+                     title: "Parent G/L",
                      field: "gl_code.gl_codes_parent.name",
                      hozAlign: "center",
                      vertAlign: "middle",
@@ -164,7 +164,7 @@
                      }
                  },
                  {
-                     title: "Sub Account",
+                     title: "Sub G/L",
                      field: "gl_code.name",
                      hozAlign: "center",
                      vertAlign: "middle",
@@ -175,7 +175,7 @@
                      }
                  },
                  {
-                     title: "Transaction Type",
+                     title: "Type",
                      field: "transaction_type.name",
                      hozAlign: "center",
                      vertAlign: "middle",
@@ -185,10 +185,8 @@
                          values: transaction_type
                      },
                      formatter: function(cell, formatterParams, onRendered) {
-                         // Access the cell value
                          var transaction_type = cell.getValue();
 
-                         // Add custom styling based on membership type
                          var style = '';
                          if (transaction_type === 'Income') {
                              style = 'color: green;';
@@ -197,7 +195,6 @@
                          }
                          var formattedValue = '<span style="' + style + '">' + transaction_type + '</span>';
 
-                         // Return the formatted content
                          return formattedValue;
                      }
                  },
@@ -210,7 +207,7 @@
                      headerFilterPlaceholder: 'Search by Amount'
                  },
                  {
-                     title: "Transaction Account",
+                     title: "Account",
                      field: "account.name",
                      hozAlign: "center",
                      vertAlign: "middle",
@@ -221,7 +218,7 @@
                      }
                  },
                  {
-                     title: "Created Date",
+                     title: "Date",
                      field: "created_at",
                      hozAlign: "center",
                      vertAlign: "middle",
@@ -238,6 +235,8 @@
                      hozAlign: "center",
                      vertAlign: "middle",
                      width: "8%",
+                     download: false,
+                     print:false,
                      formatter: function(cell, formatterParams, onRendered) {
                          var id = cell.getData().id;
 
@@ -260,7 +259,6 @@
          });
          // Add a reset button
          var resetButton = document.getElementById("reset-button");
-
 
          resetButton.addEventListener("click", function() {
              table.clearFilter();
