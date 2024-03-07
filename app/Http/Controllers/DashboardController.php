@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Models\Dashboard;
 use App\Http\Requests\StoreDashboardRequest;
 use App\Http\Requests\UpdateDashboardRequest;
+use App\Models\AncestorData;
 use App\Models\Gender;
 use App\Models\Member;
 use App\Models\MemberJunior;
@@ -14,7 +15,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\MembershipType;
 use App\Models\MemberShipStatus;
-
+use App\Models\Transaction;
 
 class DashboardController extends Controller
 {
@@ -31,7 +32,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('page.dashbord.dashbord');
+        $members = Member::all();
+        $numberOfMembers = count($members);
+
+        $ancestors = AncestorData::all();
+        $numberOfAncestors = count($ancestors);
+
+        $incomeTransactions = Transaction::where('transaction_type_id', 1)->sum('amount');
+        $expenseTransactions = Transaction::where('transaction_type_id', 2)->sum('amount');
+
+        return view('page.dashbord.dashbord', compact('numberOfMembers', 'numberOfAncestors', 'incomeTransactions', 'expenseTransactions'));
     }
 
     /**
