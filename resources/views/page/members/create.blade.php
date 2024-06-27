@@ -329,7 +329,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Journal<span
-                                                    class="tx-danger">*</span></label>
+                                                    class="tx-danger"> *</span></label>
                                             <div class="col-md-4">
                                                 <div class="mb-3 mb-sm-0 d-flex align-items-center">
                                                     <label class="form-label mb-0 me-2">Emailed</label>
@@ -346,8 +346,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-6 form-label">Registration form
-                                                received</label>
+                                            <label class="col-md-6 form-label">Registration Form Received</label>
                                             <div class="col-md-6">
                                                 <input id="registration_form_received" type="checkbox"
                                                     class="checkbox-input" name="registration_form_received"
@@ -355,9 +354,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-6 form-label">Signed Confidentiality
-                                                agreement
-                                                received</label>
+                                            <label class="col-md-6 form-label">Signed Confidentiality Agreement Received</label>
                                             <div class="col-md-6">
                                                 <input id="signed_agreement" type="checkbox" class="checkbox-input"
                                                     name="signed_agreement" value='1'>
@@ -375,7 +372,7 @@
                                                 <label class="col-md-4 form-label">Experience</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Experience" name="experience">
+                                                        placeholder="Experience" name="experience">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -383,29 +380,29 @@
                                                     Issues</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Health Issues" name="health_issues">
+                                                        placeholder="Health Issues" name="health_issues">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Contact
-                                                    received</label>
+                                                    Received</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Contact" name="contact">
+                                                        placeholder="Contact Received" name="contact">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Skills</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Skills" name="skills">
+                                                        placeholder="Skills" name="skills">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Availability</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Enter Availability" name="availability">
+                                                        placeholder="Availability" name="availability">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -413,7 +410,7 @@
                                                     Working Preferences</label>
                                                 <div class="col-md-8">
                                                     <textarea class="form-control" name="volunteer_skills_working" rows="3"
-                                                        placeholder="Enter Volunteer Skills and Working Preferences"></textarea>
+                                                        placeholder="Volunteer Skills and Working Preferences"></textarea>
                                                 </div>
                                             </div>
                                         </div>

@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreMemberRequest;
+use App\Models\SubscriptionPlan;
 
 class SubscribeMemberController extends Controller
 {
@@ -38,7 +39,8 @@ class SubscribeMemberController extends Controller
         $data['titles'] = Title::all();
         $data['states'] = States::all();
         $data['membership_status'] = MemberShipStatus::all();
-        $data['membership_types'] = MembershipType::all();
+        //$data['membership_types'] = MembershipType::all();
+        $data['membership_types'] = SubscriptionPlan::all();
 
         return view('page.members.create', compact('data'));
     }
@@ -148,7 +150,8 @@ class SubscribeMemberController extends Controller
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
-        $data['membership_types'] = MembershipType::all();
+        $data['membership_types'] = SubscriptionPlan::all();
+        //$data['membership_types'] = MembershipType::all();
         $data['membership_status'] = MemberShipStatus::all();
 
         return view('page.members.view-member', compact('member', 'data'));
@@ -161,7 +164,8 @@ class SubscribeMemberController extends Controller
         $data['state_name'] = Helper::getState($member?->address?->state);
         $data['states'] = States::all();
         $data['membership_status'] = MemberShipStatus::all();
-        $data['membership_types'] = MembershipType::all();
+        //$data['membership_types'] = MembershipType::all();
+        $data['membership_types'] = SubscriptionPlan::all();
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
