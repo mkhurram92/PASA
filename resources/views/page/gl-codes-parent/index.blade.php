@@ -101,7 +101,7 @@
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary" href="javascript:void(0)" id="create-parentglcode-record">
-                         <i class="fa fa-plus-circle" style="font-size:24px;"> Add a Parent G/L</i>
+                         <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                      </a>
                  </div>
              </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountiesController;
 use App\Http\Controllers\ShipController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TitleController;
 use App\Http\Controllers\StatesController;
 use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\FriendMemberFormWizard;
@@ -92,6 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('subscription-plans', SubscriptionPlanController::class);
     Route::resource('/', DashboardController::class);
     Route::resource('/user', UserController::class);
+    Route::resource('/title',TitleController::class);
     Route::resource('/ship', ShipController::class);
     Route::resource('mode-of-arrivals', ModeOfArrivalsController::class);
     //Route::resource('states', StatesController::class);

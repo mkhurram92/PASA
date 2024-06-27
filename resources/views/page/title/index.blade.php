@@ -98,10 +98,10 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">Rigs</h3>
+                     <h3 class="page-title">User List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="javascript:void(0)" id="create-rig-record">
+                     <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                      </a>
                  </div>
@@ -148,7 +148,7 @@
                                  <button class="custom-button" id="reset-button">Reset Filter</button>
                              </div>
                              <div class="table-responsive">
-                                 <div id="rigs-table"></div>
+                                 <div id="users-table"></div>
                              </div>
                          </div>
                      </div>
@@ -160,122 +160,141 @@
  <!-- MODAL EFFECTS -->
  <div id="crud"></div>
  @include('plugins.select2')
- @section('scripts')
-     <script>
-         var myData = @json($data);
 
-         var table = new Tabulator("#rigs-table", {
-             data: myData,
-             layout: "fitColumns",
-             columns: [{
-                     title: 'ID',
-                     field: 'id',
-                     headerFilter: 'input',
-                     hozAlign: 'center',
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Search by ID'
-                 },
-                 {
-                     title: 'Rig Name',
-                     field: 'name',
-                     headerFilter: 'input',
-                     hozAlign: 'center',
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Search by Rig Name'
-                 },
-                 {
-                     title: "Action",
-                     field: "actions",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     width: "8%",
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var id = cell.getData().id;
+@section('scripts')
+    <script>
+        var myData = @json($data);
 
-                         // Add buttons for each row
-                         return '<div class="button-container">' +
-                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
-                             '"></button>' +
-                             '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
-                             '</div>';
-                     }
-                 }
-             ],
-             pagination: 'local',
-             paginationSize: 10,
-             placeholder: "No Data Available"
-         });
+        var table = new Tabulator("#users-table", {
+            data: myData,
+            layout: "fitColumns",
+            columns: [{
+                    title: 'ID',
+                    field: 'id',
+                    headerFilter: 'input',
+                    hozAlign: 'center',
+                    vertAlign: "middle",
+                    headerFilterPlaceholder: 'Search by ID'
+                },
+                {
+                    title: 'Name',
+                    field: 'name',
+                    headerFilter: 'input',
+                    hozAlign: 'center',
+                    vertAlign: "middle",
+                    headerFilterPlaceholder: 'Search by Name'
+                },
+                {
+                    title: 'Email',
+                    field: 'email',
+                    hozAlign: 'center',
+                    vertAlign: "middle",
+                    headerFilter: "input",
+                    headerFilterPlaceholder: 'Search by Email'
+                },
+                {
+                    title: 'Created Date',
+                    field: 'created_at',
+                    hozAlign: 'center',
+                    vertAlign: "middle",
+                    headerFilter: "input",
+                    headerFilterPlaceholder: 'Search by Created Date'
+                },
+                {
+                    title: "Action",
+                    field: "actions",
+                    hozAlign: "center",
+                    vertAlign: "middle",
+                    width: "8%",
+                    formatter: function(cell, formatterParams, onRendered) {
+                        var id = cell.getData().id;
 
-         $('#create-rig-record').click(function() {
-             $.get("{{ route('rigs.create') }}", form => {
-                 $('#crud').html(form.html);
-                 $('#crud').find(".modal").modal('show');
-             });
-         });
+                        // Add buttons for each row
+                        return '<div class="button-container">' +
+                            '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                            '"></button>' +
+                            '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
+                            '</div>';
+                    }
+                }
+            ],
+            pagination: 'local',
+            paginationSize: 10,
+            placeholder: "No Data Available"
+        });
 
-         // Attach the event listener directly to the table element
-         document.getElementById('rigs-table').addEventListener("click", function(e) {
-             if (e.target.classList.contains("view-button")) {
-                 var cityId = e.target.getAttribute("data-id");
-                 openViewModal(cityId);
-             } else if (e.target.classList.contains("edit-button")) {
-                 var cityId = e.target.getAttribute("data-id");
-                 openUpdateModal(cityId);
-             }
-         });
+        $('#create-record').click(function() {
+            $.get("{{ route('user.create') }}", form => {
+                $('#crud').html(form.html);
+                $('#crud').find(".modal").modal('show');
+            });
+        });
 
-         function openUpdateModal(cityId) {
-             $.get("{{ route('rigs.edit', ['rig' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
-                 $('#crud').html(response.html);
-                 $('#crud').find(".modal").modal('show');
-             });
-         }
+        // Attach the event listener directly to the table element
+        document.getElementById('users-table').addEventListener("click", function(e) {
+            if (e.target.classList.contains("view-button")) {
+                var cityId = e.target.getAttribute("data-id");
+                openViewModal(cityId);
+            } else if (e.target.classList.contains("edit-button")) {
+                var cityId = e.target.getAttribute("data-id");
+                openUpdateModal(cityId);
+            }
+        });
 
-         // Function to open the view modal
-         function openViewModal(cityId) {
-             $.get("{{ route('rigs.show', ['rig' => '__city__']) }}".replace('__city__', cityId), function(response) {
-                 $('#crud').html(response.html);
-                 $('#crudModel').modal('show');
-             });
-         }
+        function openUpdateModal(cityId) {
+            $.get("{{ route('user.edit', ['user' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
+                $('#crud').html(response.html);
+                $('#crud').find(".modal").modal('show');
+            });
+        }
 
-         function printData() {
-             table.print(false, true);
-         }
+        // Function to open the view modal
+        function openViewModal(cityId) {
+            $.get("{{ route('user.show', ['user' => '__city__']) }}".replace('__city__', cityId), function(response) {
+                $('#crud').html(response.html);
+                $('#crud').find(".modal").modal('show');
+            });
+        }
 
-         // Add a reset button
-         var resetButton = document.getElementById("reset-button");
+        function printData() {
+            //console.log("Print button clicked");
 
-         resetButton.addEventListener("click", function() {
-             table.clearFilter();
-             table.clearHeaderFilter();
-         });
+            table.print(false, true);
+        }
 
-         $("#pageSizeDropdown").on("change", function() {
-             var selectedPageSize = parseInt($(this).val(), 10);
-             table.setPageSize(selectedPageSize);
-         });
+        // Add a reset button
+        var resetButton = document.getElementById("reset-button");
 
-         //trigger download of data.csv file
-         document.getElementById("download-csv").addEventListener("click", function() {
-             table.download("csv", "Ancestor List.csv");
-         });
+        resetButton.addEventListener("click", function() {
+            table.clearFilter();
+            table.clearHeaderFilter();
+        });
 
-         //trigger download of data.xlsx file
-         document.getElementById("download-xlsx").addEventListener("click", function() {
-             table.download("xlsx", "Ancestor List.xlsx", {
-                 sheetName: "PASA01",
-             });
-         });
+        $("#pageSizeDropdown").on("change", function() {
+            var selectedPageSize = parseInt($(this).val(), 10);
+            table.setPageSize(selectedPageSize);
+        });
 
-         //trigger download of data.pdf file
-         document.getElementById("download-pdf").addEventListener("click", function() {
-             table.download("pdf", "Ancestor List.pdf", {
-                 orientation: "landscape",
-                 title: "Ancestor List",
-             });
-         });
-     </script>
- @endsection
- <!-- app-content end-->
- @include('layout.footer')
+        //trigger download of data.csv file
+        document.getElementById("download-csv").addEventListener("click", function() {
+            table.download("csv", "User List.csv");
+        });
+
+        //trigger download of data.xlsx file
+        document.getElementById("download-xlsx").addEventListener("click", function() {
+            table.download("xlsx", "User List.xlsx", {
+                sheetName: "PASA01",
+            });
+        });
+
+        //trigger download of data.pdf file
+        document.getElementById("download-pdf").addEventListener("click", function() {
+            table.download("pdf", "User List.pdf", {
+                orientation: "landscape",
+                title: "User List",
+            });
+        });
+    </script>
+@endsection
+
+@include('layout.footer')

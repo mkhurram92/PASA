@@ -103,7 +103,7 @@
                  <div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary @if (Route::is('mode-of-arrivals.create')) active @endif"
                          href="{{ route('mode-of-arrivals.create') }}" id="add-record">
-                         <i class="fa fa-plus-circle" style="font-size:24px;"> Add New</i>
+                         <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                      </a>
                  </div>
              </div>

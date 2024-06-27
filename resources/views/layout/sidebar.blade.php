@@ -208,6 +208,7 @@
                             <i class="fa fa-gears fa-2x mx-3"></i>
                             <span class="side-menu__label">Settings</span><i class="angle fe fe-chevron-right"></i></a>
                         <ul class="slide-menu @if (Route::is(
+                                'title.index',
                                 'user.index',
                                 'states.index',
                                 'ports.index',
@@ -221,6 +222,14 @@
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('user.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('user.index') }}">
                                         <span class="sub-side-menu__label">Users</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('title-list')
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item mx-5 @if (Route::is('title.index')) active @endif"
+                                        data-bs-toggle="sub-slide" href="{{ route('title.index') }}">
+                                        <span class="sub-side-menu__label">Titles</span>
                                     </a>
                                 </li>
                             @endcan
