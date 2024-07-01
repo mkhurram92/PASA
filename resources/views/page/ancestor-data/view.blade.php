@@ -60,9 +60,7 @@
                                             <label class="col-md-4 form-label">Pioneer’s Family Name<span
                                                     class="text-danger"></span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    placeholder="Pioneer’s Family Name"
-                                                    value="{{ $ancestor?->ancestor_surname }}" disabled readonly
+                                                <input class="form-control" type="text" value="{{ $ancestor?->ancestor_surname }}" disabled readonly
                                                     name="ancestor_surname">
                                             </div>
                                         </div>
@@ -70,16 +68,14 @@
                                             <label class="col-md-4 form-label">Pioneer’s Given Name<span
                                                     class="text-danger"></span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Given Name"
-                                                    value="{{ $ancestor?->given_name }}" disabled readonly
+                                                <input class="form-control" type="text" value="{{ $ancestor?->given_name }}" disabled readonly
                                                     name="given_name">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <label class="col-md-4 form-label">Pioneer's Preffered Name</label>
+                                            <label class="col-md-4 form-label">Pioneer's Preferred Name</label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    placeholder="Pioneer's Preffered Name"
                                                     value="{{ $ancestor?->maiden_surname }}" disabled readonly
                                                     name="maiden_surname">
 
@@ -91,31 +87,27 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Birth Date</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Birth Date"
-                                                    value="{{ $ancestor?->date_of_birth }}" disabled readonly
+                                                <input class="form-control" type="text" value="{{ $ancestor?->date_of_birth }}" disabled readonly
                                                     name="date_of_birth">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Birth Place</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Birth Place"
-                                                    value="" disabled readonly name="place_of_birth">
+                                                <input class="form-control" type="text" disabled readonly name="place_of_birth">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Death Date</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Death Date"
-                                                    value="{{ $ancestor?->date_of_death }}" disabled readonly
+                                                <input class="form-control" type="text" value="{{ $ancestor?->date_of_death }}" disabled readonly
                                                     name="date_of_death">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Death Place</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Death Place"
-                                                    value="" disabled readonly name="place_of_death">
+                                                <input class="form-control" type="text" disabled readonly name="place_of_death">
                                             </div>
                                         </div>
                                     </div>
@@ -130,9 +122,7 @@
                                                     <label class="col-md-4 form-label">Mode of Travel to South
                                                         Australia<span class="text-danger"></span></label>
                                                     <div class="col-md-8">
-                                                        <input class="form-control" type="text"
-                                                            placeholder="Mode of Travel"
-                                                            value="{{ $ancestor?->sourceOfArrival?->name }}" disabled
+                                                        <input class="form-control" type="text" value="{{ $ancestor?->sourceOfArrival?->name }}" disabled
                                                             readonly>
                                                     </div>
                                                 </div>
@@ -141,9 +131,8 @@
                                                         <label class="col-md-4 form-label">Ship Name - Arrival Year<span
                                                                 class="text-danger"></span></label>
                                                         <div class="col-md-8">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Ship Name"
-                                                                value="{{ $ancestor?->mode_of_travel?->ship?->name_of_ship . ' - ' . $ancestor?->mode_of_travel?->year }}"
+                                                            <input class="form-control" type="text" 
+                                                            value="{{ $ancestor?->mode_of_travel?->ship?->name_of_ship . ' - ' . $ancestor?->mode_of_travel?->year }}"
                                                                 disabled readonly>
                                                         </div>
                                                     </div>
@@ -152,9 +141,7 @@
                                                         <label class="col-md-4 form-label">Arrival Date in SA<span
                                                                 class="text-danger"></span></label>
                                                         <div class="col-md-8">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Arrival Date in SA"
-                                                                value="{{ $ancestor?->mode_of_travel?->date_of_arrival }}"
+                                                            <input class="form-control" type="text" value="{{ $ancestor?->mode_of_travel?->date_of_arrival }}"
                                                                 disabled readonly>
                                                         </div>
                                                     </div>
@@ -162,9 +149,7 @@
                                                         <label class="col-md-4 form-label">Arrival Port in SA<span
                                                                 class="text-danger"></span></label>
                                                         <div class="col-md-8">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Arrival Port in SA"
-                                                                value="{{ $ancestor?->mode_of_travel?->port?->name }}"
+                                                            <input class="form-control" type="text" value="{{ $ancestor?->mode_of_travel?->port?->name }}"
                                                                 disabled readonly>
                                                         </div>
                                                     </div>
@@ -173,9 +158,7 @@
                                                         <label class="col-md-4 form-label">Arrivals Date in SA<span
                                                                 class="text-danger"></span></label>
                                                         <div class="col-md-8">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Ship Name"
-                                                                value="{{ $ancestor?->localTravelDetails?->travel_date }}"
+                                                            <input class="form-control" type="text" value="{{ $ancestor?->localTravelDetails?->travel_date }}"
                                                                 disabled readonly>
                                                         </div>
                                                     </div>
@@ -184,7 +167,7 @@
                                                         <label class="col-md-4 form-label">Arrival Evidence<span
                                                                 class="text-danger"></span></label>
                                                         <div class="col-md-8">
-                                                            <textarea class="form-control" rows="5" placeholder="Arrival Evidence" disabled readonly>{{ $ancestor?->localTravelDetails?->description }}</textarea>
+                                                            <textarea class="form-control" rows="5" disabled readonly>{{ $ancestor?->localTravelDetails?->description }}</textarea>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -222,9 +205,8 @@
                                                                 class="text-danger"></span></label>
 
                                                         <div class="col-md-9">
-                                                            <input class="form-control fc-datepicker" type="text"
-                                                                placeholder="Marriage Date"
-                                                                value="{{ $ancestor?->spouse_details?->marriage_date }}"
+                                                            <input class="form-control fc-datepicker" type="text" 
+                                                            value="{{ $ancestor?->spouse_details?->marriage_date }}"
                                                                 id="marriage_date" name="marriage_date" disabled
                                                                 readonly>
                                                         </div>
@@ -235,9 +217,7 @@
                                                                 class="text-danger"></span></label>
 
                                                         <div class="col-md-9">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Marriage Place" value=""
-                                                                id="marriage_place" name="marriage_place"
+                                                            <input class="form-control" type="text" id="marriage_place" name="marriage_place"
                                                                 value="" disabled readonly>
                                                         </div>
                                                     </div>
@@ -246,11 +226,9 @@
                                                                 class="text-danger"></span></label>
 
                                                         <div class="col-md-9">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Spouse’s Family Name"
-                                                                id="spouse_family_name" name="spouse_family_name"
+                                                            <input class="form-control" type="text" id="spouse_family_name" name="spouse_family_name"
                                                                 value="{{ $ancestor?->spouse_details?->spouse_family_name }}"
-                                                                disabled readonly>
+                                                                disabled readonly> 
                                                         </div>
                                                     </div>
                                                     <div id="spouse_given_name_section" class="mb-3 row">
@@ -258,9 +236,7 @@
                                                                 class="text-danger"></span></label>
 
                                                         <div class="col-md-9">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Spouse’s Given Name(s)"
-                                                                value="{{ $ancestor?->spouse_details?->spouse_given_name }}"
+                                                            <input class="form-control" type="text" value="{{ $ancestor?->spouse_details?->spouse_given_name }}"
                                                                 id="spouse_given_name" name="spouse_given_name"
                                                                 disabled readonly>
                                                         </div>
@@ -268,35 +244,27 @@
                                                     <div id="spouse_date_of_birth" class="mb-3 row">
                                                         <label class="col-md-3 form-label">Birth Date</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control fc-datepicker" type="text"
-                                                                placeholder="Birth Date"
-                                                                value="{{ $ancestor?->spouse_details?->spouse_birth_date }}"
+                                                            <input class="form-control fc-datepicker" type="text" value="{{ $ancestor?->spouse_details?->spouse_birth_date }}"
                                                                 name="spouse_date_of_birth" disabled readonly>
                                                         </div>
                                                     </div>
                                                     <div id="spouse_place_of_birth" class="mb-3 row">
                                                         <label class="col-md-3 form-label">Birth Place</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Birth Place" value=""
-                                                                name="spouse_place_of_birth" disabled readonly>
+                                                            <input class="form-control" type="text" name="spouse_place_of_birth" disabled readonly>
                                                         </div>
                                                     </div>
                                                     <div id="spouse_date_of_death" class="mb-3 row">
                                                         <label class="col-md-3 form-label">Death Date</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control fc-datepicker" type="text"
-                                                                placeholder="Death Date"
-                                                                value="{{ $ancestor?->spouse_details?->spouse_death_date }}"
+                                                            <input class="form-control fc-datepicker" type="text" value="{{ $ancestor?->spouse_details?->spouse_death_date }}"
                                                                 name="spouse_date_of_death"  disabled readonly>
                                                         </div>
                                                     </div>
                                                     <div id="spouse_place_of_death" class="mb-3 row">
                                                         <label class="col-md-3 form-label">Death Place</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Death Place" value=""
-                                                                name="spouse_place_of_death" disabled readonly>
+                                                            <input class="form-control" type="text" name="spouse_place_of_death" disabled readonly>
                                                         </div>
                                                     </div>
                                                 @endif

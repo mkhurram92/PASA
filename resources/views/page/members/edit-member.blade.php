@@ -307,17 +307,51 @@
                                                 <textarea class="form-control" name="end_status_notes" rows="3" placeholder="End Status Notes">{{ $member?->additionalInfo?->end_status_notes }}</textarea>
                                             </div>
                                         </div>
-
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Key Holder</label>
+                                            <label class="col-md-4 form-label">Volunteer</label>
                                             <div class="col-md-8">
-                                                <input id="key_holder" type="checkbox" class="checkbox-input" name="key_holder" value='1' @if ($member?->additionalInfo?->key_holder == 1) checked @endif>
+                                                <input id="volunteer" type="checkbox" class="checkbox-input" name="volunteer" value='1' @if ($member?->additionalInfo?->volunteer == 1) checked @endif>
                                             </div>
                                         </div>
-                                        <div class="mb-3 row key_held" style="display: none;">
-                                            <label class="col-md-4 form-label">Key Held</label>
-                                            <div class="col-md-8">
-                                                <textarea class="form-control" name="key_held" rows="3" placeholder="Key Held">{{ $member?->additionalInfo?->key_held }}</textarea>
+                                        <div class="volunteer_details" style="display: none;">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Experience</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="experience" rows="3">{{ $member?->volunteerDetails?->experience }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Health
+                                                    Issues</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="health_issues" rows="3">{{ $member?->volunteerDetails?->health_issues }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Contact
+                                                    received</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="contact" rows="3">{{ $member?->volunteerDetails?->contact }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Skills</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="skills" rows="3">{{ $member?->volunteerDetails?->skills }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Availability</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="availability" rows="3">{{ $member?->volunteerDetails?->availability }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Volunteer Skills and
+                                                    Working Preferences</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="volunteer_skills_working" rows="3">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -353,52 +387,17 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Volunteer</label>
+                                            <label class="col-md-4 form-label">Key Holder</label>
                                             <div class="col-md-8">
-                                                <input id="volunteer" type="checkbox" class="checkbox-input" name="volunteer" value='1' @if ($member?->additionalInfo?->volunteer == 1) checked @endif>
+                                                <input id="key_holder" type="checkbox" class="checkbox-input" name="key_holder" value='1' @if ($member?->additionalInfo?->key_holder == 1) checked @endif>
                                             </div>
                                         </div>
-                                        <div class="volunteer_details" style="display: none;">
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Experience</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Enter Experience" value="{{ $member?->volunteerDetails?->experience }}" name="experience">
-                                                </div>
+                                        <div class="mb-3 row key_held" style="display: none;">
+                                            <label class="col-md-4 form-label">Key Held</label>
+                                            <div class="col-md-8">
+                                                <textarea class="form-control" name="key_held" rows="3" placeholder="Key Held">{{ $member?->additionalInfo?->key_held }}</textarea>
                                             </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Health
-                                                    Issues</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Enter Health Issues" value="{{ $member?->volunteerDetails?->health_issues }}" name="health_issues">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Contact
-                                                    received</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Enter Contact" value="{{ $member?->volunteerDetails?->contact }}" name="contact">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Skills</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Enter Skills" value="{{ $member?->volunteerDetails?->skills }}" name="skills">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Availability</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Enter Availability" value="{{ $member?->volunteerDetails?->availability }}" name="availability">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Volunteer Skills and
-                                                    Working Preferences</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="volunteer_skills_working" rows="3" placeholder="Enter Volunteer Skills and Working Preferences">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div>                                        
                                     </div>
                                 </div>
                             </div>

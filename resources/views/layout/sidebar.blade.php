@@ -317,7 +317,7 @@
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('subscription-plans.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('subscription-plans.index') }}">
-                                        <span class="sub-side-menu__label">Membership Categories</span>
+                                        <span class="sub-side-menu__label">Membership Type</span>
                                     </a>
                                 </li>
                             @endcan

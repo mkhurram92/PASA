@@ -270,20 +270,54 @@
                                         </div>
 
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Key Holder</label>
+                                            <label class="col-md-4 form-label">Volunteer</label>
                                             <div class="col-md-8">
-                                                <span id="displayStatus" class="custom-font"></span>
+                                                <span id="volunteerStatus" class="custom-font"></span>
                                             </div>
                                         </div>
 
-                                        @if ($member?->additionalInfo?->key_holder == 1)
-                                        <div class="mb-3 row key_held">
-                                            <label class="col-md-4 form-label">Key Held</label>
-                                            <div class="col-md-8">
-                                                <textarea class="form-control" name="key_held" readonly disabled rows="3">{{ $member?->additionalInfo?->key_held }}</textarea>
+                                        @if ($member?->additionalInfo?->volunteer == 1)
+                                        <div class="volunteer_details">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Experience</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="experience" readonly disabled>{{ $member?->volunteerDetails?->experience }} </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Health
+                                                    Issues</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="health_issues" readonly disabled>{{ $member?->volunteerDetails?->health_issues }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Contact
+                                                    received</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="contact" readonly disabled>{{ $member?->volunteerDetails?->contact }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Skills</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="skills" readonly disabled>{{ $member?->volunteerDetails?->skills }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Availability</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="availability" readonly disabled>{{ $member?->volunteerDetails?->availability }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Volunteer Skills and
+                                                    Working Preferences</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3" >{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
+                                                </div>
                                             </div>
                                         </div>
-                                        @endif
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
@@ -305,55 +339,22 @@
                                                 <span id="signedAgreementStatus" class="custom-font"></span>
                                             </div>
                                         </div>
+                                        
                                         <div class="mb-3 row">
-                                            <label class="col-md-6 form-label">Volunteer</label>
-                                            <div class="col-md-6">
-                                                <span id="volunteerStatus" class="custom-font"></span>
+                                            <label class="col-md-4 form-label">Key Holder</label>
+                                            <div class="col-md-8">
+                                                <span id="displayStatus" class="custom-font"></span>
                                             </div>
                                         </div>
 
-                                        @if ($member?->additionalInfo?->volunteer == 1)
-                                        <div class="volunteer_details">
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Experience</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->experience }}" name="experience" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Health
-                                                    Issues</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->health_issues }}" name="health_issues" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Contact
-                                                    received</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->contact }}" name="contact" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Skills</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->skills }}" name="skills" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Availability</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" value="{{ $member?->volunteerDetails?->availability }}" name="availability" readonly disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Volunteer Skills and
-                                                    Working Preferences</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3" >{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
-                                                </div>
+                                        @if ($member?->additionalInfo?->key_holder == 1)
+                                        <div class="mb-3 row key_held">
+                                            <label class="col-md-4 form-label">Key Held</label>
+                                            <div class="col-md-8">
+                                                <textarea class="form-control" name="key_held" readonly disabled rows="3">{{ $member?->additionalInfo?->key_held }}</textarea>
                                             </div>
                                         </div>
+                                        @endif
                                         @endif
                                     </div>
                                 </div>
