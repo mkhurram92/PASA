@@ -201,25 +201,25 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Home Phone</label>
+                                            <label class="col-md-4 form-label">Home Phone (including Area Code)</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Home Phone"
-                                                    name="phone">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Area Code" name="area_code" style="width: 25%; margin-right: 10px;">
+                                                    <input type="text" class="form-control" placeholder="Home Phone" name="phone" style="width: calc(75% - 10px);">
+                                                </div>
                                             </div>
-                                        </div>
+                                        </div>                                                                           
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Mobile Phone</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Mobile Phone"
-                                                    name="mobile">
+                                                <input type="text" class="form-control" placeholder="Mobile Phone" name="mobile">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Email Address<span class="tx-danger">
-                                                    *</span></label>
+                                                    </span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    placeholder="Email Address" id="email" name="email">
+                                                <input class="form-control" type="text" placeholder="Email Address" id="email" name="email">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
