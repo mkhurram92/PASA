@@ -18,7 +18,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/favicons/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('/favicons/site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ asset('/favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
+    <link rel="mask-icon" href="{{asset('/favicons/safari-pinned-tab.svg')}}" color="#5bbad5">
     <link rel="shortcut icon" href="{{ asset('/favicons/favicon.ico') }}">
 
     <!-- Bootstrap css -->
@@ -48,6 +48,7 @@
         .login-form {
             width: 50%;
             display: flex;
+            flex-direction: column; /* Ensure form elements stack vertically */
             align-items: center;
             justify-content: center;
             padding: 40px;
@@ -57,10 +58,7 @@
         }
 
         .login-info {
-            background-color: #505151;
-            /* Dark background color */
-            background-image: none;
-            /* Remove background image */
+            background-color: #505151; /* Dark background color */
             width: 50%;
             display: flex;
             align-items: center;
@@ -73,17 +71,6 @@
         .login-info div {
             position: relative;
             z-index: 1;
-        }
-
-        .login-info:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 0;
         }
 
         .login-info img {
@@ -130,14 +117,11 @@
                 @csrf
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" placeholder="Email"
-                        class="form-control @error('email') is-invalid @enderror" name="email"
-                        value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                        name="password" placeholder="Password" required autocomplete="current-password">
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
                 </div>
                 <div class="form-group mb-3">
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
@@ -149,8 +133,7 @@
         </div>
         <div class="login-info">
             <div>
-                <img src="{{ asset('images/logo/logo.png') }}" alt="Logo"
-                    style="width: 200px; margin-bottom: 20px;">
+                <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" style="width: 200px; margin-bottom: 20px;">
                 <h1>Welcome Back!</h1>
                 <p>Sign in to continue to your account and enjoy our services.</p>
             </div>
