@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Title -->
-    <title>Pioneers</title>
+    <title>Pioneers SA</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/favicons/apple-touch-icon.png') }}">
