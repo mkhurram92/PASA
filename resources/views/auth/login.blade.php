@@ -11,14 +11,14 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Title -->
-    <title>Pioneers Association of South Australia</title>
+    <title>Pioneers</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/favicons/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('/favicons/site.webmanifest') }}">
-    <link rel="mask-icon" href="{{asset('/favicons/safari-pinned-tab.svg')}}" color="#5bbad5">
+    <link rel="mask-icon" href="{{ asset('/favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
     <link rel="shortcut icon" href="{{ asset('/favicons/favicon.ico') }}">
 
     <!-- Bootstrap css -->
@@ -40,48 +40,79 @@
 
     <!-- Custom css -->
     <style>
-        .login-page {
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .login-form {
+            width: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            padding: 40px;
             background-color: #f8f9fa;
+            position: relative;
+            z-index: 1;
         }
 
-        .login-card {
-            max-width: 400px;
+        .login-info {
+            background-color: #505151;
+            /* Dark background color */
+            background-image: none;
+            /* Remove background image */
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .login-info div {
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-info:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .login-info img {
+            max-width: 80%;
+        }
+
+        .login-form form {
             width: 100%;
-            padding: 30px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            border-radius: 8px;
+            max-width: 400px;
         }
 
-        .login-card .input-group {
-            margin-bottom: 20px;
-        }
-
-        .login-card .btn-primary {
+        .login-form .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
         }
 
-        .login-card .btn-link {
+        .login-form .btn-link {
             color: #007bff;
         }
 
-        .login-card .form-control {
+        .login-form .form-control {
             border-radius: 0.25rem;
         }
     </style>
 </head>
 
 <body class="main-body light-mode ltr page-style1 error-page bg4">
-    <div class="login-page">
-        <div class="login-card">
-            <div class="text-center mb-4">
-                <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" style="width: 150px;">
-            </div>
+    <div class="login-container">
+        <div class="login-form">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     {{ $errors->first() }}
@@ -99,15 +130,14 @@
                 @csrf
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <div class="input-group">
-                        <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                    </div>
+                    <input id="email" type="email" placeholder="Email"
+                        class="form-control @error('email') is-invalid @enderror" name="email"
+                        value="{{ old('email') }}" required autocomplete="email" autofocus>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <div class="input-group">
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
-                    </div>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                        name="password" placeholder="Password" required autocomplete="current-password">
                 </div>
                 <div class="form-group mb-3">
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
@@ -116,6 +146,14 @@
                     <a href="forgot-password-1.html" class="btn btn-link">Forgot password?</a>
                 </div>
             </form>
+        </div>
+        <div class="login-info">
+            <div>
+                <img src="{{ asset('images/logo/logo.png') }}" alt="Logo"
+                    style="width: 200px; margin-bottom: 20px;">
+                <h1>Welcome Back!</h1>
+                <p>Sign in to continue to your account and enjoy our services.</p>
+            </div>
         </div>
     </div>
 
