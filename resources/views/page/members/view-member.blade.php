@@ -318,7 +318,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
                                     </div>
+
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
                                             <label class="col-md-6 form-label">Journal</label>
@@ -339,7 +341,6 @@
                                                 <span id="signedAgreementStatus" class="custom-font"></span>
                                             </div>
                                         </div>
-                                        
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Key Holder</label>
                                             <div class="col-md-8">
@@ -354,7 +355,7 @@
                                                 <textarea class="form-control" name="key_held" readonly disabled rows="3">{{ $member?->additionalInfo?->key_held }}</textarea>
                                             </div>
                                         </div>
-                                        @endif
+                                        
                                         @endif
                                     </div>
                                 </div>

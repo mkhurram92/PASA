@@ -161,132 +161,139 @@
  <div id="crud"></div>
  @include('plugins.select2')
 
-@section('scripts')
-    <script>
-        var myData = @json($data);
+ @section('scripts')
+     <script>
+         var myData = @json($data);
 
-        var table = new Tabulator("#title-table", {
-            data: myData,
-            layout: "fitColumns",
-            columns: [{
-                    title: 'ID',
-                    field: 'id',
-                    headerFilter: 'input',
-                    hozAlign: 'center',
-                    vertAlign: "middle",
-                    headerFilterPlaceholder: 'Search by ID'
-                },
-                {
-                    title: 'Name',
-                    field: 'name',
-                    headerFilter: 'input',
-                    hozAlign: 'center',
-                    vertAlign: "middle",
-                    headerFilterPlaceholder: 'Search by Name'
-                },
-                {
-                    title: 'Created Date',
-                    field: 'created_at',
-                    hozAlign: 'center',
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Search by Created Date'
-                },
-                {
-                    title: "Action",
-                    field: "actions",
-                    hozAlign: "center",
-                    vertAlign: "middle",
-                    width: "8%",
-                    formatter: function(cell, formatterParams, onRendered) {
-                        var id = cell.getData().id;
+         var table = new Tabulator("#title-table", {
+             data: myData,
+             layout: "fitColumns",
+             columns: [{
+                     title: 'ID',
+                     field: 'id',
+                     headerFilter: 'input',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilterPlaceholder: 'Search by ID'
+                 },
+                 {
+                     title: 'Name',
+                     field: 'name',
+                     headerFilter: 'input',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilterPlaceholder: 'Search by Name'
+                 },
+                 {
+                     title: 'Created Date',
+                     field: 'created_at',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Created Date',
+                     formatter: function(cell) {
+                         var date = new Date(cell.getValue());
+                         var year = date.getFullYear();
+                         var month = String(date.getMonth() + 1).padStart(2, '0');
+                         var day = String(date.getDate()).padStart(2, '0');
+                         return year + '-' + month + '-' + day;
+                     }
+                 },
+                 {
+                     title: "Action",
+                     field: "actions",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     width: "8%",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var id = cell.getData().id;
 
-                        // Add buttons for each row
-                        return '<div class="button-container">' +
-                            '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
-                            '"></button>' +
-                            '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
-                            '</div>';
-                    }
-                }
-            ],
-            pagination: 'local',
-            paginationSize: 10,
-            placeholder: "No Data Available"
-        });
+                         // Add buttons for each row
+                         return '<div class="button-container">' +
+                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                             '"></button>' +
+                             '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
+                             '</div>';
+                     }
+                 }
+             ],
+             pagination: 'local',
+             paginationSize: 10,
+             placeholder: "No Data Available"
+         });
 
-        $('#create-record').click(function() {
-            $.get("{{ route('title.create') }}", form => {
-                $('#crud').html(form.html);
-                $('#crud').find(".modal").modal('show');
-            });
-        });
+         $('#create-record').click(function() {
+             $.get("{{ route('title.create') }}", form => {
+                 $('#crud').html(form.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         });
 
-        // Attach the event listener directly to the table element
-        document.getElementById('title-table').addEventListener("click", function(e) {
-            if (e.target.classList.contains("view-button")) {
-                var cityId = e.target.getAttribute("data-id");
-                openViewModal(cityId);
-            } else if (e.target.classList.contains("edit-button")) {
-                var cityId = e.target.getAttribute("data-id");
-                openUpdateModal(cityId);
-            }
-        });
+         // Attach the event listener directly to the table element
+         document.getElementById('title-table').addEventListener("click", function(e) {
+             if (e.target.classList.contains("view-button")) {
+                 var cityId = e.target.getAttribute("data-id");
+                 openViewModal(cityId);
+             } else if (e.target.classList.contains("edit-button")) {
+                 var cityId = e.target.getAttribute("data-id");
+                 openUpdateModal(cityId);
+             }
+         });
 
-        function openUpdateModal(cityId) {
-            $.get("{{ route('title.edit', ['title' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
-                $('#crud').html(response.html);
-                $('#crud').find(".modal").modal('show');
-            });
-        }
+         function openUpdateModal(cityId) {
+             $.get("{{ route('title.edit', ['title' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
+                 $('#crud').html(response.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         }
 
-        // Function to open the view modal
-        function openViewModal(cityId) {
-            $.get("{{ route('title.show', ['title' => '__city__']) }}".replace('__city__', cityId), function(response) {
-                $('#crud').html(response.html);
-                $('#crud').find(".modal").modal('show');
-            });
-        }
+         // Function to open the view modal
+         function openViewModal(cityId) {
+             $.get("{{ route('title.show', ['title' => '__city__']) }}".replace('__city__', cityId), function(response) {
+                 $('#crud').html(response.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         }
 
-        function printData() {
-            //console.log("Print button clicked");
+         function printData() {
+             //console.log("Print button clicked");
 
-            table.print(false, true);
-        }
+             table.print(false, true);
+         }
 
-        // Add a reset button
-        var resetButton = document.getElementById("reset-button");
+         // Add a reset button
+         var resetButton = document.getElementById("reset-button");
 
-        resetButton.addEventListener("click", function() {
-            table.clearFilter();
-            table.clearHeaderFilter();
-        });
+         resetButton.addEventListener("click", function() {
+             table.clearFilter();
+             table.clearHeaderFilter();
+         });
 
-        $("#pageSizeDropdown").on("change", function() {
-            var selectedPageSize = parseInt($(this).val(), 10);
-            table.setPageSize(selectedPageSize);
-        });
+         $("#pageSizeDropdown").on("change", function() {
+             var selectedPageSize = parseInt($(this).val(), 10);
+             table.setPageSize(selectedPageSize);
+         });
 
-        //trigger download of data.csv file
-        document.getElementById("download-csv").addEventListener("click", function() {
-            table.download("csv", "Title List.csv");
-        });
+         //trigger download of data.csv file
+         document.getElementById("download-csv").addEventListener("click", function() {
+             table.download("csv", "Title List.csv");
+         });
 
-        //trigger download of data.xlsx file
-        document.getElementById("download-xlsx").addEventListener("click", function() {
-            table.download("xlsx", "Title List.xlsx", {
-                sheetName: "Title List",
-            });
-        });
+         //trigger download of data.xlsx file
+         document.getElementById("download-xlsx").addEventListener("click", function() {
+             table.download("xlsx", "Title List.xlsx", {
+                 sheetName: "Title List",
+             });
+         });
 
-        //trigger download of data.pdf file
-        document.getElementById("download-pdf").addEventListener("click", function() {
-            table.download("pdf", "Title List.pdf", {
-                orientation: "landscape",
-                title: "Title List",
-            });
-        });
-    </script>
-@endsection
+         //trigger download of data.pdf file
+         document.getElementById("download-pdf").addEventListener("click", function() {
+             table.download("pdf", "Title List.pdf", {
+                 orientation: "landscape",
+                 title: "Title List",
+             });
+         });
+     </script>
+ @endsection
 
-@include('layout.footer')
+ @include('layout.footer')

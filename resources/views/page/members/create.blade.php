@@ -63,19 +63,15 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Title <span
                                                         class="tx-danger">*</span></label>
-                                                <div class="col-md-3">
-                                                    <select name="title" class="form-control form-select select2"
-                                                        id="title">
-                                                        @forelse ($data['titles'] as $title)
-                                                            <option value="{{ $title?->id }}">
-                                                                {{ $title?->name }}
-                                                            </option>
-                                                        @empty
-                                                            <option>Select Title</option>
-                                                        @endforelse
-                                                        <option value="Other">Other.</option>
-                                                    </select>
-                                                </div>
+                                                        <div class="col-md-3">
+                                                            <select name="title" class="form-control form-select select2" id="title">
+                                                                @forelse ($data['titles'] as $title)
+                                                                    <option value="{{ $title?->id }}">{{ $title?->name }}</option>
+                                                                @empty
+                                                                    <option>Select Title</option>
+                                                                @endforelse
+                                                            </select>
+                                                        </div>                                                        
                                                 <div class="col-md-5">
                                                     <input class="form-control" type="text" id="title_detail"
                                                         placeholder="Type Title Here" name="title_detail">
