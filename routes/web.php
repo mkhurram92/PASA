@@ -9,6 +9,7 @@ use App\Http\Controllers\CountiesController;
 use App\Http\Controllers\ShipController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TitleController;
+use App\Http\Controllers\MembershipStatusController;
 use App\Http\Controllers\StatesController;
 use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\FriendMemberFormWizard;
@@ -39,6 +40,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\Account;
+use App\Models\MembershipStatus;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/', DashboardController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/title',TitleController::class);
+    Route::resource('/membership-status', MembershipStatusController::class);
     Route::resource('/ship', ShipController::class);
     Route::resource('mode-of-arrivals', ModeOfArrivalsController::class);
     //Route::resource('states', StatesController::class);

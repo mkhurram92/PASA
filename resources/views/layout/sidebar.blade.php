@@ -172,7 +172,7 @@
                     </li>
                 @endcanany
                 @canany(['title-list','user-list', 'states-list', 'ports-list', 'counties-list', 'occupations-list', 'rigs-list',
-                    'ships-list', 'role-list', 'source-of-arrival-list', 'cities-list', 'subscription-plans-list', 'gl_codes-list'])
+                    'ships-list', 'role-list', 'source-of-arrival-list', 'cities-list', 'subscription-plans-list', 'membership-status-list','gl_codes-list'])
                     <li class="slide @if (Route::is(
                             'title.index',
                             'user.index',
@@ -197,7 +197,7 @@
                                 'occupations.index',
                                 'rigs.index',
                                 'ship.index',
-                                'subscription-plans.index')) open @endif">
+                                'subscription-plans.index', 'membership-status.index')) open @endif">
                             @can('user-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('user.index')) active @endif"
@@ -283,6 +283,14 @@
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('subscription-plans.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('subscription-plans.index') }}">
                                         <span class="sub-side-menu__label">Membership Type</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('membership-status-list')
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item mx-5 @if (Route::is('membership-status.index')) active @endif"
+                                        data-bs-toggle="sub-slide" href="{{ route('membership-status.index') }}">
+                                        <span class="sub-side-menu__label">Membership Status</span>
                                     </a>
                                 </li>
                             @endcan
