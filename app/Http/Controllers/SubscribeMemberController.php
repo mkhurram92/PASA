@@ -12,7 +12,7 @@ use App\DataTables\MembersDataTable;
 use App\Http\Requests\MemberRequest;
 use App\Mail\ApprovalEmail;
 use App\Models\AdditionalMemberInfos;
-use App\Models\MemberShipStatus;
+use App\Models\MembershipStatus;
 use App\Models\MembershipType;
 use App\Models\States;
 use App\Models\Subscription;
@@ -38,7 +38,7 @@ class SubscribeMemberController extends Controller
     {
         $data['titles'] = Title::all();
         $data['states'] = States::all();
-        $data['membership_status'] = MemberShipStatus::all();
+        $data['membership_status'] = MembershipStatus::all();
         //$data['membership_types'] = MembershipType::all();
         $data['membership_types'] = SubscriptionPlan::all();
 
@@ -152,7 +152,7 @@ class SubscribeMemberController extends Controller
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
         $data['membership_types'] = SubscriptionPlan::all();
         //$data['membership_types'] = MembershipType::all();
-        $data['membership_status'] = MemberShipStatus::all();
+        $data['membership_status'] = MembershipStatus::all();
 
         return view('page.members.view-member', compact('member', 'data'));
     }
@@ -163,7 +163,7 @@ class SubscribeMemberController extends Controller
         $data['titles'] = Title::all();
         $data['state_name'] = Helper::getState($member?->address?->state);
         $data['states'] = States::all();
-        $data['membership_status'] = MemberShipStatus::all();
+        $data['membership_status'] = MembershipStatus::all();
         //$data['membership_types'] = MembershipType::all();
         $data['membership_types'] = SubscriptionPlan::all();
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);

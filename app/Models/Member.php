@@ -52,7 +52,7 @@ class Member extends Model
 
     public function membershipStatus()
     {
-        return $this->hasOne(MemberShipStatus::class, "id", "member_status_id");
+        return $this->hasOne(MembershipStatus::class, "id", "member_status_id");
     }
 
     public function paymentType()
