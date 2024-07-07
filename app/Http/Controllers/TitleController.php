@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\DataTables\UsersDataTable;
 use Illuminate\Http\Request;
 use App\Models\Title;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreTitleRequest;
+use App\Http\Requests\UpdateTitleRequest;
 
 class TitleController extends Controller
 {
@@ -33,7 +33,7 @@ class TitleController extends Controller
      */
     public function create()
     {
-        $html = view("models.user-create")->render();
+        $html = view("models.title-create")->render();
         return response()->json(["status" => true, "html" => $html]);
     }
 
@@ -43,15 +43,13 @@ class TitleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreTitleRequest $request)
     {
         $user = Title::create([
             'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
         ]);
 
-        return response()->json(["status" => true, "message" => "User created successfully"]);
+        return response()->json(["status" => true, "message" => "Title created successfully"]);
     }
 
     /**
@@ -62,7 +60,7 @@ class TitleController extends Controller
      */
     public function show(Title $title)
     {
-        $html = view("models.user-view", compact('user'))->render();
+        $html = view("models.title-view", compact('title'))->render();
         return response()->json(["status" => true, "html" => $html]);
     }
 
@@ -74,7 +72,7 @@ class TitleController extends Controller
      */
     public function edit(Title $title)
     {
-        $html = view("models.user-update", compact('user'))->render();
+        $html = view("models.title-update", compact('title'))->render();
         return response()->json(["status" => true, "html" => $html]);
     }
 
@@ -85,18 +83,15 @@ class TitleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, Title $title)
+    public function update(UpdateTitleRequest $request, Title $title)
     {
         $req = [
             'name' => $request->name,
-            'email' => $request->email,
         ];
-        if (!empty($request->password)) {
-            $req['password'] = bcrypt($request->password);
-        }
-        $user = Title::where("id", $title->id)->update($req);
+        
+        $title = Title::where("id", $title->id)->update($req);
 
-        return response()->json(["status" => true, "message" => "User updated successfully"]);
+        return response()->json(["status" => true, "message" => "Title updated successfully"]);
     }
 
     /**
@@ -108,6 +103,6 @@ class TitleController extends Controller
     public function destroy(Title $title)
     {
         $title->delete();
-        return response()->json(["status" => true, "message" => "User deleted successfully"]);
+        return response()->json(["status" => true, "message" => "Title deleted successfully"]);
     }
 }

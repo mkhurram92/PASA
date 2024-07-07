@@ -55,33 +55,13 @@
                         </a>
                     </li>
                 @endif
-                {{-- @if (!$isAdmin)
-                    <li class="slide">
-                        <a class="side-menu__item  @if (Route::is('juniors')) active @endif"
-                            data-bs-toggle="slide" href="{{ route('juniors') }}">
-                            <i class="fa fa-child fa-2x mx-3"></i>
-                            <span class="side-menu__label">Juniors</span>
-                        </a>
-                    </li>
-                @endif
-                @if (!$isAdmin)
-                    <li class="slide">
-                        <a class="side-menu__item  @if (Route::is('partner')) active @endif"
-                            data-bs-toggle="slide" href="{{ route('partner') }}">
-                            <i class="fa fa-handshake-o fa-2x mx-3"></i>
-                            <span class="side-menu__label">Partner</span>
-                        </a>
-                    </li>
-                @endif
-                @canany(['payment-list']) --}}
-                {{-- @endcanany --}}
-                @canany(['membership-list'])
+                @canany(['finance-list'])
                     <li class="slide @if (Route::is('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-bank fa-2x mx-3"></i>
                             <span class="side-menu__label">Finance</span><i class="angle fe fe-chevron-right"></i></a>
                         <ul class="slide-menu @if (Route::is('gl-codes-parent.index','gl-codes.create', 'gl-codes.index', 'transaction.index')) open @endif">
-                            @can('membership-list')
+                            @can('finance-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('transaction.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('transaction.index') }}">
@@ -89,7 +69,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('membership-list')
+                            @can('finance-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('gl-codes-parent.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('gl-codes-parent.index') }}">
@@ -97,7 +77,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('membership-list')
+                            @can('finance-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('gl-codes.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('gl-codes.index') }}">
@@ -105,7 +85,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('membership-list')
+                            @can('finance-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('accounts.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('accounts.index') }}">
@@ -191,9 +171,10 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['user-list', 'states-list', 'ports-list', 'counties-list', 'occupations-list', 'rigs-list',
+                @canany(['title-list','user-list', 'states-list', 'ports-list', 'counties-list', 'occupations-list', 'rigs-list',
                     'ships-list', 'role-list', 'source-of-arrival-list', 'cities-list', 'subscription-plans-list', 'gl_codes-list'])
                     <li class="slide @if (Route::is(
+                            'title.index',
                             'user.index',
                             'states.index',
                             'ports.index',
@@ -233,14 +214,6 @@
                                     </a>
                                 </li>
                             @endcan
-                            {{--@can('role-list')
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item mx-5 @if (Route::is('roles.index')) active @endif"
-                                        data-bs-toggle="sub-slide" href="{{ route('roles.index') }}">
-                                        <span class="sub-side-menu__label">Roles</span>
-                                    </a>
-                                </li>
-                            @endcan--}}
                             @can('cities-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('cities.index')) active @endif"
@@ -249,14 +222,6 @@
                                     </a>
                                 </li>
                             @endcan
-                            {{-- @can('states-list')
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item mx-5 @if (Route::is('states.index')) active @endif"
-                                        data-bs-toggle="sub-slide" href="{{ route('states.index') }}">
-                        <span class="sub-side-menu__label">States</span>
-                        </a>
-                </li>
-                @endcan--> --}}
                             @can('counties-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('counties.index')) active @endif"

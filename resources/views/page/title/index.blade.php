@@ -98,7 +98,7 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">User List</h3>
+                     <h3 class="page-title">Title List</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
@@ -138,8 +138,8 @@
                                      <option value="50">50</option>
                                      <option value="100">100</option>
                                  </select>
-                                 <label style="padding: 10px;" for="date-range">Date Range:</label>
-                                 <input style="padding: 10px 20px;" type="text" id="date-range">
+                                 <!--<label style="padding: 10px;" for="date-range">Date Range:</label>
+                                 <input style="padding: 10px 20px;" type="text" id="date-range">-->
                                  <button class="custom-button" type="button" id="printTable"
                                      onclick="printData()">Print</button>
                                  <button class="custom-button" id="download-csv">Download CSV</button>
@@ -148,7 +148,7 @@
                                  <button class="custom-button" id="reset-button">Reset Filter</button>
                              </div>
                              <div class="table-responsive">
-                                 <div id="users-table"></div>
+                                 <div id="title-table"></div>
                              </div>
                          </div>
                      </div>
@@ -165,7 +165,7 @@
     <script>
         var myData = @json($data);
 
-        var table = new Tabulator("#users-table", {
+        var table = new Tabulator("#title-table", {
             data: myData,
             layout: "fitColumns",
             columns: [{
@@ -183,14 +183,6 @@
                     hozAlign: 'center',
                     vertAlign: "middle",
                     headerFilterPlaceholder: 'Search by Name'
-                },
-                {
-                    title: 'Email',
-                    field: 'email',
-                    hozAlign: 'center',
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Search by Email'
                 },
                 {
                     title: 'Created Date',
@@ -224,14 +216,14 @@
         });
 
         $('#create-record').click(function() {
-            $.get("{{ route('user.create') }}", form => {
+            $.get("{{ route('title.create') }}", form => {
                 $('#crud').html(form.html);
                 $('#crud').find(".modal").modal('show');
             });
         });
 
         // Attach the event listener directly to the table element
-        document.getElementById('users-table').addEventListener("click", function(e) {
+        document.getElementById('title-table').addEventListener("click", function(e) {
             if (e.target.classList.contains("view-button")) {
                 var cityId = e.target.getAttribute("data-id");
                 openViewModal(cityId);
@@ -242,7 +234,7 @@
         });
 
         function openUpdateModal(cityId) {
-            $.get("{{ route('user.edit', ['user' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
+            $.get("{{ route('title.edit', ['title' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
                 $('#crud').html(response.html);
                 $('#crud').find(".modal").modal('show');
             });
@@ -250,7 +242,7 @@
 
         // Function to open the view modal
         function openViewModal(cityId) {
-            $.get("{{ route('user.show', ['user' => '__city__']) }}".replace('__city__', cityId), function(response) {
+            $.get("{{ route('title.show', ['title' => '__city__']) }}".replace('__city__', cityId), function(response) {
                 $('#crud').html(response.html);
                 $('#crud').find(".modal").modal('show');
             });
@@ -277,21 +269,21 @@
 
         //trigger download of data.csv file
         document.getElementById("download-csv").addEventListener("click", function() {
-            table.download("csv", "User List.csv");
+            table.download("csv", "Title List.csv");
         });
 
         //trigger download of data.xlsx file
         document.getElementById("download-xlsx").addEventListener("click", function() {
-            table.download("xlsx", "User List.xlsx", {
-                sheetName: "PASA01",
+            table.download("xlsx", "Title List.xlsx", {
+                sheetName: "Title List",
             });
         });
 
         //trigger download of data.pdf file
         document.getElementById("download-pdf").addEventListener("click", function() {
-            table.download("pdf", "User List.pdf", {
+            table.download("pdf", "Title List.pdf", {
                 orientation: "landscape",
-                title: "User List",
+                title: "Title List",
             });
         });
     </script>
