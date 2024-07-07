@@ -184,7 +184,7 @@
                             'ship.index',
                             'source-of-arrivals.index',
                             'subscription-plans.index',
-                            'cities.index')) is-expanded @endif">
+                            'cities.index', 'membership-status.index')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-gears fa-2x mx-3"></i>
                             <span class="side-menu__label">Settings</span><i class="angle fe fe-chevron-right"></i></a>
