@@ -225,7 +225,7 @@
                         // Convert 24-hour format to 12-hour format
                         hours = (hours % 12) || 12;
 
-                        var formattedDate = day + '/' + month + '/' + year + ' ' + hours + ':' +
+                        var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' +
                             minutes +
                             ':' + seconds + ' ' + ampm;
 
