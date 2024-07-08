@@ -89,10 +89,21 @@
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Date of Departure  </label>
+                                                <label class="col-md-3 form-label">Departure Date</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text" value="{{ $modeOfArrival?->date_of_departure }}" name="date_of_departure">
+                                                    <div class="row">
+                                                        <div class="col-4 pr-1">
+                                                            <input class="form-control" placeholder="YYYY" value="{{ $modeOfArrival ? $modeOfArrival->year_of_departure : '' }}" type="text" name="year_of_departure">
+                                                        </div>
+                                                        <div class="col-4 px-1">
+                                                            <input class="form-control" placeholder="MM" value="{{ $modeOfArrival && $modeOfArrival->month_of_departure ? sprintf('%02d', $modeOfArrival->month_of_departure) : '' }}" type="text" name="month_of_departure">
+                                                        </div>
+                                                        <div class="col-4 pl-1">
+                                                            <input class="form-control" placeholder="DD" value="{{ $modeOfArrival && $modeOfArrival->date_of_departure ? sprintf('%02d', $modeOfArrival->date_of_departure) : '' }}" type="text" name="date_of_departure">
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                                                            
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Arrived At  </label>
@@ -103,9 +114,19 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Date of Arrival  </label>
+                                                <label class="col-md-3 form-label">Arrival Date </label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" value="{{ $modeOfArrival?->date_of_arrival }}" type="text" name="date_of_arrival">
+                                                    <div class="row">
+                                                        <div class="col-4 pr-1">
+                                                            <input class="form-control" placeholder="YYYY" value="{{ $modeOfArrival ? $modeOfArrival->year_of_arrival : '' }}" type="text" name="year_of_arrival">
+                                                        </div>
+                                                        <div class="col-4 px-1">
+                                                            <input class="form-control" placeholder="MM" value="{{ $modeOfArrival && $modeOfArrival->month_of_arrival ? sprintf('%02d', $modeOfArrival->month_of_arrival) : '' }}" type="text" name="month_of_arrival">
+                                                        </div>
+                                                        <div class="col-4 pl-1">
+                                                            <input class="form-control" placeholder="DD" value="{{ $modeOfArrival && $modeOfArrival->date_of_arrival ? sprintf('%02d', $modeOfArrival->date_oof_arrival) : '' }}" type="text" name="date_of_arrival">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

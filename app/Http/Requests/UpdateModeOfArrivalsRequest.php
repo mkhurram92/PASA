@@ -15,17 +15,21 @@ class UpdateModeOfArrivalsRequest extends FormRequest
     {
         return [
             "ship_id" => "required|exists:ships,id",
-/*            "year" => "required|digits:4",
-            "country_id" => "required|exists:countries,id",
-            "county_id" => "required|exists:counties,id",
-            "city_id" => "required|exists:cities,id",
-            "date_of_departure" => "required",
-            "arrived_at" => "required|exists:ports,id",
-            "date_of_arrival" => "required",
-            "ship_commander" => "required",
-            "embarkation_number" => "required",
-            "notes" => "nullable",
-            "ports_of_call" => "required",*/
+            "year"=> "nullable|digits:4",
+            "country_id"=> "nullable|exists:countries,id",
+            "county_id"=> "nullable|exists:counties,id",
+            "city_id"=> "nullable|exists:cities,id",
+            "date_of_departure"=> "nullable|digits:2",
+            "month_of_departure"=> "nullable|digits:2",
+            "year_of_departure"=> "nullable|digits:4",
+            "arrived_at"=> "nullable|exists:ports,id",
+            "date_of_arrival"=> "nullable|digits:2",
+            "month_of_arrival"=> "nullable|digits:2",
+            "year_of_arrival"=> "nullable|digits:4",
+            "ship_commander"=> "nullable",
+            "embarkation_number"=> "nullable",
+            "notes"=> "nullable",
+            "ports_of_call"=> "nullable",
         ];
     }
     public function messages()

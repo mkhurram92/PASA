@@ -237,23 +237,64 @@
 
                          return result;
                      }
-
                  },
                  {
                      title: "Departure Date",
-                     field: "date_of_departure",
+                     field: "departure_date_combined",
                      hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Departure Date'
+                     headerFilterPlaceholder: 'Search by Departure Date',
+                     mutator: function(value, data, type, params, component) {
+                         let date = data.date_of_departure ? String(data.date_of_departure).padStart(2,
+                             '0') : "";
+                         let month = data.month_of_departure ? String(data.month_of_departure).padStart(2,
+                             '0') : "";
+                         let year = data.year_of_departure ? String(data.year_of_departure) : "";
+
+                         if (year) {
+                             if (month) {
+                                 if (date) {
+                                     return `${year}-${month}-${date}`;
+                                 } else {
+                                     return `${year}-${month}`;
+                                 }
+                             } else {
+                                 return `${year}`;
+                             }
+                         } else {
+                             return ""; // Return empty string if year is not present
+                         }
+                     }
                  },
                  {
-                     title: "Arrival Date in SA",
-                     field: "date_of_arrival",
+                     title: "Departure Date",
+                     field: "arrival_date_combined",
                      hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Arrival Date in SA'
+                     headerFilterPlaceholder: 'Search by Arrival Date',
+                     mutator: function(value, data, type, params, component) {
+                         let date = data.date_of_arrival ? String(data.date_of_arrival).padStart(2,
+                             '0') : "";
+                         let month = data.month_of_arrival ? String(data.month_of_departure).padStart(2,
+                             '0') : "";
+                         let year = data.year_of_arrival ? String(data.year_of_arrival) : "";
+
+                         if (year) {
+                             if (month) {
+                                 if (date) {
+                                     return `${year}-${month}-${date}`;
+                                 } else {
+                                     return `${year}-${month}`;
+                                 }
+                             } else {
+                                 return `${year}`;
+                             }
+                         } else {
+                             return ""; // Return empty string if year is not present
+                         }
+                     }
                  },
                  {
                      title: "Arrival Place in SA",
@@ -290,7 +331,6 @@
              paginationSize: 10,
              placeholder: "No Data Available"
          });
-
 
          var resetButton = document.getElementById("reset-button");
 
