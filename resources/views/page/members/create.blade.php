@@ -95,8 +95,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Preferred Name <span
-                                                        class="tx-danger">*</span></label>
+                                                <label class="col-md-4 form-label">Preferred Name </label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
                                                         placeholder="Preferred Name" name="preferred_name"
@@ -137,32 +136,28 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Unit / Apartment No.<span
-                                                    class="tx-danger"></span></label>
+                                            <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
                                                     placeholder="Unit/Apartment No." name="unit_no">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Street Name<span
-                                                    class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Street Name </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="PO Box"
                                                     name="number_street">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">City / Town / Suburb <span
-                                                    class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">City / Town / Suburb </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Suburb"
                                                     name="suburb">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">State / County <span
-                                                    class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">State / County </label>
                                             <div class="col-md-8">
                                                 <select name="state" class="form-control form-select select2"
                                                     id="state">
@@ -177,8 +172,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Country<span
-                                                    class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Country </label>
                                             <div class="col-md-8">
                                                 <select name="country" class="form-control form-select select2"
                                                     id="country">
@@ -187,8 +181,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Post Code <span
-                                                    class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Post Code </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Post Code"
                                                     name="post_code">
@@ -243,8 +236,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Username <span
-                                                    class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Username </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="User Name"
                                                     name="username">
