@@ -224,12 +224,20 @@
                      headerFilterPlaceholder: 'Search by Departure Place',
                      formatter: function(cell, formatterParams, onRendered) {
                          var city = cell.getData().city ? cell.getData().city.name : "";
-                         var county = cell.getData().county ? cell.getData().county.name :
-                             "";
-                         var country = cell.getData().country ? cell.getData().country.name :
-                             "";
-                         return city + ", " + county + ", " + country;
+                         var county = cell.getData().county ? cell.getData().county.name : "";
+                         var country = cell.getData().country ? cell.getData().country.name : "";
+
+                         var result = city + (city && (county || country) ? ", " : "") + county + (county &&
+                             country ? ", " : "") + country;
+
+                         // Check if all parts are empty and return null if they are
+                         if (!city && !county && !country) {
+                             return null;
+                         }
+
+                         return result;
                      }
+
                  },
                  {
                      title: "Departure Date",

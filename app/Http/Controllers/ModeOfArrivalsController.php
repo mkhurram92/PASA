@@ -9,6 +9,8 @@ use App\Http\Requests\StoreModeOfArrivalsRequest;
 use App\Http\Requests\UpdateModeOfArrivalsRequest;
 use App\Models\Ports;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log; // Add this line
+
 
 class ModeOfArrivalsController extends Controller
 {
@@ -49,16 +51,15 @@ class ModeOfArrivalsController extends Controller
     public function store(StoreModeOfArrivalsRequest $request)
     {
         $data = $request->validated();
-        try {
-            $ship = Ship::find($data['ship_id']);
-            $year = $data['year'];
-        } catch (\Exception $e) {
-            $ship = collect();
-            $year = null;
-        }
-        ModeOfArrivals::create(array_merge($data, [
-            "voyage" => $ship?->name_of_ship . " - " . $year
-        ]));
+        //Log::debug('Validated data:', $data);
+        
+        // Save only the 'ship_id' and non-null fields from $data
+        $filteredData = array_filter($data, function($value) {
+            return !is_null($value);
+        });
+           
+        ModeOfArrivals::create($filteredData);
+    
         return response()->json(['status' => true, "message" => "Arrival created", "redirectTo" => route("mode-of-arrivals.index")]);
     }
 

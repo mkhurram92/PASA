@@ -49,77 +49,117 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Ship</label>
                                             <div class="col-md-9">
-                                                <input class="form-control" type="text" placeholder="Name of Ship" value="{{ $modeOfArrival?->ship?->name_of_ship }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $modeOfArrival->ship->name_of_ship }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Year</label>
                                             <div class="col-md-9">
-                                                <input class="form-control" type="text" placeholder="YYYY" value="{{ $modeOfArrival?->year }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $modeOfArrival->year ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Country</label>
                                             <div class="col-md-9">
-                                                <input class="form-control" type="text" placeholder="Country" value="{{ $modeOfArrival?->country?->name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $modeOfArrival->country->name ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">County</label>
                                             <div class="col-md-9">
-                                                <input class="form-control" type="text" placeholder="County" value="{{ $modeOfArrival?->county?->name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $modeOfArrival->county->name ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">City</label>
                                             <div class="col-md-9">
-                                                <input class="form-control" type="text" placeholder="City" value="{{ $modeOfArrival?->city?->name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $modeOfArrival->city->name ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
-
                                         <div class="mb-3 row">
-                                            <label class="col-md-3 form-label">Date of Departure</label>
+                                            <label class="col-md-3 form-label">Departure Date</label>
                                             <div class="col-md-9">
-                                                <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text" value="{{ $modeOfArrival?->date_of_departure }}" readonly disabled>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        @php
+                                                            $year = $modeOfArrival->year_of_departure ?? '';
+                                                            $month = $modeOfArrival->month_of_departure ?? '';
+                                                            $day = $modeOfArrival->date_of_departure ?? '';
+                                            
+                                                            $date = $year;
+                                            
+                                                            if ($month) {
+                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                            
+                                                            if ($day) {
+                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                                        @endphp
+                                            
+                                                        <input class="form-control" value="{{ $date }}" readonly disabled>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Arrived At</label>
                                             <div class="col-md-9">
-                                                <input class="form-control fc-datepicker" placeholder="Arrived At" type="text" value="{{ $modeOfArrival?->port?->name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $modeOfArrival->port->name ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-3 form-label">Date of Arrival</label>
+                                            <label class="col-md-3 form-label">Arrival Date</label>
                                             <div class="col-md-9">
-                                                <input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text" value="{{ $modeOfArrival?->date_of_arrival }}" readonly disabled>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        @php
+                                                            $year = $modeOfArrival->year_of_arrival ?? '';
+                                                            $month = $modeOfArrival->month_of_arrival ?? '';
+                                                            $day = $modeOfArrival->date_of_arrival ?? '';
+                                            
+                                                            $date = $year;
+                                            
+                                                            if ($month) {
+                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                            
+                                                            if ($day) {
+                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                                        @endphp
+                                            
+                                                        <input class="form-control" value="{{ $date }}" readonly disabled>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="row mb-3">
                                             <label class="col-md-3 form-label">Ship Commander</label>
                                             <div class="col-md-9">
-                                                <input class="form-control" type="text" placeholder="Ship Commander" value="{{ $modeOfArrival?->ship_commander }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $modeOfArrival?->ship_commander ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
 
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Embarkation Number</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" placeholder="Embarkation Number" value="{{ $modeOfArrival?->embarkation_number }}" readonly disabled>
+                                                <input type="text" class="form-control" value="{{ $modeOfArrival?->embarkation_number ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Notes</label>
                                             <div class="col-md-9">
-                                                <textarea class="form-control" rows="3" placeholder="Notes" readonly disabled>{{ $modeOfArrival?->notes }}</textarea>
+                                                <textarea class="form-control" rows="3" readonly disabled>{{ $modeOfArrival?->notes  ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Ports of Call</label>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" placeholder="Ports of Call" value="{{ $modeOfArrival?->ports_of_call }}" readonly disabled>
+                                                <textarea class="form-control" rows="3" readonly disabled> {{ $modeOfArrival?->ports_of_call ?? '' }} </textarea>
                                             </div>
                                         </div>
                                     </div>

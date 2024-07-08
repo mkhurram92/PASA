@@ -15,7 +15,7 @@ class UpdateModeOfArrivalsRequest extends FormRequest
     {
         return [
             "ship_id" => "required|exists:ships,id",
-            "year" => "required|digits:4",
+/*            "year" => "required|digits:4",
             "country_id" => "required|exists:countries,id",
             "county_id" => "required|exists:counties,id",
             "city_id" => "required|exists:cities,id",
@@ -25,7 +25,7 @@ class UpdateModeOfArrivalsRequest extends FormRequest
             "ship_commander" => "required",
             "embarkation_number" => "required",
             "notes" => "nullable",
-            "ports_of_call" => "required",
+            "ports_of_call" => "required",*/
         ];
     }
     public function messages()
@@ -33,7 +33,7 @@ class UpdateModeOfArrivalsRequest extends FormRequest
         return [
             "ship_id.required" => "Ship field is required",
             "ship_id.exists" => "Ship Not Found",
-            "year.required" => "Year field is required",
+/*            "year.required" => "Year field is required",
             "year.digits" => "Invalid Year",
             "country_id.required" => "Country field is required",
             "country_id.exists" => "County Not Found",
@@ -47,7 +47,7 @@ class UpdateModeOfArrivalsRequest extends FormRequest
             "date_of_arrival.required" => "Date of Arrival field is required",
             "ship_commander.required" => "Ship Commander field is required",
             "embarkation_number.required" => "Embarkation Number field is required",
-            "ports_of_call.required" => "Ports of Call field is required",
+            "ports_of_call.required" => "Ports of Call field is required",**/
         ];
     }
 }

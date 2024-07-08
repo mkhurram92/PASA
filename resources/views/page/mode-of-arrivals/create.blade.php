@@ -56,8 +56,7 @@
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Departure Year <span
-                                                        class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">Departure Year </label>
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text" placeholder="YYYY"
                                                         value="" name="year">
@@ -75,15 +74,14 @@
                                                             <input class="form-control" placeholder="MM" type="text" name="month_of_departure">
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" type="text" name="day_of_departure">
+                                                            <input class="form-control" placeholder="DD" type="text" name="date_of_departure">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>                                            
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Country<span
-                                                        class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">Country </label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2" id="countries_select2"
                                                         name="country_id"></select>
@@ -91,8 +89,7 @@
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">County<span
-                                                        class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">County </label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2" placeholder="Select item"
                                                         id="counties_select2" name="county_id"></select>
@@ -100,8 +97,7 @@
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">City<span
-                                                        class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">City </label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2" placeholder="Select item"
                                                         id="cities_select2" name="city_id"></select>
@@ -109,16 +105,14 @@
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Ports of Call <span
-                                                        class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">Ports of Call </label>
                                                 <div class="col-md-9">
                                                     <textarea class="form-control" rows="4" placeholder="Ports of Call" name="ports_of_call"></textarea>
                                                 </div>
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Arrived Place in SA <span
-                                                        class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">Arrived Place in SA </label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2" name="arrived_at"
                                                         id="arrived_at_select2">
@@ -127,7 +121,7 @@
                                             </div>
                                             
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Arrival Date in SA <span class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">Arrival Date in SA </label>
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
@@ -137,7 +131,7 @@
                                                             <input class="form-control" placeholder="MM" value="" type="text" name="month_of_arrival">
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" value="" type="text" name="day_of_arrival">
+                                                            <input class="form-control" placeholder="DD" value="" type="text" name="date_of_arrival">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -146,8 +140,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="row mb-3">
-                                                <label class="col-md-3 form-label">Ship Commander <span
-                                                        class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">Ship Commander </label>
 
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text"
@@ -157,8 +150,7 @@
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Embarkation Number <span
-                                                        class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">Embarkation Number </label>
 
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control"
@@ -192,15 +184,6 @@
     <script>
         var dt_ship_elem = $("#ship-table"),
             dt_ship = "";
-
-        $('.fc-datepicker').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            dateFormat: 'yy-mm-dd',
-            changeMonth: true, // Customize the date format as needed
-            changeYear: true,
-            yearRange: 'c-2000:c+nn'
-        });
     </script>
     @include('page.mode-of-arrivals.scripts')
 @endsection

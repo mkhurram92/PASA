@@ -14,8 +14,12 @@ class ModeOfArrivals extends Model
         "ship_id",
         "year",
         "date_of_departure",
+        "month_of_departure",
+        "year_of_departure",
         "arrived_at",
         "date_of_arrival",
+        "month_of_arrival",
+        "year_of_arrival",
         "ship_commander",
         "embarkation_number",
         "notes",
@@ -45,32 +49,5 @@ class ModeOfArrivals extends Model
     public function city()
     {
         return $this->belongsTo(City::class, "city_id");
-    }
-    public function setDateOfDepartureAttribute($date_of_departure)
-    {
-        $carbonDate = Carbon::createFromFormat('m/d/Y', $date_of_departure);
-        $formattedDate = $carbonDate->format('Y-m-d');
-        $this->attributes['date_of_departure'] = $formattedDate;
-    }
-
-    public function setDateOfArrivalAttribute($date_of_arrival)
-    {
-        $carbonDate = Carbon::createFromFormat('m/d/Y', $date_of_arrival);
-        $formattedDate = $carbonDate->format('Y-m-d');
-        $this->attributes['date_of_arrival'] = $formattedDate;
-    }
-
-    public function getDateOfDepartureAttribute($date_of_departure)
-    {
-        $carbonDate = Carbon::createFromFormat('Y-m-d', $date_of_departure);
-        $formattedDate = $carbonDate->format('m/d/Y');
-        return $formattedDate;
-    }
-
-    public function getDateOfArrivalAttribute($date_of_arrival)
-    {
-        $carbonDate = Carbon::createFromFormat('Y-m-d', $date_of_arrival);
-        $formattedDate = $carbonDate->format('m/d/Y');
-        return $formattedDate;
     }
 }

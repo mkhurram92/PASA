@@ -25,17 +25,21 @@ class StoreModeOfArrivalsRequest extends FormRequest
     {
         return [
             "ship_id"=> "required|exists:ships,id",
-            "year"=> "required|digits:4",
-            "country_id"=> "required|exists:countries,id",
-            "county_id"=> "required|exists:counties,id",
-            "city_id"=> "required|exists:cities,id",
-            "date_of_departure"=> "required",
-            "arrived_at"=> "required|exists:ports,id",
-            "date_of_arrival"=> "required",
-            "ship_commander"=> "required",
-            "embarkation_number"=> "required",
+            "year"=> "nullable|digits:4",
+            "country_id"=> "nullable|exists:countries,id",
+            "county_id"=> "nullable|exists:counties,id",
+            "city_id"=> "nullable|exists:cities,id",
+            "date_of_departure"=> "nullable|digits:2",
+            "month_of_departure"=> "nullable|digits:2",
+            "year_of_departure"=> "nullable|digits:4",
+            "arrived_at"=> "nullable|exists:ports,id",
+            "date_of_arrival"=> "nullable|digits:2",
+            "month_of_arrival"=> "nullable|digits:2",
+            "year_of_arrival"=> "nullable|digits:4",
+            "ship_commander"=> "nullable",
+            "embarkation_number"=> "nullable",
             "notes"=> "nullable",
-            "ports_of_call"=> "required",
+            "ports_of_call"=> "nullable",
         ];
     }
     public function messages()
@@ -43,7 +47,7 @@ class StoreModeOfArrivalsRequest extends FormRequest
         return [
             "ship_id.required"=>"Ship field is required",
             "ship_id.exists"=>"Ship Not Found",
-            "year.required"=>"Year field is required",
+/*            "year.required"=>"Year field is required",
             "year.digits"=>"Invalid Year",
             "country_id.required"=>"Country field is required",
             "country_id.exists"=> "County Not Found",
@@ -57,7 +61,7 @@ class StoreModeOfArrivalsRequest extends FormRequest
             "date_of_arrival.required"=> "Date of Arrival field is required",
             "ship_commander.required"=>"Ship Commander field is required",
             "embarkation_number.required"=> "Embarkation Number field is required",
-            "ports_of_call.required"=>"Ports of Call field is required",
+            "ports_of_call.required"=>"Ports of Call field is required",*/
         ];
     }
 }
