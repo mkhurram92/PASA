@@ -102,7 +102,6 @@
                                                         @empty
                                                         <option value="">Select Title</option>
                                                         @endforelse
-                                                        <option value="Other">Other.</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-5">
@@ -123,7 +122,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Preferred Name <span class="tx-danger">*</span></label>
+                                                <label class="col-md-4 form-label">Preferred Name  </label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text" placeholder="Preferred Name" value="{{ $member?->preferred_name }}" name="preferred_name">
                                                 </div>
@@ -143,7 +142,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Birth Date <span class="tx-danger">*</span></label>
+                                                <label class="col-md-4 form-label">Birth Date  </label>
                                                 <div class="col-md-8">
                                                     <input class="form-control fc-datepicker" type="text" value="{{ $member?->date_of_birth }}" name="date_of_birth">
                                                 </div>
@@ -159,25 +158,25 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Unit / Apartment No.<span class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="Unit/Apartment No." value="{{ $member?->address?->unit_no }}" name="unit_no">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Street Name<span class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Street Name </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="PO Box" value="{{ $member?->address?->number_street }}" name="number_street">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">City / Town / Suburb <span class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">City / Town / Suburb  </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Suburb" value="{{ $member?->address?->suburb }}" name="suburb">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">State / County <span class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">State / County  </label>
                                             <div class="col-md-8">
                                                 <select name="state" class="form-control form-select select2" id="state">
                                                     @forelse ($data['states'] as $state)
@@ -191,7 +190,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Country<span class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Country </label>
                                             <div class="col-md-8">
                                                 <select name="country" class="form-control form-select select2" id="country">
                                                     <option value="Australia">Australia</option>
@@ -199,7 +198,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Post Code <span class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Post Code  </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Post Code" value="{{ $member?->address?->post_code }}" name="post_code">
                                             </div>
@@ -219,8 +218,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Email Address<span class="tx-danger">
-                                                    *</span></label>
+                                            <label class="col-md-4 form-label">Email Address </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="Email Address" value="{{ $member?->contact?->email }}" name="email" disabled readonly>
                                             </div>
@@ -249,7 +247,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Username <span class="tx-danger">*</span></label>
+                                            <label class="col-md-4 form-label">Username  </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="User Name" value="{{ $member?->username }}" name="username" readonly disabled>
                                             </div>
@@ -289,7 +287,7 @@
                                             <label class="col-md-8 form-label">Date Membership
                                                 Commenced (Membership Approval Date) </label>
                                             <div class="col-md-4">
-                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_approved }}" readonly disabled name="date_membership_approved">
+                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_approved }}"  name="date_membership_approved">
                                             </div>
                                         </div>
 
@@ -297,7 +295,7 @@
                                             <label class="col-md-4 form-label">Date Membership Ended
                                             </label>
                                             <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_end }}" disabled readonly>
+                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_end }}"  name="date_membership_end">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -454,8 +452,8 @@
             selectOtherMonths: true,
             dateFormat: 'yy-mm-dd',
             changeYear: true,
-            changeMonth: true, // Customize the date format as needed
-            yearRange: 'c-250:c+nn'
+            changeMonth: true//, // Customize the date format as needed
+            //yearRange: 'c-250:c+nn'
         });
 
         $(document).on("change", "#daterange-btn", function() {

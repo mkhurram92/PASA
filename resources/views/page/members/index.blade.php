@@ -217,17 +217,17 @@
                         var day = date.getDate().toString().padStart(2, '0');
                         var month = (date.getMonth() + 1).toString().padStart(2, '0');
                         var year = date.getFullYear();
-                        var hours = date.getHours().toString().padStart(2, '0');
-                        var minutes = date.getMinutes().toString().padStart(2, '0');
-                        var seconds = date.getSeconds().toString().padStart(2, '0');
-                        var ampm = hours >= 12 ? 'pm' : 'am';
+                        //var hours = date.getHours().toString().padStart(2, '0');
+                        //var minutes = date.getMinutes().toString().padStart(2, '0');
+                        //var seconds = date.getSeconds().toString().padStart(2, '0');
+                        //var ampm = hours >= 12 ? 'pm' : 'am';
 
                         // Convert 24-hour format to 12-hour format
-                        hours = (hours % 12) || 12;
+                        //hours = (hours % 12) || 12;
 
-                        var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' +
-                            minutes +
-                            ':' + seconds + ' ' + ampm;
+                        var formattedDate = year + '-' + month + '-' + day;// + ' ' + hours + ':' +
+                           // minutes +
+                            //':' + seconds + ' ' + ampm;
 
                         return formattedDate;
                     }

@@ -47,7 +47,9 @@ class SubscribeMemberController extends Controller
 
     public function index(Request $request)
     {
-        $members = Member::with('membershipType', 'membershipStatus')->get();
+        //$members = Member::with('membershipType', 'membershipStatus', 'additionalInfo')->get();
+        $members = Member::with('membershipType', 'membershipStatus', 'additionalInfo')->get();
+
         $membershipTypeOptions = MembershipType::pluck('name')->toArray();
         array_unshift($membershipTypeOptions, '');
 
@@ -102,6 +104,7 @@ class SubscribeMemberController extends Controller
                 'key_holder' => (int)$request->key_holder,
                 'key_held' => $request->key_held,
                 'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
+                
                 //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
             ]);
             $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
@@ -179,14 +182,14 @@ class SubscribeMemberController extends Controller
             'title' => 'required',
             'family_name' => 'required',
             'given_name' => 'required',
-            'preferred_name' => 'required',
+            'preferred_name' => 'nullable',
             'date_of_birth' => 'nullable',
 
-            'number_street' => 'required',
-            'suburb' => 'required',
-            'state' => 'required',
-            'country' => 'required',
-            'post_code' => 'required',
+            'number_street' => 'nullable',
+            'suburb' => 'nullable',
+            'state' => 'nullable',
+            'country' => 'nullable',
+            'post_code' => 'nullable',
 
             'phone' => 'nullable',
             'mobile' => 'nullable',
@@ -245,8 +248,8 @@ class SubscribeMemberController extends Controller
             'signed_agreement' => (int)$request->signed_agreement,
             'key_holder' => (int)$request->key_holder,
             'key_held' => $request->key_held,
-            //'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
-            //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
+            'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
+            'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
         ]);
         $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
         if ($volunteerEnable && $volunteerEnable->volunteer == 1) {

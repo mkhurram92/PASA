@@ -29,7 +29,7 @@ class MembersDataTable extends DataTable
             Column::make('family_name')->title('Family Name'),
             Column::make('email')->title('Email Address'),
             Column::make('member_type_id')->title('Member Type'),
-            Column::make('approved_at')->title('Approval Date'),
+            //Column::make('date_membership_approved')->title('Approval Date'),
             Column::make('member_status_id')->title('Membership Status'),
         ];
     }
