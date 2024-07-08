@@ -277,7 +277,7 @@
                      mutator: function(value, data, type, params, component) {
                          let date = data.date_of_arrival ? String(data.date_of_arrival).padStart(2,
                              '0') : "";
-                         let month = data.month_of_arrival ? String(data.month_of_departure).padStart(2,
+                         let month = data.month_of_arrival ? String(data.month_of_arrival).padStart(2,
                              '0') : "";
                          let year = data.year_of_arrival ? String(data.year_of_arrival) : "";
 

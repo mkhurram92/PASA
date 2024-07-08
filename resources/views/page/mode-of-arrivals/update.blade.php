@@ -124,7 +124,7 @@
                                                             <input class="form-control" placeholder="MM" value="{{ $modeOfArrival && $modeOfArrival->month_of_arrival ? sprintf('%02d', $modeOfArrival->month_of_arrival) : '' }}" type="text" name="month_of_arrival">
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" value="{{ $modeOfArrival && $modeOfArrival->date_of_arrival ? sprintf('%02d', $modeOfArrival->date_oof_arrival) : '' }}" type="text" name="date_of_arrival">
+                                                            <input class="form-control" placeholder="DD" value="{{ $modeOfArrival && $modeOfArrival->date_of_arrival ? sprintf('%02d', $modeOfArrival->date_of_arrival) : '' }}" type="text" name="date_of_arrival">
                                                         </div>
                                                     </div>
                                                 </div>
