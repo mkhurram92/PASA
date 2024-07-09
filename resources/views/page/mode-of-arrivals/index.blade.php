@@ -268,7 +268,7 @@
                      }
                  },
                  {
-                     title: "Departure Date",
+                     title: "Arrival Date",
                      field: "arrival_date_combined",
                      hozAlign: "center",
                      vertAlign: "middle",

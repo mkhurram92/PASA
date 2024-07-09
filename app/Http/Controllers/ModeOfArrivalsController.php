@@ -52,14 +52,14 @@ class ModeOfArrivalsController extends Controller
     {
         $data = $request->validated();
         //Log::debug('Validated data:', $data);
-        
+
         // Save only the 'ship_id' and non-null fields from $data
-        $filteredData = array_filter($data, function($value) {
+        $filteredData = array_filter($data, function ($value) {
             return !is_null($value);
         });
-           
+
         ModeOfArrivals::create($filteredData);
-    
+
         return response()->json(['status' => true, "message" => "Arrival created", "redirectTo" => route("mode-of-arrivals.index")]);
     }
 
@@ -131,10 +131,10 @@ class ModeOfArrivalsController extends Controller
         $arrivals = ModeOfArrivals::with(['ship'])->when(!empty($search), function ($q) use ($search) {
             $q->where('name_of_ship', 'like', '%' . $search . '%');
         })
-        ->get();
+            ->get();
 
         $response = array();
-        
+
         foreach ($arrivals as $arrival) {
             $response[] = array(
                 "id" => $arrival?->id,
@@ -144,13 +144,43 @@ class ModeOfArrivalsController extends Controller
 
         return response()->json($response);
     }
+
     function getShipFirstDate(Request $request)
     {
         $ship = ModeOfArrivals::findOrFail($request->ship_id);
+        $dateOfArrival = $ship->date_of_arrival;
+        $monthOfArrival = $ship->month_of_arrival;
+        $yearOfArrival = $ship->year_of_arrival;
+
+        // Convert to integers if not null
+        $dateOfArrival = is_null($dateOfArrival) ? null : intval($dateOfArrival);
+        $monthOfArrival = is_null($monthOfArrival) ? null : intval($monthOfArrival);
+        $yearOfArrival = is_null($yearOfArrival) ? null : intval($yearOfArrival);
+
+        // Debugging output
+        //Log::debug("dateOfArrival: " . json_encode($dateOfArrival));
+        //Log::debug("monthOfArrival: " . json_encode($monthOfArrival));
+        //Log::debug("yearOfArrival: " . json_encode($yearOfArrival));
+
+        if (is_null($yearOfArrival) && is_null($monthOfArrival) && is_null($dateOfArrival)) {
+            $firstDate = "Unknown";
+        } elseif (!is_null($yearOfArrival) && is_null($monthOfArrival) && is_null($dateOfArrival)) {
+            $firstDate = $yearOfArrival;
+        } elseif (!is_null($yearOfArrival) && !is_null($monthOfArrival) && is_null($dateOfArrival)) {
+            $firstDate = $yearOfArrival . '-' . str_pad($monthOfArrival, 2, '0', STR_PAD_LEFT);
+        } elseif (!is_null($yearOfArrival) && !is_null($monthOfArrival) && !is_null($dateOfArrival)) {
+            $firstDate = $yearOfArrival . '-' . str_pad($monthOfArrival, 2, '0', STR_PAD_LEFT) . '-' . str_pad($dateOfArrival, 2, '0', STR_PAD_LEFT);
+        } else {
+            $firstDate = "Unknown";
+        }
+
+        // Debugging output
+        //Log::debug("firstDate: " . json_encode($firstDate));
+
         return response()->json(
             [
                 "mode_of_travel_id" => $ship->id,
-                "first_date" => $ship?->date_of_arrival
+                "first_date" => $firstDate
             ]
         );
     }

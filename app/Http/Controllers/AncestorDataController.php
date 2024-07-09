@@ -72,14 +72,10 @@ class AncestorDataController extends Controller
 
     public function store(StoreAncestorDataRequest $request)
     {
-
         DB::beginTransaction();
 
         try {
             $validatedData = $request->validated();
-
-            $this->formatDate($validatedData, 'date_of_birth');
-            $this->formatDate($validatedData, 'date_of_death');
 
             $ancestorData = AncestorData::create($validatedData);
 
@@ -97,6 +93,10 @@ class AncestorDataController extends Controller
             if ($ancestorData->has_spouse) {
                 $this->saveAncestorSpouse($ancestorData, $request);
             }
+
+            $filteredData = array_filter($validatedData, function ($value) {
+                return !is_null($value);
+            });
 
             DB::commit();
 

@@ -68,18 +68,23 @@
                 $.ajax("{{ route('get-ship-first-date') }}", {
                         type: "POST",
                         data: {
-                            ship_id: id
+                            ship_id: id,
+                            _token: '{{ csrf_token() }}' // Add CSRF token for security
                         }
                     })
                     .done(response => {
-                        // Assuming response includes first_date
                         const firstDate = response.first_date;
 
-                        // Set the first_date in the datepicker
-                        $('#first_date').datepicker("setDate", firstDate);
+                        // Display the date in the first_date input field
+                        if (firstDate && firstDate !== "Unknown") {
+                            $('#first_date').val(firstDate);
+                        } else {
+                            // Clear the field if the date is "Unknown"
+                            $('#first_date').val("");
+                        }
 
-                        // Set the mode_of_arrival_id in a hidden field
-                        $("#mode_of_travel_id").val(id); // Use 'id' directly from the select2
+                        // Set the mode_of_travel_id in a hidden field
+                        $("#mode_of_travel_id").val(id);
 
                         // Additional code if needed
                         // ...
@@ -90,14 +95,6 @@
             }
         });
 
-        $('.fc-datepicker').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            dateFormat: 'yy-mm-dd',
-            changeMonth: true, // Customize the date format as needed
-            changeYear: true,
-            yearRange: 'c-2000:c+nn'
-        });
         $(document).on("input", ".uppercase", function(e) {
             $(e.target).val($(e.target).val().toUpperCase());
         })
