@@ -245,12 +245,16 @@ class AncestorDataController extends Controller
 
             $validatedData = $request->validated();
 
-            $this->formatDate($validatedData, 'date_of_birth');
-            $this->formatDate($validatedData, 'date_of_death');
+            //this->formatDate($validatedData, 'date_of_birth');
+            //$this->formatDate($validatedData, 'date_of_death');
 
             if (isset($validatedData['travel_to_sa'])) {
                 $ancestorData->has_spouse = $validatedData['travel_to_sa'];
             }
+
+            //$filteredData = array_filter($validatedData, function ($value) {
+            //    return !is_null($value);
+            //});
 
             $ancestorData->update($validatedData);
 
@@ -262,6 +266,10 @@ class AncestorDataController extends Controller
 
                 $ancestorData->mode_of_travel_id = null;
             }
+
+            $filteredData = array_filter($validatedData, function ($value) {
+                return !is_null($value);
+            });
 
             $ancestorData->save();
 

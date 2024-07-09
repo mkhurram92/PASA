@@ -118,10 +118,17 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Birth Date</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control fc-datepicker" type="text"
-                                                        placeholder="Birth Date" value="{{ $ancestor?->date_of_birth }}"
-                                                        name="date_of_birth">
-
+                                                    <div class="row">
+                                                        <div class="col-4 pr-1">
+                                                            <input class="form-control" placeholder="YYYY" value="{{ $ancestor ? $ancestor?->year_of_birth : '' }}" type="text" id="year_of_birth" name="year_of_birth">
+                                                        </div>
+                                                        <div class="col-4 px-1">
+                                                            <input class="form-control" placeholder="MM" value="{{ $ancestor && $ancestor?->month_of_birth ? sprintf('%02d', $ancestor?->month_of_birth) : '' }}" type="text" id="month_of_birth"  name="month_of_birth">
+                                                        </div>
+                                                        <div class="col-4 pl-1">
+                                                            <input class="form-control" placeholder="DD" value="{{ $ancestor && $ancestor?->date_of_birth ? sprintf('%02d', $ancestor?->date_of_birth) : '' }}" type="text" id="date_of_birth"  name="date_of_birth">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -136,10 +143,17 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Death Date</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control fc-datepicker" type="text"
-                                                        placeholder="Death Date"
-                                                        value="{{ $ancestor?->date_of_death }}" name="date_of_death">
-
+                                                    <div class="row">
+                                                        <div class="col-4 pr-1">
+                                                            <input class="form-control" placeholder="YYYY" value="{{ $ancestor ? $ancestor?->year_of_death : '' }}" type="text" name="year_of_death">
+                                                        </div>
+                                                        <div class="col-4 px-1">
+                                                            <input class="form-control" placeholder="MM" value="{{ $ancestor && $ancestor?->month_of_death ? sprintf('%02d', $ancestor?->month_of_death) : '' }}" type="text" name="month_of_death">
+                                                        </div>
+                                                        <div class="col-4 pl-1">
+                                                            <input class="form-control" placeholder="DD" value="{{ $ancestor && $ancestor?->date_of_death ? sprintf('%02d',$ancestor?->date_of_death) : '' }}" type="text" name="date_of_death">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">

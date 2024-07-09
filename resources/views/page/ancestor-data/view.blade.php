@@ -87,8 +87,27 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Birth Date</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{ $ancestor?->date_of_birth }}" disabled readonly
-                                                    name="date_of_birth">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        @php
+                                                            $year = $ancestor?->year_of_birth ?? '';
+                                                            $month = $ancestor?->month_of_birth ?? '';
+                                                            $day = $ancestor?->date_of_birth ?? '';
+                                            
+                                                            $date = $year;
+                                            
+                                                            if ($month) {
+                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                            
+                                                            if ($day) {
+                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                                        @endphp
+                                            
+                                                        <input class="form-control" value="{{ $date }}" readonly disabled>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -100,8 +119,27 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Death Date</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{ $ancestor?->date_of_death }}" disabled readonly
-                                                    name="date_of_death">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        @php
+                                                            $year = $ancestor?->year_of_death ?? '';
+                                                            $month = $ancestor?->month_of_death ?? '';
+                                                            $day = $ancestor?->date_of_death ?? '';
+                                            
+                                                            $date = $year;
+                                            
+                                                            if ($month) {
+                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                            
+                                                            if ($day) {
+                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                                        @endphp
+                                            
+                                                        <input class="form-control" value="{{ $date }}" readonly disabled>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
