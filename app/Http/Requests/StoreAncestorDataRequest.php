@@ -31,14 +31,14 @@ class StoreAncestorDataRequest extends FormRequest
             'source_of_arrival' => 'nullable',
             'travel_to_sa' => 'nullable|in:yes,no',
             'date_of_birth' => 'nullable',
-            'month_of_birth'=>'nullable',
-            'year_of_birth'=>'nullable',
+            'month_of_birth' => 'nullable',
+            'year_of_birth' => 'nullable',
             'date_of_death' => 'nullable',
-            'month_of_death'=>'nullable',
-            'year_of_death'=>'nullable',
-            'arrival_date_in_sa' =>'nullable|string',
-            'evidence_of_arrival' =>'nullable|string',
-            'mode_of_arrival_id' =>'nullable|int',
+            'month_of_death' => 'nullable',
+            'year_of_death' => 'nullable',
+            'arrival_date_in_sa' => 'nullable|string',
+            'evidence_of_arrival' => 'nullable|string',
+            'mode_of_arrival_id' => 'nullable|int',
         ];
 
         return $rules;

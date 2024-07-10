@@ -174,23 +174,42 @@
                                                                 disabled readonly>
                                                         </div>
                                                     </div>
-
+                                                    <?php
+                                                    // Assuming these values come from your model or database
+                                                    $date_of_arrival = $ancestor?->mode_of_travel?->date_of_arrival;
+                                                    $month_of_arrival = $ancestor?->mode_of_travel?->month_of_arrival;
+                                                    $year_of_arrival = $ancestor?->mode_of_travel?->year_of_arrival;
+                                                    
+                                                    // Initialize the result
+                                                    $formatted_date = null;
+                                                    
+                                                    // Check the conditions and format the date accordingly
+                                                    if ($year_of_arrival) {
+                                                        if ($month_of_arrival) {
+                                                            if ($date_of_arrival) {
+                                                                $formatted_date = sprintf('%04d-%02d-%02d', $year_of_arrival, $month_of_arrival, $date_of_arrival);
+                                                            } else {
+                                                                $formatted_date = sprintf('%04d-%02d', $year_of_arrival, $month_of_arrival);
+                                                            }
+                                                        } else {
+                                                            $formatted_date = sprintf('%04d', $year_of_arrival);
+                                                        }
+                                                    }
+                                                    ?>
                                                     <div class="row mb-3">
-                                                        <label class="col-md-4 form-label">Arrival Date in SA<span
-                                                                class="text-danger"></span></label>
+                                                        <label class="col-md-4 form-label">Arrival Date in SA<span class="text-danger"></span></label>
                                                         <div class="col-md-8">
-                                                            <input class="form-control" type="text" value="{{ $ancestor?->mode_of_travel?->date_of_arrival }}"
-                                                                disabled readonly>
+                                                            <input class="form-control" type="text" value="{{ $formatted_date }}" disabled readonly>
                                                         </div>
-                                                    </div>
-                                                    <div class="row mb-3">
+                                                    </div>                                                    
+                                                    <!--<div class="row mb-3">
                                                         <label class="col-md-4 form-label">Arrival Port in SA<span
                                                                 class="text-danger"></span></label>
                                                         <div class="col-md-8">
                                                             <input class="form-control" type="text" value="{{ $ancestor?->mode_of_travel?->port?->name }}"
                                                                 disabled readonly>
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                 @else
                                                     <div class="mb-3 row">
                                                         <label class="col-md-4 form-label">Arrivals Date in SA<span

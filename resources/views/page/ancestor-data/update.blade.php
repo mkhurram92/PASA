@@ -120,13 +120,13 @@
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
-                                                            <input class="form-control" placeholder="YYYY" value="{{ $ancestor ? $ancestor?->year_of_birth : '' }}" type="text" id="year_of_birth" name="year_of_birth">
+                                                            <input class="form-control" placeholder="YYYY" value="{{ $ancestor ? $ancestor?->year_of_birth : '' }}" type="text" name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" value="{{ $ancestor && $ancestor?->month_of_birth ? sprintf('%02d', $ancestor?->month_of_birth) : '' }}" type="text" id="month_of_birth"  name="month_of_birth">
+                                                            <input class="form-control" placeholder="MM" value="{{ $ancestor && $ancestor?->month_of_birth ? sprintf('%02d', $ancestor?->month_of_birth) : '' }}" type="text" name="month_of_birth">
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" value="{{ $ancestor && $ancestor?->date_of_birth ? sprintf('%02d', $ancestor?->date_of_birth) : '' }}" type="text" id="date_of_birth"  name="date_of_birth">
+                                                            <input class="form-control" placeholder="DD" value="{{ $ancestor && $ancestor?->date_of_birth ? sprintf('%02d', $ancestor?->date_of_birth) : '' }}" type="text" name="date_of_birth">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -134,7 +134,7 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Birth Place</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control fc-datepicker" type="text"
+                                                    <input class="form-control" type="text"
                                                         placeholder="Birth Date"
                                                         value="{{ $ancestor?->place_of_birth }}" name="place_of_birth">
 
@@ -159,7 +159,7 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Death Place</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control fc-datepicker" type="text"
+                                                    <input class="form-control" type="text"
                                                         placeholder="Death Place"
                                                         value="{{ $ancestor?->please_of_death }}"
                                                         name="place_of_death">
