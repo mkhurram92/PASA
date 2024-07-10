@@ -209,11 +209,11 @@
                                             <label class="col-md-4 form-label">Home Phone (including Area Code)</label>
                                             <div class="col-md-8">
                                                 <div class="input-group">
-                                                    <input class="form-control" type="text"
+                                                    <input class="form-control" type="text" placeholder="Area Code" 
                                                         value="{{ $member?->contact?->area_code }}" name="area_code"
                                                         style="width: 25%; margin-right: 10px;">
                                                     <input class="form-control" type="text"
-                                                        value="{{ $member?->contact?->phone }}" name="phone"
+                                                        value="{{ $member?->contact?->phone }}" placeholder="Phone" name="phone"
                                                         style="width: calc(75% - 10px);">
                                                 </div>
                                             </div>
