@@ -274,17 +274,17 @@
                      headerFilterParams: {
                          values: source_of_arrival
                      }
-                 },
-                 {
-                     title: "Occupation",
-                     field: "occupation_relation.name",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Occupation',
-                     headerFilterParams: {
-                         values: occulation
-                     }
+                 //},
+                 //{
+                 //    title: "Occupation",
+                 //    field: "occupation_relation.name",
+                 //    hozAlign: "center",
+                 //    vertAlign: "middle",
+                 //    headerFilter: "select",
+                 //    headerFilterPlaceholder: 'Search by Occupation',
+                 //    headerFilterParams: {
+                 //        values: occulation
+                 //    }
                  },
                  {
                      title: "Action",
