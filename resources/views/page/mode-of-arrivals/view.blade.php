@@ -53,7 +53,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-3 form-label">Year</label>
+                                            <label class="col-md-3 form-label">Departure Year</label>
                                             <div class="col-md-9">
                                                 <input class="form-control" type="text" value="{{ $modeOfArrival->year ?? '' }}" readonly disabled>
                                             </div>
@@ -103,13 +103,13 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-3 form-label">Arrived At</label>
+                                            <label class="col-md-3 form-label">Arrived Place in SA</label>
                                             <div class="col-md-9">
                                                 <input class="form-control" type="text" value="{{ $modeOfArrival->port->name ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-3 form-label">Arrival Date</label>
+                                            <label class="col-md-3 form-label">Arrival Date in SA</label>
                                             <div class="col-md-9">
                                                 <div class="row">
                                                     <div class="col-12">
@@ -153,13 +153,13 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Notes</label>
                                             <div class="col-md-9">
-                                                <textarea class="form-control" rows="3" readonly disabled>{{ $modeOfArrival?->notes  ?? '' }}</textarea>
+                                                <textarea class="form-control" rows="4" readonly disabled>{{ $modeOfArrival?->notes  ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">Ports of Call</label>
                                             <div class="col-md-9">
-                                                <textarea class="form-control" rows="3" readonly disabled> {{ $modeOfArrival?->ports_of_call ?? '' }} </textarea>
+                                                <textarea class="form-control" rows="4" readonly disabled> {{ $modeOfArrival?->ports_of_call ?? '' }} </textarea>
                                             </div>
                                         </div>
                                     </div>

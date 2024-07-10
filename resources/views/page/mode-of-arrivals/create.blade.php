@@ -46,7 +46,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Ship Name <span
+                                                <label class="col-md-3 form-label">Ship <span
                                                         class="text-danger">*</span></label>
                                                 <div class="col-md-9">
                                                     <select class="form-control select2" id="ship_select2"
@@ -62,23 +62,6 @@
                                                         value="" name="year">
                                                 </div>
                                             </div>
-
-                                            <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Departure Date </label>
-                                                <div class="col-md-9">
-                                                    <div class="row">
-                                                        <div class="col-4 pr-1">
-                                                            <input class="form-control" placeholder="YYYY" type="text" name="year_of_departure">
-                                                        </div>
-                                                        <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" type="text" name="month_of_departure">
-                                                        </div>
-                                                        <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" type="text" name="date_of_departure">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>                                            
 
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Country </label>
@@ -105,9 +88,22 @@
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Ports of Call </label>
+                                                <label class="col-md-3 form-label">Departure Date </label>
                                                 <div class="col-md-9">
-                                                    <textarea class="form-control" rows="4" placeholder="Ports of Call" name="ports_of_call"></textarea>
+                                                    <div class="row">
+                                                        <div class="col-4 pr-1">
+                                                            <input class="form-control" placeholder="YYYY"
+                                                                type="text" name="year_of_departure">
+                                                        </div>
+                                                        <div class="col-4 px-1">
+                                                            <input class="form-control" placeholder="MM" type="text"
+                                                                name="month_of_departure">
+                                                        </div>
+                                                        <div class="col-4 pl-1">
+                                                            <input class="form-control" placeholder="DD" type="text"
+                                                                name="date_of_departure">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -119,24 +115,27 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Arrival Date in SA </label>
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
-                                                            <input class="form-control" placeholder="YYYY" value="" type="text" name="year_of_arrival">
+                                                            <input class="form-control" placeholder="YYYY"
+                                                                value="" type="text" name="year_of_arrival">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" value="" type="text" name="month_of_arrival">
+                                                            <input class="form-control" placeholder="MM" value=""
+                                                                type="text" name="month_of_arrival">
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" value="" type="text" name="date_of_arrival">
+                                                            <input class="form-control" placeholder="DD"
+                                                                value="" type="text" name="date_of_arrival">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                                                                
+
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="row mb-3">
@@ -161,20 +160,26 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Notes</label>
                                                 <div class="col-md-9">
-                                                    <textarea class="form-control" rows="6" placeholder="Notes" name="notes"></textarea>
-
+                                                    <textarea class="form-control" rows="4" placeholder="Notes" name="notes"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-3 form-label">Ports of Call </label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" rows="4" placeholder="Ports of Call" name="ports_of_call"></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <!-- MODAL EFFECTS -->
