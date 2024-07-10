@@ -206,9 +206,16 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Home Phone</label>
+                                            <label class="col-md-4 form-label">Home Phone (including Area Code)</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Home Phone" value="{{ $member?->contact?->phone }}" name="phone">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text"
+                                                        value="{{ $member?->contact?->area_code }}" name="area_code"
+                                                        style="width: 25%; margin-right: 10px;">
+                                                    <input class="form-control" type="text"
+                                                        value="{{ $member?->contact?->phone }}" name="phone"
+                                                        style="width: calc(75% - 10px);">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

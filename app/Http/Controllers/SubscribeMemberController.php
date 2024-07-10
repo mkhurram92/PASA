@@ -89,6 +89,7 @@ class SubscribeMemberController extends Controller
                 'email' => $request->email,
                 'mobile' => $request->mobile,
                 'phone' => $request->phone,
+                'area_code' => $request->area_code,
             ]);
 
             AdditionalMemberInfos::updateOrCreate(['member_id' => $member->id], [
@@ -233,6 +234,7 @@ class SubscribeMemberController extends Controller
             ///'email' => $request->email,
             'mobile' => $request->mobile,
             'phone' => $request->phone,
+            'area_code' => $request->area_code,
         ]);
 
 

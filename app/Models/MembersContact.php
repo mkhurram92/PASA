@@ -13,6 +13,7 @@ class MembersContact extends Model
         'email',
         'mobile',
         'phone',
+        'area_code',
     ];
 
     public function member()
