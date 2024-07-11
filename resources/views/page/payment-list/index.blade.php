@@ -164,39 +164,6 @@
                      headerFilterPlaceholder: 'Filter by Payment Type',
                      headerFilterParams: {
                          values: paymentType
-                     },
-                     formatter: function(cell, formatterParams, onRendered) {
-                         // Access the cell value
-                         var membershipType = cell.getValue();
-
-                         // Add custom styling based on membership type
-                         var style = '';
-                         if (membershipType === 'primary') {
-                             style = 'color: magenta;';
-                         } else if (membershipType === 'Pioneer Life Membership') {
-                             style = 'color: limegreen;';
-                         } else if (membershipType === 'Pioneer Partner Membership') {
-                             style = 'color: blue;';
-                         } else if (membershipType === 'Associate Pioneer Membership') {
-                             style = 'color: red;';
-                         } else if (membershipType === 'Associate Life Membership') {
-                             style = 'color: pink;';
-                         } else if (membershipType === 'Junior Pioneer Membership') {
-                             style = 'color: purple;';
-                         } else if (membershipType === 'Friend Membership') {
-                             style = 'color: orange;';
-                         } else if (membershipType === 'Friend Partner Membership') {
-                             style = 'color: turquoise;';
-                         } else if (membershipType === 'Honorary Life Membership') {
-                             style = 'color: cyan;';
-                         } else if (membershipType === 'Complementary Membership') {
-                             style = 'color: magenta;';
-                         }
-                         // Wrap the text inside a span with the specified style
-                         var formattedValue = '<span style="' + style + '">' + membershipType + '</span>';
-
-                         // Return the formatted content
-                         return formattedValue;
                      }
                  },
                  {
@@ -227,7 +194,7 @@
                          // Convert 24-hour format to 12-hour format
                          hours = (hours % 12) || 12;
 
-                         var formattedDate = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes +
+                         var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes +
                              ':' + seconds + ' ' + ampm;
 
                          return formattedDate;

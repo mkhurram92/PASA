@@ -179,7 +179,7 @@
             columns: [{
                     title: 'ID',
                     field: 'id',
-                    hozAlign: "center",
+                    hozAlign: "right",
                     vertAlign: "middle",
                     headerFilter: "input",
                     width: "8%",
@@ -188,7 +188,7 @@
                 {
                     title: 'Given Name',
                     field: 'given_name',
-                    hozAlign: "center",
+                    hozAlign: "left",
                     vertAlign: "middle",
                     headerFilter: "input",
                     headerFilterPlaceholder: 'Filter by Name'
@@ -196,7 +196,7 @@
                 {
                     title: 'Family Name',
                     field: 'family_name',
-                    hozAlign: "center",
+                    hozAlign: "left",
                     vertAlign: "middle",
                     headerFilter: "input",
                     headerFilterPlaceholder: 'Filter by Family Name'
@@ -204,7 +204,7 @@
                 {
                     title: 'Approval Date',
                     field: 'approved_at',
-                    hozAlign: "center",
+                    hozAlign: "left",
                     vertAlign: "middle",
                     headerFilterPlaceholder: 'Filter by Approval Date',
                     headerFilter: "input",
@@ -222,7 +222,7 @@
                 {
                     title: 'Membership Type',
                     field: 'membership_type.name',
-                    hozAlign: "center",
+                    hozAlign: "left",
                     vertAlign: "middle",
                     headerFilter: "select",
                     headerFilterPlaceholder: 'Filter by Membership Type',
@@ -233,7 +233,7 @@
                 {
                     title: 'Membership Status',
                     field: 'membership_status.name',
-                    hozAlign: "center",
+                    hozAlign: "left",
                     vertAlign: "middle",
                     headerFilter: "select",
                     headerFilterPlaceholder: 'Filter by Membership Status',

@@ -36,7 +36,7 @@
                         <ul class="nav panel-tabs">
                             <li class=""><a href="#tab5" class="active" data-bs-toggle="tab">Profile</a></li>
                             <li><a href="#tab6" data-bs-toggle="tab">Ancestor</a></li>
-                            <li><a href="#tab7" data-bs-toggle="tab">Padigree</a></li>
+                            <li><a href="#tab7" data-bs-toggle="tab">Pedigree</a></li>
                         </ul>
                     </div>
                 </div>
@@ -426,7 +426,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Place Of Origin</label>
+                                                <label class="col-md-3 form-label">Origin Place</label>
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text"
                                                         placeholder="Place Of Origin"
@@ -435,7 +435,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Name Of the Ship</label>
+                                                <label class="col-md-3 form-label">Ship Name</label>
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text"
                                                         placeholder="Name Of the Ship"
@@ -444,7 +444,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Date of Birth</label>
+                                                <label class="col-md-3 form-label">Birth Date</label>
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text"
                                                         placeholder="Date of Birth"
@@ -459,12 +459,12 @@
                         </div>
                         <div class="tab-pane" id="tab7">
                             <div class="card-header justify-content-between">
-                                <h3 class="card-title">Pedigrees</h3>
+                                <h3 class="card-title">Pedigree</h3>
                             </div>
                             @if ($member)
                                 @if (count($member?->pedigree))
                                     <div class="card-header justify-content-between">
-                                        <h3 class="card-title">Pedigrees Chart</h3>
+                                        <h3 class="card-title">Pedigree Chart</h3>
                                     </div>
                                     <div class="card-body p-0">
                                         <div class="card-body">
@@ -495,7 +495,7 @@
                                                     </div>
                                                     @if (!is_null($pedigree?->date_of_birth))
                                                         <div class="col-md-2">
-                                                            <label class="form-control-label">Date of Birth</label>
+                                                            <label class="form-control-label">Birth Date</label>
                                                             <input class="form-control" type="text"
                                                                 placeholder="Date of Birth"
                                                                 value="{{ $pedigree?->date_of_birth ?? '' }}" readonly
@@ -504,7 +504,7 @@
                                                     @endif
                                                     @if (!is_null($pedigree?->place_of_birth))
                                                         <div class="col-md-2">
-                                                            <label class="form-control-label">Place of Birth</label>
+                                                            <label class="form-control-label">Birth Place</label>
                                                             <input class="form-control" type="text"
                                                                 placeholder="Place of Birth"
                                                                 value="{{ $pedigree?->place_of_birth ?? '' }}"
@@ -513,7 +513,7 @@
                                                     @endif
                                                     @if (!is_null($pedigree?->date_of_death))
                                                         <div class="col-md-2">
-                                                            <label class="form-control-label">Date of Death</label>
+                                                            <label class="form-control-label">Death Date</label>
                                                             <input class="form-control" type="text"
                                                                 placeholder="Date of Death"
                                                                 value="{{ $pedigree?->date_of_death ?? '' }}" readonly
@@ -522,7 +522,7 @@
                                                     @endif
                                                     @if (!is_null($pedigree?->place_of_death))
                                                         <div class="col-md-2">
-                                                            <label class="form-control-label">Place of Death</label>
+                                                            <label class="form-control-label">Death Place</label>
                                                             <input class="form-control" type="text"
                                                                 placeholder="Place of Death"
                                                                 value="{{ $pedigree?->place_of_death ?? '' }}"
@@ -531,7 +531,7 @@
                                                     @endif
                                                     @if (!is_null($pedigree?->date_of_marriage))
                                                         <div class="col-md-2">
-                                                            <label class="form-control-label">Date of Marriage</label>
+                                                            <label class="form-control-label">Marriage Date</label>
                                                             <input class="form-control" type="text"
                                                                 placeholder="Date of Marriage"
                                                                 value="{{ $pedigree?->date_of_marriage ?? '' }}"
@@ -540,7 +540,7 @@
                                                     @endif
                                                     @if (!is_null($pedigree?->place_of_marriage))
                                                         <div class="col-md-2">
-                                                            <label class="form-control-label">Place of Marriage</label>
+                                                            <label class="form-control-label">Marriage Place</label>
                                                             <input class="form-control" type="text"
                                                                 placeholder="Place of Marriage"
                                                                 value="{{ $pedigree?->place_of_marriage ?? '' }}"
