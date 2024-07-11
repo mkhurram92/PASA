@@ -100,11 +100,11 @@
                 <div class="page-leftheader">
                     <h3 class="page-title">Mode Of Travel</h3>
                 </div>
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <!--<div class="card-header d-flex justify-content-between align-items-center">
                     <a class="btn btn-primary" href="javascript:void(0)" id="create-source-of-arrival-record">
                         <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                     </a>
-                </div>
+                </div>-->
             </div>
             <div class="row">
                 <div class="col-md-12 p-12">
@@ -136,8 +136,6 @@
                                      <option value="100">100</option>
                                      <option value="1000000">ALL</option>
                                 </select>
-                                <label style="padding: 10px;" disabled for="date-range">Date Range:</label>
-                                <input style="padding: 10px 20px;" disabled type="text" id="date-range">
                                 <button class="custom-button" type="button" id="printTable"
                                     onclick="printData()">Print</button>
                                 <button class="custom-button" id="download-csv">Download CSV</button>
