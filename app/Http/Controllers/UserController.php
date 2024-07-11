@@ -90,10 +90,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $html = view("models.user-update", compact('user'))->render();
+        $roles = Role::all(); // Fetch all roles from your Role model or adjust query as needed
+        $html = view("models.user-update", compact('user', 'roles'))->render();
+        
         return response()->json(["status" => true, "html" => $html]);
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -103,14 +105,24 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $req = [
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
+            'role_id' => $request->role_id,
         ];
+
         if (!empty($request->password)) {
-            $req['password'] = bcrypt($request->password);
+            $data['password'] = bcrypt($request->password);
         }
-        $user = User::where("id", $user->id)->update($req);
+
+        // Update the user's data
+        $user->update($data);
+
+        // Update the user's role
+        if ($request->has('role_id')) {
+            $user->role_id = $request->role_id;
+            $user->save();
+        }
 
         return response()->json(["status" => true, "message" => "User updated successfully"]);
     }
