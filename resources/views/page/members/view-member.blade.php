@@ -283,13 +283,7 @@
                                             <label class="col-md-8 form-label">Date Membership
                                                 Commenced (Membership Approval Date) </label>
                                             <div class="col-md-4">
-<<<<<<< Updated upstream
-                                                <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->additionalInfo?->date_membership_approved }}"
-                                                    name="date_membership_approved" readonly disabled>
-=======
                                                 <input class="form-control fc-datepicker" type="text" value="{{ $member?->approved_at }}" name="date_membership_approved" readonly disabled>
->>>>>>> Stashed changes
                                             </div>
                                         </div>
 
