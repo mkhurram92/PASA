@@ -141,14 +141,11 @@
                         <div class="card-body p-2">
                             <div class="tabulator-toolbar">
                                 Show <select style="padding:10px;" id="pageSizeDropdown">
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
+                                    <option value="25">25</option>
                                     <option value="50">50</option>
                                     <option value="100">100</option>
+                                    <option value="1000000">ALL</option>
                                 </select>
-                                <label style="padding: 10px;" for="date-range">Date Range:</label>
-                                <input style="padding: 10px 20px;" type="text" id="date-range">
                                 <button class="custom-button" type="button" id="printTable"
                                     onclick="printData()">Print</button>
                                 <button class="custom-button" id="download-csv">Download CSV</button>
@@ -217,17 +214,7 @@
                         var day = date.getDate().toString().padStart(2, '0');
                         var month = (date.getMonth() + 1).toString().padStart(2, '0');
                         var year = date.getFullYear();
-                        //var hours = date.getHours().toString().padStart(2, '0');
-                        //var minutes = date.getMinutes().toString().padStart(2, '0');
-                        //var seconds = date.getSeconds().toString().padStart(2, '0');
-                        //var ampm = hours >= 12 ? 'pm' : 'am';
-
-                        // Convert 24-hour format to 12-hour format
-                        //hours = (hours % 12) || 12;
-
-                        var formattedDate = year + '-' + month + '-' + day;// + ' ' + hours + ':' +
-                           // minutes +
-                            //':' + seconds + ' ' + ampm;
+                        var formattedDate = year + '-' + month + '-' + day;
 
                         return formattedDate;
                     }
@@ -241,39 +228,6 @@
                     headerFilterPlaceholder: 'Filter by Membership Type',
                     headerFilterParams: {
                         values: membershipTypeOptions
-                    },
-                    formatter: function(cell, formatterParams, onRendered) {
-                        // Access the cell value
-                        var membershipType = cell.getValue();
-
-                        // Add custom styling based on membership type
-                        var style = '';
-                        if (membershipType === 'Pioneer Membership') {
-                            style = 'color: green;';
-                        } else if (membershipType === 'Pioneer Life Membership') {
-                            style = 'color: limegreen;';
-                        } else if (membershipType === 'Pioneer Partner Membership') {
-                            style = 'color: blue;';
-                        } else if (membershipType === 'Associate Pioneer Membership') {
-                            style = 'color: red;';
-                        } else if (membershipType === 'Associate Life Membership') {
-                            style = 'color: pink;';
-                        } else if (membershipType === 'Junior Pioneer Membership') {
-                            style = 'color: purple;';
-                        } else if (membershipType === 'Friend Membership') {
-                            style = 'color: orange;';
-                        } else if (membershipType === 'Friend Partner Membership') {
-                            style = 'color: turquoise;';
-                        } else if (membershipType === 'Honorary Life Membership') {
-                            style = 'color: cyan;';
-                        } else if (membershipType === 'Complementary Membership') {
-                            style = 'color: magenta;';
-                        }
-                        // Wrap the text inside a span with the specified style
-                        var formattedValue = '<span style="' + style + '">' + membershipType + '</span>';
-
-                        // Return the formatted content
-                        return formattedValue;
                     }
                 },
                 {
@@ -285,31 +239,9 @@
                     headerFilterPlaceholder: 'Filter by Membership Status',
                     headerFilterParams: {
                         values: membershipStatusOptions
-                    },
-                    formatter: function(cell, formatterParams, onRendered) {
-                        // Access the cell value
-                        var membershipStatus = cell.getValue();
-
-                        // Add custom styling based on membership type
-                        var style = '';
-                        if (membershipStatus === 'New Applicant') {
-                            style = 'color: green;';
-                        } else if (membershipStatus === 'Active') {
-                            style = 'color: magenta;';
-                        } else if (membershipStatus === 'Resigned') {
-                            style = 'color: turquoise;';
-                        } else if (membershipStatus === 'Non-renewal') {
-                            style = 'color: red;';
-                        } else if (membershipStatus === 'Deceased') {
-                            style = 'color: orange;';
-                        }
-                        // Wrap the text inside a span with the specified style
-                        var formattedValue = '<span style="' + style + '">' + membershipStatus + '</span>';
-
-                        // Return the formatted content
-                        return formattedValue;
                     }
-                }, {
+                },
+                {
                     title: "Actions",
                     field: "actions",
                     hozAlign: "center",
@@ -326,7 +258,7 @@
                 }
             ],
             pagination: "local",
-            paginationSize: 20,
+            paginationSize: 25,
             placeholder: "No Data Available"
         });
 

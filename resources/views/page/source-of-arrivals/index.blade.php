@@ -131,12 +131,10 @@
                         <div class="card-body p-2">
                             <div class="tabulator-toolbar">
                                 Show <select style="padding:10px;" id="pageSizeDropdown">
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
+                                    <option value="25">25</option>
+                                     <option value="50">50</option>
+                                     <option value="100">100</option>
+                                     <option value="1000000">ALL</option>
                                 </select>
                                 <label style="padding: 10px;" disabled for="date-range">Date Range:</label>
                                 <input style="padding: 10px 20px;" disabled type="text" id="date-range">
@@ -201,7 +199,7 @@
                 }
             ],
             pagination: 'local',
-            paginationSize: 10,
+            paginationSize: 25,
             placeholder: "No Data Available"
         });
 
