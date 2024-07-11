@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\UsersDataTable;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -22,7 +23,17 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $request)
     {
-        $data = User::all();
+        $users = User::with('role')->get();
+
+        // Transform the data to include role name
+        $data = $users->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role_name' => $user->role ? $user->role->name : 'No role assigned',
+            ];
+        });
 
         return $request->render('page.user.index', compact('data'));
     }
@@ -33,7 +44,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $html = view("models.user-create")->render();
+        $roles = Role::all();
+
+        $html = view('models.user-create', compact('roles'))->render();
         return response()->json(["status" => true, "html" => $html]);
     }
 
@@ -49,6 +62,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
+            'role_id' => $request->role_id,
         ]);
 
         return response()->json(["status" => true, "message" => "User created successfully"]);
@@ -62,7 +76,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $html = view("models.user-view", compact('user'))->render();
+        $roleName = $user->role ? $user->role->name : 'No role assigned'; // Assuming you have a relationship defined in your User model
+
+        $html = view('models.user-view', compact('user', 'roleName'))->render();
         return response()->json(["status" => true, "html" => $html]);
     }
 

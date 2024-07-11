@@ -189,19 +189,12 @@
                     headerFilterPlaceholder: 'Search by Email'
                 },
                 {
-                    title: 'Created Date',
-                    field: 'created_at',
+                    title: 'Role',
+                    field: 'role_name',
                     hozAlign: 'center',
                     vertAlign: "middle",
                     headerFilter: "input",
-                    headerFilterPlaceholder: 'Search by Created Date',
-                     formatter: function(cell) {
-                         var date = new Date(cell.getValue());
-                         var year = date.getFullYear();
-                         var month = String(date.getMonth() + 1).padStart(2, '0');
-                         var day = String(date.getDate()).padStart(2, '0');
-                         return year + '-' + month + '-' + day;
-                     }
+                    headerFilterPlaceholder: 'Search by Email'
                 },
                 {
                     title: "Action",

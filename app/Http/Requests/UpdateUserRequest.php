@@ -27,6 +27,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . request()->segment(2) . ',id',
             'password' => 'nullable',
+            'role_id' =>'nullable'
         ];
     }
 }
