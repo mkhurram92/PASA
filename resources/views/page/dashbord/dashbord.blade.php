@@ -6,12 +6,17 @@
         <div class="container-fluid main-container">
 
             <!--Page header-->
-            <div class="page-header">
+            <div class="page-header d-flex justify-content-between">
                 <div class="page-leftheader">
                     <h4 class="page-title">Dashboard</h4>
                 </div>
+                <div>
+                    <h5 class="page-title">User : {{ Auth::user()->name }}</h5>
+                </div>
             </div>
+            
             <!--End Page header-->
+            @if (Auth::user()->role->name == "Admin")
 
             <div class="row">
                 <div class="col-xl-3 col-md-6">
@@ -53,6 +58,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>

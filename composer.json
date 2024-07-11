@@ -16,7 +16,7 @@
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
-        "spatie/laravel-permission": "^5.10",
+        "spatie/laravel-permission": "^6.9",
         "stripe/stripe-php": "^12.4",
         "yajra/laravel-datatables": "9.0"
     },
