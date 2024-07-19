@@ -15,7 +15,7 @@ class UpdateModeOfArrivalsRequest extends FormRequest
     {
         return [
             "ship_id" => "required|exists:ships,id",
-            "year"=> "nullable|digits:4",
+            "year"=> "nullable",
             "country_id"=> "nullable|exists:countries,id",
             "county_id"=> "nullable|exists:counties,id",
             "city_id"=> "nullable|exists:cities,id",

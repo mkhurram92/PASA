@@ -50,7 +50,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Depature Year </label>
+                                                <label class="col-md-3 form-label">Arrival Year </label>
 
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text" placeholder="YYYY" value="{{ $modeOfArrival?->year }}" name="year">

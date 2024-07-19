@@ -172,7 +172,7 @@
                     vertAlign: "middle"
                 },
                 {
-                    title: 'Souce of Arrival',
+                    title: 'Source of Arrival',
                     field: 'name',
                     headerFilter: 'input',
                     hozAlign: 'center',

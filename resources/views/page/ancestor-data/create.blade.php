@@ -98,11 +98,11 @@
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-md-4 form-label">Pioneer's Preffered Name<span
+                                                <label class="col-md-4 form-label">Pioneer's Preferred Name<span
                                                         class="text-danger"></span></label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        placeholder="Pioneer's Preffered Name" value=""
+                                                        placeholder="Pioneer's Preferred Name" value=""
                                                         name="preferred_name">
                                                 </div>
                                             </div>
