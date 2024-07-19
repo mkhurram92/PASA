@@ -124,7 +124,7 @@ class DashboardController extends Controller
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
         $data['membership_types'] = MembershipType::all();
-        //$data['membership_status'] = MemberShipStatus::all();
+        $data['membership_status'] = MemberShipStatus::all();
 
         $member_id = $member?->id;
         $juniors = MemberJunior::with(['withGender', 'withSubscription'])->where("member_id", $member_id)->whereNull("member_junior_id")->latest()->get();
