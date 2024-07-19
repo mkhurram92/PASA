@@ -14,7 +14,7 @@ use App\Models\States;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\MembershipType;
-use App\Models\MemberShipStatus;
+use App\Models\MembershipStatus;
 use App\Models\Transaction;
 
 class DashboardController extends Controller

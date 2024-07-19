@@ -203,13 +203,13 @@
                      }
                  },
                  {
-                     title: "Year",
+                     title: "Arrival Year",
                      field: "year",
                      hozAlign: "center",
                      vertAlign: "middle",
                      width: "10%",
                      headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Year'
+                     headerFilterPlaceholder: 'Search by Arrival Year'
                  },
                  {
                      title: "Departure Place",
@@ -304,11 +304,36 @@
                      }
                  },
                  {
+                     title: "Ship Commandar",
+                     field: "ship_commander",
+                     visible: false,
+                     download: true
+                 },
+                 {
+                     title: "Embarkation Number",
+                     field: "embarkation_number",
+                     visible: false,
+                     download: true
+                 },
+                 {
+                     title: "Port of Call",
+                     field: "ports_of_call",
+                     visible: false,
+                     download: true
+                 },
+                 {
+                     title: "Notes",
+                     field: "notes",
+                     visible: false,
+                     download: true
+                 },
+                 {
                      title: "Action",
                      field: "actions",
                      hozAlign: "center",
                      vertAlign: "middle",
                      width: "8%",
+                     download: false,
                      formatter: function(cell, formatterParams, onRendered) {
                          var id = cell.getData().id;
                          // Add buttons for each row
