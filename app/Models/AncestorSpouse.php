@@ -12,12 +12,18 @@ class AncestorSpouse extends Model
     protected $fillable = [
         'ancestor_id',
         'marriage_date',
+        'marriage_month',
+        'marriage_year',
         'marriage_place',
         'spouse_family_name',
         'spouse_given_name',
         'spouse_birth_date',
+        'spouse_birth_month',
+        'spouse_birth_year',
         'spouse_birth_place',
         'spouse_death_date',
+        'spouse_death_month',
+        'spouse_death_year',
         'spouse_death_place',
     ];
 

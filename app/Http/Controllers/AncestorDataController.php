@@ -125,7 +125,7 @@ class AncestorDataController extends Controller
 
             $ancestorSpouse = new AncestorSpouse();
             $ancestorSpouse->ancestor_id = $ancestorData->id;
-            $ancestorSpouse->fill($request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
+            $ancestorSpouse->fill($request->only(['marriage_date', 'marriage_month', 'marriage_year', 'marriage_place', 'spouse_birth_place', 'spouse_death_place', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date','spouse_birth_month','spouse_birth_year', 'spouse_death_date','spouse_death_month','spouse_death_year']));
             $ancestorSpouse->save();
 
             //Log::info('Ancestor spouse data saved successfully', ['ancestor_spouse_id' => $ancestorSpouse->id]);
@@ -256,7 +256,7 @@ class AncestorDataController extends Controller
     private function updateAncestorSpouse($ancestorData, $request)
     {
         try {
-            $spouseData = $request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']);
+            $spouseData = $request->only(['marriage_date', 'marriage_month', 'marriage_year', 'marriage_place', 'spouse_birth_place', 'spouse_death_place', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date','spouse_birth_month','spouse_birth_year', 'spouse_death_date','spouse_death_month','spouse_death_year']);
             Log::info('Updating ancestor spouse data', $spouseData);
 
             $ancestorSpouse = AncestorSpouse::where('ancestor_id', $ancestorData->id)->first();

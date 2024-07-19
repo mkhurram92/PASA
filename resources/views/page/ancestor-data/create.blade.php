@@ -113,13 +113,16 @@
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
-                                                            <input class="form-control" placeholder="YYYY" value="" type="text" name="year_of_birth">
+                                                            <input class="form-control" placeholder="YYYY"
+                                                                value="" type="text" name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" value="" type="text" name="month_of_birth">
+                                                            <input class="form-control" placeholder="MM" value=""
+                                                                type="text" name="month_of_birth">
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" value="" type="text" name="date_of_birth">
+                                                            <input class="form-control" placeholder="DD" value=""
+                                                                type="text" name="date_of_birth">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -137,13 +140,16 @@
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
-                                                            <input class="form-control" placeholder="YYYY" value="" type="text" name="year_of_death">
+                                                            <input class="form-control" placeholder="YYYY"
+                                                                value="" type="text" name="year_of_death">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" value="" type="text" name="month_of_death">
+                                                            <input class="form-control" placeholder="MM"
+                                                                value="" type="text" name="month_of_death">
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" value="" type="text" name="date_of_death">
+                                                            <input class="form-control" placeholder="DD"
+                                                                value="" type="text" name="date_of_death">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -151,8 +157,9 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Death Place</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="Death Place"
-                                                        value="" name="place_of_death">
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Death Place" value=""
+                                                        name="place_of_death">
                                                 </div>
                                             </div>
                                         </div>
@@ -175,8 +182,8 @@
                                                     </div>
 
                                                     <div id="ship_section" class="mb-3 row">
-                                                        <label class="col-md-4 form-label">Ship Name - Arrival Year<span
-                                                                class="text-danger"></span></label>
+                                                        <label class="col-md-4 form-label">Ship Name - Arrival
+                                                            Year<span class="text-danger"></span></label>
                                                         <div class="col-md-8">
                                                             <select class="form-control select2"
                                                                 id="mode_of_arrival_select2"
@@ -193,7 +200,8 @@
 
                                                         <div class="col-md-8">
                                                             <input class="form-control fc-datepicker" type="text"
-                                                                value="" id="first_date" name="first_date" readonly disabled>
+                                                                value="" id="first_date" name="first_date"
+                                                                readonly disabled>
                                                         </div>
                                                     </div>
 
@@ -211,24 +219,34 @@
                                                                 class="text-danger"></span></label>
 
                                                         <div class="col-md-8">
-                                                            <textarea class="form-control" id="evidence_of_arrival" 
-                                                            name="evidence_of_arrival" rows="6" maxlength="300"></textarea>
+                                                            <textarea class="form-control" id="evidence_of_arrival" name="evidence_of_arrival" rows="6" maxlength="300"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <h3 class="card-title">Pioneer Spouse’s Details</h3>
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Marriage Date<span
-                                                                class="text-danger"></span></label>
-
+                                                        <label class="col-md-3 form-label">Marriage Date</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control fc-datepicker" type="text"
-                                                                placeholder="Marriage Date" value=""
-                                                                id="marriage_date" name="marriage_date">
+                                                            <div class="row">
+                                                                <div class="col-4 pr-1">
+                                                                    <input class="form-control" placeholder="YYYY"
+                                                                        value="" type="text"
+                                                                        name="marriage_year">
+                                                                </div>
+                                                                <div class="col-4 px-1">
+                                                                    <input class="form-control" placeholder="MM"
+                                                                        value="" type="text"
+                                                                        name="marriage_month">
+                                                                </div>
+                                                                <div class="col-4 pl-1">
+                                                                    <input class="form-control" placeholder="DD"
+                                                                        value="" type="text"
+                                                                        name="marriage_date">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-
                                                     <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Marriage Place<span
                                                                 class="text-danger"></span></label>
@@ -262,33 +280,61 @@
                                                     <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Birth Date</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control fc-datepicker" type="text"
-                                                                placeholder="Birth Date" id="spouse_birth_date"
-                                                                value="" name="spouse_birth_date">
+                                                            <div class="row">
+                                                                <div class="col-4 pr-1">
+                                                                    <input class="form-control" placeholder="YYYY"
+                                                                        value="" type="text"
+                                                                        name="spouse_birth_year">
+                                                                </div>
+                                                                <div class="col-4 px-1">
+                                                                    <input class="form-control" placeholder="MM"
+                                                                        value="" type="text"
+                                                                        name="spouse_birth_month">
+                                                                </div>
+                                                                <div class="col-4 pl-1">
+                                                                    <input class="form-control" placeholder="DD"
+                                                                        value="" type="text"
+                                                                        name="spouse_birth_date">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Birth Place</label>
                                                         <div class="col-md-9">
                                                             <input class="form-control" type="text"
-                                                                placeholder="Birth Place" value=""
-                                                                name="spouse_place_of_birth">
+                                                                placeholder="Birth Place"
+                                                                name="spouse_birth_place">
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Death Date</label>
                                                         <div class="col-md-9">
-                                                            <input class="form-control fc-datepicker" type="text"
-                                                                placeholder="Death Date" value=""
-                                                                id="spouse_death_date" name="spouse_death_date">
+                                                            <div class="row">
+                                                                <div class="col-4 pr-1">
+                                                                    <input class="form-control" placeholder="YYYY"
+                                                                        value="" type="text"
+                                                                        name="spouse_death_year">
+                                                                </div>
+                                                                <div class="col-4 px-1">
+                                                                    <input class="form-control" placeholder="MM"
+                                                                        value="" type="text"
+                                                                        name="spouse_death_month">
+                                                                </div>
+                                                                <div class="col-4 pl-1">
+                                                                    <input class="form-control" placeholder="DD"
+                                                                        value="" type="text"
+                                                                        name="spouse_death_date">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Death Place</label>
                                                         <div class="col-md-9">
                                                             <input class="form-control" type="text"
-                                                                placeholder="Death Place" value=""
-                                                                name="spouse_place_of_death">
+                                                                placeholder="Death Place"
+                                                                name="spouse_death_place">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -338,7 +384,6 @@
         }
         // Attach the function to the change event of the element with ID "source_of_arrival_select2"
         $(document).on("change", "#source_of_arrival_select2", handleSourceOfArrivalChange);
-
     </script>
 
     @include('page.ancestor-data.scripts')
