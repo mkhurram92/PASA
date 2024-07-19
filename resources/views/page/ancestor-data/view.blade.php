@@ -231,33 +231,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <h3 class="card-title">Pioneer Spouse’s Details</h3>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-7 form-label">Did this person travel to SA
-                                                        aboard the same ship?<span class="text-danger"></span></label>
-
-                                                    <div class="col-md-5">
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="travel_to_sa" id="travel_to_sa_yes"
-                                                                value="1"
-                                                                {{ $ancestor->has_spouse == 1 ? 'checked' : '' }}
-                                                                disabled readonly>
-                                                            <label class="form-check-label"
-                                                                for="travel_to_sa_yes">Yes</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="travel_to_sa" id="travel_to_sa_no"
-                                                                value="0"
-                                                                {{ $ancestor->has_spouse == 0 ? 'checked' : '' }}
-                                                                disabled readonly>
-                                                            <label class="form-check-label"
-                                                                for="travel_to_sa_no">No</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @if ($ancestor->has_spouse == 1)
-                                                    <div id="marriage_date_section" class="mb-3 row">
+                                                    <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Marriage Date<span
                                                                 class="text-danger"></span></label>
 
@@ -269,16 +243,16 @@
                                                         </div>
                                                     </div>
 
-                                                    <div id="marriage_date_section" class="mb-3 row">
+                                                    <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Marriage Place<span
                                                                 class="text-danger"></span></label>
 
                                                         <div class="col-md-9">
                                                             <input class="form-control" type="text" id="marriage_place" name="marriage_place"
-                                                                value="" disabled readonly>
+                                                            value="{{ $ancestor?->spouse_details?->marriage_place }}" disabled readonly>
                                                         </div>
                                                     </div>
-                                                    <div id="spouse_family_name_section" class="mb-3 row">
+                                                    <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Spouse’s Family Name<span
                                                                 class="text-danger"></span></label>
 
@@ -288,7 +262,7 @@
                                                                 disabled readonly> 
                                                         </div>
                                                     </div>
-                                                    <div id="spouse_given_name_section" class="mb-3 row">
+                                                    <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Spouse’s Given Name(s)<span
                                                                 class="text-danger"></span></label>
 
@@ -298,33 +272,32 @@
                                                                 disabled readonly>
                                                         </div>
                                                     </div>
-                                                    <div id="spouse_date_of_birth" class="mb-3 row">
+                                                    <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Birth Date</label>
                                                         <div class="col-md-9">
                                                             <input class="form-control fc-datepicker" type="text" value="{{ $ancestor?->spouse_details?->spouse_birth_date }}"
                                                                 name="spouse_date_of_birth" disabled readonly>
                                                         </div>
                                                     </div>
-                                                    <div id="spouse_place_of_birth" class="mb-3 row">
+                                                    <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Birth Place</label>
                                                         <div class="col-md-9">
                                                             <input class="form-control" type="text" name="spouse_place_of_birth" disabled readonly>
                                                         </div>
                                                     </div>
-                                                    <div id="spouse_date_of_death" class="mb-3 row">
+                                                    <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Death Date</label>
                                                         <div class="col-md-9">
                                                             <input class="form-control fc-datepicker" type="text" value="{{ $ancestor?->spouse_details?->spouse_death_date }}"
                                                                 name="spouse_date_of_death"  disabled readonly>
                                                         </div>
                                                     </div>
-                                                    <div id="spouse_place_of_death" class="mb-3 row">
+                                                    <div class="mb-3 row">
                                                         <label class="col-md-3 form-label">Death Place</label>
                                                         <div class="col-md-9">
                                                             <input class="form-control" type="text" name="spouse_place_of_death" disabled readonly>
                                                         </div>
                                                     </div>
-                                                @endif
                                             </div>
                                         </div>
                                     </div>

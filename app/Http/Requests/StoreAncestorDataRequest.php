@@ -29,7 +29,6 @@ class StoreAncestorDataRequest extends FormRequest
             'ancestor_surname' => 'required|string',
             'given_name' => 'required|string',
             'source_of_arrival' => 'nullable',
-            'travel_to_sa' => 'nullable|in:yes,no',
             'date_of_birth' => 'nullable',
             'month_of_birth' => 'nullable',
             'year_of_birth' => 'nullable',
@@ -39,6 +38,14 @@ class StoreAncestorDataRequest extends FormRequest
             'arrival_date_in_sa' => 'nullable|string',
             'evidence_of_arrival' => 'nullable|string',
             'mode_of_arrival_id' => 'nullable|int',
+            'marriage_date' =>'nullable',
+            'marriage_place'=>'nullable',
+            'spouse_family_name' =>'nullable',
+            'spouse_given_name' => 'nullable',
+            'spouse_birth_date' => 'nullable',
+            'spouse_place_of_birth' =>'nullable',
+            'spouse_place_of_death' =>'nullable',
+            'spouse_death_date' => 'nullable',
         ];
 
         return $rules;
@@ -53,9 +60,6 @@ class StoreAncestorDataRequest extends FormRequest
             'given_name.required' => 'Pioneer\'s Given Name field is required',
             'given_name.string' => 'Pioneer\'s Given Name must be a string',
             'source_of_arrival.required' => 'Mode of Travel field is required',
-            //'source_of_arrival.exists' => 'Selected Mode of Travel is invalid',
-            'travel_to_sa.required' => 'Travel to SA field is required',
-            'travel_to_sa.in' => 'Travel to SA must be either "yes" or "no"',
         ];
 
         return $messages;

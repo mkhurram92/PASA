@@ -80,19 +80,13 @@ class AncestorDataController extends Controller
             $ancestorData = AncestorData::create($validatedData);
 
             if ($ancestorData->source_of_arrival == 1 || $ancestorData->source_of_arrival == 2) {
-
                 $ancestorData->mode_of_travel_id = $request->input('mode_of_travel_id');
-
                 $ancestorData->save();
-            } else { //($ancestorData->source_of_arrival == 3) {
+            } else {
                 $this->saveTravelDetails($ancestorData, $validatedData, $request);
             }
 
-            $this->updateHasSpouse($ancestorData, $request);
-
-            if ($ancestorData->has_spouse) {
-                $this->saveAncestorSpouse($ancestorData, $request);
-            }
+            $this->saveAncestorSpouse($ancestorData, $request);
 
             $filteredData = array_filter($validatedData, function ($value) {
                 return !is_null($value);
@@ -103,7 +97,6 @@ class AncestorDataController extends Controller
             return response()->json([
                 "status" => true,
                 "message" => "Ancestor Details Saved Successfully",
-                //"redirectTo" => route("ancestor-data.index")
                 "redirectTo" => url("ancestor-data/{$ancestorData->id}")
             ]);
         } catch (\Exception $e) {
@@ -125,40 +118,20 @@ class AncestorDataController extends Controller
         }
     }
 
-    private function updateHasSpouse($ancestorData, $request)
-    {
-        $ancestorData->has_spouse = ($request->input('travel_to_sa') === 'yes') ? 1 : 0;
-        $ancestorData->save();
-    }
-
     private function saveAncestorSpouse($ancestorData, $request)
     {
-        $ancestorSpouse = new AncestorSpouse();
-        $ancestorSpouse->ancestor_id = $ancestorData->id;
-        $ancestorSpouse->fill($request->only(['marriage_date', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
-        $ancestorSpouse->save();
-    }
+        try {
+            //Log::info('Saving ancestor spouse data', $request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
 
-
-    private function updateAncestorSpouse($ancestorData, $request)
-    {
-        // Find the existing AncestorSpouse record based on the ancestor ID
-        $ancestorSpouse = AncestorSpouse::where('ancestor_id', $ancestorData->id)->first();
-
-        if ($ancestorSpouse) {
-            // Update the existing record with the new data
-            $ancestorSpouse->fill($request->only(['marriage_date', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
+            $ancestorSpouse = new AncestorSpouse();
+            $ancestorSpouse->ancestor_id = $ancestorData->id;
+            $ancestorSpouse->fill($request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
             $ancestorSpouse->save();
-        } else {
-            // Create a new record
-            AncestorSpouse::create([
-                'ancestor_id' => $ancestorData->id,
-                'marriage_date' => $request->input('marriage_date'),
-                'spouse_family_name' => $request->input('spouse_family_name'),
-                'spouse_given_name' => $request->input('spouse_given_name'),
-                'spouse_birth_date' => $request->input('spouse_birth_date'),
-                'spouse_death_date' => $request->input('spouse_death_date'),
-            ]);
+
+            //Log::info('Ancestor spouse data saved successfully', ['ancestor_spouse_id' => $ancestorSpouse->id]);
+        } catch (\Exception $e) {
+            //Log::error('Error saving ancestor spouse data: ' . $e->getMessage());
+            throw $e; // Rethrow the exception to trigger a rollback
         }
     }
 
@@ -245,45 +218,27 @@ class AncestorDataController extends Controller
 
             $validatedData = $request->validated();
 
-            //this->formatDate($validatedData, 'date_of_birth');
-            //$this->formatDate($validatedData, 'date_of_death');
-
-            if (isset($validatedData['travel_to_sa'])) {
-                $ancestorData->has_spouse = $validatedData['travel_to_sa'];
-            }
-
-            //$filteredData = array_filter($validatedData, function ($value) {
-            //    return !is_null($value);
-            //});
-
+            // Update the ancestor data
             $ancestorData->update($validatedData);
 
+            // Handle source of arrival logic
             if ($ancestorData->source_of_arrival == 1 || $ancestorData->source_of_arrival == 2) {
-
                 $ancestorData->mode_of_travel_id = $request->input('mode_of_travel_id');
             } else {
                 $this->updateTravelDetails($ancestorData, $validatedData, $request);
-
                 $ancestorData->mode_of_travel_id = null;
             }
 
-            $filteredData = array_filter($validatedData, function ($value) {
-                return !is_null($value);
-            });
-
             $ancestorData->save();
 
-            if (isset($validatedData['travel_to_sa'])) {
-
-                $this->updateAncestorSpouse($ancestorData, $request);
-            }
+            // Update spouse data
+            $this->updateAncestorSpouse($ancestorData, $request);
 
             DB::commit();
 
             return response()->json([
                 "status" => true,
                 "message" => "AncestorData updated successfully",
-                //"redirectTo" => route("ancestor-data.index")
                 "redirectTo" => url("ancestor-data/{$ancestorData->id}")
             ]);
         } catch (\Exception $e) {
@@ -295,6 +250,30 @@ class AncestorDataController extends Controller
                 "status" => false,
                 "message" => "An error occurred while updating AncestorData. Please try again later.",
             ], 500);
+        }
+    }
+
+    private function updateAncestorSpouse($ancestorData, $request)
+    {
+        try {
+            $spouseData = $request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']);
+            Log::info('Updating ancestor spouse data', $spouseData);
+
+            $ancestorSpouse = AncestorSpouse::where('ancestor_id', $ancestorData->id)->first();
+
+            if ($ancestorSpouse) {
+                $ancestorSpouse->fill($spouseData);
+            } else {
+                $ancestorSpouse = new AncestorSpouse($spouseData);
+                $ancestorSpouse->ancestor_id = $ancestorData->id;
+            }
+
+            $ancestorSpouse->save();
+
+            Log::info('Ancestor spouse data updated successfully', ['ancestor_spouse_id' => $ancestorSpouse->id]);
+        } catch (\Exception $e) {
+            Log::error('Error updating ancestor spouse data: ' . $e->getMessage());
+            throw $e; // Rethrow the exception to trigger a rollback
         }
     }
 

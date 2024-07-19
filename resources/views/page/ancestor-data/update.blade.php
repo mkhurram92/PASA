@@ -243,31 +243,6 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <h3 class="card-title">Pioneer Spouse’s Details</h3>
-                                                    <div class="mb-3 row">
-                                                        <label class="col-md-7 form-label">Did this person travel to SA
-                                                            aboard the same ship?<span class="text-danger">
-                                                                *</span></label>
-
-                                                        <div class="col-md-5">
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="travel_to_sa" id="travel_to_sa_yes"
-                                                                    value="1"
-                                                                    {{ $ancestor->has_spouse == 1 ? 'checked' : '' }}>
-                                                                <label class="form-check-label"
-                                                                    for="travel_to_sa_yes">Yes</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="travel_to_sa" id="travel_to_sa_no"
-                                                                    value="0"
-                                                                    {{ $ancestor->has_spouse == 0 ? 'checked' : '' }}>
-                                                                <label class="form-check-label"
-                                                                    for="travel_to_sa_no">No</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
                                                     <div id="marriage_date_section" class="mb-3 row">
                                                         <label class="col-md-3 form-label">Marriage Date<span
                                                                 class="text-danger"></span></label>
@@ -287,6 +262,7 @@
                                                         <div class="col-md-9">
                                                             <input class="form-control" type="text"
                                                                 placeholder="Marriage Place" 
+                                                                value="{{ $ancestor?->spouse_details?->marriage_place }}"
                                                                 id="marriage_place" name="marriage_place"
                                                                 value="">
                                                         </div>
@@ -372,11 +348,12 @@
 @section('scripts')
     @include('plugins.select2')
     <script>
-        $(document).ready(function() {
+        //$(document).ready(function() {
             // Check if the script is running
-            console.log("Script is running.");
+            //console.log("Script is running.");
 
             // Function to handle showing/hiding sections based on radio button value
+            /**
             function handleRadioButtonChange() {
                 var selectedValue = $("input[name='travel_to_sa']:checked").val();
                 console.log("Selected value:", selectedValue);
@@ -404,7 +381,7 @@
 
             // Check the initial value on load
             handleRadioButtonChange();
-        });
+        });*/
 
 
 
