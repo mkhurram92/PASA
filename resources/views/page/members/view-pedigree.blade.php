@@ -74,6 +74,7 @@
                                                 <a class="form-control-label"
                                                     style="color: #022ff8; font-size:16px">Generation x
                                                     {{ $pedigree->pedigree_level + 1 }}</a>
+
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -81,67 +82,64 @@
                                                 <label class="form-control-label">Father Name</label>
                                                 <input
                                                     class="form-control @if ($pedigree->pioneer_parents == 1) text-danger @endif"
-                                                    value="{{ $pedigree->f_name }}" required="" type="text"
-                                                    readonly disabled>
+                                                    value="{{ $pedigree->f_name }}" type="text" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Date</label>
-                                                <input class="form-control" type="text" placeholder="Birth Date"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->date_of_birth ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Place</label>
-                                                <input class="form-control" type="text" placeholder="Birth Place"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->place_of_birth ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Date</label>
-                                                <input class="form-control" type="text" placeholder="Death Date"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->date_of_death ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Place</label>
-                                                <input class="form-control" type="text" placeholder="Death Place"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->place_of_death ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Marriage Date</label>
-                                                <input class="form-control" type="text" placeholder="Marriage Date"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->date_of_marriage ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Mother Name</label>
                                                 <input
                                                     class="form-control @if ($pedigree->pioneer_parents == 0) text-danger @endif"
-                                                    id="email" value="{{ $pedigree->m_name }}" required=""
-                                                    type="text" readonly disabled>
+                                                    id="email" value="{{ $pedigree->m_name }}" type="text"
+                                                    readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Date</label>
-                                                <input class="form-control" type="text" placeholder="Birth Date"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->m_birth_date ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Place</label>
-                                                <input class="form-control" type="text" placeholder="Birth Place"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->m_birth_place ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Date</label>
-                                                <input class="form-control" type="text" placeholder="Death Date"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->m_death_date ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Place</label>
-                                                <input class="form-control" type="text" placeholder="Death Place"
+                                                <input class="form-control" type="text"
                                                     value="{{ $pedigree->m_death_place ?? '' }}" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Marriage Place</label>
                                                 <input class="form-control" type="text"
-                                                    placeholder="Marriage Place"
-                                                    value="{{ $pedigree->place_of_marriage ?? '' }}" readonly
-                                                    disabled>
+                                                    value="{{ $pedigree->place_of_marriage ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
                                         <br>

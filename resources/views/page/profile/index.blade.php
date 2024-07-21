@@ -17,7 +17,8 @@
                 font-size: medium;
                 color: black;
             }
-            body{
+
+            body {
                 background: white;
             }
         </style>
@@ -45,11 +46,6 @@
                         <div class="tab-pane active " id="tab5">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h3 class="card-title">Member Personal Details</h3>
-                                <div>
-                                    <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
-                                        <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
-                                    </a>
-                                </div>
                             </div>
                             <div class="card-body p-0">
                                 <div class="card-body">
@@ -131,7 +127,8 @@
                                                 <label class="col-md-4 form-label">Street Name</label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
-                                                        value="{{ $member?->address?->number_street }}" readonly disabled>
+                                                        value="{{ $member?->address?->number_street }}" readonly
+                                                        disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -145,21 +142,23 @@
                                                 <label class="col-md-4 form-label">State / County</label>
                                                 <div class="col-md-8">
                                                     <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->state?->name }}" readonly disabled>
+                                                        value="{{ $member?->address?->state?->name }}" readonly
+                                                        disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Country</label>
                                                 <div class="col-md-8">
                                                     <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->country?->name }}" readonly disabled>
+                                                        value="{{ $member?->address?->country?->name }}" readonly
+                                                        disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Post Code</label>
                                                 <div class="col-md-8">
                                                     <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->post_code }}" readonly disabled>
+                                                        value="{{ $member?->address?->post_code }}" readonly disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -207,27 +206,35 @@
                                                 <label class="col-md-4 form-label">Membership
                                                     Number</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Membership Number" value="{{ $member?->additionalInfo?->membership_number }}" name="membership_number" readonly disabled>
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Membership Number"
+                                                        value="{{ $member?->additionalInfo?->membership_number }}"
+                                                        name="membership_number" readonly disabled>
                                                 </div>
                                             </div>
-    
+
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">User Name</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="User name" value="{{ $member?->username }}" readonly disabled>
+                                                    <input class="form-control" type="text"
+                                                        placeholder="User name" value="{{ $member?->username }}"
+                                                        readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Membership Type </label>
                                                 <div class="col-md-8">
-                                                    <select name="member_type_id" class="form-control form-select select2" id="member_type_id" readonly disabled>
+                                                    <select name="member_type_id"
+                                                        class="form-control form-select select2" id="member_type_id"
+                                                        readonly disabled>
                                                         @forelse ($data['membership_types'] as $type)
-                                                        <option value="{{ $type?->id }}" @if ($type?->id == $member?->member_type_id) selected @endif>
-                                                            {{ $type?->name }}
-                                                        </option>
+                                                            <option value="{{ $type?->id }}"
+                                                                @if ($type?->id == $member?->member_type_id) selected @endif>
+                                                                {{ $type?->name }}
+                                                            </option>
                                                         @empty
-                                                        <option value="">Select Membership Type
-                                                        </option>
+                                                            <option value="">Select Membership Type
+                                                            </option>
                                                         @endforelse
                                                     </select>
                                                 </div>
@@ -236,14 +243,17 @@
                                                 <label class="col-md-4 form-label">Membership Status
                                                 </label>
                                                 <div class="col-md-8">
-                                                    <select name="member_status_id" class="form-control form-select select2" id="member_status_id" readonly disabled>
+                                                    <select name="member_status_id"
+                                                        class="form-control form-select select2" id="member_status_id"
+                                                        readonly disabled>
                                                         @forelse ($data['membership_status'] as $status)
-                                                        <option value="{{ $status?->id }}" @if ($status?->id == $member?->member_status_id) selected @endif>
-                                                            {{ $status?->name }}
-                                                        </option>
+                                                            <option value="{{ $status?->id }}"
+                                                                @if ($status?->id == $member?->member_status_id) selected @endif>
+                                                                {{ $status?->name }}
+                                                            </option>
                                                         @empty
-                                                        <option value="">Select Membership Status
-                                                        </option>
+                                                            <option value="">Select Membership Status
+                                                            </option>
                                                         @endforelse
                                                     </select>
                                                 </div>
@@ -252,15 +262,19 @@
                                                 <label class="col-md-8 form-label">Date Membership
                                                     Commenced (Membership Approval Date) </label>
                                                 <div class="col-md-4">
-                                                    <input class="form-control fc-datepicker" type="text" value="{{ $member?->approved_at }}" name="date_membership_approved" readonly disabled>
+                                                    <input class="form-control fc-datepicker" type="text"
+                                                        value="{{ $member?->approved_at }}"
+                                                        name="date_membership_approved" readonly disabled>
                                                 </div>
                                             </div>
-    
+
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Date Membership Ended
                                                 </label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_end }}" name="date_membership_end" readonly disabled>
+                                                    <input class="form-control fc-datepicker" type="text"
+                                                        value="{{ $member?->additionalInfo?->date_membership_end }}"
+                                                        name="date_membership_end" readonly disabled>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -270,21 +284,21 @@
                                                     <textarea class="form-control" name="end_status_notes" rows="3" placeholder="" readonly disabled>{{ $member?->additionalInfo?->end_status_notes }}</textarea>
                                                 </div>
                                             </div>
-    
+
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Key Holder</label>
                                                 <div class="col-md-8">
                                                     <span id="displayStatus" class="custom-font"></span>
                                                 </div>
                                             </div>
-    
+
                                             @if ($member?->additionalInfo?->key_holder == 1)
-                                            <div class="mb-3 row key_held">
-                                                <label class="col-md-4 form-label">Key Held</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="key_held" readonly disabled rows="3" placeholder="Key Held">{{ $member?->additionalInfo?->key_held }}</textarea>
+                                                <div class="mb-3 row key_held">
+                                                    <label class="col-md-4 form-label">Key Held</label>
+                                                    <div class="col-md-8">
+                                                        <textarea class="form-control" name="key_held" readonly disabled rows="3" placeholder="Key Held">{{ $member?->additionalInfo?->key_held }}</textarea>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @endif
                                         </div>
                                         <div class="col-lg-6">
@@ -300,9 +314,10 @@
                                                     <span id="registrationFormStatus" class="custom-font"></span>
                                                 </div>
                                             </div>
-    
+
                                             <div class="mb-3 row">
-                                                <label class="col-md-6 form-label">Signed Confidentiality agreement received</label>
+                                                <label class="col-md-6 form-label">Signed Confidentiality agreement
+                                                    received</label>
                                                 <div class="col-md-6">
                                                     <span id="signedAgreementStatus" class="custom-font"></span>
                                                 </div>
@@ -313,49 +328,59 @@
                                                     <span id="volunteerStatus" class="custom-font"></span>
                                                 </div>
                                             </div>
-    
+
                                             @if ($member?->additionalInfo?->volunteer == 1)
-                                            <div class="volunteer_details">
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Experience</label>
-                                                    <div class="col-md-8">
-                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->experience }}" name="experience" readonly disabled>
+                                                <div class="volunteer_details">
+                                                    <div class="mb-3 row">
+                                                        <label class="col-md-4 form-label">Experience</label>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control" type="text" placeholder=""
+                                                                value="{{ $member?->volunteerDetails?->experience }}"
+                                                                name="experience" readonly disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 row">
+                                                        <label class="col-md-4 form-label">Health
+                                                            Issues</label>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control" type="text" placeholder=""
+                                                                value="{{ $member?->volunteerDetails?->health_issues }}"
+                                                                name="health_issues" readonly disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 row">
+                                                        <label class="col-md-4 form-label">Contact
+                                                            received</label>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control" type="text" placeholder=""
+                                                                value="{{ $member?->volunteerDetails?->contact }}"
+                                                                name="contact" readonly disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 row">
+                                                        <label class="col-md-4 form-label">Skills</label>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control" type="text" placeholder=""
+                                                                value="{{ $member?->volunteerDetails?->skills }}"
+                                                                name="skills" readonly disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 row">
+                                                        <label class="col-md-4 form-label">Availability</label>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control" type="text" placeholder=""
+                                                                value="{{ $member?->volunteerDetails?->availability }}"
+                                                                name="availability" readonly disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 row">
+                                                        <label class="col-md-4 form-label">Volunteer Skills and
+                                                            Working Preferences</label>
+                                                        <div class="col-md-8">
+                                                            <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3" placeholder="">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Health
-                                                        Issues</label>
-                                                    <div class="col-md-8">
-                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->health_issues }}" name="health_issues" readonly disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Contact
-                                                        received</label>
-                                                    <div class="col-md-8">
-                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->contact }}" name="contact" readonly disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Skills</label>
-                                                    <div class="col-md-8">
-                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->skills }}" name="skills" readonly disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Availability</label>
-                                                    <div class="col-md-8">
-                                                        <input class="form-control" type="text" placeholder="" value="{{ $member?->volunteerDetails?->availability }}" name="availability" readonly disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Volunteer Skills and
-                                                        Working Preferences</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3" placeholder="">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             @endif
                                         </div>
                                     </div>
@@ -458,95 +483,86 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab7">
-                            <div class="card-header justify-content-between">
-                                <h3 class="card-title">Pedigree</h3>
-                            </div>
                             @if ($member)
                                 @if (count($member?->pedigree))
                                     <div class="card-header justify-content-between">
-                                        <h3 class="card-title">Pedigree Chart</h3>
+                                        <h3 class="card-title">Pioneer Member's Pedigree Chart</h3>
                                     </div>
                                     <div class="card-body p-0">
                                         <div class="card-body">
                                             @foreach ($member?->pedigree as $pedigree)
                                                 <div class="row">
-                                                    <div class="col-md-2">
-                                                        <label class="form-control-label">Level:</label>
-                                                        <input class="form-control"
-                                                            value="{{ $pedigree?->pedigree_level }}" readonly disabled
-                                                            type="text">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-4">
+                                                            <a class="form-control-label"
+                                                                style="color: #022ff8; font-size:16px">Generation x
+                                                                {{ $pedigree->pedigree_level + 1 }}</a>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-control-label">Father
-                                                            Name:</label>
-                                                        <input
-                                                            class="form-control @if ($pedigree->pioneer_parents == 1) text-danger @endif"
-                                                            value="{{ $pedigree?->f_name }}" required=""
-                                                            type="text" readonly disabled>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label class="form-control-label">Mother
-                                                            Name:</label>
-                                                        <input
-                                                            class="form-control
-                                                    @if ($pedigree->pioneer_parents == 0) text-danger @endif"
-                                                            id="email" value="{{ $pedigree?->m_name }}"
-                                                            required="" type="text" readonly disabled>
-                                                    </div>
-                                                    @if (!is_null($pedigree?->date_of_birth))
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-2">
+                                                            <label class="form-control-label">Father Name</label>
+                                                            <input
+                                                                class="form-control @if ($pedigree->pioneer_parents == 1) text-danger @endif"
+                                                                value="{{ $pedigree->f_name }}" type="text" readonly disabled>
+                                                        </div>
                                                         <div class="col-md-2">
                                                             <label class="form-control-label">Birth Date</label>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Date of Birth"
-                                                                value="{{ $pedigree?->date_of_birth ?? '' }}" readonly
+                                                            <input class="form-control" type="text" value="{{ $pedigree->date_of_birth ?? '' }}" readonly
                                                                 disabled>
                                                         </div>
-                                                    @endif
-                                                    @if (!is_null($pedigree?->place_of_birth))
                                                         <div class="col-md-2">
                                                             <label class="form-control-label">Birth Place</label>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Place of Birth"
-                                                                value="{{ $pedigree?->place_of_birth ?? '' }}"
-                                                                readonly disabled>
-                                                        </div>
-                                                    @endif
-                                                    @if (!is_null($pedigree?->date_of_death))
-                                                        <div class="col-md-2">
-                                                            <label class="form-control-label">Death Date</label>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Date of Death"
-                                                                value="{{ $pedigree?->date_of_death ?? '' }}" readonly
+                                                            <input class="form-control" type="text" value="{{ $pedigree->place_of_birth ?? '' }}" readonly
                                                                 disabled>
                                                         </div>
-                                                    @endif
-                                                    @if (!is_null($pedigree?->place_of_death))
+                                                        <div class="col-md-2">
+                                                            <label class="form-control-label">Death Date</label>
+                                                            <input class="form-control" type="text" value="{{ $pedigree->date_of_death ?? '' }}" readonly
+                                                                disabled>
+                                                        </div>
                                                         <div class="col-md-2">
                                                             <label class="form-control-label">Death Place</label>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Place of Death"
-                                                                value="{{ $pedigree?->place_of_death ?? '' }}"
-                                                                readonly disabled>
+                                                            <input class="form-control" type="text" value="{{ $pedigree->place_of_death ?? '' }}" readonly
+                                                                disabled>
                                                         </div>
-                                                    @endif
-                                                    @if (!is_null($pedigree?->date_of_marriage))
                                                         <div class="col-md-2">
                                                             <label class="form-control-label">Marriage Date</label>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Date of Marriage"
-                                                                value="{{ $pedigree?->date_of_marriage ?? '' }}"
+                                                            <input class="form-control" type="text" value="{{ $pedigree->date_of_marriage ?? '' }}"
                                                                 readonly disabled>
                                                         </div>
-                                                    @endif
-                                                    @if (!is_null($pedigree?->place_of_marriage))
+                                                        <div class="col-md-2">
+                                                            <label class="form-control-label">Mother Name</label>
+                                                            <input
+                                                                class="form-control @if ($pedigree->pioneer_parents == 0) text-danger @endif"
+                                                                id="email" value="{{ $pedigree->m_name }}" type="text" readonly disabled>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-control-label">Birth Date</label>
+                                                            <input class="form-control" type="text" value="{{ $pedigree->m_birth_date ?? '' }}" readonly
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-control-label">Birth Place</label>
+                                                            <input class="form-control" type="text" value="{{ $pedigree->m_birth_place ?? '' }}" readonly
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-control-label">Death Date</label>
+                                                            <input class="form-control" type="text" value="{{ $pedigree->m_death_date ?? '' }}" readonly
+                                                                disabled>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-control-label">Death Place</label>
+                                                            <input class="form-control" type="text" value="{{ $pedigree->m_death_place ?? '' }}" readonly
+                                                                disabled>
+                                                        </div>
                                                         <div class="col-md-2">
                                                             <label class="form-control-label">Marriage Place</label>
-                                                            <input class="form-control" type="text"
-                                                                placeholder="Place of Marriage"
-                                                                value="{{ $pedigree?->place_of_marriage ?? '' }}"
+                                                            <input class="form-control" type="text" value="{{ $pedigree->place_of_marriage ?? '' }}"
                                                                 readonly disabled>
                                                         </div>
-                                                    @endif
+                                                    </div>
                                                 </div>
                                                 <br>
                                             @endforeach
@@ -581,24 +597,46 @@
         })
 
         document.addEventListener('DOMContentLoaded', function() {
-        var displayStatus = document.getElementById('displayStatus');
-        var volunteerStatus = document.getElementById('volunteerStatus');
-        var registrationFormStatus = document.getElementById('registrationFormStatus');
-        var signedAgreementStatus = document.getElementById('signedAgreementStatus');
-        var journalStatus = document.getElementById('journalStatus');
+            var displayStatus = document.getElementById('displayStatus');
+            var volunteerStatus = document.getElementById('volunteerStatus');
+            var registrationFormStatus = document.getElementById('registrationFormStatus');
+            var signedAgreementStatus = document.getElementById('signedAgreementStatus');
+            var journalStatus = document.getElementById('journalStatus');
 
-        // Initial display based on the value
-        displayStatus.textContent = @if($member?->additionalInfo?->key_holder== 1)
-        'Yes'
-        @else 'No'
-        @endif;
-        
-        volunteerStatus.textContent = @if ($member?->additionalInfo?->volunteer == 1) 'Yes' @else 'No' @endif;
-        registrationFormStatus.textContent = @if ($member?->additionalInfo?->registration_form_received == 1) 'Yes' @else 'No' @endif;
-        signedAgreementStatus.textContent = @if ($member?->additionalInfo?->signed_agreement == 1) 'Yes' @else 'No' @endif;
-        journalStatus.textContent = @if ($member?->journal == 0) 'Emailed' @else 'Posted' @endif;
+            // Initial display based on the value
+            displayStatus.textContent =
+                @if ($member?->additionalInfo?->key_holder == 1)
+                    'Yes'
+                @else
+                    'No'
+                @endif ;
 
-    });
+            volunteerStatus.textContent =
+                @if ($member?->additionalInfo?->volunteer == 1)
+                    'Yes'
+                @else
+                    'No'
+                @endif ;
+            registrationFormStatus.textContent =
+                @if ($member?->additionalInfo?->registration_form_received == 1)
+                    'Yes'
+                @else
+                    'No'
+                @endif ;
+            signedAgreementStatus.textContent =
+                @if ($member?->additionalInfo?->signed_agreement == 1)
+                    'Yes'
+                @else
+                    'No'
+                @endif ;
+            journalStatus.textContent =
+                @if ($member?->journal == 0)
+                    'Emailed'
+                @else
+                    'Posted'
+                @endif ;
+
+        });
     </script>
 @endsection
 <!-- app-content end-->
