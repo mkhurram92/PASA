@@ -13,10 +13,6 @@
                 font-weight: 500;
             }
 
-            .form-control[:read-only] {
-                font-size: 16px;
-            }
-
             .col-md-2 {
                 margin-top: 1rem;
             }
@@ -25,7 +21,7 @@
             <!--Page header-->
             <div class="page-header">
                 <div class="page-leftheader">
-                    <h4 class="page-title"></h4>
+                    <h4 class="page-title">Edit Pedigree</h4>
                 </div>
             </div>
             <!--End Page header-->
@@ -48,27 +44,26 @@
                         @endif
 
                         <div class="card-header justify-content-between">
-                            <h3 class="card-title">Pioneer Member's Pedigree Chart</h3>
+                            <h3 class="card-title">Update Pioneer Member's Pedigree Chart</h3>
                             <div>
+                                <button type="submit" form="pedigree-form" class="btn btn-primary">Save
+                                    Pedigree</button>
                                 <a class="btn btn-danger" href="{{ route('members.index') }}">
                                     <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                 </a>
-                                @if (count($member->pedigree) > 0)
-                                    <a class="btn btn-success mr-2"
-                                        href="{{ route('members.editPedigree', $member->id) }}">
-                                        <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
-                                    </a>
-                                @endif
-
-                                <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
+                                <a class="btn btn-info" href="{{ url()->previous() }}" id="view-members">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
                             </div>
                         </div>
-                        @if (count($member->pedigree) > 0)
-                            <div class="card-body p-0">
-                                <div class="card-body">
-                                    @foreach ($member->pedigree as $pedigree)
+                        <div class="card-body p-0">
+                            <form id="pedigree-form" action="{{ route('members.updatePedigree', $member->id) }}"
+                                method="POST">
+                                @csrf
+                                @method('POST') <!-- Ensure the method matches the route's HTTP method -->
+
+                                @foreach ($member->pedigree as $index => $pedigree)
+                                    <div class="card-body">
                                         <div class="row mb-3">
                                             <div class="col-md-4">
                                                 <a class="form-control-label"
@@ -79,109 +74,89 @@
                                         <div class="row mb-3">
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Father Name</label>
-                                                <input
-                                                    class="form-control @if ($pedigree->pioneer_parents == 1) text-danger @endif"
-                                                    value="{{ $pedigree->f_name }}" required="" type="text"
-                                                    readonly disabled>
+                                                <input class="form-control" name="pedigree[{{ $index }}][id]"
+                                                    type="hidden" value="{{ $pedigree->id }}">
+                                                <input class="form-control" name="pedigree[{{ $index }}][f_name]"
+                                                    value="{{ $pedigree->f_name }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Date</label>
-                                                <input class="form-control" type="text" placeholder="Birth Date"
-                                                    value="{{ $pedigree->date_of_birth ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][date_of_birth]"
+                                                    value="{{ $pedigree->date_of_birth ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Place</label>
-                                                <input class="form-control" type="text" placeholder="Birth Place"
-                                                    value="{{ $pedigree->place_of_birth ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][place_of_birth]"
+                                                    value="{{ $pedigree->place_of_birth ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Date</label>
-                                                <input class="form-control" type="text" placeholder="Death Date"
-                                                    value="{{ $pedigree->date_of_death ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][date_of_death]"
+                                                    value="{{ $pedigree->date_of_death ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Place</label>
-                                                <input class="form-control" type="text" placeholder="Death Place"
-                                                    value="{{ $pedigree->place_of_death ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][place_of_death]"
+                                                    value="{{ $pedigree->place_of_death ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Marriage Date</label>
-                                                <input class="form-control" type="text" placeholder="Marriage Date"
-                                                    value="{{ $pedigree->date_of_marriage ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][date_of_marriage]"
+                                                    value="{{ $pedigree->date_of_marriage ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Mother Name</label>
-                                                <input
-                                                    class="form-control @if ($pedigree->pioneer_parents == 0) text-danger @endif"
-                                                    id="email" value="{{ $pedigree->m_name }}" required=""
-                                                    type="text" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][m_name]"
+                                                    value="{{ $pedigree->m_name }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Date</label>
-                                                <input class="form-control" type="text" placeholder="Birth Date"
-                                                    value="{{ $pedigree->m_birth_date ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][m_birth_date]"
+                                                    value="{{ $pedigree->m_birth_date ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Place</label>
-                                                <input class="form-control" type="text" placeholder="Birth Place"
-                                                    value="{{ $pedigree->m_birth_place ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][m_birth_place]"
+                                                    value="{{ $pedigree->m_birth_place ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Date</label>
-                                                <input class="form-control" type="text" placeholder="Death Date"
-                                                    value="{{ $pedigree->m_death_date ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][m_death_date]"
+                                                    value="{{ $pedigree->m_death_date ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Place</label>
-                                                <input class="form-control" type="text" placeholder="Death Place"
-                                                    value="{{ $pedigree->m_death_place ?? '' }}" readonly disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][m_death_place]"
+                                                    value="{{ $pedigree->m_death_place ?? '' }}" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Marriage Place</label>
-                                                <input class="form-control" type="text"
-                                                    placeholder="Marriage Place"
-                                                    value="{{ $pedigree->place_of_marriage ?? '' }}" readonly
-                                                    disabled>
+                                                <input class="form-control"
+                                                    name="pedigree[{{ $index }}][place_of_marriage]"
+                                                    value="{{ $pedigree->place_of_marriage ?? '' }}" type="text">
                                             </div>
                                         </div>
                                         <br>
                                         <br>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @else
-                            <div class="card">
-                                <div class="card-header justify-content-between">
-                                    <h3 class="card-title">No Pedigrees Available</h3>
-                                </div>
-                            </div>
-                        @endif
+                                    </div>
+                                @endforeach
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- MODAL EFFECTS -->
-<div id="crud"></div>
-@section('scripts')
-    @include('plugins.select2')
-    <script>
-        document.getElementById('view-members').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-pedigree/', '/view-member/');
-
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
-    </script>
-@endsection
 <!-- app-content end-->
 @include('layout.footer')

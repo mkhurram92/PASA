@@ -91,11 +91,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('members/edit-member/{id}', [SubscribeMemberController::class, 'editMember'])->name("members.edit-member");
     Route::post('members/edit-member/{id}', [SubscribeMemberController::class, 'memberDetailUpdate'])->name("members.detail-update");
 
+    //New Updates Edit in Admin Panel
+    Route::get('members/edit-pedigree/{id}', [SubscribeMemberController::class, 'editPedigree'])->name('members.editPedigree');
+    Route::post('members/update-pedigree/{id}', [SubscribeMemberController::class, 'updatePedigree'])->name('members.updatePedigree');
+
+
     Route::resource('members', SubscribeMemberController::class);
     Route::resource('subscription-plans', SubscriptionPlanController::class);
     Route::resource('/', DashboardController::class);
     Route::resource('/user', UserController::class);
-    Route::resource('/title',TitleController::class);
+    Route::resource('/title', TitleController::class);
     Route::resource('/membership-status', MembershipStatusController::class);
     Route::resource('/ship', ShipController::class);
     Route::resource('mode-of-arrivals', ModeOfArrivalsController::class);
@@ -155,5 +160,4 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     Route::get('/getSubGlCodes/{parentId}', [TransactionController::class, 'getSubGlCodes']);
-
 });

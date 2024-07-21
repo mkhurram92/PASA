@@ -28,6 +28,9 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreMemberRequest;
 use App\Models\SubscriptionPlan;
+use App\Models\MemberPedigree;
+use Illuminate\Support\Facades\Log;
+
 
 class SubscribeMemberController extends Controller
 {
@@ -105,7 +108,7 @@ class SubscribeMemberController extends Controller
                 'key_holder' => (int)$request->key_holder,
                 'key_held' => $request->key_held,
                 'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
-                
+
                 //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
             ]);
             $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
@@ -317,10 +320,11 @@ class SubscribeMemberController extends Controller
 
             $usr = ModelsUser::create(
                 [
-                "email" => $member->contact->email,
-                "password" => $member->password,
-                "name" => $member->given_name . " " . $member->family_name
-            ]);
+                    "email" => $member->contact->email,
+                    "password" => $member->password,
+                    "name" => $member->given_name . " " . $member->family_name
+                ]
+            );
 
             $usr->assignRole("user");
             // Mail::to($member->email)->send(new ApprovalEmail($member));
@@ -342,5 +346,54 @@ class SubscribeMemberController extends Controller
                 "error" => $e->getMessage(),
             ]);
         }
+    }
+
+    public function editPedigree($id)
+    {
+        //Log::info('Received ID:', ['id' => $id]);
+
+        $member = Member::find($id);
+
+        if (!$member) {
+            return redirect()->route('members.index')->with('error', 'Member not found.');
+        }
+
+        //Log::info('Member Found:', ['member' => $member]);
+
+        return view('page.members.edit-pedigree', ['member' => $member]);
+    }
+
+    public function updatePedigree(Request $request, $id)
+    {
+        $this->validate($request, [
+            'pedigree.*.id' => 'required|integer|exists:member_pedigrees,id',
+            'pedigree.*.f_name' => 'nullable|string|max:255',
+            'pedigree.*.date_of_birth' => 'nullable|string|max:255',
+            'pedigree.*.place_of_birth' => 'nullable|string|max:255',
+            'pedigree.*.date_of_death' => 'nullable|string|max:255',
+            'pedigree.*.place_of_death' => 'nullable|string|max:255',
+            'pedigree.*.date_of_marriage' => 'nullable|string|max:255',
+
+            'pedigree.*.m_name' => 'nullable|string|max:255',
+            'pedigree.*.m_birth_date' => 'nullable|string|max:255',
+            'pedigree.*.m_birth_place' => 'nullable|string|max:255',
+            'pedigree.*.m_death_date' => 'nullable|string|max:255',
+            'pedigree.*.m_death_place' => 'nullable|string|max:255',
+            'pedigree.*.place_of_marriage' => 'nullable|string|max:255',
+
+        ]);
+
+        $member = Member::findOrFail($id);
+
+        foreach ($request->pedigree as $pedigreeData) {
+            $pedigree = MemberPedigree::findOrFail($pedigreeData['id']);
+            $pedigree->update($pedigreeData);
+        }
+        
+        return response()->json([
+            "status" => true,
+            "message" => "Pedigree updated successfully",
+            "redirectTo" => route("members.view-pedigree", ['id' => $member->id])
+        ]);
     }
 }
