@@ -40,7 +40,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="password" class="control-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Leave blank to keep current password" value="" maxlength="50">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Leave blank to keep current password" maxlength="50">
                             </div>
                         </div>
                     </div>

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -92,10 +93,10 @@ class UserController extends Controller
     {
         $roles = Role::all(); // Fetch all roles from your Role model or adjust query as needed
         $html = view("models.user-update", compact('user', 'roles'))->render();
-        
+
         return response()->json(["status" => true, "html" => $html]);
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -103,26 +104,28 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'role_id' => $request->role_id,
-        ];
+        // Validate input
+        $request->validate([
+            'name' => 'required|max:50',
+            'email' => 'required|email|max:50',
+            'role_id' => 'required|exists:roles,id',
+            'password' => 'nullable',
+        ]);
 
-        if (!empty($request->password)) {
-            $data['password'] = bcrypt($request->password);
+        // Update user fields
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->role_id = $request->input('role_id');
+
+        // Update password if provided
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
         }
 
-        // Update the user's data
-        $user->update($data);
-
-        // Update the user's role
-        if ($request->has('role_id')) {
-            $user->role_id = $request->role_id;
-            $user->save();
-        }
+        // Save changes
+        $user->save();
 
         return response()->json(["status" => true, "message" => "User updated successfully"]);
     }
