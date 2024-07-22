@@ -29,6 +29,8 @@ class StoreMemberRequest extends FormRequest
             "given_name" => 'required',
             "preferred_name" => 'nullable',
             "date_of_birth" => 'nullable',
+            "month_of_birth" => 'nullable',
+            "year_of_birth" =>'nullable',
             "number_street" => 'nullable',
             "suburb" => 'nullable',
             "state" => 'nullable',

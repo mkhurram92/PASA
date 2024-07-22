@@ -11,7 +11,7 @@
                     <option value="1">Post</option>
                 </select>
             </div>
-            <input type="hidden" value="{{ $subsription_plan->email_price + 20 }}" name="preferred_delivery_price"
+            <input type="hidden" value="{{ $subsription_plan->email_price + $subsription_plan->joining_fee }}" name="preferred_delivery_price"
                 id="preferred_delivery_price">
             <div class="col-md-8 d-flex">
                 <div class="col-md-3 my-2">

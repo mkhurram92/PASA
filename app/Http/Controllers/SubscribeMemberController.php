@@ -73,7 +73,10 @@ class SubscribeMemberController extends Controller
                 'preferred_name' => $request->preferred_name,
                 'initials' => $request->initials,
                 'post_nominal' => $request->post_nominal ?? null,
-                'date_of_birth' => !empty($request->date_of_birth) ? date('Y-m-d', strtotime($request->date_of_birth)) : null,
+                //'date_of_birth' => !empty($request->date_of_birth) ? date('Y-m-d', strtotime($request->date_of_birth)) : null,
+                'date_of_birth' => $request->date_of_birth, //&& is_numeric($request->date_of_birth) && $request->date_of_birth >= 00 && $request->date_of_birth <= 31) ? (int)$request->date_of_birth : null,
+                'month_of_birth' => $request->month_of_birth, //&& is_numeric($request->month_of_birth) && $request->month_of_birth >= 01 && $request->month_of_birth <= 12) ? (int)$request->month_of_birth : null,
+                'year_of_birth' => $request->year_of_birth, //&& is_numeric($request->year_of_birth) && $request->year_of_birth >= 1900 && $request->year_of_birth <= 2100) ? (int)$request->year_of_birth : null,
                 'username' => $request->username,
                 'member_type_id' => $request->member_type_id,
                 'member_status_id' => $request->member_status_id,
@@ -188,6 +191,8 @@ class SubscribeMemberController extends Controller
             'given_name' => 'required',
             'preferred_name' => 'nullable',
             'date_of_birth' => 'nullable',
+            'month_of_birth' => 'nullable',
+            'year_of_birth' => 'nullable',
 
             'number_street' => 'nullable',
             'suburb' => 'nullable',
@@ -215,7 +220,11 @@ class SubscribeMemberController extends Controller
         $member->preferred_name = $request->preferred_name;
         $member->initials = $request->initials;
         $member->post_nominal = $request->post_nominal ?? NULL;
-        $member->date_of_birth = !empty($request->date_of_birth) ? date('Y-m-d', strtotime($request->date_of_birth)) : null;
+        //$member->date_of_birth = !empty($request->date_of_birth) ? date('Y-m-d', strtotime($request->date_of_birth)) : null;
+        $member->date_of_birth = $request->date_of_birth; //&& is_numeric($request->date_of_birth) && $request->date_of_birth >= 00 && $request->date_of_birth <= 31) ? (int)$request->date_of_birth : null,
+        $member->month_of_birth = $request->month_of_birth; //&& is_numeric($request->month_of_birth) && $request->month_of_birth >= 01 && $request->month_of_birth <= 12) ? (int)$request->month_of_birth : null,
+        $member->year_of_birth = $request->year_of_birth; //&& is_numeric($request->year_of_birth) && $request->year_of_birth >= 1900 && $request->year_of_birth <= 2100) ? (int)$request->year_of_birth : null,
+                
         //$member->username = $request->username;
         $member->member_type_id = $request->member_type_id;
         $member->member_status_id = $request->member_status_id;

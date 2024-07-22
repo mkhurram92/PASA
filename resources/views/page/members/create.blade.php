@@ -119,10 +119,22 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Birth Date</label>
+                                                <label class="col-md-4 form-label">Birth Date </label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control fc-datepicker" type="text"
-                                                        name="date_of_birth">
+                                                    <div class="row">
+                                                        <div class="col-4 pr-1">
+                                                            <input class="form-control" placeholder="YYYY"
+                                                                type="text" name="year_of_birth">
+                                                        </div>
+                                                        <div class="col-4 px-1">
+                                                            <input class="form-control" placeholder="MM" type="text"
+                                                                name="month_of_birth">
+                                                        </div>
+                                                        <div class="col-4 pl-1">
+                                                            <input class="form-control" placeholder="DD" type="text"
+                                                                name="date_of_birth">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
