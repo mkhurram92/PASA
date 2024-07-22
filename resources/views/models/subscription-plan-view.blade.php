@@ -30,6 +30,12 @@
                         placeholder="Enter Post Price" value="{{ $subscription_plan?->post_price }}" required=""
                         readonly disabled>
                 </div>
+                <div class="form-group">
+                    <label for="name" class="control-label">Joining Fee<span class="tx-danger">*</span></label>
+                    <input type="number" class="form-control" id="joining_fee" name="joining_fee"
+                        value="{{ $subscription_plan?->joining_fee }}" required=""
+                        readonly disabled>
+                </div>
                 <div class="col-sm-offset-2 col-sm-10">
                     <button class="btn btn-default close-modal">Close</button>
                 </div>

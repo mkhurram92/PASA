@@ -31,6 +31,11 @@
                             placeholder="Enter Post Price" value="" required="">
                     </div>
                     <div class="form-group">
+                        <label for="name" class="control-label">Joining Fee<span class="tx-danger">*</span></label>
+                        <input type="number" class="form-control" id="joining_fee" name="joining_fee"
+                            placeholder="Enter Joining Fee" value="" required="">
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save
                                 changes</button>

@@ -1,7 +1,7 @@
 <h3>Account</h3>
 <section>
     <div class="row">
-        <h3> Account Information</h3>
+        <h3 class="card-title"> Account Information</h3>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Username <span class="tx-danger">*</span></label>
             <input class="form-control" id="username" name="username" value="{{ old('username') }}"
@@ -18,8 +18,9 @@
                 value="{{ old('email_confirmation') }}"  required="" type="email">
         </div>
     </div>
+    <br>
     <div class="row">
-        <h3> Application Personal Details</h3>
+        <h3 class="card-title">Application Personal Details</h3>
         <div class="col-12">
             <div class="row">
                 <div class="col-md-2 my-2">

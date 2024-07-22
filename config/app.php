@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Pioneers Association of SA'),
+    'name' => env('APP_NAME', 'Pioneers SA'),
 
     /*
     |--------------------------------------------------------------------------

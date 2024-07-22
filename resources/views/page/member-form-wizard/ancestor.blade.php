@@ -1,7 +1,7 @@
 <h3>Ancestor</h3>
 <section>
     <div class="row">
-        <h3>Primary Ancestor</h3>
+        <h3 class="card-title">Primary Ancestor</h3>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Gender</label>
             <select name="gender" class="form-control form-select select2" id="gender_ancestor">

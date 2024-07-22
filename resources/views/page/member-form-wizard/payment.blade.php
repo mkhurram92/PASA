@@ -1,7 +1,7 @@
 <h3>Payment</h3>
 <section>
     <div class="row">
-        <h3> Payment Information</h3>
+        <h3 class="card-title"> Payment Information</h3>
         <div class="row">
             <div class="col-md-4 my-2">
                 <label class="form-control-label">Journal Preferred Delivery</label>
@@ -20,11 +20,11 @@
                 </div>
                 <div class="col-md-3 my-2">
                     <label class="form-control-label">New Member</label>
-                    <h4 id="new_member_block">$20.00</h4>
+                    <h4 id="new_member_block">${{ number_format($subsription_plan->joining_fee, 2)}}</h4>
                 </div>
                 <div class="col-md-3 my-2">
                     <label class="form-control-label">Total</label>
-                    <h4 id="total_block">${{ number_format($subsription_plan->email_price + 20, 2) }}</h4>
+                    <h4 id="total_block">${{ number_format($subsription_plan->email_price + $subsription_plan->joining_fee, 2) }}</h4>
                 </div>
             </div>
         </div>
@@ -55,16 +55,16 @@
                 $(membership_fee_block).text(
                     "${{ number_format($subsription_plan->post_price, 2) }} (Post)"
                 );
-                $(total_block).text("${{ number_format($subsription_plan->post_price + 20, 2) }}");
+                $(total_block).text("${{ number_format($subsription_plan->post_price + $subsription_plan->joining_fee, 2) }}");
                 $("#preferred_delivery_price").val(
-                    "{{ $subsription_plan->post_price + 20 }}");
+                    "{{ $subsription_plan->post_price + $subsription_plan->joining_fee }}");
             } else {
                 $(membership_fee_block).text(
-                    "{{ number_format($subsription_plan->email_price, 2) }} (Email)"
+                    "${{ number_format($subsription_plan->email_price, 2) }} (Email)"
                 );
-                $(total_block).text("${{ number_format($subsription_plan->email_price + 20, 2) }}");
+                $(total_block).text("${{ number_format($subsription_plan->email_price + $subsription_plan->joining_fee, 2) }}");
                 $("#preferred_delivery_price").val(
-                    "{{ $subsription_plan->email_price + 20 }}");
+                    "{{ $subsription_plan->email_price + $subsription_plan->joining_fee }}");
             }
         })
     });

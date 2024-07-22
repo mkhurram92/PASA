@@ -27,7 +27,8 @@ class UpdateSubscriptionPlanRequest extends FormRequest
             'name' => 'required|string',
             'description' => 'required|string',
             'email_price' => 'required|integer',
-            'post_price' => 'required|integer'
+            'post_price' => 'required|integer',
+            'joining_fee' => 'required'
         ];
     }
 }

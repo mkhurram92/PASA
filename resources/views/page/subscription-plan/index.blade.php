@@ -222,6 +222,20 @@
                      }
                  },
                  {
+                     title: 'Joining Fee',
+                     field: 'joining_fee',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Joining Fee',
+                     formatter: "money",
+                     formatterParams: {
+                         decimal: ".",
+                         thousand: ",",
+                         symbol: "$"
+                     }
+                 },
+                 {
                      title: "Action",
                      field: "actions",
                      hozAlign: "center",

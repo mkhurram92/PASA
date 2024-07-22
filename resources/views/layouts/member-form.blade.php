@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Pioneers SA Membership') }}</title>
+    <title>{{ config('app.name', 'Pioneers SA') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -79,7 +79,7 @@
                     <div class="col-md-6">
                         <a class="navbar-brand" href="{{ url('/') }}">
                             <img src="{{ asset('images/logo/2023-02-09-Pioneers-SA-Badge-Clear-Background.png') }}"
-                                class="w-20" alt="Pioneers SA Membership">
+                                class="w-20" alt="Pioneers SA">
                         </a>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">

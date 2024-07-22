@@ -16,6 +16,7 @@ class SubscriptionPlan extends Model
         "description",
         "email_price",
         "post_price",
+        "joining_fee",
         "created_by",
         "updated_by",
         "deleted_by"

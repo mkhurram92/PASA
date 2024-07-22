@@ -1,6 +1,6 @@
 @extends('layouts.member-form')
 
-@section('title', 'Register')
+@section('title', 'Registration')
 @section('head')
     <script src="https://js.stripe.com/v3/"></script>
 @endsection
