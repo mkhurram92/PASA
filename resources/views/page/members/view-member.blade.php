@@ -153,6 +153,28 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">Country</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                    value="{{ $member?->address?->country?->name }}" readonly
+                                                    disabled>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">State / County</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control"
+                                                    value="{{ $member?->address?->state?->name }}" readonly disabled>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">City / Town / Suburb</label>
+                                            <div class="col-md-8">
+                                                <input class="form-control fc-datepicker" type="text"
+                                                    value="{{ $member?->address?->city?->name }}" readonly disabled>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
@@ -166,29 +188,7 @@
                                                 <input class="form-control" type="text"
                                                     value="{{ $member?->address?->number_street }}" readonly disabled>
                                             </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">City / Town / Suburb</label>
-                                            <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->address?->suburb }}" readonly disabled>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">State / County</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->state?->name }}" readonly disabled>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Country</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->country?->name }}" readonly
-                                                    disabled>
-                                            </div>
-                                        </div>
+                                        </div>                                        
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Post Code</label>
                                             <div class="col-md-8">

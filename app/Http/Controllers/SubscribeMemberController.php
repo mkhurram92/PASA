@@ -86,9 +86,9 @@ class SubscribeMemberController extends Controller
             $member->address()->updateOrCreate(['member_id' => $member->id], [
                 //'unit_no' => $request->unit_no,
                 'number_street' => $request->number_street,
-                'suburb' => $request->suburb,
-                'state_id' => $request->state,
-                'country_id' => 14,
+                'suburb' => $request->city_id,
+                'state_id' => $request->county_id,
+                'country_id' => $request->country_id,
                 'post_code' => $request->post_code,
             ]);
             $member->contact()->updateOrCreate(['member_id' => $member->id], [
@@ -235,9 +235,9 @@ class SubscribeMemberController extends Controller
         $member->address()->updateOrCreate([], [
             'unit_no' => $request->unit_no,
             'number_street' => $request->number_street,
-            'suburb' => $request->suburb,
-            'state_id' => $request->state,
-            'country_id' => 14,
+            'suburb' => $request->city_id,
+            'state_id' => $request->county_id,
+            'country_id' => $request->country_id,
             'post_code' => $request->post_code,
         ]);
 

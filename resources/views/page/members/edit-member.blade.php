@@ -168,6 +168,37 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">Country  </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control select2" id="countries_select2" name="country_id">
+                                                    @if (!empty($member?->address?->country?->id))
+                                                    <option value="{{ $member?->address?->country?->id }}" selected>{{ $member?->address?->country?->name }}</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">State / County</label>
+                                            <div class="col-md-8">
+                                                <select class="form-control select2" id="counties_select2" name="county_id">
+                                                    @if (!empty($member?->address?->state?->id))
+                                                    <option value="{{ $member?->address?->state?->id }}" selected>{{ $member?->address?->state?->name }}</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">City / Town / Suburb </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control select2" id="cities_select2" name="city_id">
+                                                    @if (!empty($member?->address?->city?->id))
+                                                    <option value="{{ $member?->address?->city?->id }}" selected>{{ $member?->address?->city?->name }}</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="Unit/Apartment No." value="{{ $member?->address?->unit_no }}" name="unit_no">
@@ -179,7 +210,7 @@
                                                 <input class="form-control" type="text" placeholder="PO Box" value="{{ $member?->address?->number_street }}" name="number_street">
                                             </div>
                                         </div>
-                                        <div class="mb-3 row">
+                                        <!--<div class="mb-3 row">
                                             <label class="col-md-4 form-label">City / Town / Suburb  </label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" placeholder="Suburb" value="{{ $member?->address?->suburb }}" name="suburb">
@@ -206,7 +237,7 @@
                                                     <option value="Australia">Australia</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Post Code  </label>
                                             <div class="col-md-8">
@@ -508,6 +539,7 @@
 
     });
 </script>
+@include("page.mode-of-arrivals.scripts")
 @endsection
 <!-- app-content end-->
 @include('layout.footer')

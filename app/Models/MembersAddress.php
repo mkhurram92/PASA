@@ -22,7 +22,11 @@ class MembersAddress extends Model
     }
     public function state()
     {
-        return $this->belongsTo(States::class, 'state_id');
+        return $this->belongsTo(Counties::class, 'state_id');
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'suburb');
     }
     public function country()
     {

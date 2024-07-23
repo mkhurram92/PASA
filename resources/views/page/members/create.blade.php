@@ -148,6 +148,29 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">Country </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control select2" id="countries_select2"
+                                                    name="country_id"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">State / County </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control select2" placeholder="Select item"
+                                                    id="counties_select2" name="county_id"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">City / Town / Suburb </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control select2" placeholder="Select item"
+                                                    id="cities_select2" name="city_id"></select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
@@ -159,37 +182,6 @@
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="PO Box"
                                                     name="number_street">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">City / Town / Suburb </label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Suburb"
-                                                    name="suburb">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">State / County </label>
-                                            <div class="col-md-8">
-                                                <select name="state" class="form-control form-select select2"
-                                                    id="state">
-                                                    @forelse ($data['states'] as $state)
-                                                        <option value="{{ $state?->id }}">
-                                                            {{ $state?->name }}
-                                                        </option>
-                                                    @empty
-                                                        <option>Select States</option>
-                                                    @endforelse
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Country </label>
-                                            <div class="col-md-8">
-                                                <select name="country" class="form-control form-select select2"
-                                                    id="country">
-                                                    <option value="Australia">Australia</option>
-                                                </select>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -399,6 +391,7 @@
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
     @include('plugins.select2')
+    @include('page.members.scripts')
     <script>
         $(document).ready(function() {
 
