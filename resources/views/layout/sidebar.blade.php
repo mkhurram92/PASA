@@ -218,7 +218,7 @@
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('cities.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('cities.index') }}">
-                                        <span class="sub-side-menu__label">Cities</span>
+                                        <span class="sub-side-menu__label">Cities / Towns / Suburs</span>
                                     </a>
                                 </li>
                             @endcan
@@ -226,7 +226,7 @@
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('counties.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('counties.index') }}">
-                                        <span class="sub-side-menu__label">Counties / States</span>
+                                        <span class="sub-side-menu__label">States / Counties</span>
                                     </a>
                                 </li>
                             @endcan
