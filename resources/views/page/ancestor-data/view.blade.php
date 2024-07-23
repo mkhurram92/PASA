@@ -116,7 +116,8 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Birth Place</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{ $ancestor?->place_of_birth }}"  disabled readonly
+                                                <input class="form-control" type="text"
+                                                    value="{{ $ancestor?->place_of_birth }}" disabled readonly
                                                     name="place_of_birth">
                                             </div>
                                         </div>
@@ -150,7 +151,8 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Death Place</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{ $ancestor?->place_of_death }}" disabled readonly
+                                                <input class="form-control" type="text"
+                                                    value="{{ $ancestor?->place_of_death }}" disabled readonly
                                                     name="place_of_death">
                                             </div>
                                         </div>
@@ -173,8 +175,8 @@
                                                 </div>
                                                 @if ($ancestor->source_of_arrival == 1 || $ancestor->source_of_arrival == 2)
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-4 form-label">Ship Name - Arrival Year<span
-                                                                class="text-danger"></span></label>
+                                                        <label class="col-md-4 form-label">Ship Name - Arrival
+                                                            Year<span class="text-danger"></span></label>
                                                         <div class="col-md-8">
                                                             <input class="form-control" type="text"
                                                                 value="{{ $ancestor?->mode_of_travel?->ship?->name_of_ship . ' - ' . $ancestor?->mode_of_travel?->year }}"
@@ -220,50 +222,61 @@
                                                         </div>
                                                     </div>-->
                                                 @else
-                                                    <div class="mb-3 row">
-                                                        <label class="col-md-4 form-label">Arrivals Date in SA<span
-                                                                class="text-danger"></span></label>
-                                                        <div class="col-md-8">
-                                                            <input class="form-control" type="text"
-                                                                value="{{ $ancestor?->localTravelDetails?->travel_date }}"
-                                                                disabled readonly>
+                                                    @if ($ancestor->source_of_arrival == 3)
+                                                        <div class="mb-3 row">
+                                                            <label class="col-md-4 form-label">Arrivals Date in SA<span
+                                                                    class="text-danger"></span></label>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $ancestor?->localTravelDetails?->travel_date }}"
+                                                                    disabled readonly>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="row mb-3">
-                                                        <label class="col-md-4 form-label">Arrival Evidence<span
-                                                                class="text-danger"></span></label>
-                                                        <div class="col-md-8">
-                                                            <textarea class="form-control" rows="5" disabled readonly>{{ $ancestor?->localTravelDetails?->description }}</textarea>
+                                                        <div class="row mb-3">
+                                                            <label class="col-md-4 form-label">Arrival Evidence<span
+                                                                    class="text-danger"></span></label>
+                                                            <div class="col-md-8">
+                                                                <textarea class="form-control" rows="5" disabled readonly>{{ $ancestor?->localTravelDetails?->description }}</textarea>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 @endif
                                             </div>
                                             <div class="col-lg-6">
                                                 <h3 class="card-title">Pioneer Spouse’s Details</h3>
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Marriage Date<span class="text-danger"></span></label>
+                                                    <label class="col-md-3 form-label">Marriage Date<span
+                                                            class="text-danger"></span></label>
                                                     <div class="col-md-8">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 @php
-                                                                    $year = $ancestor?->spouse_details?->marriage_year ?? '';
-                                                                    $month = $ancestor?->spouse_details?->marriage_month ?? '';
-                                                                    $day = $ancestor?->spouse_details?->marriage_date ?? '';
-        
+                                                                    $year =
+                                                                        $ancestor?->spouse_details?->marriage_year ??
+                                                                        '';
+                                                                    $month =
+                                                                        $ancestor?->spouse_details?->marriage_month ??
+                                                                        '';
+                                                                    $day =
+                                                                        $ancestor?->spouse_details?->marriage_date ??
+                                                                        '';
+
                                                                     $date = $year;
-        
+
                                                                     if ($month) {
-                                                                        $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                                        $date .=
+                                                                            '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
                                                                     }
-        
+
                                                                     if ($day) {
-                                                                        $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                                        $date .=
+                                                                            '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
                                                                     }
                                                                 @endphp
-        
-                                                                <input class="form-control" value="{{ $date }}" readonly
-                                                                    disabled>
+
+                                                                <input class="form-control"
+                                                                    value="{{ $date }}" readonly disabled>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -308,23 +321,31 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 @php
-                                                                    $year = $ancestor?->spouse_details?->spouse_birth_year ?? '';
-                                                                    $month = $ancestor?->spouse_details?->spouse_birth_month ?? '';
-                                                                    $day = $ancestor?->spouse_details?->spouse_birth_date ?? '';
-        
+                                                                    $year =
+                                                                        $ancestor?->spouse_details
+                                                                            ?->spouse_birth_year ?? '';
+                                                                    $month =
+                                                                        $ancestor?->spouse_details
+                                                                            ?->spouse_birth_month ?? '';
+                                                                    $day =
+                                                                        $ancestor?->spouse_details
+                                                                            ?->spouse_birth_date ?? '';
+
                                                                     $date = $year;
-        
+
                                                                     if ($month) {
-                                                                        $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                                        $date .=
+                                                                            '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
                                                                     }
-        
+
                                                                     if ($day) {
-                                                                        $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                                        $date .=
+                                                                            '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
                                                                     }
                                                                 @endphp
-        
-                                                                <input class="form-control" value="{{ $date }}" readonly
-                                                                    disabled>
+
+                                                                <input class="form-control"
+                                                                    value="{{ $date }}" readonly disabled>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -343,23 +364,31 @@
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 @php
-                                                                    $year = $ancestor?->spouse_details?->spouse_death_year ?? '';
-                                                                    $month = $ancestor?->spouse_details?->spouse_death_month ?? '';
-                                                                    $day = $ancestor?->spouse_details?->spouse_death_date ?? '';
-        
+                                                                    $year =
+                                                                        $ancestor?->spouse_details
+                                                                            ?->spouse_death_year ?? '';
+                                                                    $month =
+                                                                        $ancestor?->spouse_details
+                                                                            ?->spouse_death_month ?? '';
+                                                                    $day =
+                                                                        $ancestor?->spouse_details
+                                                                            ?->spouse_death_date ?? '';
+
                                                                     $date = $year;
-        
+
                                                                     if ($month) {
-                                                                        $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                                        $date .=
+                                                                            '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
                                                                     }
-        
+
                                                                     if ($day) {
-                                                                        $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                                        $date .=
+                                                                            '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
                                                                     }
                                                                 @endphp
-        
-                                                                <input class="form-control" value="{{ $date }}" readonly
-                                                                    disabled>
+
+                                                                <input class="form-control"
+                                                                    value="{{ $date }}" readonly disabled>
                                                             </div>
                                                         </div>
                                                     </div>
