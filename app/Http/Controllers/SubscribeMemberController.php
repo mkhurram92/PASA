@@ -283,41 +283,10 @@ class SubscribeMemberController extends Controller
         ]);
     }
 
-    //public function update(Member $member)
-    //{
-    //    AdditionalMemberInfos::updateOrCreate(
-    //        ['member_id' => $member->id],
-    //        ['date_membership_approved' => now()]
-    //    );
-
-    //    $usr = ModelsUser::create([
-    //        "email" => $member->contact->email,
-    //        "password" => $member->password,
-    //        "name" => $member->given_name . " " . $member->family_name
-    //    ]);
-    //$get_subscription = Subscription::where('user_id', $member->id)->first();
-    //$get_subscription->update(['created_by' => $usr->id]);
-    //    $usr->assignRole("user");
-    // Mail::to($member->email)->send(new ApprovalEmail($member));
-
-    //    return response()->json([
-    //        "status" => true,
-    //        "message" => "Member Updated successfully",
-    //        "redirectTo" => route("members.view-member", ['id' => $member->id])
-    //    ]);
-
-    //}
-
     public function update(Member $member)
     {
         try {
             DB::beginTransaction();
-
-            //AdditionalMemberInfos::updateOrCreate(
-            //    ['member_id' => $member->id],
-            //    ['date_membership_approved' => now()],
-            //    ['date_membership_end' => now()],
-            //);
 
             AdditionalMemberInfos::updateOrCreate(
                 ['member_id' => $member->id],
@@ -359,15 +328,11 @@ class SubscribeMemberController extends Controller
 
     public function editPedigree($id)
     {
-        //Log::info('Received ID:', ['id' => $id]);
-
         $member = Member::find($id);
 
         if (!$member) {
             return redirect()->route('members.index')->with('error', 'Member not found.');
         }
-
-        //Log::info('Member Found:', ['member' => $member]);
 
         return view('page.members.edit-pedigree', ['member' => $member]);
     }
@@ -392,7 +357,6 @@ class SubscribeMemberController extends Controller
 
             if ($pedigree) {
                 $pedigree->fill($pedigreeData);
-                //$pedigree->pedigree_level = $pedigreeData['pedigree_level'];
                 $pedigree->member_id = $member->id;
                 $pedigree->save();
 

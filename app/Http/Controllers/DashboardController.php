@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\MembershipType;
 use App\Models\MembershipStatus;
 use App\Models\Transaction;
+use App\Models\SubscriptionPlan;
 
 class DashboardController extends Controller
 {
@@ -123,7 +124,7 @@ class DashboardController extends Controller
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
-        $data['membership_types'] = MembershipType::all();
+        $data['membership_types'] = SubscriptionPlan::all();
         $data['membership_status'] = MemberShipStatus::all();
 
         $member_id = $member?->id;
@@ -131,6 +132,7 @@ class DashboardController extends Controller
         $genders = Gender::get();
         $states = States::get();
         return view("page.profile.index", compact('user', 'juniors', 'member', 'genders', 'states', 'data'));
+        
     }
 
     function juniors()
