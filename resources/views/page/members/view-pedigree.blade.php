@@ -58,6 +58,11 @@
                                         href="{{ route('members.editPedigree', $member->id) }}">
                                         <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
                                     </a>
+                                @else
+                                    <a class="btn btn-success mr-2"
+                                        href="{{ route('members.addPedigree', $member->id) }}">
+                                        <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Add</i>
+                                    </a>
                                 @endif
 
                                 <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
@@ -68,20 +73,22 @@
                         @if (count($member->pedigree) > 0)
                             <div class="card-body p-0">
                                 <div class="card-body">
+                                    @php
+                                        $gen_seq = 1;
+                                    @endphp
                                     @foreach ($member->pedigree as $pedigree)
                                         <div class="row mb-3">
                                             <div class="col-md-4">
                                                 <a class="form-control-label"
                                                     style="color: #022ff8; font-size:16px">Generation x
-                                                    {{ $pedigree->pedigree_level + 1 }}</a>
-
+                                                    {{ $gen_seq }}</a>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Father Name</label>
                                                 <input
-                                                    class="form-control @if ($pedigree->pioneer_parents == 1) text-danger @endif"
+                                                    class="form-control"
                                                     value="{{ $pedigree->f_name }}" type="text" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
@@ -112,7 +119,7 @@
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Mother Name</label>
                                                 <input
-                                                    class="form-control @if ($pedigree->pioneer_parents == 0) text-danger @endif"
+                                                    class="form-control"
                                                     id="email" value="{{ $pedigree->m_name }}" type="text"
                                                     readonly disabled>
                                             </div>
@@ -144,13 +151,16 @@
                                         </div>
                                         <br>
                                         <br>
+                                        @php
+                                            $gen_seq++;
+                                        @endphp
                                     @endforeach
                                 </div>
                             </div>
                         @else
                             <div class="card">
                                 <div class="card-header justify-content-between">
-                                    <h3 class="card-title">No Pedigrees Available</h3>
+                                    <h3 class="card-title">No Pedigrees Found</h3>
                                 </div>
                             </div>
                         @endif

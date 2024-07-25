@@ -224,7 +224,7 @@ class SubscribeMemberController extends Controller
         $member->date_of_birth = $request->date_of_birth; //&& is_numeric($request->date_of_birth) && $request->date_of_birth >= 00 && $request->date_of_birth <= 31) ? (int)$request->date_of_birth : null,
         $member->month_of_birth = $request->month_of_birth; //&& is_numeric($request->month_of_birth) && $request->month_of_birth >= 01 && $request->month_of_birth <= 12) ? (int)$request->month_of_birth : null,
         $member->year_of_birth = $request->year_of_birth; //&& is_numeric($request->year_of_birth) && $request->year_of_birth >= 1900 && $request->year_of_birth <= 2100) ? (int)$request->year_of_birth : null,
-                
+
         //$member->username = $request->username;
         $member->member_type_id = $request->member_type_id;
         $member->member_status_id = $request->member_status_id;
@@ -375,33 +375,70 @@ class SubscribeMemberController extends Controller
     public function updatePedigree(Request $request, $id)
     {
         $this->validate($request, [
-            'pedigree.*.id' => 'required|integer|exists:member_pedigrees,id',
             'pedigree.*.f_name' => 'nullable|string|max:255',
-            'pedigree.*.date_of_birth' => 'nullable|string|max:255',
-            'pedigree.*.place_of_birth' => 'nullable|string|max:255',
-            'pedigree.*.date_of_death' => 'nullable|string|max:255',
-            'pedigree.*.place_of_death' => 'nullable|string|max:255',
-            'pedigree.*.date_of_marriage' => 'nullable|string|max:255',
-
             'pedigree.*.m_name' => 'nullable|string|max:255',
-            'pedigree.*.m_birth_date' => 'nullable|string|max:255',
-            'pedigree.*.m_birth_place' => 'nullable|string|max:255',
-            'pedigree.*.m_death_date' => 'nullable|string|max:255',
-            'pedigree.*.m_death_place' => 'nullable|string|max:255',
-            'pedigree.*.place_of_marriage' => 'nullable|string|max:255',
-
+            // Add more validation rules as needed
         ]);
 
         $member = Member::findOrFail($id);
 
+        $existingPedigreeIds = MemberPedigree::where('member_id', $member->id)->pluck('id')->toArray();
+
+        $updatedPedigreeIds = [];
+
         foreach ($request->pedigree as $pedigreeData) {
-            $pedigree = MemberPedigree::findOrFail($pedigreeData['id']);
-            $pedigree->update($pedigreeData);
+            $pedigreeId = $pedigreeData['id'] ?? null;
+            $pedigree = $pedigreeId ? MemberPedigree::find($pedigreeId) : new MemberPedigree();
+
+            if ($pedigree) {
+                $pedigree->fill($pedigreeData);
+                //$pedigree->pedigree_level = $pedigreeData['pedigree_level'];
+                $pedigree->member_id = $member->id;
+                $pedigree->save();
+
+                $updatedPedigreeIds[] = $pedigree->id;
+            }
         }
-        
+
+        // Delete any pedigrees that are not in the updated list
+        MemberPedigree::where('member_id', $member->id)
+            ->whereNotIn('id', $updatedPedigreeIds)
+            ->delete();
+
         return response()->json([
             "status" => true,
             "message" => "Pedigree updated successfully",
+            "redirectTo" => route("members.view-pedigree", ['id' => $member->id])
+        ]);
+    }
+
+    public function addPedigree($id)
+    {
+        $member = Member::find($id);
+
+        if (!$member) {
+            return redirect()->route('members.index')->with('error', 'Member not found.');
+        }
+
+        return view('page.members.add-pedigree', ['member' => $member]);
+    }
+
+    public function storePedigree(Request $request, $memberId)
+    {
+        $this->validate($request, [
+            'pedigrees.*.f_name' => 'nullable|string|max:255',
+            'pedigrees.*.m_name' => 'nullable|string|max:255',
+        ]);
+
+        $member = Member::findOrFail($memberId);
+
+        foreach ($request->pedigrees as $pedigreeData) {
+            $pedigreeData['member_id'] = $memberId;
+            MemberPedigree::create($pedigreeData);
+        }
+        return response()->json([
+            "status" => true,
+            "message" => "Pedigree Added successfully",
             "redirectTo" => route("members.view-pedigree", ['id' => $member->id])
         ]);
     }

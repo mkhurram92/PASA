@@ -94,7 +94,9 @@ Route::group(['middleware' => ['auth']], function () {
     //New Updates Edit in Admin Panel
     Route::get('members/edit-pedigree/{id}', [SubscribeMemberController::class, 'editPedigree'])->name('members.editPedigree');
     Route::post('members/update-pedigree/{id}', [SubscribeMemberController::class, 'updatePedigree'])->name('members.updatePedigree');
-
+    Route::get('members/add-pedigree/{id}', [SubscribeMemberController::class, 'addPedigree'])->name('members.addPedigree');
+    Route::post('members/store-pedigree/{id}', [SubscribeMemberController::class, 'storePedigree'])->name('members.storePedigree');
+    
 
     Route::resource('members', SubscribeMemberController::class);
     Route::resource('subscription-plans', SubscriptionPlanController::class);
