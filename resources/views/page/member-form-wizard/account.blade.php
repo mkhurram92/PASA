@@ -1,4 +1,3 @@
-<h3>Account</h3>
 <section>
     <div class="row">
         <h3 class="card-title"> Account Information</h3>

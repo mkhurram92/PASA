@@ -10,34 +10,34 @@
             <input id="fatherpioneer_1" type="radio" class="radio-input ancestor_father" name="ancestor">
         </div>
     </div>
-
-    <div class="row mb-3 element" id='div_2'>
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-2">
-                    <label class="form-control-label">Father Name</label>
-                    <input id="father_name_1" type="text" class="form-control" name="main_father_name">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-control-label">Birth Date</label>
-                    <input id="father_dob_1" type="date" class="form-control" name="main_father_dob">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-control-label">Birth Place</label>
-                    <input id="main_father_pob" type="text" class="form-control" name="main_father_pob">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-control-label">Death Date</label>
-                    <input id="father_dod_1" type="date" class="form-control" name="main_father_dod">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-control-label">Death Place</label>
-                    <input id="main_father_pod" type="text" class="form-control" name="main_father_pod">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-control-label">Marriage Date</label>
-                    <input id="main_father_dom" type="date" class="form-control" name="main_father_dom">
-                </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-2">
+                <label class="form-control-label">Father Name</label>
+                <input id="father_name_1" type="text" class="form-control" name="main_father_name">
+            </div>
+            <div class="col-md-2">
+                <label class="form-control-label">Birth Date</label>
+                <input id="father_dob_1" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                    name="main_father_dob">
+            </div>
+            <div class="col-md-2">
+                <label class="form-control-label">Birth Place</label>
+                <input id="main_father_pob" type="text" class="form-control" name="main_father_pob">
+            </div>
+            <div class="col-md-2">
+                <label class="form-control-label">Death Date</label>
+                <input id="father_dod_1" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                    name="main_father_dod">
+            </div>
+            <div class="col-md-2">
+                <label class="form-control-label">Death Place</label>
+                <input id="main_father_pod" type="text" class="form-control" name="main_father_pod">
+            </div>
+            <div class="col-md-2">
+                <label class="form-control-label">Marriage Date</label>
+                <input id="main_father_dom" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                    name="main_father_dom">
             </div>
         </div>
     </div>
@@ -62,7 +62,8 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-control-label">Birth Date</label>
-                    <input id="mother_dob_1" type="date" class="form-control" name="main_mother_dob">
+                    <input id="mother_dob_1" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                        name="main_mother_dob">
                 </div>
                 <div class="col-md-2">
                     <label class="form-control-label">Birth Place</label>
@@ -70,7 +71,8 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-control-label">Death Date</label>
-                    <input id="mother_dod_1" type="date" class="form-control" name="main_mother_dod">
+                    <input id="mother_dod_1" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                        name="main_mother_dod">
                 </div>
                 <div class="col-md-2">
                     <label class="form-control-label">Death Place</label>
@@ -86,7 +88,6 @@
             </div>
         </div>
     </div>
-
     <div class="row mb-3">
         <div class="col-sm-3">
             <div class="mb-3 mb-sm-0">
