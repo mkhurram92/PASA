@@ -1,4 +1,3 @@
-<h3>Pedigree</h3>
 <section class='container'>
     <div class="row mb-3">
         <div class="col-sm-6 d-flex align-items-center">
