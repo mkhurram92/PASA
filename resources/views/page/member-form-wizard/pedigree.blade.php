@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-2">
                 <label class="form-control-label">Birth Date</label>
-                <input id="father_dob_1" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                <input id="father_dob_1" type="text" class="form-control" placeholder="YYYY-MM-DD"
                     name="main_father_dob">
             </div>
             <div class="col-md-2">
@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-2">
                 <label class="form-control-label">Death Date</label>
-                <input id="father_dod_1" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                <input id="father_dod_1" type="text" class="form-control" placeholder="YYYY-MM-DD"
                     name="main_father_dod">
             </div>
             <div class="col-md-2">
@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-2">
                 <label class="form-control-label">Marriage Date</label>
-                <input id="main_father_dom" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                <input id="main_father_dom" type="text" class="form-control" placeholder="YYYY-MM-DD"
                     name="main_father_dom">
             </div>
         </div>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-control-label">Birth Date</label>
-                    <input id="mother_dob_1" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                    <input id="mother_dob_1" type="text" class="form-control" placeholder="YYYY-MM-DD"
                         name="main_mother_dob">
                 </div>
                 <div class="col-md-2">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-control-label">Death Date</label>
-                    <input id="mother_dod_1" type="text" class="form-control" placeholder="YYYY-DD-MM"
+                    <input id="mother_dod_1" type="text" class="form-control" placeholder="YYYY-MM-DD"
                         name="main_mother_dod">
                 </div>
                 <div class="col-md-2">
