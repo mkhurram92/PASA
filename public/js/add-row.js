@@ -30,14 +30,14 @@ $(document).ready(function () {
 
                 var htmlString = '<div class="col-sm-6">';
                 htmlString += '<div class="mb-3 mb-sm-0 d-flex align-items-center">';
-                htmlString += '<label class="form-label mb-0 me-2">Father - this is the Pioneer line</label>';
+                htmlString += '<label class="form-label mb-0 me-2">Fathers - this is the Pioneer line</label>';
                 htmlString += '<input name="pioneer_sub_parents[' + Number(split_id[1] - 2) + ']" id="father_' + nextindex + '" class="radio-input" type="radio" value="1" />';
                 htmlString += '</div>';
                 htmlString += '</div><br><br>'; // Close the first column and start a new one
 
                 htmlString += '<div class="col-sm-6">';
                 htmlString += '<div class="mb-3 mb-sm-0 d-flex align-items-center">';
-                htmlString += '<label class="form-label mb-0 me-2">Mother - this is the Pioneer line</label>';
+                htmlString += '<label class="form-label mb-0 me-2">Mothers - this is the Pioneer line</label>';
                 htmlString += '<input id="mother_' + nextindex + '" type="radio" class="radio-input" name="pioneer_sub_parents[' + Number(split_id[1] - 2) + ']" value="0">';
                 htmlString += '</div>';
                 htmlString += '</div><br><br>'; // Close the second column
