@@ -49,24 +49,12 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
-                                @if (Auth::user()->role_id == 1)
-                                    @if (!$member?->additionalInfo?->date_membership_approved)
-                                        <a class="btn btn-success" id="approveButton">
-                                            <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
-                                        </a>
-                                    @endif
-                                @endif
-                                <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
+                                <a class="btn btn-danger mr-2" href="{{ url('members/view-pedigree/' . $member_id) }}" >
                                     <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
                                 </a>
-                                <a class="btn btn-success mr-2" href="{{ url()->current() }}/edit" id="editLink">
+                                <a class="btn btn-success mr-2" href="{{ url('members/edit-member/' . $member_id) }}" >
                                     <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
                                 </a>
-                                @if (Auth::user()->role_id == 1)
-                                    <a class="btn btn-info" href="{{ route('members.index') }}">
-                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                    </a>
-                                @endif
                             </div>
                         </div>
                         <div class="card-body p-0">
@@ -523,34 +511,6 @@
                     'Posted'
                 @endif ;
 
-        });
-
-        document.getElementById('editLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/edit-member/');
-
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
-
-        document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/view-pedigree/');
-
-            // Redirect to the new URL
-            window.location.href = newUrl;
         });
     </script>
 @endsection

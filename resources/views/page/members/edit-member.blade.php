@@ -60,17 +60,17 @@
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
                         @if ($errors->any())
-                        <div class="alert alert-danger">
-                            {{ $errors->first() }}
-                        </div>
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
+                            </div>
                         @elseif(session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
                         @elseif(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
                         @endif
                         <form action="{{ route('members.detail-update', ['id' => $member->id]) }}" method="POST">
                             <div class="card-header d-flex justify-content-between align-items-center">
@@ -79,9 +79,16 @@
                                     <button type='submit' class='btn btn-primary'>
                                         Save Member Details
                                     </button>
-                                    <a class="btn btn-info" href="{{ route('members.view-member', ['id' => $member->id]) }}">
-                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                    </a>
+                                    @if (Auth::user()->name == 'Admin')
+                                        <a class="btn btn-info"
+                                            href="{{ route('members.view-member', ['id' => $member->id]) }}">
+                                            <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                        </a>
+                                    @else
+                                        <a class="btn btn-info" href="{{ route('profile') }}">
+                                            <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
 
@@ -92,39 +99,50 @@
                                         @csrf
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Title <span class="tx-danger">*</span></label>
+                                                <label class="col-md-4 form-label">Title <span
+                                                        class="tx-danger">*</span></label>
                                                 <div class="col-md-3">
-                                                    <select name="title" class="form-control form-select select2" id="title">
+                                                    <select name="title" class="form-control form-select select2"
+                                                        id="title">
                                                         @forelse ($data['titles'] as $title)
-                                                        <option value="{{ $title?->id }}" @if ($title?->id == $member?->title_id) selected @endif>
-                                                            {{ $title?->name }}
-                                                        </option>
+                                                            <option value="{{ $title?->id }}"
+                                                                @if ($title?->id == $member?->title_id) selected @endif>
+                                                                {{ $title?->name }}
+                                                            </option>
                                                         @empty
-                                                        <option value="">Select Title</option>
+                                                            <option value="">Select Title</option>
                                                         @endforelse
                                                     </select>
                                                 </div>
                                                 <div class="col-md-5">
-                                                    <input class="form-control" type="text" id="title_detail" placeholder="Type Title Here" name="title_detail" value="{{ $member?->title_detail }}">
+                                                    <input class="form-control" type="text" id="title_detail"
+                                                        placeholder="Type Title Here" name="title_detail"
+                                                        value="{{ $member?->title_detail }}">
                                                 </div>
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Family Name <span class="tx-danger">*</span></label>
+                                                <label class="col-md-4 form-label">Family Name <span
+                                                        class="tx-danger">*</span></label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Family Name" name="family_name" value="{{ $member?->family_name }}">
+                                                    <input class="form-control" type="text" placeholder="Family Name"
+                                                        name="family_name" value="{{ $member?->family_name }}">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Given Name <span class="tx-danger">*</span></label>
+                                                <label class="col-md-4 form-label">Given Name <span
+                                                        class="tx-danger">*</span></label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Given Name" value="{{ $member?->given_name }}" name="given_name">
+                                                    <input class="form-control" type="text" placeholder="Given Name"
+                                                        value="{{ $member?->given_name }}" name="given_name">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Preferred Name  </label>
+                                                <label class="col-md-4 form-label">Preferred Name </label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Preferred Name" value="{{ $member?->preferred_name }}" name="preferred_name">
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Preferred Name"
+                                                        value="{{ $member?->preferred_name }}" name="preferred_name">
                                                 </div>
                                             </div>
                                         </div>
@@ -132,13 +150,17 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Initials</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Enter Initials" value="{{ $member?->initials }}" name="initials">
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Enter Initials" value="{{ $member?->initials }}"
+                                                        name="initials">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Post Nominal</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Enter Post Nominal" value="{{ $member?->post_nominal }}" name="post_nominal">
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Enter Post Nominal"
+                                                        value="{{ $member?->post_nominal }}" name="post_nominal">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -146,13 +168,19 @@
                                                 <div class="col-md-8">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
-                                                            <input class="form-control" value="{{ $member?->year_of_birth }}" type="text" name="year_of_birth">
+                                                            <input class="form-control"
+                                                                value="{{ $member?->year_of_birth }}" type="text"
+                                                                name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" value="{{ $member?->month_of_birth }}"  type="text" name="month_of_birth">
+                                                            <input class="form-control"
+                                                                value="{{ $member?->month_of_birth }}" type="text"
+                                                                name="month_of_birth">
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" value="{{ $member?->date_of_birth }}" type="text" name="date_of_birth">
+                                                            <input class="form-control"
+                                                                value="{{ $member?->date_of_birth }}" type="text"
+                                                                name="date_of_birth">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,11 +196,13 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Country  </label>
+                                            <label class="col-md-4 form-label">Country </label>
                                             <div class="col-md-8">
-                                                <select class="form-control select2" id="countries_select2" name="country_id">
+                                                <select class="form-control select2" id="countries_select2"
+                                                    name="country_id">
                                                     @if (!empty($member?->address?->country?->id))
-                                                    <option value="{{ $member?->address?->country?->id }}" selected>{{ $member?->address?->country?->name }}</option>
+                                                        <option value="{{ $member?->address?->country?->id }}"
+                                                            selected>{{ $member?->address?->country?->name }}</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -180,9 +210,11 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">State / County</label>
                                             <div class="col-md-8">
-                                                <select class="form-control select2" id="counties_select2" name="county_id">
+                                                <select class="form-control select2" id="counties_select2"
+                                                    name="county_id">
                                                     @if (!empty($member?->address?->state?->id))
-                                                    <option value="{{ $member?->address?->state?->id }}" selected>{{ $member?->address?->state?->name }}</option>
+                                                        <option value="{{ $member?->address?->state?->id }}" selected>
+                                                            {{ $member?->address?->state?->name }}</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -191,9 +223,11 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">City / Town / Suburb </label>
                                             <div class="col-md-8">
-                                                <select class="form-control select2" id="cities_select2" name="city_id">
+                                                <select class="form-control select2" id="cities_select2"
+                                                    name="city_id">
                                                     @if (!empty($member?->address?->city?->id))
-                                                    <option value="{{ $member?->address?->city?->id }}" selected>{{ $member?->address?->city?->name }}</option>
+                                                        <option value="{{ $member?->address?->city?->id }}" selected>
+                                                            {{ $member?->address?->city?->name }}</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -201,13 +235,17 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Unit/Apartment No." value="{{ $member?->address?->unit_no }}" name="unit_no">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Unit/Apartment No."
+                                                    value="{{ $member?->address?->unit_no }}" name="unit_no">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Street Name </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="PO Box" value="{{ $member?->address?->number_street }}" name="number_street">
+                                                <input class="form-control" type="text" placeholder="PO Box"
+                                                    value="{{ $member?->address?->number_street }}"
+                                                    name="number_street">
                                             </div>
                                         </div>
                                         <!--<div class="mb-3 row">
@@ -221,12 +259,12 @@
                                             <div class="col-md-8">
                                                 <select name="state" class="form-control form-select select2" id="state">
                                                     @forelse ($data['states'] as $state)
-                                                    <option value="{{ $state?->id }}" @if ($state?->id == $member?->address?->state_id) selected @endif>
+<option value="{{ $state?->id }}" @if ($state?->id == $member?->address?->state_id) selected @endif>
                                                         {{ $state?->name }}
                                                     </option>
-                                                    @empty
+                                                @empty
                                                     <option value="">Select States</option>
-                                                    @endforelse
+@endforelse
                                                 </select>
                                             </div>
                                         </div>
@@ -239,9 +277,10 @@
                                             </div>
                                         </div>-->
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Post Code  </label>
+                                            <label class="col-md-4 form-label">Post Code </label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Post Code" value="{{ $member?->address?->post_code }}" name="post_code">
+                                                <input type="text" class="form-control" placeholder="Post Code"
+                                                    value="{{ $member?->address?->post_code }}" name="post_code">
                                             </div>
                                         </div>
                                     </div>
@@ -250,25 +289,30 @@
                                             <label class="col-md-4 form-label">Home Phone (including Area Code)</label>
                                             <div class="col-md-8">
                                                 <div class="input-group">
-                                                    <input class="form-control" type="text" placeholder="Area Code" 
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Area Code"
                                                         value="{{ $member?->contact?->area_code }}" name="area_code"
                                                         style="width: 25%; margin-right: 10px;">
                                                     <input class="form-control" type="text"
-                                                        value="{{ $member?->contact?->phone }}" placeholder="Phone" name="phone"
-                                                        style="width: calc(75% - 10px);">
+                                                        value="{{ $member?->contact?->phone }}" placeholder="Phone"
+                                                        name="phone" style="width: calc(75% - 10px);">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Mobile Phone</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Mobile Phone" value="{{ $member?->contact?->mobile }}" name="mobile">
+                                                <input type="text" class="form-control" placeholder="Mobile Phone"
+                                                    value="{{ $member?->contact?->mobile }}" name="mobile">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Email Address </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Email Address" value="{{ $member?->contact?->email }}" name="email" disabled readonly>
+                                                <input class="form-control" type="text"
+                                                    placeholder="Email Address"
+                                                    value="{{ $member?->contact?->email }}" name="email" disabled
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -291,26 +335,33 @@
                                             <label class="col-md-4 form-label">Membership
                                                 Number</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Membership Number" value="{{ $member?->additionalInfo?->membership_number }}" name="membership_number">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Membership Number"
+                                                    value="{{ $member?->additionalInfo?->membership_number }}"
+                                                    name="membership_number">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Username  </label>
+                                            <label class="col-md-4 form-label">Username </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="User Name" value="{{ $member?->username }}" name="username" readonly disabled>
+                                                <input class="form-control" type="text" placeholder="User Name"
+                                                    value="{{ $member?->username }}" name="username" readonly
+                                                    disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Membership Type </label>
                                             <div class="col-md-8">
-                                                <select name="member_type_id" class="form-control form-select select2" id="member_type_id">
+                                                <select name="member_type_id" class="form-control form-select select2"
+                                                    id="member_type_id">
                                                     @forelse ($data['membership_types'] as $type)
-                                                    <option value="{{ $type?->id }}" @if ($type?->id == $member?->member_type_id) selected @endif>
-                                                        {{ $type?->name }}
-                                                    </option>
+                                                        <option value="{{ $type?->id }}"
+                                                            @if ($type?->id == $member?->member_type_id) selected @endif>
+                                                            {{ $type?->name }}
+                                                        </option>
                                                     @empty
-                                                    <option value="">Select Membership Type
-                                                    </option>
+                                                        <option value="">Select Membership Type
+                                                        </option>
                                                     @endforelse
                                                 </select>
                                             </div>
@@ -319,14 +370,16 @@
                                             <label class="col-md-4 form-label">Membership Status
                                             </label>
                                             <div class="col-md-8">
-                                                <select name="member_status_id" class="form-control form-select select2" id="member_status_id">
+                                                <select name="member_status_id"
+                                                    class="form-control form-select select2" id="member_status_id">
                                                     @forelse ($data['membership_status'] as $status)
-                                                    <option value="{{ $status?->id }}" @if ($status?->id == $member?->member_status_id) selected @endif>
-                                                        {{ $status?->name }}
-                                                    </option>
+                                                        <option value="{{ $status?->id }}"
+                                                            @if ($status?->id == $member?->member_status_id) selected @endif>
+                                                            {{ $status?->name }}
+                                                        </option>
                                                     @empty
-                                                    <option value="">Select Membership Status
-                                                    </option>
+                                                        <option value="">Select Membership Status
+                                                        </option>
                                                     @endforelse
                                                 </select>
                                             </div>
@@ -335,7 +388,9 @@
                                             <label class="col-md-8 form-label">Date Membership
                                                 Commenced (Membership Approval Date) </label>
                                             <div class="col-md-4">
-                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_approved }}"  name="date_membership_approved">
+                                                <input class="form-control fc-datepicker" type="text"
+                                                    value="{{ $member?->additionalInfo?->date_membership_approved }}"
+                                                    name="date_membership_approved">
                                             </div>
                                         </div>
 
@@ -343,7 +398,9 @@
                                             <label class="col-md-4 form-label">Date Membership Ended
                                             </label>
                                             <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_end }}"  name="date_membership_end">
+                                                <input class="form-control fc-datepicker" type="text"
+                                                    value="{{ $member?->additionalInfo?->date_membership_end }}"
+                                                    name="date_membership_end">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -356,7 +413,9 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Volunteer</label>
                                             <div class="col-md-8">
-                                                <input id="volunteer" type="checkbox" class="checkbox-input" name="volunteer" value='1' @if ($member?->additionalInfo?->volunteer == 1) checked @endif>
+                                                <input id="volunteer" type="checkbox" class="checkbox-input"
+                                                    name="volunteer" value='1'
+                                                    @if ($member?->additionalInfo?->volunteer == 1) checked @endif>
                                             </div>
                                         </div>
                                         <div class="volunteer_details" style="display: none;">
@@ -403,17 +462,22 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-3 form-label">Journal<span class="tx-danger">*</span></label>
+                                            <label class="col-md-3 form-label">Journal<span
+                                                    class="tx-danger">*</span></label>
                                             <div class="col-md-4">
                                                 <div class="mb-3 mb-sm-0 d-flex align-items-center">
                                                     <label class="form-label mb-0 me-2">Emailed</label>
-                                                    <input id="emailed" type="radio" class="radio-input" name="journal" value="0" @if ($member?->journal == 0) checked @endif>
+                                                    <input id="emailed" type="radio" class="radio-input"
+                                                        name="journal" value="0"
+                                                        @if ($member?->journal == 0) checked @endif>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3 mb-sm-0 d-flex align-items-center">
                                                     <label class="form-label mb-0 me-2">Posted</label>
-                                                    <input id="posted" type="radio" class="radio-input" name="journal" value="1" @if ($member?->journal == 1) checked @endif>
+                                                    <input id="posted" type="radio" class="radio-input"
+                                                        name="journal" value="1"
+                                                        @if ($member?->journal == 1) checked @endif>
                                                 </div>
                                             </div>
                                         </div>
@@ -421,7 +485,9 @@
                                             <label class="col-md-6 form-label">Registration form
                                                 received</label>
                                             <div class="col-md-6">
-                                                <input id="registration_form_received" type="checkbox" class="checkbox-input" name="registration_form_received" value='1' @if ($member?->additionalInfo?->registration_form_received == 1) checked @endif>
+                                                <input id="registration_form_received" type="checkbox"
+                                                    class="checkbox-input" name="registration_form_received"
+                                                    value='1' @if ($member?->additionalInfo?->registration_form_received == 1) checked @endif>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -429,13 +495,17 @@
                                                 agreement
                                                 received</label>
                                             <div class="col-md-6">
-                                                <input id="signed_agreement" type="checkbox" class="checkbox-input" name="signed_agreement" value='1' @if ($member?->additionalInfo?->signed_agreement == 1) checked @endif>
+                                                <input id="signed_agreement" type="checkbox" class="checkbox-input"
+                                                    name="signed_agreement" value='1'
+                                                    @if ($member?->additionalInfo?->signed_agreement == 1) checked @endif>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Key Holder</label>
                                             <div class="col-md-8">
-                                                <input id="key_holder" type="checkbox" class="checkbox-input" name="key_holder" value='1' @if ($member?->additionalInfo?->key_holder == 1) checked @endif>
+                                                <input id="key_holder" type="checkbox" class="checkbox-input"
+                                                    name="key_holder" value='1'
+                                                    @if ($member?->additionalInfo?->key_holder == 1) checked @endif>
                                             </div>
                                         </div>
                                         <div class="mb-3 row key_held" style="display: none;">
@@ -443,7 +513,7 @@
                                             <div class="col-md-8">
                                                 <textarea class="form-control" name="key_held" rows="3" placeholder="Key Held">{{ $member?->additionalInfo?->key_held }}</textarea>
                                             </div>
-                                        </div>                                        
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -457,89 +527,89 @@
 <!-- MODAL EFFECTS -->
 <div id="crud"></div>
 @section('scripts')
-@include('plugins.select2')
-<script>
-    $(document).ready(function() {
+    @include('plugins.select2')
+    <script>
+        $(document).ready(function() {
 
-        $("#title_detail").hide();
+            $("#title_detail").hide();
 
-        var otherValue = "Other";
+            var otherValue = "Other";
 
-        $("#title").change(function() {
-            if ($(this).val() === otherValue) {
-                $("#title_detail").show();
-            } else {
-                $("#title_detail").hide();
+            $("#title").change(function() {
+                if ($(this).val() === otherValue) {
+                    $("#title_detail").show();
+                } else {
+                    $("#title_detail").hide();
+                }
+            });
+
+            $("#title").trigger("change");
+        });
+
+        $("#title").select2();
+        $("#state").select2();
+        $("#member_type_id").select2();
+        $("#member_status_id").select2();
+        $("#country").select2();
+        var dt_ship_elem = $("#ship-table"),
+            dt_ship = "";
+        window.addEventListener("DOMContentLoaded", function() {
+            if (typeof initShipSelect !== "undefined") {
+                initShipSelect();
             }
-        });
+            if (typeof initCountiesSelect !== "undefined") {
+                initCountiesSelect();
+            }
+            if (typeof initPortsSelect !== "undefined") {
+                initPortsSelect();
+            }
 
-        $("#title").trigger("change");
-    });
+            // Datepicker
+            $('.fc-datepicker').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: 'yy-mm-dd',
+                changeYear: true,
+                changeMonth: true //, // Customize the date format as needed
+                //yearRange: 'c-250:c+nn'
+            });
 
-    $("#title").select2();
-    $("#state").select2();
-    $("#member_type_id").select2();
-    $("#member_status_id").select2();
-    $("#country").select2();
-    var dt_ship_elem = $("#ship-table"),
-        dt_ship = "";
-    window.addEventListener("DOMContentLoaded", function() {
-        if (typeof initShipSelect !== "undefined") {
-            initShipSelect();
-        }
-        if (typeof initCountiesSelect !== "undefined") {
-            initCountiesSelect();
-        }
-        if (typeof initPortsSelect !== "undefined") {
-            initPortsSelect();
-        }
-
-        // Datepicker
-        $('.fc-datepicker').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            dateFormat: 'yy-mm-dd',
-            changeYear: true,
-            changeMonth: true//, // Customize the date format as needed
-            //yearRange: 'c-250:c+nn'
-        });
-
-        $(document).on("change", "#daterange-btn", function() {
-            initDataTable()
-        });
-        $(document).on("submit", "#crud form", function() {
-            initDataTable()
-        });
-        $('#volunteer').change(function() {
-            if ($(this).prop('checked')) {
+            $(document).on("change", "#daterange-btn", function() {
+                initDataTable()
+            });
+            $(document).on("submit", "#crud form", function() {
+                initDataTable()
+            });
+            $('#volunteer').change(function() {
+                if ($(this).prop('checked')) {
+                    $('.volunteer_details').show();
+                } else {
+                    $('.volunteer_details').hide();
+                }
+            });
+            if ($("#volunteer").prop('checked')) {
                 $('.volunteer_details').show();
             } else {
                 $('.volunteer_details').hide();
             }
-        });
-        if ($("#volunteer").prop('checked')) {
-            $('.volunteer_details').show();
-        } else {
-            $('.volunteer_details').hide();
-        }
 
-        $('#key_holder').change(function() {
-            if ($(this).prop('checked')) {
+            $('#key_holder').change(function() {
+                if ($(this).prop('checked')) {
+                    $('.key_held').show();
+                } else {
+                    $('.key_held').hide();
+                }
+            });
+
+            if ($("#key_holder").prop('checked')) {
                 $('.key_held').show();
             } else {
                 $('.key_held').hide();
             }
+
         });
-
-        if ($("#key_holder").prop('checked')) {
-            $('.key_held').show();
-        } else {
-            $('.key_held').hide();
-        }
-
-    });
-</script>
-@include("page.mode-of-arrivals.scripts")
+    </script>
+    @include('page.mode-of-arrivals.scripts')
 @endsection
 <!-- app-content end-->
 @include('layout.footer')

@@ -51,9 +51,15 @@
                         <div class="card-header justify-content-between">
                             <h3 class="card-title">Update Pedigree Chart</h3>
                             <div>
-                                <a class="btn btn-danger" href="{{ route('members.index') }}">
-                                    <i class="fa fa-home" style="font-size:20px;"> Home</i>
-                                </a>
+                                @if (Auth::user()->name == 'Admin')
+                                    <a class="btn btn-danger" href="{{ route('members.index') }}">
+                                        <i class="fa fa-home" style="font-size:20px;"> Home</i>
+                                    </a>
+                                @else
+                                    <a class="btn btn-danger" href="{{ route('profile') }}">
+                                        <i class="fa fa-home" style="font-size:20px;"> Home</i>
+                                    </a>
+                                @endif
                                 <a class="btn btn-info" href="{{ url()->previous() }}" id="view-members">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
@@ -75,55 +81,82 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Father Name</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][f_name]" value="{{ $pedigree->f_name }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][f_name]"
+                                                        value="{{ $pedigree->f_name }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Birth Date</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][date_of_birth]" value="{{ $pedigree->date_of_birth ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][date_of_birth]"
+                                                        value="{{ $pedigree->date_of_birth ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Birth Place</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][place_of_birth]" value="{{ $pedigree->place_of_birth ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][place_of_birth]"
+                                                        value="{{ $pedigree->place_of_birth ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Death Date</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][date_of_death]" value="{{ $pedigree->date_of_death ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][date_of_death]"
+                                                        value="{{ $pedigree->date_of_death ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Death Place</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][place_of_death]" value="{{ $pedigree->place_of_death ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][place_of_death]"
+                                                        value="{{ $pedigree->place_of_death ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Marriage Date</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][date_of_marriage]" value="{{ $pedigree->date_of_marriage ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][date_of_marriage]"
+                                                        value="{{ $pedigree->date_of_marriage ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Mother Name</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][m_name]" value="{{ $pedigree->m_name }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][m_name]"
+                                                        value="{{ $pedigree->m_name }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Birth Date</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][m_birth_date]" value="{{ $pedigree->m_birth_date ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][m_birth_date]"
+                                                        value="{{ $pedigree->m_birth_date ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Birth Place</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][m_birth_place]" value="{{ $pedigree->m_birth_place ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][m_birth_place]"
+                                                        value="{{ $pedigree->m_birth_place ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Death Date</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][m_death_date]" value="{{ $pedigree->m_death_date ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][m_death_date]"
+                                                        value="{{ $pedigree->m_death_date ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Death Place</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][m_death_place]" value="{{ $pedigree->m_death_place ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][m_death_place]"
+                                                        value="{{ $pedigree->m_death_place ?? '' }}" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Marriage Place</label>
-                                                    <input class="form-control" name="pedigree[{{ $index }}][place_of_marriage]" value="{{ $pedigree->place_of_marriage ?? '' }}" type="text">
+                                                    <input class="form-control"
+                                                        name="pedigree[{{ $index }}][place_of_marriage]"
+                                                        value="{{ $pedigree->place_of_marriage ?? '' }}"
+                                                        type="text">
                                                 </div>
-                                                <input type="hidden" name="pedigree[{{ $index }}][id]" value="{{ $pedigree->id }}">
+                                                <input type="hidden" name="pedigree[{{ $index }}][id]"
+                                                    value="{{ $pedigree->id }}">
                                                 <div class="col-md-1 remove-button">
-                                                    <button type="button" class="btn btn-danger" onclick="removePedigreeForm(this)">Remove</button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        onclick="removePedigreeForm(this)">Remove</button>
                                                 </div>
                                             </div>
                                             <br>
@@ -132,7 +165,8 @@
                                     @endforeach
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="btn btn-success" onclick="addPedigreeForm()">Add Another Pedigree</button>
+                                    <button type="button" class="btn btn-success" onclick="addPedigreeForm()">Add
+                                        Another Pedigree</button>
                                     <button type="submit" class="btn btn-primary">Update Pedigree</button>
                                 </div>
                             </form>
@@ -148,7 +182,7 @@
 
 <script>
     let pedigreeIndex = {{ count($member->pedigree) }};
-    
+
     function addPedigreeForm() {
         const formsContainer = document.getElementById('pedigree-forms');
         const newForm = document.createElement('div');

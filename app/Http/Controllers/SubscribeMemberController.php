@@ -30,7 +30,8 @@ use App\Http\Requests\StoreMemberRequest;
 use App\Models\SubscriptionPlan;
 use App\Models\MemberPedigree;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Else_;
 
 class SubscribeMemberController extends Controller
 {
@@ -276,11 +277,20 @@ class SubscribeMemberController extends Controller
                 'availability' => $request->availability
             ]);
         }
-        return response()->json([
-            "status" => true,
-            "message" => "Member Updated successfully",
-            "redirectTo" => route("members.view-member", ['id' => $member->id])
-        ]);
+
+        if (Auth::user()->name == 'Admin') {
+            return response()->json([
+                "status" => true,
+                "message" => "Member Updated successfully",
+                "redirectTo" => route("members.view-member", ['id' => $member->id])
+            ]);
+        } else {
+            return response()->json([
+                "status" => true,
+                "message" => "Member Updated successfully",
+                "redirectTo" => route("profile")
+            ]);
+        }
     }
 
     public function update(Member $member)
@@ -368,12 +378,19 @@ class SubscribeMemberController extends Controller
         MemberPedigree::where('member_id', $member->id)
             ->whereNotIn('id', $updatedPedigreeIds)
             ->delete();
-
-        return response()->json([
-            "status" => true,
-            "message" => "Pedigree updated successfully",
-            "redirectTo" => route("members.view-pedigree", ['id' => $member->id])
-        ]);
+        if (Auth::user()->name == 'Admin') {
+            return response()->json([
+                "status" => true,
+                "message" => "Pedigree updated successfully",
+                "redirectTo" => route("members.view-pedigree", ['id' => $member->id])
+            ]);
+        } else {
+            return response()->json([
+                "status" => true,
+                "message" => "Pedigree updated successfully",
+                "redirectTo" => route("profile")
+            ]);
+        }
     }
 
     public function addPedigree($id)

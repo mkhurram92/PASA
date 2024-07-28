@@ -128,10 +128,12 @@ class DashboardController extends Controller
         $data['membership_status'] = MemberShipStatus::all();
 
         $member_id = $member?->id;
+
         $juniors = MemberJunior::with(['withGender', 'withSubscription'])->where("member_id", $member_id)->whereNull("member_junior_id")->latest()->get();
         $genders = Gender::get();
         $states = States::get();
-        return view("page.profile.index", compact('user', 'juniors', 'member', 'genders', 'states', 'data'));
+        
+        return view("page.profile.index", compact('user', 'juniors', 'member', 'genders', 'states', 'data', 'member_id'));
         
     }
 

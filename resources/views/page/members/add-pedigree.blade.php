@@ -50,12 +50,21 @@
                         <div class="card-header justify-content-between">
                             <h3 class="card-title">Add Pedigree Chart</h3>
                             <div>
+                                @if(Auth::user()->name =='Admin')
                                 <a class="btn btn-danger" href="{{ route('members.index') }}">
                                     <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                 </a>
                                 <a class="btn btn-info" href="{{ url()->previous() }}" id="view-members">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
+                                @else
+                                <a class="btn btn-danger" href="{{ route('profile') }}">
+                                    <i class="fa fa-home" style="font-size:20px;"> Home</i>
+                                </a>
+                                <a class="btn btn-info" href="{{ url()->previous() }}" id="view-members">
+                                    <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                </a>
+                                @endif
                             </div>
                         </div>
                         <div class="card-body p-0">

@@ -50,9 +50,11 @@
                         <div class="card-header justify-content-between">
                             <h3 class="card-title">Pioneer Member's Pedigree Chart</h3>
                             <div>
-                                <a class="btn btn-danger" href="{{ route('members.index') }}">
-                                    <i class="fa fa-home" style="font-size:20px;"> Home</i>
-                                </a>
+                                @if (Auth::user()->name == 'Admin')
+                                    <a class="btn btn-danger" href="{{ route('members.index') }}">
+                                        <i class="fa fa-home" style="font-size:20px;"> Home</i>
+                                    </a>
+                                @endif
                                 @if (count($member->pedigree) > 0)
                                     <a class="btn btn-success mr-2"
                                         href="{{ route('members.editPedigree', $member->id) }}">
@@ -64,10 +66,15 @@
                                         <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Add</i>
                                     </a>
                                 @endif
-
+                                @if(Auth::user()->name =='Admin')
                                 <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
+                                @else
+                                <a class="btn btn-info" href="{{ route('profile') }}">
+                                    <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                </a>
+                                @endif
                             </div>
                         </div>
                         @if (count($member->pedigree) > 0)
@@ -87,9 +94,8 @@
                                         <div class="row mb-3">
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Father Name</label>
-                                                <input
-                                                    class="form-control"
-                                                    value="{{ $pedigree->f_name }}" type="text" readonly disabled>
+                                                <input class="form-control" value="{{ $pedigree->f_name }}"
+                                                    type="text" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Date</label>
@@ -118,10 +124,8 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Mother Name</label>
-                                                <input
-                                                    class="form-control"
-                                                    id="email" value="{{ $pedigree->m_name }}" type="text"
-                                                    readonly disabled>
+                                                <input class="form-control" id="email"
+                                                    value="{{ $pedigree->m_name }}" type="text" readonly disabled>
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Date</label>
