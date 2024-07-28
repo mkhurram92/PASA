@@ -86,7 +86,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Date</label>
-                                                <input class="form-control" name="pedigrees[0][date_of_birth]" type="text">
+                                                <input class="form-control" name="pedigrees[0][date_of_birth]" placeholder="YYYY-MM-DD" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Place</label>
@@ -94,7 +94,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Date</label>
-                                                <input class="form-control" name="pedigrees[0][date_of_death]" type="text">
+                                                <input class="form-control" name="pedigrees[0][date_of_death]" placeholder="YYYY-MM-DD"  type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Place</label>
@@ -102,7 +102,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Marriage Date</label>
-                                                <input class="form-control" name="pedigrees[0][date_of_marriage]" type="text">
+                                                <input class="form-control" name="pedigrees[0][date_of_marriage]" placeholder="YYYY-MM-DD"  type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Mother Name</label>
@@ -110,7 +110,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Date</label>
-                                                <input class="form-control" name="pedigrees[0][m_birth_date]" type="text">
+                                                <input class="form-control" name="pedigrees[0][m_birth_date]" placeholder="YYYY-MM-DD"  type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Birth Place</label>
@@ -118,7 +118,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Date</label>
-                                                <input class="form-control" name="pedigrees[0][m_death_date]" type="text">
+                                                <input class="form-control" name="pedigrees[0][m_death_date]" placeholder="YYYY-MM-DD"  type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Death Place</label>
