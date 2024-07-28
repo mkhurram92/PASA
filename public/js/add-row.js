@@ -68,11 +68,11 @@ $(document).ready(function () {
                     
                     <div class='row mb-3'>
                         <div class='col-sm-6 d-flex align-items-center'>
-                            <label class='form-label mb-0 me-2'>Mothers - this is the Pioneer line</label>
+                            <label class='form-label mb-0 me-2'>Mothers - This is the Pioneer line</label>
                             <input id='mother_${nextindex}' type='radio' class='radio-input' name='pioneer_sub_parents[${split_id[1] - 2}]' value='0'>
                         </div>
                         <div class='col-sm-6 d-flex align-items-center'>
-                            <label class='form-label ancestor_mother'>This is my Pioneer </label>
+                            <label class='form-label mb-0 me-2'>This is my Pioneer </label>
                             <input id='motherpioneer_${nextindex}' type='radio' class='radio-input ancestor_mother' name='ancestor'>
                         </div>
                     <div>
@@ -105,14 +105,15 @@ $(document).ready(function () {
                         </div>
                     </div>
 
-                        <div class='col-sm-3'>
-                            <div class='mb-2 mb-sm-0'>
-                                <label class='form-label'>&nbsp;</label>
-                                <button id='add_${nextindex}' type='button' class='btn btn-primary add123'>Add the preceding generation</button>
-                                <button id='remove_${nextindex}' type='button' class='btn btn-danger remove'>Remove</button>
-                            </div>
+                    <div class='col-sm-6 d-flex justify-content-between align-items-center'>
+                        <div class='col-sm-6'>
+                            <button id='remove_${nextindex}' type='button' class='btn btn-danger remove'>Remove</button>
                         </div>
-                    </div>`;
+                        <div class='col-sm-6'>
+                            <button id='add_${nextindex}' type='button' class='btn btn-primary add123'>Add the preceding generation</button>
+                        </div>
+                    </div>
+                    `;
 
                 $(".element:last").after(htmlString);
 

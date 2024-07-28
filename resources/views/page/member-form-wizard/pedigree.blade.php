@@ -82,6 +82,9 @@
                     <label class="form-control-label">Marriage Place</label>
                     <input id="main_father_pom" type="text" class="form-control" name="main_father_pom">
                 </div>
+                <div>
+                    <br>
+                </div>
                 <div class="col-md-1 remove-button">
                     <button type="button" class="btn btn-danger" onclick="removePedigreeForm(this)">Remove</button>
                 </div>
@@ -89,9 +92,8 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-sm-3">
+        <div class="col-sm-12">
             <div class="mb-3 mb-sm-0">
-                <label class="form-label">&nbsp;</label>
                 <div class="input-group">
                     <button type="button" class="btn btn-primary add123">Add the Preceding Generation</button>
                 </div>
