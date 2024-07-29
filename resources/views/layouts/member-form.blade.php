@@ -75,26 +75,26 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <a class="navbar-brand" href="{{ url('/') }}">
-                            <img src="{{ asset('images/logo/2023-02-09-Pioneers-SA-Badge-Clear-Background.png') }}"
-                                class="w-20" alt="Pioneers SA">
-                        </a>
-                    </div>
-                    <div class="col-md-6 d-flex align-items-center">
-                        <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ">
+                <div class="row w-100">
+                    <div class="col-md-3 d-flex align-items-center">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="navbar-nav">
                             <!-- Authentication Links -->
                             <li class="nav-item">
                                 <h2 class="mb-0">@yield('title')</h2>
                             </li>
                         </ul>
                     </div>
+                    <div class="col-md-6 text-center">
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            <img src="{{ asset('images/logo/2023-02-09-Pioneers-SA-Badge-Clear-Background.png') }}"
+                                class="w-20" alt="Pioneers SA">
+                        </a>
+                    </div>
+                    <div class="col-md-3"></div>
                 </div>
             </div>
-        </nav>
-
+        </nav>        
         <main class="py-4">
             @yield('content')
         </main>

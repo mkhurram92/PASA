@@ -34,9 +34,9 @@ class MemberFormWizard extends Controller
                 //'password' => 'required|confirmed|min:5',
                 //'email' => 'required|email|confirmed|unique:members,email',
                 'title' => 'required',
-                'given_name' => 'required',
-                'family_name' => 'required',
-                'preferred_name' => 'required'
+                'given_name' => 'nullable',
+                'family_name' => 'nullable',
+                'preferred_name' => 'nullable'
             ];
 
             $validator = Validator::make($values, $needToValidate);
@@ -63,7 +63,9 @@ class MemberFormWizard extends Controller
                         "given_name" => $values['given_name'],
                         "family_name" => $values['family_name'],
                         "preferred_name" => $values['preferred_name'],
-                        'date_of_birth' => !empty($values['date_of_birth']) ? date('Y-m-d', strtotime($values['date_of_birth'])) : null,
+                        'year_of_birth' => $values['year_of_birth'],
+                        'month_of_birth' => $values['month_of_birth'],
+                        'date_of_birth' => $values['date_of_birth'],
                         "gender" => $values['gender'],
                         "member_type_id" => 1,
                         "journal" => (int) $values['journal_preferred_delivery'],

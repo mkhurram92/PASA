@@ -3,17 +3,17 @@
     <div class="row">
         <h3 class="card-title"> Account Information</h3>
         <div class="col-md-4 my-2">
-            <label class="form-control-label">Username <span class="tx-danger"></span></label>
+            <label class="form-control-label">Username</label>
             <input class="form-control" id="username" name="username" value="{{ old('username') }}"
                  required="" type="text">
         </div>
         <div class="col-md-4 my-2">
-            <label class="form-control-label">Email <span class="tx-danger"></span></label>
+            <label class="form-control-label">Email</label>
             <input class="form-control" id="email" name="email" value="{{ old('email') }}"
                  required="" type="text">
         </div>
         <div class="col-md-4 my-2">
-            <label class="form-control-label">Confirmation Email <span class="tx-danger"></span></label>
+            <label class="form-control-label">Confirmation Email</label>
             <input class="form-control" id="email_confirmation" name="email_confirmation"
                 value="{{ old('email_confirmation') }}"  required="" type="email">
         </div>
@@ -24,7 +24,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-md-2 my-2">
-                    <label class="form-control-label">Gender <span class="tx-danger"></span></label>
+                    <label class="form-control-label">Gender</label>
                     <select name="gender" class="form-control form-select select2" id="gender">
                         @forelse ($genders as $gender)
                             <option value="{{ $gender->id }}">{{ ucwords($gender->name) }}</option>
@@ -34,7 +34,7 @@
                     </select>
                 </div>
                 <div class="col-md-2 my-2">
-                    <label class="form-control-label">Title <span class="tx-danger"></span></label>
+                    <label class="form-control-label">Title</label>
                     <select name="title" class="form-control form-select select2" id="title">
                         @forelse ($titles as $title)
                             <option value="{{ $title?->id }}">
@@ -45,41 +45,49 @@
                     </select>
                 </div>
                 <div class="col-md-4 my-2">
-                    <label class="form-control-label">Given name <span class="tx-danger"></span></label>
+                    <label class="form-control-label">Given name</label>
                     <input class="form-control" id="given_name" name="given_name" value="{{ old('given_name') }}"
-                         required="" type="text">
+                         type="text">
                 </div>
                 <div class="col-md-4 my-2">
-                    <label class="form-control-label">Family Name <span class="tx-danger"></span></label>
+                    <label class="form-control-label">Family Name</label>
                     <input class="form-control" id="family_name" name="family_name" value="{{ old('family_name') }}"
-                         required="" type="text">
+                         type="text">
                 </div>
                 <div class="col-md-6 my-2">
-                    <label class="form-control-label">Preferred Name <span class="tx-danger"></span></label>
+                    <label class="form-control-label">Preferred Name</span></label>
                     <input class="form-control" id="preferred_name" name="preferred_name"
-                        value="{{ old('preferred_name') }}"  required=""
-                        type="text">
+                        value="{{ old('preferred_name') }}" type="text">
                 </div>
                 <div class="col-md-6 my-2">
-                    <label class="form-control-label">Birth Date <span class="tx-danger"></span></label>
-                    <input class="form-control" id="date_of_birth" name="date_of_birth"
-                        value="{{ old('date_of_birth') }}"  required=""
-                        type="date">
+                    <div class="row d-flex">
+                        <div class="col-md-4 my-2">
+                            <label class="form-control-label">Birth Year </label>
+                            <input class="form-control" id="year_of_birth" name="year_of_birth" value="{{ old('year_of_birth') }}" type="text">
+                        </div>
+                        <div class="col-md-4 my-2">
+                            <label class="form-control-label">Birth Month</label>
+                            <input class="form-control" id="month_of_birth" name="month_of_birth" value="{{ old('month_of_birth') }}" type="text">
+                        </div>
+                        <div class="col-md-4 my-2">
+                            <label class="form-control-label">Birth Date</label>
+                            <input class="form-control" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" type="text">
+                        </div>
+                    </div>
                 </div>
-
+                
                 <div class="col-md-12 my-2">
-                    <label class="form-control-label">Unit No / Number & Street <span class="tx-danger"></span></label>
+                    <label class="form-control-label">Unit No / Number & Street </label>
                     <input class="form-control" id="number_street" name="number_street"
-                        value="{{ old('number_street') }}"  required=""
+                        value="{{ old('number_street') }}" type="text">
+                </div>
+                <div class="col-md-6 my-2">
+                    <label class="form-control-label">Suburb</label>
+                    <input class="form-control" id="suburb" name="suburb" value="{{ old('suburb') }}"
                         type="text">
                 </div>
                 <div class="col-md-6 my-2">
-                    <label class="form-control-label">Suburb <span class="tx-danger"></span></label>
-                    <input class="form-control" id="suburb" name="suburb" value="{{ old('suburb') }}"
-                         required="" type="text">
-                </div>
-                <div class="col-md-6 my-2">
-                    <label class="form-control-label">State <span class="tx-danger"></span></label>
+                    <label class="form-control-label">State</label>
                     <select name="state" class="form-control form-select select2" id="state">
                         @forelse ($states as $state)
                             <option value="{{ $state?->id }}">{{ $state?->name }}</option>
@@ -97,17 +105,17 @@
                 <div class="col-md-6 my-2">
                     <label class="form-control-label">Post Code/Zip <span class="tx-danger"></span></label>
                     <input class="form-control" id="post_code" name="post_code" value="{{ old('post_code') }}"
-                         required="" type="text">
+                          type="text">
                 </div>
                 <div class="col-md-6 my-2">
                     <label class="form-control-label">Phone (Home) </label>
                     <input class="form-control" id="phone" name="phone" value="{{ old('phone') }}"
-                         required="" type="text">
+                         type="text">
                 </div>
                 <div class="col-md-6 my-2">
                     <label class="form-control-label">Phone (Mobile) </label>
                     <input class="form-control" id="mobile" name="mobile" value="{{ old('mobile') }}"
-                         required="" type="text">
+                          type="text">
                 </div>
             </div>
         </div>

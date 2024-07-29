@@ -121,7 +121,7 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['ancestor-create', 'ancestor-list'])
+                @canany(['ancestor-list'])
                     <li class="slide @if (Route::is('ancestor-data.create', 'ancestor-data.index')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-sitemap fa-2x mx-3"></i>
@@ -146,7 +146,7 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['mode-of-arrival-create', 'mode-of-arrival-list'])
+                @canany(['mode-of-arrival-list'])
                     <li class="slide @if (Route::is('mode-of-arrivals.create', 'mode-of-arrivals.index')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-ship fa-2x mx-3"></i>
