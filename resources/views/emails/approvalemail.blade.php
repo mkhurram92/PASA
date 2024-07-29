@@ -1,10 +1,9 @@
 <x-mail::message>
     # Hello, {{ $name }}
 
-    Your {{ $type }} account has beeen approve and successfully created email id {{ $email }}.
-    Now you can login with your credentials.
+    Your account has been approved and successfully created with the email ID {{ $email }}. You can now log in with your credentials..
 
-
-    Thank you for using our application!,<br>
+    Thank you!
+    
     {{ config('app.name') }}
 </x-mail::message>

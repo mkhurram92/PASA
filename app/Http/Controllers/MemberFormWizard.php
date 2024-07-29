@@ -233,7 +233,7 @@ class MemberFormWizard extends Controller
                             "stripe_response" => $payment->status
                         ]);
                     }
-                    // Mail::to($values['email'])->send(new RegisterEmail($Member));
+                    Mail::to($values['email'])->send(new RegisterEmail($Member));
                     return response()->json(['success' => "Member added", "redirectTo" => route("login")]);
                 }
                 Subscription::where("payment_intent_id", $payment_intent_id)->update([

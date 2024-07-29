@@ -32,7 +32,7 @@ class ApprovalEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Member Approval of ' . $this->details['member_type'],
+            subject: 'Your Account Has Been Approved and Created',
         );
     }
 

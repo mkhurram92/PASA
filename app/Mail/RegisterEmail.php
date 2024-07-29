@@ -32,7 +32,7 @@ class RegisterEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Register Email of ' . $this->details['member_type'],
+            subject: 'Welcome! Your Account Is Under Review', //Register Email of ' . $this->details['member_type'],
         );
     }
 
