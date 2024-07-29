@@ -1,3 +1,4 @@
+<h3>Pedigree</h3>
 <section>
     <div class="row mb-3">
         <h3 class="card-title"> Pedigree Chart</h3>

@@ -1,3 +1,4 @@
+<h3>Payment</h3>
 <section>
     <div class="row">
         <h3 class="card-title"> Payment Information</h3>
