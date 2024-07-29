@@ -32,6 +32,7 @@ use App\Models\MemberPedigree;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Else_;
+use Illuminate\Support\Facades\Hash;
 
 class SubscribeMemberController extends Controller
 {
@@ -306,28 +307,28 @@ class SubscribeMemberController extends Controller
                 ]
             );
 
-            $usr = ModelsUser::create(
-                [
-                    "email" => $member->contact->email,
-                    "password" => $member->password,
-                    "name" => $member->given_name . " " . $member->family_name
-                ]
-            );
+            $usr = ModelsUser::create([
+                "email" => $member->contact->email,
+                "password" => Hash::make($member->password), // Hash the password
+                "name" => $member->given_name . " " . $member->family_name
+            ]);
 
             $usr->assignRole("user");
-            // Mail::to($member->email)->send(new ApprovalEmail($member));
+            Mail::to($member->contact->email)->send(new ApprovalEmail($member));
 
             DB::commit();
 
             return response()->json([
                 "status" => true,
-                "message" => "Member Approved successfully",
+                "message" => "Member Approved Successfully",
                 "redirectTo" => route("members.view-member", ['id' => $member->id])
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
-            // Handle the exception as needed
+            // Log the exception for debugging purposes
+            Log::error('Error updating member: ' . $e->getMessage());
+
             return response()->json([
                 "status" => false,
                 "message" => "Error updating member",
