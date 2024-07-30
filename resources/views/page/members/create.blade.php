@@ -154,11 +154,13 @@
                                                                 type="text" name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <select class="form-control select2" id="month_of_birth"
+                                                            <select class="form-control month-select"
                                                                 name="month_of_birth"></select>
                                                         </div>
+
+                                                        <!-- Day Select2 -->
                                                         <div class="col-4 px-1">
-                                                            <select class="form-control" id="date_of_birth"
+                                                            <select class="form-control day-select"
                                                                 name="date_of_birth"></select>
                                                         </div>
                                                     </div>
@@ -445,8 +447,9 @@
             $("#title").trigger("change");
         });
 
-        initMonthSelect2();
-        initDaySelect2();
+        initMonthSelect2(); // Initialize month dropdowns
+        initDaySelect2(); // Initialize day dropdowns
+
         $("#title").select2();
         $("#state").select2();
         $("#member_type_id").select2();

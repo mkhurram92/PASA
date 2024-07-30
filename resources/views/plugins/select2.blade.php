@@ -31,9 +31,9 @@
         });
     }
 
-    function initMonthSelect2(elem = null, selectedValue = '') {
+    function initSelect2(elem, options) {
         if (!elem) {
-            elem = $("#month_of_birth");
+            elem = $(options.selector);
         }
         if ($(elem).data('select2')) {
             try {
@@ -42,92 +42,114 @@
                 console.warn(error);
             }
         }
+
         $(elem).select2({
             dropdownParent: elem.parent(),
-            data: [{
-                    id: '',
-                    text: 'Month'
-                }, // Placeholder option
-                {
-                    id: "01",
-                    text: "Jan"
-                },
-                {
-                    id: "02",
-                    text: "Feb"
-                },
-                {
-                    id: "03",
-                    text: "Mar"
-                },
-                {
-                    id: "04",
-                    text: "Apr"
-                },
-                {
-                    id: "05",
-                    text: "May"
-                },
-                {
-                    id: "06",
-                    text: "Jun"
-                },
-                {
-                    id: "07",
-                    text: "Jul"
-                },
-                {
-                    id: "08",
-                    text: "Aug"
-                },
-                {
-                    id: "09",
-                    text: "Sep"
-                },
-                {
-                    id: "10",
-                    text: "Oct"
-                },
-                {
-                    id: "11",
-                    text: "Nov"
-                },
-                {
-                    id: "12",
-                    text: "Dec"
+            data: options.data
+        }).val(options.selectedValue).trigger('change');
+    }
+
+    function initMonthSelect2(elem = null, selectedValue = '') {
+        if (!elem) {
+            elem = $(".month-select"); // Changed to class selector to handle multiple elements
+        }
+        elem.each(function() {
+            if ($(this).data('select2')) {
+                try {
+                    $(this).select2("destroy");
+                } catch (error) {
+                    console.warn(error);
                 }
-            ]
-        }).val(selectedValue).trigger('change');
+            }
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                data: [{
+                        id: '',
+                        text: 'Month'
+                    }, // Placeholder option
+                    {
+                        id: "01",
+                        text: "Jan"
+                    },
+                    {
+                        id: "02",
+                        text: "Feb"
+                    },
+                    {
+                        id: "03",
+                        text: "Mar"
+                    },
+                    {
+                        id: "04",
+                        text: "Apr"
+                    },
+                    {
+                        id: "05",
+                        text: "May"
+                    },
+                    {
+                        id: "06",
+                        text: "Jun"
+                    },
+                    {
+                        id: "07",
+                        text: "Jul"
+                    },
+                    {
+                        id: "08",
+                        text: "Aug"
+                    },
+                    {
+                        id: "09",
+                        text: "Sep"
+                    },
+                    {
+                        id: "10",
+                        text: "Oct"
+                    },
+                    {
+                        id: "11",
+                        text: "Nov"
+                    },
+                    {
+                        id: "12",
+                        text: "Dec"
+                    }
+                ]
+            }).val(selectedValue).trigger('change');
+        });
     }
 
     function initDaySelect2(elem = null, selectedValue = '') {
         if (!elem) {
-            elem = $("#date_of_birth");
+            elem = $(".day-select"); // Changed to class selector to handle multiple elements
         }
-        if ($(elem).data('select2')) {
-            try {
-                $(elem).select2("destroy");
-            } catch (error) {
-                console.warn(error);
+        elem.each(function() {
+            if ($(this).data('select2')) {
+                try {
+                    $(this).select2("destroy");
+                } catch (error) {
+                    console.warn(error);
+                }
             }
-        }
-        const days = [];
-        days.push({
-            id: '',
-            text: 'Date'
-        }); // Placeholder option
-        for (let i = 1; i <= 31; i++) {
-            let day = i < 10 ? '0' + i : i.toString();
+            const days = [];
             days.push({
-                id: day,
-                text: day
-            });
-        }
+                id: '',
+                text: 'Date'
+            }); // Placeholder option
+            for (let i = 1; i <= 31; i++) {
+                let day = i < 10 ? '0' + i : i.toString();
+                days.push({
+                    id: day,
+                    text: day
+                });
+            }
 
-        $(elem).select2({
-            dropdownParent: elem.parent(),
-            data: days
-        }).val(selectedValue).trigger('change');
+            $(this).select2({
+                dropdownParent: $(this).parent(),
+                data: days
+            }).val(selectedValue).trigger('change');
+        });
     }
 
     function initShipSelect(element = null) {

@@ -173,10 +173,12 @@
                                                                 name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <select id="month_of_birth" name="month_of_birth" class="form-control"></select>
+                                                            <select class="form-control month-select"
+                                                                id="month_of_birth" name="month_of_birth"></select>
                                                         </div>
-                                                        <div class="col-4 pl-1">
-                                                            <select id="date_of_birth" name="date_of_birth" class="form-control"></select>
+                                                        <div class="col-4 px-1">
+                                                            <select class="form-control day-select" id="date_of_birth"
+                                                                name="date_of_birth"></select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -255,7 +257,7 @@
 <option value="{{ $state?->id }}" @if ($state?->id == $member?->address?->state_id) selected @endif>
                                                         {{ $state?->name }}
                                                     </option>
-                                    @empty
+                @empty
                                                     <option value="">Select States</option>
 @endforelse
                                                 </select>
@@ -522,6 +524,12 @@
 @section('scripts')
     @include('plugins.select2')
     <script>
+        const existingMonthOfBirth = "{{ $member->month_of_birth }}";
+        const existingDayOfBirth = "{{ $member->date_of_birth }}";
+
+        initMonthSelect2(null, existingMonthOfBirth);
+        initDaySelect2(null, existingDayOfBirth);
+
         $(document).ready(function() {
 
             $("#title_detail").hide();
@@ -539,11 +547,6 @@
             $("#title").trigger("change");
         });
 
-        const monthValue = "{{ old('month_of_birth', $member?->month_of_birth) }}";
-        const dayValue = "{{ old('date_of_birth', $member?->date_of_birth) }}";
-
-        initMonthSelect2(null, monthValue);
-        initDaySelect2(null, dayValue);
 
         $("#title").select2();
         $("#state").select2();
