@@ -36,7 +36,10 @@ class MemberFormWizard extends Controller
                 'title' => 'required',
                 'given_name' => 'nullable',
                 'family_name' => 'nullable',
-                'preferred_name' => 'nullable'
+                'preferred_name' => 'nullable',
+                'year_of_birth' => 'nullable',
+                'month_of_birth' => 'nullable',
+                'date_of_birth' => 'nullable',
             ];
 
             $validator = Validator::make($values, $needToValidate);

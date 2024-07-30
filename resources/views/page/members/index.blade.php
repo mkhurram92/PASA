@@ -201,7 +201,7 @@
                     headerFilter: "input",
                     headerFilterPlaceholder: 'Filter by Family Name'
                 },
-                {
+                /*{
                     title: 'Approval Date',
                     field: 'approved_at',
                     hozAlign: "left",
@@ -218,7 +218,7 @@
 
                         return formattedDate;
                     }
-                },
+                },**/
                 {
                     title: 'Membership Type',
                     field: 'membership_type.name',
