@@ -205,7 +205,6 @@ class SubscribeMemberController extends Controller
             'phone' => 'nullable',
             'mobile' => 'nullable',
             'journal' => 'required',
-
         ];
 
         $validator = Validator::make($request->all(), $needToValidate);

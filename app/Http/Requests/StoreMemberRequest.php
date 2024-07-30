@@ -61,7 +61,7 @@ class StoreMemberRequest extends FormRequest
             'post_code.required' => 'The post code field is required.',
             //'email.unique' => 'The email has already been registered.',
             'journal' => 'Journal delivery method is required',
-            'year_of_birth' => 'Year must be exactly 4 digits or left blank'
+            'year_of_birth' => 'Year must be exactly 4 digits or left blank',
         ];
     }
 }

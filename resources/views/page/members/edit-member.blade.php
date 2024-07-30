@@ -243,34 +243,6 @@
                                                     name="number_street">
                                             </div>
                                         </div>
-                                        <!--<div class="mb-3 row">
-                                            <label class="col-md-4 form-label">City / Town / Suburb  </label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Suburb" value="{{ $member?->address?->suburb }}" name="suburb">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">State / County  </label>
-                                            <div class="col-md-8">
-                                                <select name="state" class="form-control form-select select2" id="state">
-                                                    @forelse ($data['states'] as $state)
-<option value="{{ $state?->id }}" @if ($state?->id == $member?->address?->state_id) selected @endif>
-                                                        {{ $state?->name }}
-                                                    </option>
-                @empty
-                                                    <option value="">Select States</option>
-@endforelse
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Country </label>
-                                            <div class="col-md-8">
-                                                <select name="country" class="form-control form-select select2" id="country">
-                                                    <option value="Australia">Australia</option>
-                                                </select>
-                                            </div>
-                                        </div>-->
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Post Code </label>
                                             <div class="col-md-8">
