@@ -127,12 +127,10 @@
                                                                 type="text" name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" type="text"
-                                                                name="month_of_birth">
-                                                        </div>
-                                                        <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" type="text"
-                                                                name="date_of_birth">
+                                                            <select class="form-control select2" id="month_of_birth" name="month_of_birth"></select>
+                                                        </div>                                                        
+                                                        <div class="col-4 px-1">
+                                                            <select class="form-control" id="date_of_birth" name="date_of_birth"></select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -166,8 +164,8 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">City / Town / Suburb </label>
                                             <div class="col-md-8">
-                                                <select class="form-control select2" placeholder="Select item"
-                                                    id="cities_select2" name="city_id"></select>
+                                                <input class="form-control" type="text"
+                                                    placeholder="City / Town / Suburb" name="city_id">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -410,6 +408,8 @@
             $("#title").trigger("change");
         });
 
+        initMonthSelect2();
+        initDaySelect2();
         $("#title").select2();
         $("#state").select2();
         $("#member_type_id").select2();

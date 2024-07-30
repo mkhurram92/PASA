@@ -173,14 +173,10 @@
                                                                 name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control"
-                                                                value="{{ $member?->month_of_birth }}" type="text"
-                                                                name="month_of_birth">
+                                                            <select id="month_of_birth" name="month_of_birth" class="form-control"></select>
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control"
-                                                                value="{{ $member?->date_of_birth }}" type="text"
-                                                                name="date_of_birth">
+                                                            <select id="date_of_birth" name="date_of_birth" class="form-control"></select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -223,13 +219,10 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">City / Town / Suburb </label>
                                             <div class="col-md-8">
-                                                <select class="form-control select2" id="cities_select2"
-                                                    name="city_id">
-                                                    @if (!empty($member?->address?->city?->id))
-                                                        <option value="{{ $member?->address?->city?->id }}" selected>
-                                                            {{ $member?->address?->city?->name }}</option>
-                                                    @endif
-                                                </select>
+                                                <input class="form-control" type="text"
+                                                    placeholder="Unit/Apartment No."
+                                                    value="{{ $member?->address?->suburb }}"
+                                                    name="City / Town / Suburb">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -262,7 +255,7 @@
 <option value="{{ $state?->id }}" @if ($state?->id == $member?->address?->state_id) selected @endif>
                                                         {{ $state?->name }}
                                                     </option>
-                                                @empty
+                                    @empty
                                                     <option value="">Select States</option>
 @endforelse
                                                 </select>
@@ -545,6 +538,12 @@
 
             $("#title").trigger("change");
         });
+
+        const monthValue = "{{ old('month_of_birth', $member?->month_of_birth) }}";
+        const dayValue = "{{ old('date_of_birth', $member?->date_of_birth) }}";
+
+        initMonthSelect2(null, monthValue);
+        initDaySelect2(null, dayValue);
 
         $("#title").select2();
         $("#state").select2();

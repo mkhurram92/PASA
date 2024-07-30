@@ -1,5 +1,4 @@
 <script>
-    
     function initRigSelect2(elem = null) {
         if (!elem) {
             elem = $("#rig");
@@ -12,24 +11,123 @@
             }
         }
         $(elem).select2({
-            dropdownParent: elem.parent()
-            , ajax: {
-                url: 'rig-select2'
-                , type: "GET"
-                , dataType: 'json'
-                , data: function(params) {
+            dropdownParent: elem.parent(),
+            ajax: {
+                url: 'rig-select2',
+                type: "GET",
+                dataType: 'json',
+                data: function(params) {
                     return {
-                        searchTerm: params.term
-                        , editId: $('#rig').attr("edit-id")
+                        searchTerm: params.term,
+                        editId: $('#rig').attr("edit-id")
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
                 }
             }
         });
+    }
+
+    function initMonthSelect2(elem = null, selectedValue = '') {
+        if (!elem) {
+            elem = $("#month_of_birth");
+        }
+        if ($(elem).data('select2')) {
+            try {
+                $(elem).select2("destroy");
+            } catch (error) {
+                console.warn(error);
+            }
+        }
+        $(elem).select2({
+            dropdownParent: elem.parent(),
+            data: [{
+                    id: '',
+                    text: 'Month'
+                }, // Placeholder option
+                {
+                    id: "01",
+                    text: "Jan"
+                },
+                {
+                    id: "02",
+                    text: "Feb"
+                },
+                {
+                    id: "03",
+                    text: "Mar"
+                },
+                {
+                    id: "04",
+                    text: "Apr"
+                },
+                {
+                    id: "05",
+                    text: "May"
+                },
+                {
+                    id: "06",
+                    text: "Jun"
+                },
+                {
+                    id: "07",
+                    text: "Jul"
+                },
+                {
+                    id: "08",
+                    text: "Aug"
+                },
+                {
+                    id: "09",
+                    text: "Sep"
+                },
+                {
+                    id: "10",
+                    text: "Oct"
+                },
+                {
+                    id: "11",
+                    text: "Nov"
+                },
+                {
+                    id: "12",
+                    text: "Dec"
+                }
+            ]
+        }).val(selectedValue).trigger('change');
+    }
+
+    function initDaySelect2(elem = null, selectedValue = '') {
+        if (!elem) {
+            elem = $("#date_of_birth");
+        }
+        if ($(elem).data('select2')) {
+            try {
+                $(elem).select2("destroy");
+            } catch (error) {
+                console.warn(error);
+            }
+        }
+        const days = [];
+        days.push({
+            id: '',
+            text: 'Date'
+        }); // Placeholder option
+        for (let i = 1; i <= 31; i++) {
+            let day = i < 10 ? '0' + i : i.toString();
+            days.push({
+                id: day,
+                text: day
+            });
+        }
+
+        $(elem).select2({
+            dropdownParent: elem.parent(),
+            data: days
+        }).val(selectedValue).trigger('change');
     }
 
     function initShipSelect(element = null) {
@@ -41,26 +139,26 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('ship.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('ship.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initCountiesSelect(element = null) {
@@ -72,28 +170,28 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('counties.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('counties.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , country: $("#countries_select2").val()
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        country: $("#countries_select2").val(),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initPortsSelect(element = null) {
@@ -105,27 +203,27 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('ports.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('ports.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initOccupationSelect(element = null) {
@@ -137,28 +235,29 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('occupation.select2')}}"
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('occupation.select2') }}"
 
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+                    ,
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initModeOfArrivalSelect(element = null) {
@@ -170,27 +269,27 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('mode.of.arrival.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('mode.of.arrival.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initSourceOfArrivalSelect(element = null) {
@@ -202,27 +301,27 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('source.of.arrival.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('source.of.arrival.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initVoyageSelect(element = null) {
@@ -233,28 +332,28 @@
             $(element).select2("destroy");
         }
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('mode.of.arrival.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('mode.of.arrival.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
-                        , type: "voyage"
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term,
+                        type: "voyage"
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initGenderSelect(element = null) {
@@ -265,27 +364,27 @@
             $(element).select2("destroy");
         }
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('gender.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('gender.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
-                    , };
-                }
-                , processResults: function(response) {
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term,
+                    };
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initCountriesSelect(element = null) {
@@ -297,27 +396,27 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('countries.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('countries.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initCitiesSelect(element = null) {
@@ -329,28 +428,28 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('cities.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('cities.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , county: $("#counties_select2").val()
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        county: $("#counties_select2").val(),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
 
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
 
     function initStatesSelect(element = null) {
@@ -362,26 +461,25 @@
         }
 
         $(element).select2({
-            dropdownParent: element.parent()
-            , ajax: {
-                url: "{{route('states.select2')}}"
-                , type: "post"
-                , dataType: 'json'
-                , delay: 250
-                , data: function(params) {
+            dropdownParent: element.parent(),
+            ajax: {
+                url: "{{ route('states.select2') }}",
+                type: "post",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
                     return {
-                        _token: $("meta[name='csrf-token']").attr('content')
-                        , search: params.term
+                        _token: $("meta[name='csrf-token']").attr('content'),
+                        search: params.term
                     };
-                }
-                , processResults: function(response) {
+                },
+                processResults: function(response) {
                     return {
                         results: response
                     };
                 }
-            }
-            , autoWidth: true
-        , });
+            },
+            autoWidth: true,
+        });
     }
-
 </script>

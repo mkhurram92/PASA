@@ -171,7 +171,7 @@
                                             <label class="col-md-4 form-label">City / Town / Suburb</label>
                                             <div class="col-md-8">
                                                 <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->address?->city?->name }}" readonly disabled>
+                                                    value="{{ $member?->address?->suburb }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
