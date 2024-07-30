@@ -194,7 +194,7 @@ class SubscribeMemberController extends Controller
             'preferred_name' => 'nullable',
             'date_of_birth' => 'nullable',
             'month_of_birth' => 'nullable',
-            'year_of_birth' => 'nullable',
+            "year_of_birth" =>'nullable|regex:/^\d{4}$/',
 
             'number_street' => 'nullable',
             'suburb' => 'nullable',

@@ -28,6 +28,31 @@
                 height: 300px;
                 /* Set the height to 100% */
             }
+
+            .tooltip-custom {
+                display: none;
+                position: absolute;
+                top: -30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #ff6b6b;
+                color: white;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
+            .tooltip-custom::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 5px;
+                border-style: solid;
+                border-color: #ff6b6b transparent transparent transparent;
+            }
         </style>
         <div class="container-fluid main-container">
 
@@ -63,15 +88,17 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Title <span
                                                         class="tx-danger">*</span></label>
-                                                        <div class="col-md-3">
-                                                            <select name="title" class="form-control form-select select2" id="title">
-                                                                @forelse ($data['titles'] as $title)
-                                                                    <option value="{{ $title?->id }}">{{ $title?->name }}</option>
-                                                                @empty
-                                                                    <option>Select Title</option>
-                                                                @endforelse
-                                                            </select>
-                                                        </div>                                                        
+                                                <div class="col-md-3">
+                                                    <select name="title" class="form-control form-select select2"
+                                                        id="title">
+                                                        @forelse ($data['titles'] as $title)
+                                                            <option value="{{ $title?->id }}">{{ $title?->name }}
+                                                            </option>
+                                                        @empty
+                                                            <option>Select Title</option>
+                                                        @endforelse
+                                                    </select>
+                                                </div>
                                                 <div class="col-md-5">
                                                     <input class="form-control" type="text" id="title_detail"
                                                         placeholder="Type Title Here" name="title_detail">
@@ -127,10 +154,12 @@
                                                                 type="text" name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <select class="form-control select2" id="month_of_birth" name="month_of_birth"></select>
-                                                        </div>                                                        
+                                                            <select class="form-control select2" id="month_of_birth"
+                                                                name="month_of_birth"></select>
+                                                        </div>
                                                         <div class="col-4 px-1">
-                                                            <select class="form-control" id="date_of_birth" name="date_of_birth"></select>
+                                                            <select class="form-control" id="date_of_birth"
+                                                                name="date_of_birth"></select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -192,25 +221,32 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Home Phone (including Area Code)</label>
+                                            <label class="col-md-4 form-label">Home Phone (including Area
+                                                Code)</label>
                                             <div class="col-md-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Area Code" name="area_code" style="width: 25%; margin-right: 10px;">
-                                                    <input type="text" class="form-control" placeholder="Home Phone" name="phone" style="width: calc(75% - 10px);">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Area Code" name="area_code"
+                                                        style="width: 25%; margin-right: 10px;">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Home Phone" name="phone"
+                                                        style="width: calc(75% - 10px);">
                                                 </div>
                                             </div>
-                                        </div>                                                                           
+                                        </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Mobile Phone</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" placeholder="Mobile Phone" name="mobile">
+                                                <input type="text" class="form-control" placeholder="Mobile Phone"
+                                                    name="mobile">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Email Address<span class="tx-danger">
-                                                    </span></label>
+                                                </span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Email Address" id="email" name="email">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Email Address" id="email" name="email">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -327,8 +363,8 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
-                                            <label class="col-md-3 form-label">Journal<span
-                                                    class="tx-danger"> *</span></label>
+                                            <label class="col-md-3 form-label">Journal<span class="tx-danger">
+                                                    *</span></label>
                                             <div class="col-md-4">
                                                 <div class="mb-3 mb-sm-0 d-flex align-items-center">
                                                     <label class="form-label mb-0 me-2">Emailed</label>
@@ -353,7 +389,8 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-6 form-label">Signed Confidentiality Agreement Received</label>
+                                            <label class="col-md-6 form-label">Signed Confidentiality Agreement
+                                                Received</label>
                                             <div class="col-md-6">
                                                 <input id="signed_agreement" type="checkbox" class="checkbox-input"
                                                     name="signed_agreement" value='1'>
