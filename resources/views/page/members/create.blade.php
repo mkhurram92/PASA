@@ -187,8 +187,7 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">State / County </label>
                                             <div class="col-md-8">
-                                                <select class="form-control select2" placeholder="Select item"
-                                                    id="counties_select2" name="county_id"></select>
+                                                <select class="form-control select2" id="counties_select2" name="county_id"></select>
                                             </div>
                                         </div>
 
@@ -209,7 +208,7 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Street Name </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="PO Box"
+                                                <input class="form-control" type="text" placeholder="Street Name"
                                                     name="number_street">
                                             </div>
                                         </div>

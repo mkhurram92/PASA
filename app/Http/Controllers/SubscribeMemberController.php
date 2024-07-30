@@ -86,7 +86,7 @@ class SubscribeMemberController extends Controller
             ]);
 
             $member->address()->updateOrCreate(['member_id' => $member->id], [
-                //'unit_no' => $request->unit_no,
+                'unit_no' => $request->unit_no,
                 'number_street' => $request->number_street,
                 'suburb' => $request->city_id,
                 'state_id' => $request->county_id,

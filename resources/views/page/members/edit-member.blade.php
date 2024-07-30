@@ -222,9 +222,9 @@
                                             <label class="col-md-4 form-label">City / Town / Suburb </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    placeholder="Unit/Apartment No."
+                                                    placeholder="City / Town / Suburb"
                                                     value="{{ $member?->address?->suburb }}"
-                                                    name="City / Town / Suburb">
+                                                    name="suburb">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
