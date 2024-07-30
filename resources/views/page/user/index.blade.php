@@ -100,11 +100,11 @@
                  <div class="page-leftheader">
                      <h3 class="page-title">Users</h3>
                  </div>
-                 <div class="card-header d-flex justify-content-between align-items-center">
+                 <!--<div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                      </a>
-                 </div>
+                 </div>-->
              </div>
              <div class="row">
                  <div class="col-md-12 p-12">
