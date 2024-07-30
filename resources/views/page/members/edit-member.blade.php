@@ -224,7 +224,7 @@
                                                 <input class="form-control" type="text"
                                                     placeholder="City / Town / Suburb"
                                                     value="{{ $member?->address?->suburb }}"
-                                                    name="suburb">
+                                                    name="city_id">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
