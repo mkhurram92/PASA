@@ -17,7 +17,8 @@
                 font-size: medium;
                 color: black;
             }
-        </style>
+            
+            </style>
         <div class="container-fluid main-container">
 
             <!--Page header-->
@@ -33,26 +34,26 @@
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
                         @if ($errors->any())
-                            <div class="alert alert-danger">
-                                {{ $errors->first() }}
-                            </div>
+                        <div class="alert alert-danger">
+                            {{ $errors->first() }}
+                        </div>
                         @elseif(session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
                         @elseif(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
                         @endif
 
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
                                 @if (!$member?->additionalInfo?->date_membership_approved)
-                                    <a class="btn btn-success" id="approveButton">
-                                        <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
-                                    </a>
+                                <a class="btn btn-success" id="approveButton">
+                                    <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
+                                </a>
                                 @endif
                                 <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
                                     <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
@@ -73,29 +74,25 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Title</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->title?->name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->title?->name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Family Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->family_name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->family_name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Given Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->given_name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->given_name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Preferred Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->preferred_name }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->preferred_name }}" readonly disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -103,16 +100,13 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Initials</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->initials }}" name="initials" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->initials }}" name="initials" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Post Nominal</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->post_nominal }}" name="post_nominal" readonly
-                                                    disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->post_nominal }}" name="post_nominal" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -121,21 +115,21 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         @php
-                                                            $year = $member?->year_of_birth ?? '';
-                                                            $month = $member?->month_of_birth ?? '';
-                                                            $day = $member?->date_of_birth ?? '';
-                                            
-                                                            $date = $year;
-                                            
-                                                            if ($month) {
-                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
-                                                            }
-                                            
-                                                            if ($day) {
-                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
-                                                            }
+                                                        $year = $member?->year_of_birth ?? '';
+                                                        $month = $member?->month_of_birth ?? '';
+                                                        $day = $member?->date_of_birth ?? '';
+
+                                                        $date = $year;
+
+                                                        if ($month) {
+                                                        $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                        }
+
+                                                        if ($day) {
+                                                        $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                        }
                                                         @endphp
-                                            
+
                                                         <input class="form-control" value="{{ $date }}" readonly disabled>
                                                     </div>
                                                 </div>
@@ -155,45 +149,37 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Country</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->country?->name }}" readonly
-                                                    disabled>
+                                                <input type="text" class="form-control" value="{{ $member?->address?->country?->name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">State / County</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->state?->name }}" readonly disabled>
+                                                <input type="text" class="form-control" value="{{ $member?->address?->state?->name }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">City / Town / Suburb</label>
                                             <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->address?->suburb }}" readonly disabled>
+                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->address?->suburb }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Unit / Apartment No. </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->address?->unit_no }}" name="unit_no" readonly
-                                                    disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->address?->unit_no }}" name="unit_no" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Street Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->address?->number_street }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->address?->number_street }}" readonly disabled>
                                             </div>
-                                        </div>                                        
+                                        </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Post Code</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->post_code }}" readonly disabled>
+                                                <input type="text" class="form-control" value="{{ $member?->address?->post_code }}" readonly disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -202,36 +188,27 @@
                                             <label class="col-md-4 form-label">Home Phone (including Area Code)</label>
                                             <div class="col-md-8">
                                                 <div class="input-group">
-                                                    <input class="form-control" type="text"
-                                                        value="{{ $member?->contact?->area_code }}" name="area_code"
-                                                        style="width: 25%; margin-right: 10px;" readonly disabled>
-                                                    <input class="form-control" type="text"
-                                                        value="{{ $member?->contact?->phone }}" name="phone"
-                                                        style="width: calc(75% - 10px);" readonly disabled >
+                                                    <input class="form-control" type="text" value="{{ $member?->contact?->area_code }}" name="area_code" style="width: 25%; margin-right: 10px;" readonly disabled>
+                                                    <input class="form-control" type="text" value="{{ $member?->contact?->phone }}" name="phone" style="width: calc(75% - 10px);" readonly disabled>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Mobile Phone</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control"
-                                                    value="{{ $member?->contact?->mobile }}" readonly disabled>
+                                                <input type="text" class="form-control" value="{{ $member?->contact?->mobile }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Email</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->contact?->email }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->contact?->email }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">General
-                                                Notes</label>
+                                            <label class="col-md-4 form-label">General Notes</label>
                                             <div class="col-md-8">
-                                                <textarea class="form-control" name="general_notes" rows="5" readonly disabled style="text-align: left;">
-                                                    {{ $member?->additionalInfo?->general_notes }}
-                                                </textarea>
+                                                <textarea class="form-control" name="general_notes" rows="5" readonly disabled>{{ $member?->additionalInfo?->general_notes }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -249,32 +226,27 @@
                                             <label class="col-md-4 form-label">Membership
                                                 Number</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->additionalInfo?->membership_number }}"
-                                                    name="membership_number" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->additionalInfo?->membership_number }}" name="membership_number" readonly disabled>
                                             </div>
                                         </div>
 
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">User Name</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"
-                                                    value="{{ $member?->username }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $member?->username }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Membership Type </label>
                                             <div class="col-md-8">
-                                                <select name="member_type_id" class="form-control form-select select2"
-                                                    id="member_type_id" readonly disabled>
+                                                <select name="member_type_id" class="form-control form-select select2" id="member_type_id" readonly disabled>
                                                     @forelse ($data['membership_types'] as $type)
-                                                        <option value="{{ $type?->id }}"
-                                                            @if ($type?->id == $member?->member_type_id) selected @endif>
-                                                            {{ $type?->name }}
-                                                        </option>
+                                                    <option value="{{ $type?->id }}" @if ($type?->id == $member?->member_type_id) selected @endif>
+                                                        {{ $type?->name }}
+                                                    </option>
                                                     @empty
-                                                        <option value="">Select Membership Type
-                                                        </option>
+                                                    <option value="">Select Membership Type
+                                                    </option>
                                                     @endforelse
                                                 </select>
                                             </div>
@@ -283,17 +255,14 @@
                                             <label class="col-md-4 form-label">Membership Status
                                             </label>
                                             <div class="col-md-8">
-                                                <select name="member_status_id"
-                                                    class="form-control form-select select2" id="member_status_id"
-                                                    readonly disabled>
+                                                <select name="member_status_id" class="form-control form-select select2" id="member_status_id" readonly disabled>
                                                     @forelse ($data['membership_status'] as $status)
-                                                        <option value="{{ $status?->id }}"
-                                                            @if ($status?->id == $member?->member_status_id) selected @endif>
-                                                            {{ $status?->name }}
-                                                        </option>
+                                                    <option value="{{ $status?->id }}" @if ($status?->id == $member?->member_status_id) selected @endif>
+                                                        {{ $status?->name }}
+                                                    </option>
                                                     @empty
-                                                        <option value="">Select Membership Status
-                                                        </option>
+                                                    <option value="">Select Membership Status
+                                                    </option>
                                                     @endforelse
                                                 </select>
                                             </div>
@@ -310,9 +279,7 @@
                                             <label class="col-md-4 form-label">Date Membership Ended
                                             </label>
                                             <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->additionalInfo?->date_membership_end }}"
-                                                    name="date_membership_end" readonly disabled>
+                                                <input class="form-control fc-datepicker" type="text" value="{{ $member?->additionalInfo?->date_membership_end }}" name="date_membership_end" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -331,47 +298,47 @@
                                         </div>
 
                                         @if ($member?->additionalInfo?->volunteer == 1)
-                                            <div class="volunteer_details">
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Experience</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="experience" readonly disabled>{{ $member?->volunteerDetails?->experience }} </textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Health
-                                                        Issues</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="health_issues" readonly disabled>{{ $member?->volunteerDetails?->health_issues }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Contact
-                                                        received</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="contact" readonly disabled>{{ $member?->volunteerDetails?->contact }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Skills</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="skills" readonly disabled>{{ $member?->volunteerDetails?->skills }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Availability</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="availability" readonly disabled>{{ $member?->volunteerDetails?->availability }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Volunteer Skills and
-                                                        Working Preferences</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
-                                                    </div>
+                                        <div class="volunteer_details">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Experience</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="experience" readonly disabled>{{ $member?->volunteerDetails?->experience }} </textarea>
                                                 </div>
                                             </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Health
+                                                    Issues</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="health_issues" readonly disabled>{{ $member?->volunteerDetails?->health_issues }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Contact
+                                                    received</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="contact" readonly disabled>{{ $member?->volunteerDetails?->contact }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Skills</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="skills" readonly disabled>{{ $member?->volunteerDetails?->skills }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Availability</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" name="availability" readonly disabled>{{ $member?->volunteerDetails?->availability }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Volunteer Skills and
+                                                    Working Preferences</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
                                         @endif
                                     </div>
 
@@ -404,12 +371,12 @@
                                         </div>
 
                                         @if ($member?->additionalInfo?->key_holder == 1)
-                                            <div class="mb-3 row key_held">
-                                                <label class="col-md-4 form-label">Key Held</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="key_held" readonly disabled rows="3">{{ $member?->additionalInfo?->key_held }}</textarea>
-                                                </div>
+                                        <div class="mb-3 row key_held">
+                                            <label class="col-md-4 form-label">Key Held</label>
+                                            <div class="col-md-8">
+                                                <textarea class="form-control" name="key_held" readonly disabled rows="3">{{ $member?->additionalInfo?->key_held }}</textarea>
                                             </div>
+                                        </div>
                                         @endif
                                     </div>
                                 </div>
@@ -425,138 +392,138 @@
 <!-- MODAL EFFECTS -->
 <div id="crud"></div>
 @section('scripts')
-    @include('plugins.select2')
+@include('plugins.select2')
 
-    <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
-    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+<script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#approveButton').on('click', function() {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You are about to approve the membership.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, approve it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '{{ route('members.update', ['member' => $member?->id]) }}',
-                            method: 'PUT',
-                            data: {
-                                '_token': '{{ csrf_token() }}',
-                            },
-                            success: function(response) {
-                                if (response && response.status === true) {
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: response.message,
-                                        icon: 'success',
-                                        showCancelButton: false,
-                                        confirmButtonText: 'OK',
-                                        timerProgressBar: true,
-                                        allowOutsideClick: false,
-                                        timer: 10000,
-                                    }).then(() => {
-                                        window.location.href = response
-                                            .redirectTo;
-                                    });
-                                } else {
-                                    console.error('Error updating member:', response
-                                        .message);
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error('Error updating member:', error);
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#approveButton').on('click', function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to approve the membership.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, approve it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{ route('members.update', ['member'=> $member?->id]) }}',
+                        method: 'PUT',
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                        },
+                        success: function(response) {
+                            if (response && response.status === true) {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: response.message,
+                                    icon: 'success',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    timer: 10000,
+                                }).then(() => {
+                                    window.location.href = response
+                                        .redirectTo;
+                                });
+                            } else {
+                                console.error('Error updating member:', response
+                                    .message);
                             }
-                        });
-                    }
-                });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating member:', error);
+                        }
+                    });
+                }
             });
         });
+    });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var displayStatus = document.getElementById('displayStatus');
-            var volunteerStatus = document.getElementById('volunteerStatus');
-            var registrationFormStatus = document.getElementById('registrationFormStatus');
-            var signedAgreementStatus = document.getElementById('signedAgreementStatus');
-            var journalStatus = document.getElementById('journalStatus');
+    document.addEventListener('DOMContentLoaded', function() {
+        var displayStatus = document.getElementById('displayStatus');
+        var volunteerStatus = document.getElementById('volunteerStatus');
+        var registrationFormStatus = document.getElementById('registrationFormStatus');
+        var signedAgreementStatus = document.getElementById('signedAgreementStatus');
+        var journalStatus = document.getElementById('journalStatus');
 
-            // Initial display based on the value
-            displayStatus.textContent =
-                @if ($member?->additionalInfo?->key_holder == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
+        // Initial display based on the value
+        displayStatus.textContent =
+            @if($member?-> additionalInfo?-> key_holder == 1)
+        'Yes'
+        @else
+            'No'
+        @endif;
 
-            volunteerStatus.textContent =
-                @if ($member?->additionalInfo?->volunteer == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            registrationFormStatus.textContent =
-                @if ($member?->additionalInfo?->registration_form_received == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            signedAgreementStatus.textContent =
-                @if ($member?->additionalInfo?->signed_agreement == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            journalStatus.textContent =
-                @if ($member?->journal == 0)
-                    'Emailed'
-                @else
-                    'Posted'
-                @endif ;
+        volunteerStatus.textContent =
+            @if($member?-> additionalInfo?-> volunteer == 1)
+        'Yes'
+        @else
+            'No'
+        @endif;
+        registrationFormStatus.textContent =
+            @if($member?-> additionalInfo?-> registration_form_received == 1)
+        'Yes'
+        @else
+            'No'
+        @endif;
+        signedAgreementStatus.textContent =
+            @if($member?-> additionalInfo?-> signed_agreement == 1)
+        'Yes'
+        @else
+            'No'
+        @endif;
+        journalStatus.textContent =
+            @if($member?-> journal == 0)
+        'Emailed'
+        @else
+            'Posted'
+        @endif;
 
-        });
+    });
 
 
-        document.getElementById('editLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
+    document.getElementById('editLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
 
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+        // Extract the current URL and the id from it
+        var currentUrl = window.location.href;
+        var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/edit-member/');
+        // Construct the new URL for editing
+        var newUrl = currentUrl.replace('/view-member/', '/edit-member/');
 
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
+        // Redirect to the new URL
+        window.location.href = newUrl;
+    });
 
-        //var currentUrl = window.location.href;
+    //var currentUrl = window.location.href;
 
-        // Extract the ID from the URL (assuming it's the last digit after the last '/')
-        //var id = currentUrl.match(/\d+$/)[0];
+    // Extract the ID from the URL (assuming it's the last digit after the last '/')
+    //var id = currentUrl.match(/\d+$/)[0];
 
-        // Update the href attribute with the extracted ID
-        //document.getElementById("viewPedigreeLink").href = "/members/view-pedigree/" + id;
+    // Update the href attribute with the extracted ID
+    //document.getElementById("viewPedigreeLink").href = "/members/view-pedigree/" + id;
 
-        document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
+    document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
 
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+        // Extract the current URL and the id from it
+        var currentUrl = window.location.href;
+        var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/view-pedigree/');
+        // Construct the new URL for editing
+        var newUrl = currentUrl.replace('/view-member/', '/view-pedigree/');
 
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
-    </script>
+        // Redirect to the new URL
+        window.location.href = newUrl;
+    });
+</script>
 @endsection
 <!-- app-content end-->
 @include('layout.footer')
