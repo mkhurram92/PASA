@@ -109,39 +109,36 @@
              <div class="row">
                  <div class="col-md-12 p-12">
                      @if ($errors->any() || session('error') || session('success'))
-                         <div class="card">
-                             <div class="card-body">
-                                 @if ($errors->any())
-                                     <div class="alert alert-danger">
-                                         {{ $errors->first() }}
-                                     </div>
-                                 @elseif(session('error'))
-                                     <div class="alert alert-danger">
-                                         {{ session('error') }}
-                                     </div>
-                                 @elseif(session('success'))
-                                     <div class="alert alert-success">
-                                         {{ session('success') }}
-                                     </div>
-                                 @endif
+                     <div class="card">
+                         <div class="card-body">
+                             @if ($errors->any())
+                             <div class="alert alert-danger">
+                                 {{ $errors->first() }}
                              </div>
+                             @elseif(session('error'))
+                             <div class="alert alert-danger">
+                                 {{ session('error') }}
+                             </div>
+                             @elseif(session('success'))
+                             <div class="alert alert-success">
+                                 {{ session('success') }}
+                             </div>
+                             @endif
                          </div>
+                     </div>
                      @endif
                      <div class="card">
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                     <option value="10">10</option>
-                                     <option value="20">20</option>
-                                     <option value="30">30</option>
-                                     <option value="40">40</option>
+                                     <option value="25">25</option>
                                      <option value="50">50</option>
                                      <option value="100">100</option>
+                                     <option value="1000000">ALL</option>
                                  </select>
                                  <label style="padding: 10px;" for="date-range">Date Range:</label>
                                  <input style="padding: 10px 20px;" type="text" id="date-range">
-                                 <button class="custom-button" type="button" id="printTable"
-                                     onclick="printData()">Print</button>
+                                 <button class="custom-button" type="button" id="printTable" onclick="printData()">Print</button>
                                  <button class="custom-button" id="download-csv">Download CSV</button>
                                  <button class="custom-button" id="download-xlsx">Download EXCEL</button>
                                  <button class="custom-button" id="download-pdf">Download PDF</button>
@@ -161,147 +158,147 @@
  <div id="crud"></div>
  @include('plugins.select2')
  @section('scripts')
-     <script>
-         var myData = @json($data);
-         var country = @json($country);
-         var county = @json($county);
+ <script>
+     var myData = @json($data);
+     var country = @json($country);
+     var county = @json($county);
 
-         var table = new Tabulator("#cities-table", {
-             data: myData,
-             layout: "fitColumns",
-             columns: [{
-                     title: 'ID',
-                     field: 'id',
-                     headerFilter: 'input',
-                     hozAlign: 'center',
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Search by ID'
-                 },
-                 {
-                     title: 'City',
-                     field: 'name',
-                     headerFilter: 'input',
-                     hozAlign: 'center',
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Search by City'
-                 },
-                 {
-                     title: 'State / County',
-                     field: 'county.name',
-                     hozAlign: 'center',
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by County',
-                     headerFilterParams: {
-                         values: county
-                     }
-                 },
-                 {
-                     title: 'Country',
-                     field: 'county.country.name',
-                     hozAlign: 'center',
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Country',
-                     headerFilterParams: {
-                         values: country
-                     }
-                 },
-                 {
-                     title: "Action",
-                     field: "actions",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     width: "8%",
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var id = cell.getData().id;
-
-                         // Add buttons for each row
-                         return '<div class="button-container">' +
-                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
-                             '"></button>' +
-                             '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
-                             '</div>';
-                     }
+     var table = new Tabulator("#cities-table", {
+         data: myData,
+         layout: "fitColumns",
+         columns: [{
+                 title: 'ID',
+                 field: 'id',
+                 headerFilter: 'input',
+                 hozAlign: 'center',
+                 vertAlign: "middle",
+                 headerFilterPlaceholder: 'Search by ID'
+             },
+             {
+                 title: 'City',
+                 field: 'name',
+                 headerFilter: 'input',
+                 hozAlign: 'center',
+                 vertAlign: "middle",
+                 headerFilterPlaceholder: 'Search by City'
+             },
+             {
+                 title: 'State / County',
+                 field: 'county.name',
+                 hozAlign: 'center',
+                 vertAlign: "middle",
+                 headerFilter: "select",
+                 headerFilterPlaceholder: 'Search by County',
+                 headerFilterParams: {
+                     values: county
                  }
-             ],
-             pagination: 'local',
-             paginationSize: 10,
-             placeholder: "No Data Available"
-         });
+             },
+             {
+                 title: 'Country',
+                 field: 'county.country.name',
+                 hozAlign: 'center',
+                 vertAlign: "middle",
+                 headerFilter: "select",
+                 headerFilterPlaceholder: 'Search by Country',
+                 headerFilterParams: {
+                     values: country
+                 }
+             },
+             {
+                 title: "Action",
+                 field: "actions",
+                 hozAlign: "center",
+                 vertAlign: "middle",
+                 width: "8%",
+                 formatter: function(cell, formatterParams, onRendered) {
+                     var id = cell.getData().id;
 
-         $('#create-record').click(function() {
-             $.get("{{ route('cities.create') }}", form => {
-                 $('#crud').html(form.html);
-                 initCountiesSelect();
-                 $('#crud').find(".modal").modal('show');
-             });
-         });
-
-         // Attach the event listener directly to the table element
-         document.getElementById('cities-table').addEventListener("click", function(e) {
-             if (e.target.classList.contains("view-button")) {
-                 var cityId = e.target.getAttribute("data-id");
-                 openViewModal(cityId);
-             } else if (e.target.classList.contains("edit-button")) {
-                 var cityId = e.target.getAttribute("data-id");
-                 openUpdateModal(cityId);
+                     // Add buttons for each row
+                     return '<div class="button-container">' +
+                         '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                         '"></button>' +
+                         '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
+                         '</div>';
+                 }
              }
-         });
+         ],
+         pagination: 'local',
+         paginationSize: 10,
+         placeholder: "No Data Available"
+     });
 
-         function openUpdateModal(cityId) {
-             $.get("{{ route('cities.edit', ['city' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
-                 $('#crud').html(response.html);
-                 initCountiesSelect();
-                 $('#crud').find(".modal").modal('show');
-             });
+     $('#create-record').click(function() {
+         $.get("{{ route('cities.create') }}", form => {
+             $('#crud').html(form.html);
+             initCountiesSelect();
+             $('#crud').find(".modal").modal('show');
+         });
+     });
+
+     // Attach the event listener directly to the table element
+     document.getElementById('cities-table').addEventListener("click", function(e) {
+         if (e.target.classList.contains("view-button")) {
+             var cityId = e.target.getAttribute("data-id");
+             openViewModal(cityId);
+         } else if (e.target.classList.contains("edit-button")) {
+             var cityId = e.target.getAttribute("data-id");
+             openUpdateModal(cityId);
          }
+     });
 
-         // Function to open the view modal
-         function openViewModal(cityId) {
-             $.get("{{ route('cities.show', ['city' => '__city__']) }}".replace('__city__', cityId), function(response) {
-                 $('#crud').html(response.html);
-                 $('#crudModel').modal('show');
-             });
-         }
-
-         function printData() {
-             table.print(false, true);
-         }
-
-         // Add a reset button
-         var resetButton = document.getElementById("reset-button");
-
-         resetButton.addEventListener("click", function() {
-             table.clearFilter();
-             table.clearHeaderFilter();
+     function openUpdateModal(cityId) {
+         $.get("{{ route('cities.edit', ['city' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
+             $('#crud').html(response.html);
+             initCountiesSelect();
+             $('#crud').find(".modal").modal('show');
          });
+     }
 
-         $("#pageSizeDropdown").on("change", function() {
-             var selectedPageSize = parseInt($(this).val(), 10);
-             table.setPageSize(selectedPageSize);
+     // Function to open the view modal
+     function openViewModal(cityId) {
+         $.get("{{ route('cities.show', ['city' => '__city__']) }}".replace('__city__', cityId), function(response) {
+             $('#crud').html(response.html);
+             $('#crudModel').modal('show');
          });
+     }
 
-         //trigger download of data.csv file
-         document.getElementById("download-csv").addEventListener("click", function() {
-             table.download("csv", "Ancestor List.csv");
-         });
+     function printData() {
+         table.print(false, true);
+     }
 
-         //trigger download of data.xlsx file
-         document.getElementById("download-xlsx").addEventListener("click", function() {
-             table.download("xlsx", "Ancestor List.xlsx", {
-                 sheetName: "PASA01",
-             });
-         });
+     // Add a reset button
+     var resetButton = document.getElementById("reset-button");
 
-         //trigger download of data.pdf file
-         document.getElementById("download-pdf").addEventListener("click", function() {
-             table.download("pdf", "Ancestor List.pdf", {
-                 orientation: "landscape",
-                 title: "Ancestor List",
-             });
+     resetButton.addEventListener("click", function() {
+         table.clearFilter();
+         table.clearHeaderFilter();
+     });
+
+     $("#pageSizeDropdown").on("change", function() {
+         var selectedPageSize = parseInt($(this).val(), 10);
+         table.setPageSize(selectedPageSize);
+     });
+
+     //trigger download of data.csv file
+     document.getElementById("download-csv").addEventListener("click", function() {
+         table.download("csv", "Ancestor List.csv");
+     });
+
+     //trigger download of data.xlsx file
+     document.getElementById("download-xlsx").addEventListener("click", function() {
+         table.download("xlsx", "Ancestor List.xlsx", {
+             sheetName: "PASA01",
          });
-     </script>
+     });
+
+     //trigger download of data.pdf file
+     document.getElementById("download-pdf").addEventListener("click", function() {
+         table.download("pdf", "Ancestor List.pdf", {
+             orientation: "landscape",
+             title: "Ancestor List",
+         });
+     });
+ </script>
  @endsection
  <!-- app-content end-->
  @include('layout.footer')
