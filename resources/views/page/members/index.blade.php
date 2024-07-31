@@ -176,7 +176,8 @@
         var table = new Tabulator("#members-table", {
             data: membersData,
             layout: "fitColumns",
-            columns: [{
+            columns: [
+                {
                     title: 'ID',
                     field: 'id',
                     hozAlign: "right",
@@ -184,6 +185,12 @@
                     headerFilter: "input",
                     width: "8%",
                     headerFilterPlaceholder: 'Filter by ID'
+                },
+                {
+                    title: 'Title',
+                    field: 'title_id',
+                     visible: false,
+                     download: true
                 },
                 {
                     title: 'Given Name',
@@ -201,24 +208,12 @@
                     headerFilter: "input",
                     headerFilterPlaceholder: 'Filter by Family Name'
                 },
-                /*{
+                {
                     title: 'Approval Date',
                     field: 'approved_at',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilterPlaceholder: 'Filter by Approval Date',
-                    headerFilter: "input",
-                    formatter: function(cell, formatterParams, onRendered) {
-                        var date = new Date(cell.getValue());
-
-                        var day = date.getDate().toString().padStart(2, '0');
-                        var month = (date.getMonth() + 1).toString().padStart(2, '0');
-                        var year = date.getFullYear();
-                        var formattedDate = year + '-' + month + '-' + day;
-
-                        return formattedDate;
-                    }
-                },**/
+                     visible: false,
+                     download: true
+                },
                 {
                     title: 'Membership Type',
                     field: 'membership_type.name',
@@ -242,10 +237,29 @@
                     }
                 },
                 {
+                    title: 'Journal',
+                    field: 'journal',
+                    hozAlign: "left",
+                    vertAlign: "middle",
+                    headerFilter: "select",
+                    headerFilterParams: {
+                        values: {
+                            "0": "Email",
+                            "1": "Post",
+                        }
+                    },
+                    headerFilterPlaceholder: 'Filter by Journal',
+                    formatter: function(cell, formatterParams, onRendered) {
+                        var value = cell.getValue();
+                        return value == 0 ? "Email" : "Post";
+                    }
+                },
+                {
                     title: "Actions",
                     field: "actions",
                     hozAlign: "center",
                     width: "8%",
+                    download: false,
                     vertAlign: "middle",
                     formatter: function(cell, formatterParams, onRendered) {
                         var id = cell.getData().id;

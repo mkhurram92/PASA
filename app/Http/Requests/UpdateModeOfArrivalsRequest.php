@@ -18,7 +18,7 @@ class UpdateModeOfArrivalsRequest extends FormRequest
             "year"=> "nullable",
             "country_id"=> "nullable|exists:countries,id",
             "county_id"=> "nullable|exists:counties,id",
-            "city_id"=> "nullable|exists:cities,id",
+            "city_id"=> "nullable",
             "date_of_departure"=> "nullable|digits:2",
             "month_of_departure"=> "nullable|digits:2",
             "year_of_departure"=> "nullable|digits:4",

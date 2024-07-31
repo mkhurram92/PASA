@@ -80,11 +80,7 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">City  </label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2" placeholder="Select item" id="cities_select2" name="city_id">
-                                                        @if (!empty($modeOfArrival?->city?->id))
-                                                        <option value="{{ $modeOfArrival?->city?->id }}" selected>{{ $modeOfArrival?->city?->name }}</option>
-                                                        @endif
-                                                    </select>
+                                                    <input class="form-control" value="{{  $modeOfArrival?->city_id }}" type="text" name="city_id">
                                                 </div>
                                             </div>
 

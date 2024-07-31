@@ -82,8 +82,8 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">City </label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2" placeholder="Select item"
-                                                        id="cities_select2" name="city_id"></select>
+                                                    <input class="form-control" placeholder="City" type="text"
+                                                        name="city_id">
                                                 </div>
                                             </div>
 
@@ -173,7 +173,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
                     </form>
                 </div>
             </div>

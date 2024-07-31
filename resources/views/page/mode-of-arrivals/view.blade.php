@@ -73,7 +73,7 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-3 form-label">City</label>
                                             <div class="col-md-9">
-                                                <input class="form-control" type="text" value="{{ $modeOfArrival->city->name ?? '' }}" readonly disabled>
+                                                <input class="form-control" type="text" value="{{ $modeOfArrival->city_id ?? '' }}" readonly disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
