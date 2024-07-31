@@ -116,8 +116,8 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Birth Date</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Birth Date</label>
+                                                <div class="col-md-8">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
                                                             <input class="form-control" placeholder="YYYY"
@@ -125,29 +125,29 @@
                                                                 type="text" name="year_of_birth">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM"
-                                                                value="{{ $ancestor && $ancestor?->month_of_birth ? sprintf('%02d', $ancestor?->month_of_birth) : '' }}"
-                                                                type="text" name="month_of_birth">
+                                                                <select class="form-control month-select"
+                                                                        id="month_of_birth"
+                                                                        name="month_of_birth"></select>
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD"
-                                                                value="{{ $ancestor && $ancestor?->date_of_birth ? sprintf('%02d', $ancestor?->date_of_birth) : '' }}"
-                                                                type="text" name="date_of_birth">
+                                                                <select class="form-control month-select"
+                                                                        id="date_of_birth"
+                                                                        name="date_of_birth"></select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Birth Place</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Birth Place</label>
+                                                <div class="col-md-8">
                                                     <input class="form-control" type="text" placeholder="Birth Date"
                                                         value="{{ $ancestor?->place_of_birth }}" name="place_of_birth">
 
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Death Date</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Death Date</label>
+                                                <div class="col-md-8">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
                                                             <input class="form-control" placeholder="YYYY"
@@ -155,21 +155,21 @@
                                                                 type="text" name="year_of_death">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM"
-                                                                value="{{ $ancestor && $ancestor?->month_of_death ? sprintf('%02d', $ancestor?->month_of_death) : '' }}"
-                                                                type="text" name="month_of_death">
+                                                                <select class="form-control month-select"
+                                                                        id="month_of_death"
+                                                                        name="month_of_death"></select>
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD"
-                                                                value="{{ $ancestor && $ancestor?->date_of_death ? sprintf('%02d', $ancestor?->date_of_death) : '' }}"
-                                                                type="text" name="date_of_death">
+                                                            <select class="form-control day-select"
+                                                                        id="date_of_death"
+                                                                        name="date_of_death"></select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Death Place</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Death Place</label>
+                                                <div class="col-md-8">
                                                     <input class="form-control" type="text"
                                                         placeholder="Death Place"
                                                         value="{{ $ancestor?->place_of_death }}"
@@ -255,10 +255,10 @@
                                                 <div class="col-lg-6">
                                                     <h3 class="card-title">Pioneer Spouse’s Details</h3>
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Marriage Date<span
+                                                        <label class="col-md-4 form-label">Marriage Date<span
                                                                 class="text-danger"></span></label>
 
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-8">
                                                             <div class="row">
                                                                 <div class="col-4 pr-1">
                                                                     <input class="form-control" placeholder="YYYY"
@@ -266,14 +266,14 @@
                                                                         type="text" name="marriage_year">
                                                                 </div>
                                                                 <div class="col-4 px-1">
-                                                                    <input class="form-control" placeholder="MM"
-                                                                        value="{{ $ancestor?->spouse_details?->marriage_month }}"
-                                                                        type="text" name="marriage_month">
+                                                                    <select class="form-control month-select"
+                                                                        id="marriage_month"
+                                                                        name="marriage_month"></select>
                                                                 </div>
-                                                                <div class="col-4 pl-1">
-                                                                    <input class="form-control" placeholder="DD"
-                                                                        value="{{ $ancestor?->spouse_details?->marriage_date }}"
-                                                                        type="text" name="marriage_date">
+                                                                <div class="col-4 px-1">
+                                                                    <select class="form-control day-select"
+                                                                        id="marriage_date"
+                                                                        name="marriage_date"></select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -281,10 +281,10 @@
 
 
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Marriage Place<span
+                                                        <label class="col-md-4 form-label">Marriage Place<span
                                                                 class="text-danger"></span></label>
 
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-8">
                                                             <input class="form-control" type="text"
                                                                 placeholder="Marriage Place"
                                                                 value="{{ $ancestor?->spouse_details?->marriage_place }}"
@@ -294,10 +294,10 @@
                                                     </div>
 
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Spouse’s Family
+                                                        <label class="col-md-4 form-label">Spouse’s Family
                                                             Name<span class="text-danger"></span></label>
 
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-8">
                                                             <input class="form-control" type="text"
                                                                 placeholder="Spouse’s Family Name"
                                                                 id="spouse_family_name" name="spouse_family_name"
@@ -306,10 +306,10 @@
                                                     </div>
 
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Spouse’s Given
+                                                        <label class="col-md-4 form-label">Spouse’s Given
                                                             Name<span class="text-danger"></span></label>
 
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-8">
                                                             <input class="form-control" type="text"
                                                                 placeholder="Spouse’s Given Name"
                                                                 value="{{ $ancestor?->spouse_details?->spouse_given_name }}"
@@ -318,8 +318,8 @@
                                                     </div>
 
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Birth Date</label>
-                                                        <div class="col-md-9">
+                                                        <label class="col-md-4 form-label">Birth Date</label>
+                                                        <div class="col-md-8">
                                                             <div class="row">
                                                                 <div class="col-4 pr-1">
                                                                     <input class="form-control" placeholder="YYYY"
@@ -327,21 +327,22 @@
                                                                         type="text" name="spouse_birth_year">
                                                                 </div>
                                                                 <div class="col-4 px-1">
-                                                                    <input class="form-control" placeholder="MM"
-                                                                        value="{{ $ancestor?->spouse_details?->spouse_birth_month }}"
-                                                                        type="text" name="spouse_birth_month">
+                                                                    <select class="form-control month-select"
+                                                                        name="spouse_birth_month"
+                                                                        id="spouse_birth_month"></select>
+
                                                                 </div>
                                                                 <div class="col-4 pl-1">
-                                                                    <input class="form-control" placeholder="DD"
-                                                                        value="{{ $ancestor?->spouse_details?->spouse_birth_date }}"
-                                                                        type="text" name="spouse_birth_date">
+                                                                    <select class="form-control day-select"
+                                                                        name="spouse_birth_date"
+                                                                        id="spouse_birth_date"></select>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Birth Place</label>
-                                                        <div class="col-md-9">
+                                                        <label class="col-md-4 form-label">Birth Place</label>
+                                                        <div class="col-md-8">
                                                             <input class="form-control" type="text"
                                                                 placeholder="Birth Place"
                                                                 value="{{ $ancestor?->spouse_details?->spouse_birth_place }}"
@@ -350,8 +351,8 @@
                                                     </div>
 
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Death Date</label>
-                                                        <div class="col-md-9">
+                                                        <label class="col-md-4 form-label">Death Date</label>
+                                                        <div class="col-md-8">
                                                             <div class="row">
                                                                 <div class="col-4 pr-1">
                                                                     <input class="form-control" placeholder="YYYY"
@@ -359,22 +360,22 @@
                                                                         type="text" name="spouse_death_year">
                                                                 </div>
                                                                 <div class="col-4 px-1">
-                                                                    <input class="form-control" placeholder="MM"
-                                                                        value="{{ $ancestor?->spouse_details?->spouse_death_month }}"
-                                                                        type="text" name="spouse_death_month">
+                                                                    <select class="form-control month-select"
+                                                                        name="spouse_death_month"
+                                                                        id="spouse_death_month"></select>
                                                                 </div>
                                                                 <div class="col-4 pl-1">
-                                                                    <input class="form-control" placeholder="DD"
-                                                                        value="{{ $ancestor?->spouse_details?->spouse_death_date }}"
-                                                                        type="text" name="spouse_death_date">
+                                                                    <select class="form-control day-select"
+                                                                        name="spouse_death_date"
+                                                                        id="spouse_death_date"></select>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="mb-3 row">
-                                                        <label class="col-md-3 form-label">Death Place</label>
-                                                        <div class="col-md-9">
+                                                        <label class="col-md-4 form-label">Death Place</label>
+                                                        <div class="col-md-8">
                                                             <input class="form-control" type="text"
                                                                 placeholder="Death Place"
                                                                 value="{{ $ancestor?->spouse_details?->spouse_death_place }}"
@@ -400,41 +401,34 @@
 @section('scripts')
     @include('plugins.select2')
     <script>
-        //$(document).ready(function() {
-        // Check if the script is running
-        //console.log("Script is running.");
+        const existingMonthOfMarriage = ("{{ $ancestor?->spouse_details?->marriage_month }}" || "").padStart(2, '0');
+        const existingDateOfMarriage = ("{{ $ancestor?->spouse_details?->marriage_date }}" || "").padStart(2, '0');
 
-        // Function to handle showing/hiding sections based on radio button value
-        /**
-                function handleRadioButtonChange() {
-                    var selectedValue = $("input[name='travel_to_sa']:checked").val();
-                    console.log("Selected value:", selectedValue);
+        const existingSpouseMonthOfDeath = ("{{ $ancestor?->spouse_details?->spouse_death_month }}" || "").padStart(2, '0');
+        const existingSpouseDateOfDeath = ("{{ $ancestor?->spouse_details?->spouse_death_date }}" || "").padStart(2, '0');
 
-                    // Hide all sections initially
-                    $("#marriage_date_section, #marriage_place_section, #spouse_family_name_section, #spouse_given_name_section, #spouse_birth_section, #spouse_death_section, #spouse_place_of_death, #spouse_date_of_death, #spouse_place_of_birth, #spouse_date_of_birth")
-                        .hide();
+        const existingSpouseMonthOfBirth = ("{{ $ancestor?->spouse_details?->spouse_birth_month }}" || "").padStart(2, '0');
+        const existingSpouseDateOfBirth = ("{{ $ancestor?->spouse_details?->spouse_birth_date }}" || "").padStart(2, '0');
 
-                    // Check if 'Yes' is selected
-                    if (selectedValue === "1") {
-                        // Show specific sections
-                        $("#marriage_date_section, #marriage_place_section, #spouse_family_name_section, #spouse_given_name_section, #spouse_birth_section, #spouse_death_section, #spouse_place_of_death, #spouse_date_of_death, #spouse_place_of_birth, #spouse_date_of_birth")
-                            .show();
+        const existingMonthOfBirth = ("{{ $ancestor?->month_of_birth }}" || "").padStart(2, '0');
+        const existingDateOfBirth = ("{{ $ancestor?->date_of_birth }}" || "").padStart(2, '0');
+        
+        const existingMonthOfDeath = ("{{ $ancestor?->month_of_death }}" || "").padStart(2, '0');
+        const existingDateOfDeath = ("{{ $ancestor?->date_of_death }}" || "").padStart(2, '0');
 
-                        // Log a message indicating 'Yes' is selected
-                        console.log("Radio Button Value on Change: 1");
-                    } else {
-                        // Log a message indicating 'No' is selected
-                        console.log("Radio Button Value on Change: 0");
-                    }
-                }
+        initMonthSelect2($("#marriage_month"), existingMonthOfMarriage);
+        initDaySelect2($("#marriage_date"), existingDateOfMarriage);
 
-                // Handle radio button change
-                $("input[name='travel_to_sa']").on("change", handleRadioButtonChange);
+        initMonthSelect2($("#spouse_death_month"), existingSpouseMonthOfDeath);
+        initDaySelect2($("#spouse_death_date"), existingSpouseDateOfDeath);
+        
+        initMonthSelect2($("#spouse_birth_month"), existingSpouseMonthOfBirth);
+        initDaySelect2($("#spouse_birth_date"), existingSpouseDateOfBirth);
 
-                // Check the initial value on load
-                handleRadioButtonChange();
-            });*/
-
+        initMonthSelect2($("#month_of_birth"), existingMonthOfBirth);
+        initDaySelect2($("#date_of_birth"), existingDateOfBirth);
+        initMonthSelect2($("#month_of_death"), existingMonthOfDeath);
+        initDaySelect2($("#date_of_death"), existingDateOfDeath);
 
 
 

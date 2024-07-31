@@ -157,7 +157,6 @@
                                                             <select class="form-control month-select"
                                                                 name="month_of_birth"></select>
                                                         </div>
-
                                                         <!-- Day Select2 -->
                                                         <div class="col-4 px-1">
                                                             <select class="form-control day-select"

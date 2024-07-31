@@ -96,12 +96,12 @@
                                                                 type="text" name="year_of_departure">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" type="text"
-                                                                name="month_of_departure">
+                                                            <select class="form-control month-select"
+                                                                name="month_of_departure"></select>
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" type="text"
-                                                                name="date_of_departure">
+                                                            <select class="form-control day-select"
+                                                                name="date_of_departure"></select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -125,12 +125,12 @@
                                                                 value="" type="text" name="year_of_arrival">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" value=""
-                                                                type="text" name="month_of_arrival">
+                                                            <select class="form-control month-select"
+                                                                name="month_of_arrival"></select>
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD"
-                                                                value="" type="text" name="date_of_arrival">
+                                                            <select class="form-control day-select"
+                                                                name="date_of_arrival"></select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -187,6 +187,9 @@
 @section('scripts')
     @include('plugins.select2')
     <script>
+        initMonthSelect2(); // Initialize month dropdowns
+        initDaySelect2(); // Initialize day dropdowns
+
         var dt_ship_elem = $("#ship-table"),
             dt_ship = "";
     </script>

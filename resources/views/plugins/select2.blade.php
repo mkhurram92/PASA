@@ -51,7 +51,7 @@
 
     function initMonthSelect2(elem = null, selectedValue = '') {
         if (!elem) {
-            elem = $(".month-select"); // Changed to class selector to handle multiple elements
+            elem = $(".month-select");
         }
         elem.each(function() {
             if ($(this).data('select2')) {
@@ -66,7 +66,7 @@
                 data: [{
                         id: '',
                         text: 'Month'
-                    }, // Placeholder option
+                    },
                     {
                         id: "01",
                         text: "Jan"
@@ -117,12 +117,13 @@
                     }
                 ]
             }).val(selectedValue).trigger('change');
+            console.log('Month Select2 initialized for element:', this, 'with value:', selectedValue);
         });
     }
 
     function initDaySelect2(elem = null, selectedValue = '') {
         if (!elem) {
-            elem = $(".day-select"); // Changed to class selector to handle multiple elements
+            elem = $(".day-select");
         }
         elem.each(function() {
             if ($(this).data('select2')) {
@@ -136,7 +137,7 @@
             days.push({
                 id: '',
                 text: 'Date'
-            }); // Placeholder option
+            });
             for (let i = 1; i <= 31; i++) {
                 let day = i < 10 ? '0' + i : i.toString();
                 days.push({
@@ -149,8 +150,10 @@
                 dropdownParent: $(this).parent(),
                 data: days
             }).val(selectedValue).trigger('change');
+            console.log('Day Select2 initialized for element:', this, 'with value:', selectedValue);
         });
     }
+
 
     function initShipSelect(element = null) {
         if (!element) {

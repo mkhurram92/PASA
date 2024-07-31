@@ -16,24 +16,27 @@
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
                         @if ($errors->any())
-                        <div class="alert alert-danger">
-                            {{ $errors->first() }}
-                        </div>
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
+                            </div>
                         @elseif(session('error'))
-                        <div class="alert alert-danger">
-                            {{ session('error') }}
-                        </div>
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
                         @elseif(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
                         @endif
-                        <form class="form-horizontal" action="{{ route("mode-of-arrivals.update",["mode_of_arrival"=>$modeOfArrival?->id]) }}" method="POST">
-                            @method("PUT")
+                        <form class="form-horizontal"
+                            action="{{ route('mode-of-arrivals.update', ['mode_of_arrival' => $modeOfArrival?->id]) }}"
+                            method="POST">
+                            @method('PUT')
                             <div class="card-header justify-content-between">
                                 <h3 class="card-title">Update Journey</h3>
                                 <div class="text-right">
-                                    <input type="submit" class="btn btn-primary btn-block" data-bs-effect="effect-slide-in-right" value="Update Arrival">
+                                    <input type="submit" class="btn btn-primary btn-block"
+                                        data-bs-effect="effect-slide-in-right" value="Update Arrival">
                                 </div>
                             </div>
                             <div class="card-body p-0">
@@ -41,11 +44,14 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Ship <span class="text-danger">*</span></label>
+                                                <label class="col-md-3 form-label">Ship <span
+                                                        class="text-danger">*</span></label>
 
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2" id="ship_select2" name="ship_id">
-                                                        <option value="{{ $modeOfArrival?->ship?->id }}" selected>{{ $modeOfArrival?->ship?->name_of_ship }}</option>
+                                                    <select class="form-control select2" id="ship_select2"
+                                                        name="ship_id">
+                                                        <option value="{{ $modeOfArrival?->ship?->id }}" selected>
+                                                            {{ $modeOfArrival?->ship?->name_of_ship }}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -53,34 +59,40 @@
                                                 <label class="col-md-3 form-label">Arrival Year </label>
 
                                                 <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="YYYY" value="{{ $modeOfArrival?->year }}" name="year">
+                                                    <input class="form-control" type="text" placeholder="YYYY"
+                                                        value="{{ $modeOfArrival?->year }}" name="year">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Country  </label>
+                                                <label class="col-md-3 form-label">Country </label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2" id="countries_select2" name="country_id">
+                                                    <select class="form-control select2" id="countries_select2"
+                                                        name="country_id">
                                                         @if (!empty($modeOfArrival?->country?->id))
-                                                        <option value="{{ $modeOfArrival?->country?->id }}" selected>{{ $modeOfArrival?->country?->name }}</option>
+                                                            <option value="{{ $modeOfArrival?->country?->id }}"
+                                                                selected>{{ $modeOfArrival?->country?->name }}</option>
                                                         @endif
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">County  </label>
+                                                <label class="col-md-3 form-label">County </label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2" id="counties_select2" name="county_id">
+                                                    <select class="form-control select2" id="counties_select2"
+                                                        name="county_id">
                                                         @if (!empty($modeOfArrival?->county?->id))
-                                                        <option value="{{ $modeOfArrival?->county?->id }}" selected>{{ $modeOfArrival?->county?->name }}</option>
+                                                            <option value="{{ $modeOfArrival?->county?->id }}" selected>
+                                                                {{ $modeOfArrival?->county?->name }}</option>
                                                         @endif
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">City  </label>
+                                                <label class="col-md-3 form-label">City </label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control" value="{{  $modeOfArrival?->city_id }}" type="text" name="city_id">
+                                                    <input class="form-control" value="{{ $modeOfArrival?->city_id }}"
+                                                        type="text" name="city_id">
                                                 </div>
                                             </div>
 
@@ -89,23 +101,31 @@
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
-                                                            <input class="form-control" placeholder="YYYY" value="{{ $modeOfArrival ? $modeOfArrival->year_of_departure : '' }}" type="text" name="year_of_departure">
+                                                            <input class="form-control" placeholder="YYYY"
+                                                                value="{{ $modeOfArrival ? $modeOfArrival->year_of_departure : '' }}"
+                                                                type="text" name="year_of_departure">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" value="{{ $modeOfArrival && $modeOfArrival->month_of_departure ? sprintf('%02d', $modeOfArrival->month_of_departure) : '' }}" type="text" name="month_of_departure">
+                                                            <select class="form-control month-select"
+                                                                id="month_of_departure"
+                                                                name="month_of_departure"></select>
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" value="{{ $modeOfArrival && $modeOfArrival->date_of_departure ? sprintf('%02d', $modeOfArrival->date_of_departure) : '' }}" type="text" name="date_of_departure">
+                                                            <select class="form-control day-select"
+                                                                id="date_of_departure"
+                                                                name="date_of_departure"></select>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                                                            
+
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Arrived At  </label>
+                                                <label class="col-md-3 form-label">Arrived At </label>
                                                 <div class="col-md-9">
-                                                    <select class="form-control select2" name="arrived_at" id="arrived_at_select2">
-                                                        <option value="{{ $modeOfArrival?->port?->id }}" selected>{{ $modeOfArrival?->port?->name }}</option>
+                                                    <select class="form-control select2" name="arrived_at"
+                                                        id="arrived_at_select2">
+                                                        <option value="{{ $modeOfArrival?->port?->id }}" selected>
+                                                            {{ $modeOfArrival?->port?->name }}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -114,13 +134,18 @@
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
-                                                            <input class="form-control" placeholder="YYYY" value="{{ $modeOfArrival ? $modeOfArrival->year_of_arrival : '' }}" type="text" name="year_of_arrival">
+                                                            <input class="form-control" placeholder="YYYY"
+                                                                value="{{ $modeOfArrival ? $modeOfArrival->year_of_arrival : '' }}"
+                                                                type="text" name="year_of_arrival">
                                                         </div>
                                                         <div class="col-4 px-1">
-                                                            <input class="form-control" placeholder="MM" value="{{ $modeOfArrival && $modeOfArrival->month_of_arrival ? sprintf('%02d', $modeOfArrival->month_of_arrival) : '' }}" type="text" name="month_of_arrival">
+                                                            <select class="form-control month-select"
+                                                                id="month_of_arrival"
+                                                                name="month_of_arrival"></select>
                                                         </div>
                                                         <div class="col-4 pl-1">
-                                                            <input class="form-control" placeholder="DD" value="{{ $modeOfArrival && $modeOfArrival->date_of_arrival ? sprintf('%02d', $modeOfArrival->date_of_arrival) : '' }}" type="text" name="date_of_arrival">
+                                                            <select class="form-control day-select"
+                                                                id="date_of_arrival" name="date_of_arrival"></select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -128,15 +153,21 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="row mb-3">
-                                                <label class="col-md-3 form-label">Ship Commander  </label>
+                                                <label class="col-md-3 form-label">Ship Commander </label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control" type="text" placeholder="Ship Commander" value="{{ $modeOfArrival?->ship_commander }}" name="ship_commander">
+                                                    <input class="form-control" type="text"
+                                                        placeholder="Ship Commander"
+                                                        value="{{ $modeOfArrival?->ship_commander }}"
+                                                        name="ship_commander">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Embarkation Number  </label>
+                                                <label class="col-md-3 form-label">Embarkation Number </label>
                                                 <div class="col-md-9">
-                                                    <input type="text" class="form-control" placeholder="Embarkation Number" value="{{ $modeOfArrival?->embarkation_number }}" name="embarkation_number">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Embarkation Number"
+                                                        value="{{ $modeOfArrival?->embarkation_number }}"
+                                                        name="embarkation_number">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -146,7 +177,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Ports of Call  </label>
+                                                <label class="col-md-3 form-label">Ports of Call </label>
                                                 <div class="col-md-9">
                                                     <textarea class="form-control" rows="3" placeholder="Ports of call" name="ports_of_call">{{ $modeOfArrival?->ports_of_call }} </textarea>
                                                 </div>
@@ -166,13 +197,22 @@
 <!-- MODAL EFFECTS -->
 <div id="crud"></div>
 @section('scripts')
-@include('plugins.select2')
-<script>
-    var dt_ship_elem = $("#ship-table")
-        , dt_ship = "";
+    @include('plugins.select2')
+    <script>
+        const existingMonthOfDeparture = ("{{ $modeOfArrival->month_of_departure }}" || "").padStart(2, '0');
+        const existingDayOfDeparture = ("{{ $modeOfArrival->date_of_departure }}" || "").padStart(2, '0');
+        const existingMonthOfArrival = ("{{ $modeOfArrival->month_of_arrival }}" || "").padStart(2, '0');
+        const existingDayOfArrival = ("{{ $modeOfArrival->date_of_arrival }}" || "").padStart(2, '0');
 
-</script>
-@include("page.mode-of-arrivals.scripts")
+        initMonthSelect2($("#month_of_departure"), existingMonthOfDeparture);
+        initDaySelect2($("#date_of_departure"), existingDayOfDeparture);
+        initMonthSelect2($("#month_of_arrival"), existingMonthOfArrival);
+        initDaySelect2($("#date_of_arrival"), existingDayOfArrival);
+        
+        var dt_ship_elem = $("#ship-table"),
+            dt_ship = "";
+    </script>
+    @include('page.mode-of-arrivals.scripts')
 @endsection
 <!-- app-content end-->
 @include('layout.footer')

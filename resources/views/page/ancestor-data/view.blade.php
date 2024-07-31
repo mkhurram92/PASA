@@ -246,7 +246,7 @@
                                             <div class="col-lg-6">
                                                 <h3 class="card-title">Pioneer Spouse’s Details</h3>
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Marriage Date<span
+                                                    <label class="col-md-4 form-label">Marriage Date<span
                                                             class="text-danger"></span></label>
                                                     <div class="col-md-8">
                                                         <div class="row">
@@ -283,10 +283,10 @@
                                                 </div>
 
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Marriage Place<span
+                                                    <label class="col-md-4 form-label">Marriage Place<span
                                                             class="text-danger"></span></label>
 
-                                                    <div class="col-md-9">
+                                                    <div class="col-md-8">
                                                         <input class="form-control" type="text"
                                                             id="marriage_place" name="marriage_place"
                                                             value="{{ $ancestor?->spouse_details?->marriage_place }}"
@@ -294,10 +294,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Spouse’s Family Name<span
+                                                    <label class="col-md-4 form-label">Spouse’s Family Name<span
                                                             class="text-danger"></span></label>
 
-                                                    <div class="col-md-9">
+                                                    <div class="col-md-8">
                                                         <input class="form-control" type="text"
                                                             id="spouse_family_name" name="spouse_family_name"
                                                             value="{{ $ancestor?->spouse_details?->spouse_family_name }}"
@@ -305,10 +305,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Spouse’s Given Name(s)<span
+                                                    <label class="col-md-4 form-label">Spouse’s Given Name(s)<span
                                                             class="text-danger"></span></label>
 
-                                                    <div class="col-md-9">
+                                                    <div class="col-md-8">
                                                         <input class="form-control" type="text"
                                                             value="{{ $ancestor?->spouse_details?->spouse_given_name }}"
                                                             id="spouse_given_name" name="spouse_given_name" disabled
@@ -316,7 +316,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Birth Date</label>
+                                                    <label class="col-md-4 form-label">Birth Date</label>
                                                     <div class="col-md-8">
                                                         <div class="row">
                                                             <div class="col-12">
@@ -351,15 +351,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Birth Place</label>
-                                                    <div class="col-md-9">
+                                                    <label class="col-md-4 form-label">Birth Place</label>
+                                                    <div class="col-md-8">
                                                         <input class="form-control" type="text"
                                                             value="{{ $ancestor?->spouse_details?->spouse_birth_place }}"
                                                             name="spouse_birth_place" disabled readonly>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Death Date</label>
+                                                    <label class="col-md-4 form-label">Death Date</label>
                                                     <div class="col-md-8">
                                                         <div class="row">
                                                             <div class="col-12">
@@ -394,8 +394,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-3 form-label">Death Place</label>
-                                                    <div class="col-md-9">
+                                                    <label class="col-md-4 form-label">Death Place</label>
+                                                    <div class="col-md-8">
                                                         <input class="form-control" type="text"
                                                             value="{{ $ancestor?->spouse_details?->spouse_death_place }}"
                                                             name="spouse_death_place" disabled readonly>
