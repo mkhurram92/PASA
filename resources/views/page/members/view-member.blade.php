@@ -229,7 +229,7 @@
                                             <label class="col-md-4 form-label">General
                                                 Notes</label>
                                             <div class="col-md-8">
-                                                <textarea class="form-control" name="general_notes" rows="5" readonly disabled>
+                                                <textarea class="form-control text-left" name="general_notes" rows="5" readonly disabled>
                                                     {{ $member?->additionalInfo?->general_notes }}
                                                 </textarea>
                                             </div>
