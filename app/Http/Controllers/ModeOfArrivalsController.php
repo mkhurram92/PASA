@@ -50,17 +50,26 @@ class ModeOfArrivalsController extends Controller
      */
     public function store(StoreModeOfArrivalsRequest $request)
     {
-        $data = $request->validated();
-        //Log::debug('Validated data:', $data);
+        try {
+            $data = $request->validated();
+            //Log::debug('Validated data:', $data);
 
-        // Save only the 'ship_id' and non-null fields from $data
-        $filteredData = array_filter($data, function ($value) {
-            return !is_null($value);
-        });
+            // Save only the 'ship_id' and non-null fields from $data
+            $filteredData = array_filter($data, function ($value) {
+                return !is_null($value);
+            });
 
-        ModeOfArrivals::create($filteredData);
+            ModeOfArrivals::create($filteredData);
 
-        return response()->json(['status' => true, "message" => "Arrival created", "redirectTo" => route("mode-of-arrivals.index")]);
+            return response()->json([
+                "status" => true,
+                "message" => "Journey Created Successfully",
+                "redirectTo" => route("mode-of-arrivals.index")
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(["status" => false, "message" => $e->getMessage()]);
+        }
+        //return response()->json(['status' => true, "message" => "Arrival created", "redirectTo" => route("mode-of-arrivals.index")]);
     }
 
     /**
@@ -108,10 +117,19 @@ class ModeOfArrivalsController extends Controller
             $updatedModeOfArrival = ModeOfArrivals::find($modeOfArrivals);
 
             // Redirect to the view of the updated mode of arrival
-            return response()->json(['status' => true, "message" => "Arrival Updated", "redirectTo" => route("mode-of-arrivals.show", $updatedModeOfArrival)]);
-        } catch (\Throwable $th) {
-            return response()->json(['status' => false]);
-        }
+        //    return response()->json(['status' => true, "message" => "Arrival Updated", "redirectTo" => route("mode-of-arrivals.show", $updatedModeOfArrival)]);
+        //} catch (\Throwable $th) {
+        //    return response()->json(['status' => false]);
+        //}
+
+        return response()->json([
+            "status" => true,
+            "message" => "Journey Updated Successfully",
+            "redirectTo" => route("mode-of-arrivals.show", $updatedModeOfArrival)]
+        );
+    } catch (\Exception $e) {
+        return response()->json(["status" => false, "message" => $e->getMessage()]);
+    }
     }
 
 

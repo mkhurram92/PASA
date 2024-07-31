@@ -15,17 +15,17 @@ class UpdateModeOfArrivalsRequest extends FormRequest
     {
         return [
             "ship_id" => "required|exists:ships,id",
-            "year"=> "nullable",
+            "year"=> "nullable|regex:/^\d{4}$/",
             "country_id"=> "nullable|exists:countries,id",
             "county_id"=> "nullable|exists:counties,id",
             "city_id"=> "nullable",
             "date_of_departure"=> "nullable|digits:2",
             "month_of_departure"=> "nullable|digits:2",
-            "year_of_departure"=> "nullable|digits:4",
+            "year_of_departure" =>'nullable|regex:/^\d{4}$/',
             "arrived_at"=> "nullable|exists:ports,id",
             "date_of_arrival"=> "nullable|digits:2",
             "month_of_arrival"=> "nullable|digits:2",
-            "year_of_arrival"=> "nullable|digits:4",
+            "year_of_arrival"=> "nullable|regex:/^\d{4}$/",
             "ship_commander"=> "nullable",
             "embarkation_number"=> "nullable",
             "notes"=> "nullable",
@@ -35,23 +35,11 @@ class UpdateModeOfArrivalsRequest extends FormRequest
     public function messages()
     {
         return [
-            "ship_id.required" => "Ship field is required",
-            "ship_id.exists" => "Ship Not Found",
-/*            "year.required" => "Year field is required",
-            "year.digits" => "Invalid Year",
-            "country_id.required" => "Country field is required",
-            "country_id.exists" => "County Not Found",
-            "county_id.required" => "County field is required",
-            "county_id.exists" => "County Not Found",
-            "city_id.required" => "City field is required",
-            "city_id.exists" => "City Not Found",
-            "date_of_departure.required" => "Date of Departure field is required",
-            "arrived_at.required" => "Arrived At field is required",
-            "arrived_at.exists" => "Port Not Found",
-            "date_of_arrival.required" => "Date of Arrival field is required",
-            "ship_commander.required" => "Ship Commander field is required",
-            "embarkation_number.required" => "Embarkation Number field is required",
-            "ports_of_call.required" => "Ports of Call field is required",**/
+            "ship_id.required"=>"Ship field is required",
+            "ship_id.exists"=>"Ship Not Found",
+            "year" => "Arrival year must be exactly 4 digits or left blank",
+            "year_of_arrival"=>"Arrival year must be exactly 4 digits or left blank",
+            "year_of_departure"=>"Departure year must be exactly 4 digits or left blank",
         ];
     }
 }

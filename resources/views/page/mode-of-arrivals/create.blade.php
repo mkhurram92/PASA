@@ -17,21 +17,8 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                {{ $errors->first() }}
-                            </div>
-                        @elseif(session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @elseif(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        <form class="form-horizontal" action="{{ route('mode-of-arrivals.store') }}" method="POST">
+                        <form id="journey-form" class="form-horizontal" action="{{ route('mode-of-arrivals.store') }}"
+                            method="POST">
                             <div class="card-header justify-content-between">
                                 <h3 class="card-title">Add a Journey</h3>
 
@@ -173,25 +160,73 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 
 <!-- MODAL EFFECTS -->
 <div id="crud"></div>
 @section('scripts')
+    <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+
     @include('plugins.select2')
     <script>
-        initMonthSelect2(); // Initialize month dropdowns
-        initDaySelect2(); // Initialize day dropdowns
+        initMonthSelect2();
+        initDaySelect2();
 
-        var dt_ship_elem = $("#ship-table"),
-            dt_ship = "";
+        $(document).ready(function() {
+
+            // Handle form submission via AJAX
+            $('#journey-form').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: response.message,
+                                confirmButtonText: 'OK',
+                                timer: 10000,
+                                timerProgressBar: true,
+                            }).then((result) => {
+                                if (response.redirectTo) {
+                                    window.location.href = response.redirectTo;
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: response.message,
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        // Extract error message from response
+                        var errorMessage = xhr.responseJSON && xhr.responseJSON.message ?
+                            xhr.responseJSON.message :
+                            'An unexpected error occurred. Please try again later.';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: errorMessage,
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            });
+        });
     </script>
     @include('page.mode-of-arrivals.scripts')
 @endsection

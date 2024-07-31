@@ -64,7 +64,7 @@
             $(this).select2({
                 dropdownParent: $(this).parent(),
                 data: [{
-                        id: '00',
+                        id: '',
                         text: 'Month'
                     },
                     {
@@ -135,7 +135,7 @@
             }
             const days = [];
             days.push({
-                id: '00',
+                id: '',
                 text: 'Date'
             });
             for (let i = 1; i <= 31; i++) {
