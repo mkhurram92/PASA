@@ -66,14 +66,14 @@
                                         <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Add</i>
                                     </a>
                                 @endif
-                                @if(Auth::user()->name =='Admin')
-                                <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
-                                    <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                </a>
+                                @if (Auth::user()->name == 'Admin')
+                                    <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
+                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                    </a>
                                 @else
-                                <a class="btn btn-info" href="{{ route('profile') }}">
-                                    <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                </a>
+                                    <a class="btn btn-info" href="{{ route('profile') }}">
+                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                    </a>
                                 @endif
                             </div>
                         </div>
@@ -150,7 +150,13 @@
                                             <div class="col-md-2">
                                                 <label class="form-control-label">Marriage Place</label>
                                                 <input class="form-control" type="text"
-                                                    value="{{ $pedigree->place_of_marriage ?? '' }}" readonly disabled>
+                                                    value="{{ $pedigree->place_of_marriage ?? '' }}" readonly
+                                                    disabled>
+                                            </div>
+                                            <div><br></div>
+                                            <div class="col-md-12">
+                                                <label class="form-control-label">Additional Notes</label>
+                                                <textarea class="form-control" rows="4" readonly disabled>{{ $pedigree->notes ?? '' }}</textarea>
                                             </div>
                                         </div>
                                         <br>

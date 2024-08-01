@@ -21,6 +21,7 @@ class Member extends Model
     {
         return $this->hasMany(MemberPedigree::class);
     }
+    
     public function parent_member()
     {
         return $this->hasOne(Member::class, "id", "parent_id");
@@ -74,5 +75,4 @@ class Member extends Model
     {
         return $this->belongsTo(Title::class, 'title_id');
     }
-    
 }

@@ -14,6 +14,7 @@ class MemberPedigree extends Model
      * @var array
      */
     protected $guarded = [];
+    
     public function member()
     {
         return $this->belongsTo(Member::class);

@@ -89,7 +89,8 @@
                                                     <label class="form-control-label">Birth Date</label>
                                                     <input class="form-control"
                                                         name="pedigree[{{ $index }}][date_of_birth]"
-                                                        value="{{ $pedigree->date_of_birth ?? '' }}" placeholder="YYYY-MM-DD"  type="text">
+                                                        value="{{ $pedigree->date_of_birth ?? '' }}"
+                                                        placeholder="YYYY-MM-DD" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Birth Place</label>
@@ -101,7 +102,8 @@
                                                     <label class="form-control-label">Death Date</label>
                                                     <input class="form-control"
                                                         name="pedigree[{{ $index }}][date_of_death]"
-                                                        value="{{ $pedigree->date_of_death ?? '' }}"  placeholder="YYYY-MM-DD"  type="text">
+                                                        value="{{ $pedigree->date_of_death ?? '' }}"
+                                                        placeholder="YYYY-MM-DD" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Death Place</label>
@@ -113,7 +115,8 @@
                                                     <label class="form-control-label">Marriage Date</label>
                                                     <input class="form-control"
                                                         name="pedigree[{{ $index }}][date_of_marriage]"
-                                                        value="{{ $pedigree->date_of_marriage ?? '' }}" placeholder="YYYY-MM-DD"  type="text">
+                                                        value="{{ $pedigree->date_of_marriage ?? '' }}"
+                                                        placeholder="YYYY-MM-DD" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Mother Name</label>
@@ -125,7 +128,8 @@
                                                     <label class="form-control-label">Birth Date</label>
                                                     <input class="form-control"
                                                         name="pedigree[{{ $index }}][m_birth_date]"
-                                                        value="{{ $pedigree->m_birth_date ?? '' }}" placeholder="YYYY-MM-DD"  type="text">
+                                                        value="{{ $pedigree->m_birth_date ?? '' }}"
+                                                        placeholder="YYYY-MM-DD" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Birth Place</label>
@@ -137,7 +141,8 @@
                                                     <label class="form-control-label">Death Date</label>
                                                     <input class="form-control"
                                                         name="pedigree[{{ $index }}][m_death_date]"
-                                                        value="{{ $pedigree->m_death_date ?? '' }}" placeholder="YYYY-MM-DD"  type="text">
+                                                        value="{{ $pedigree->m_death_date ?? '' }}"
+                                                        placeholder="YYYY-MM-DD" type="text">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label class="form-control-label">Death Place</label>
@@ -151,6 +156,11 @@
                                                         name="pedigree[{{ $index }}][place_of_marriage]"
                                                         value="{{ $pedigree->place_of_marriage ?? '' }}"
                                                         type="text">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label class="form-control-label">Additional Notes</label>
+                                                    <textarea class="form-control" name="pedigree[{{ $index }}][notes]" rows="4">{{ $pedigree->notes ?? '' }}</textarea>
+
                                                 </div>
                                                 <input type="hidden" name="pedigree[{{ $index }}][id]"
                                                     value="{{ $pedigree->id }}">
@@ -241,6 +251,10 @@
                 <div class="col-md-2">
                     <label class="form-control-label">Marriage Place</label>
                     <input class="form-control" name="pedigree[${pedigreeIndex}][place_of_marriage]" type="text">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-control-label">Additional Notes</label>
+                    <textarea class="form-control" name="pedigree[${pedigreeIndex}][notes]" rows="4"></textarea>
                 </div>
                 <div class="col-md-1 remove-button">
                     <button type="button" class="btn btn-danger" onclick="removePedigreeForm(this)">Remove</button>
