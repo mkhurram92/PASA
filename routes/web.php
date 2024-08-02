@@ -41,6 +41,7 @@ use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\Account;
 use App\Models\MembershipStatus;
+use App\Http\Controllers\MemberAncestorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +98,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('members/add-pedigree/{id}', [SubscribeMemberController::class, 'addPedigree'])->name('members.addPedigree');
     Route::post('members/store-pedigree/{id}', [SubscribeMemberController::class, 'storePedigree'])->name('members.storePedigree');
     Route::put('members/update/{member}', [SubscribeMemberController::class, 'update'])->name('members.update');
+    Route::get('members/{id}/ancestors', [SubscribeMemberController::class, 'showAncestors']);
+
+    Route::prefix('member_ancestors')->group(function () {
+        Route::get('/', [MemberAncestorController::class, 'index'])->name('member_ancestors.index');
+        Route::post('/', [MemberAncestorController::class, 'store'])->name('member_ancestors.store');
+        Route::delete('/{memberId}/{ancestorId}', [MemberAncestorController::class, 'destroy'])->name('member_ancestors.destroy');
+    });
+    
 
     Route::resource('members', SubscribeMemberController::class);
     Route::resource('subscription-plans', SubscriptionPlanController::class);

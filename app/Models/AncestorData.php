@@ -69,4 +69,8 @@ class AncestorData extends Model
     {
         return $this->hasOne(AncestorSpouse::class, 'ancestor_id');
     }
+    public function members()
+    {
+        return $this->belongsToMany(Member::class, 'member_ancestor', 'ancestor_id', 'member_id');
+    }
 }

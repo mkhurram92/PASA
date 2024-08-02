@@ -13,10 +13,15 @@ class Member extends Model
         'approved_at' => 'datetime',
     ];
 
-    public function ancestor()
+    //public function ancestor()
+    //{
+    ///    return $this->hasOne(MemberAncestor::class);
+    //}
+    public function ancestors()
     {
-        return $this->hasOne(MemberAncestor::class);
+        return $this->belongsToMany(AncestorData::class, 'member_ancestor', 'member_id', 'ancestor_id');
     }
+            
     public function pedigree()
     {
         return $this->hasMany(MemberPedigree::class);

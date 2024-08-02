@@ -54,7 +54,10 @@
                                         <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
                                     </a>
                                 @endif
-
+                                <a class="btn btn-warning mr-2" href="{{ url('members/' . $member?->id . '/ancestors') }}"
+                                    id="ancestor-view">
+                                    <i class="fa fa-sitemap" style="font-size:20px;"></i> Ancestor
+                                </a>
                                 <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
                                     <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
                                 </a>
@@ -552,6 +555,19 @@
 
             // Construct the new URL for editing
             var newUrl = currentUrl.replace('/view-member/', '/view-pedigree/');
+
+            // Redirect to the new URL
+            window.location.href = newUrl;
+        });
+        document.getElementById('viewAncestorsLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Extract the current URL and the id from it
+            var currentUrl = window.location.href;
+            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+
+            // Construct the new URL for editing
+            var newUrl = currentUrl.replace('/view-member/', '/view-ancestor/');
 
             // Redirect to the new URL
             window.location.href = newUrl;

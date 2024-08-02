@@ -194,7 +194,7 @@ class SubscribeMemberController extends Controller
             'preferred_name' => 'nullable',
             'date_of_birth' => 'nullable',
             'month_of_birth' => 'nullable',
-            "year_of_birth" =>'nullable|regex:/^\d{4}$/',
+            "year_of_birth" => 'nullable|regex:/^\d{4}$/',
 
             'number_street' => 'nullable',
             'suburb' => 'nullable',
@@ -422,5 +422,14 @@ class SubscribeMemberController extends Controller
             "message" => "Pedigree Added successfully",
             "redirectTo" => route("members.view-pedigree", ['id' => $member->id])
         ]);
+    }
+
+    public function showAncestors($memberId)
+    {
+        $member = Member::with('ancestors')->findOrFail($memberId);
+
+        //dd($member);
+
+        return view('page.members.view-ancestor', compact('member'));
     }
 }
