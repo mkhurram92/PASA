@@ -68,6 +68,16 @@
                                         <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                     </a>
                                 @else
+                                    @if (count($member->ancestors) > 0)
+                                        <a class="btn btn-success mr-2" href="#">
+                                            <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
+                                        </a>
+                                    @else
+                                        <a class="btn btn-success mr-2"
+                                            href="{{ route('members.addAncestor', $member->id) }}">
+                                            <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Add</i>
+                                        </a>
+                                    @endif
                                     <a class="btn btn-danger" href="{{ route('profile') }}">
                                         <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                     </a>
@@ -85,11 +95,15 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-4">
                                                     <label class="form-control-label">Pioneer Name</label>
-                                                    <input name="ancestor_given_name" value="{{ $ancestor->given_name }} {{ $ancestor->ancestor_surname }}" class="form-control" disabled>
+                                                    <input name="ancestor_given_name"
+                                                        value="{{ $ancestor->given_name }} {{ $ancestor->ancestor_surname }}"
+                                                        class="form-control" disabled>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label class="form-control-label">Source of Arrival</label>
-                                                    <input name="source_of_arrival" value="{{ $ancestor->sourceOfArrival->name ?? '' }}" class="form-control" disabled>
+                                                    <input name="source_of_arrival"
+                                                        value="{{ $ancestor->sourceOfArrival->name ?? '' }}"
+                                                        class="form-control" disabled>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label class="form-control-label">Arrival Date</label>
@@ -98,14 +112,29 @@
                                                         if ($ancestor->mode_of_travel?->year_of_arrival) {
                                                             $arrivalDate = $ancestor->mode_of_travel?->year_of_arrival;
                                                             if ($ancestor->mode_of_travel->month_of_arrival) {
-                                                                $arrivalDate .= '-' . str_pad($ancestor->mode_of_travel?->month_of_arrival, 2, '0', STR_PAD_LEFT);
+                                                                $arrivalDate .=
+                                                                    '-' .
+                                                                    str_pad(
+                                                                        $ancestor->mode_of_travel?->month_of_arrival,
+                                                                        2,
+                                                                        '0',
+                                                                        STR_PAD_LEFT,
+                                                                    );
                                                                 if ($ancestor->mode_of_travel->date_of_arrival) {
-                                                                    $arrivalDate .= '-' . str_pad($ancestor->mode_of_travel?->date_of_arrival, 2, '0', STR_PAD_LEFT);
+                                                                    $arrivalDate .=
+                                                                        '-' .
+                                                                        str_pad(
+                                                                            $ancestor->mode_of_travel?->date_of_arrival,
+                                                                            2,
+                                                                            '0',
+                                                                            STR_PAD_LEFT,
+                                                                        );
                                                                 }
                                                             }
                                                         }
                                                     @endphp
-                                                    <input name="mode_of_travel_id" value="{{ $arrivalDate }}" class="form-control" disabled>
+                                                    <input name="mode_of_travel_id" value="{{ $arrivalDate }}"
+                                                        class="form-control" disabled>
                                                 </div>
                                             </div>
                                         </div>

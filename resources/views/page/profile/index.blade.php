@@ -49,6 +49,10 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
+                                <a class="btn btn-warning mr-2" href="{{ url('members/view-ancestor/' . $member?->id) }}"
+                                    id="ancestor-view">
+                                    <i class="fa fa-sitemap" style="font-size:20px;"></i> Ancestor
+                                </a>
                                 <a class="btn btn-danger mr-2" href="{{ url('members/view-pedigree/' . $member_id) }}" >
                                     <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
                                 </a>

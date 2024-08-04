@@ -114,7 +114,7 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         //$member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
-        $member = Member::with(['partner_member', 'pedigree', 'ancestor', 'contact'])
+        $member = Member::with(['partner_member', 'pedigree', 'contact'])
             ->whereHas('contact', function ($query) use ($user) {
                 $query->where('email', $user->email);
             })
