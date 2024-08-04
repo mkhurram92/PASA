@@ -54,7 +54,7 @@
                                         <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
                                     </a>
                                 @endif
-                                <a class="btn btn-warning mr-2" href="{{ url('members/' . $member?->id . '/ancestors') }}"
+                                <a class="btn btn-warning mr-2" href="{{ url('members/view-ancestor/' . $member?->id) }}"
                                     id="ancestor-view">
                                     <i class="fa fa-sitemap" style="font-size:20px;"></i> Ancestor
                                 </a>

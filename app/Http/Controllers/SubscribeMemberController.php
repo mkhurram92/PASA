@@ -27,12 +27,15 @@ use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreMemberRequest;
+use App\Models\AncestorData;
 use App\Models\SubscriptionPlan;
 use App\Models\MemberPedigree;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Else_;
 use Illuminate\Support\Facades\Hash;
+use App\Models\ModeOfArrival;
+use App\Models\ModeOfArrivals;
 
 class SubscribeMemberController extends Controller
 {
@@ -424,12 +427,70 @@ class SubscribeMemberController extends Controller
         ]);
     }
 
-    public function showAncestors($memberId)
+    public function viewAncestor($id)
     {
-        $member = Member::with('ancestors')->findOrFail($memberId);
+        $member = Member::find($id);
+        $ancestors = AncestorData::with(['sourceOfArrival', 'mode_of_travel'])->get();
 
-        //dd($member);
+        if (!$member) {
+            return redirect()->route('members.index')->with('error', 'Member not found.');
+        }
 
-        return view('page.members.view-ancestor', compact('member'));
+        return view('page.members.view-ancestor', compact('member', 'ancestors'));
+    }
+
+    public function addAncestor($id)
+    {
+        $member = Member::find($id);
+        $ancestors = AncestorData::with(['sourceOfArrival', 'mode_of_travel'])->get();
+
+        if (!$member) {
+            return redirect()->route('members.index')->with('error', 'Member not found.');
+        }
+
+        //return view('page.members.add-ancestor', ['member' => $member]);
+        return view('page.members.add-ancestor', compact('member', 'ancestors'));
+    }
+
+    public function storeAncestor(Request $request, $memberId)
+    {
+        $request->validate([
+            'given_name' => 'required|array',
+            'given_name.*' => 'required|exists:ancestor_data,id',
+        ]);
+
+        $member = Member::findOrFail($memberId);
+
+        // Loop through the ancestors and attach them to the member
+        foreach ($request->given_name as $ancestorId) {
+            if ($ancestorId) {
+                $member->ancestors()->attach($ancestorId);
+            }
+        }
+
+        //return redirect()->route('members.show', $member->id)->with('success', 'Ancestors added successfully.');
+        return response()->json([
+            "status" => true,
+            "message" => "Ancestors added successfully",
+            "redirectTo" => route("members.view-ancestor", ['id' => $member->id])
+        ]);
+    }
+
+    public function getModeOfTravelDate($id)
+    {
+        try {
+            $modeOfArrival = ModeOfArrivals::find($id);
+
+            if ($modeOfArrival) {
+                Log::error('Mode of Arrival not found', ['id' => $modeOfArrival->date_of_arrival]);
+                return response()->json(['date_of_arrival' => $modeOfArrival->date_of_arrival]);
+            } else {
+                Log::error('Mode of Arrival not found', ['id' => $id]);
+                return response()->json(['error' => 'Mode of Arrival not found'], 404);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error fetching Mode of Arrival', ['exception' => $e]);
+            return response()->json(['error' => 'Error fetching data'], 500);
+        }
     }
 }

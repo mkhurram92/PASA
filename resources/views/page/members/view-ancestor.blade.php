@@ -1,33 +1,35 @@
 @include('layout.header')
 @include('layout.sidebar')
-
+<!-- app-content start-->
 <div class="app-content main-content">
     <div class="side-app">
         <style>
-            table {
-                width: 100%;
-                border-collapse: collapse;
+            .row {
+                margin-bottom: 1rem;
             }
 
-            th,
-            td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
+            .form-control-label {
+                font-size: 16px;
+                font-weight: 500;
             }
 
-            th {
-                background-color: #f2f2f2;
-                text-align: center;
+            .col-md-2 {
+                margin-top: 1rem;
+            }
+
+            .remove-button {
+                margin-top: 25px;
             }
         </style>
         <div class="container-fluid main-container">
-            <!--Page header-->
+            <!-- Page header -->
             <div class="page-header">
                 <div class="page-leftheader">
                     <h4 class="page-title"></h4>
                 </div>
             </div>
+
+            <!-- End Page header -->
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
@@ -45,87 +47,82 @@
                             </div>
                         @endif
 
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h3 class="card-title">{{ $member->given_name }} {{ $member->family_name }} Ancestor Details </h3>
+                        <div class="card-header justify-content-between">
+                            <h3 class="card-title">View Member's Ancestor</h3>
                             <div>
-                                <a class="btn btn-success mr-2" href="{{ url()->current() }}/edit" id="editLink">
-                                    <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
-                                </a>
-
-                                <a class="btn btn-info" href="{{ route('members.index') }}">
-                                    <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                </a>
+                                @if (Auth::user()->name == 'Admin')
+                                    <a class="btn btn-danger" href="{{ route('members.index') }}">
+                                        <i class="fa fa-home" style="font-size:20px;"> Home</i>
+                                    </a>
+                                    @if (count($member->ancestors) > 0)
+                                        <a class="btn btn-success mr-2" href="#">
+                                            <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
+                                        </a>
+                                    @else
+                                        <a class="btn btn-success mr-2"
+                                            href="{{ route('members.addAncestor', $member->id) }}">
+                                            <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Add</i>
+                                        </a>
+                                    @endif
+                                    <a class="btn btn-info" href="{{ url()->previous() }}" id="view-members">
+                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                    </a>
+                                @else
+                                    <a class="btn btn-danger" href="{{ route('profile') }}">
+                                        <i class="fa fa-home" style="font-size:20px;"> Home</i>
+                                    </a>
+                                    <a class="btn btn-info" href="{{ url()->previous() }}" id="view-members">
+                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                    </a>
+                                @endif
                             </div>
                         </div>
-                        <div class="card-body p-0">
-                            <div class="card-body">
-                                <div class="row">
-                                    @if ($member->ancestors->isEmpty())
-                                        <p>No ancestors found for this member.</p>
-                                    @else
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Gender</th>
-                                                    <th>Surname</th>
-                                                    <th>Given Name</th>
-                                                    <th>Birth Date</th>
-                                                    <th>Birth Place</th>
-                                                    <th>Death Date</th>
-                                                    <th>Death Place</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($member->ancestors as $ancestor)
-                                                    <tr>
-                                                        <td>{{ $ancestor->gender }}</td>
-                                                        <td>{{ $ancestor->ancestor_surname }}</td>
-                                                        <td>{{ $ancestor->given_name }}</td>
-                                                        <td>
-                                                            @php
-                                                                $birthDate = [];
-                                                                if ($ancestor->year_of_birth) {
-                                                                    $birthDate[] = str_pad($ancestor->year_of_birth, 4, '0', STR_PAD_LEFT);
+                        @if (count($member->ancestors) > 0)
+                            <div class="card-body p-0">
+                                <div id="ancestor-forms">
+                                    @foreach ($member->ancestors as $ancestor)
+                                        <div class="card-body">
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label class="form-control-label">Pioneer Name</label>
+                                                    <input name="ancestor_given_name" value="{{ $ancestor->given_name }} {{ $ancestor->ancestor_surname }}" class="form-control" disabled>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-control-label">Source of Arrival</label>
+                                                    <input name="source_of_arrival" value="{{ $ancestor->sourceOfArrival->name ?? '' }}" class="form-control" disabled>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-control-label">Arrival Date</label>
+                                                    @php
+                                                        $arrivalDate = '';
+                                                        if ($ancestor->mode_of_travel?->year_of_arrival) {
+                                                            $arrivalDate = $ancestor->mode_of_travel?->year_of_arrival;
+                                                            if ($ancestor->mode_of_travel->month_of_arrival) {
+                                                                $arrivalDate .= '-' . str_pad($ancestor->mode_of_travel?->month_of_arrival, 2, '0', STR_PAD_LEFT);
+                                                                if ($ancestor->mode_of_travel->date_of_arrival) {
+                                                                    $arrivalDate .= '-' . str_pad($ancestor->mode_of_travel?->date_of_arrival, 2, '0', STR_PAD_LEFT);
                                                                 }
-                                                                if ($ancestor->month_of_birth) {
-                                                                    $birthDate[] = str_pad($ancestor->month_of_birth, 2, '0', STR_PAD_LEFT);
-                                                                }
-                                                                if ($ancestor->date_of_birth) {
-                                                                    $birthDate[] = str_pad($ancestor->date_of_birth, 2, '0', STR_PAD_LEFT);
-                                                                }
-                                                                echo implode('-', $birthDate);
-                                                            @endphp
-                                                        </td>
-                                                        <td>{{ $ancestor->place_of_birth }}</td>
-                                                        <td>
-                                                            @php
-                                                                $deathDate = [];
-                                                                if ($ancestor->year_of_death) {
-                                                                    $deathDate[] = str_pad($ancestor->year_of_death, 4, '0', STR_PAD_LEFT);
-                                                                }
-                                                                if ($ancestor->month_of_death) {
-                                                                    $deathDate[] = str_pad($ancestor->month_of_death, 2, '0', STR_PAD_LEFT);
-                                                                }
-                                                                if ($ancestor->date_of_death) {
-                                                                    $deathDate[] = str_pad($ancestor->date_of_death, 2, '0', STR_PAD_LEFT);
-                                                                }
-                                                                echo implode('-', $deathDate);
-                                                            @endphp
-                                                        </td>
-                                                        <td>{{ $ancestor->place_of_death }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @endif
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    <input name="mode_of_travel_id" value="{{ $arrivalDate }}" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="card">
+                                <div class="card-header justify-content-between">
+                                    <h3 class="card-title">No Ancestor Found</h3>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @include('layout.footer')

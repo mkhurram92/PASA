@@ -98,14 +98,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('members/add-pedigree/{id}', [SubscribeMemberController::class, 'addPedigree'])->name('members.addPedigree');
     Route::post('members/store-pedigree/{id}', [SubscribeMemberController::class, 'storePedigree'])->name('members.storePedigree');
     Route::put('members/update/{member}', [SubscribeMemberController::class, 'update'])->name('members.update');
-    Route::get('members/{id}/ancestors', [SubscribeMemberController::class, 'showAncestors']);
 
-    Route::prefix('member_ancestors')->group(function () {
-        Route::get('/', [MemberAncestorController::class, 'index'])->name('member_ancestors.index');
-        Route::post('/', [MemberAncestorController::class, 'store'])->name('member_ancestors.store');
-        Route::delete('/{memberId}/{ancestorId}', [MemberAncestorController::class, 'destroy'])->name('member_ancestors.destroy');
-    });
-    
+    Route::get('members/add-ancestor/{id}', [SubscribeMemberController::class, 'addAncestor'])->name('members.addAncestor');
+    Route::get('members/view-ancestor/{id}', [SubscribeMemberController::class, 'viewAncestor'])->name("members.view-ancestor");
+    Route::post('members/store-ancestor/{id}', [SubscribeMemberController::class, 'storeAncestor'])->name('members.storeAncestor');
+    Route::get('/getModeOfTravelDate/{id}', [SubscribeMemberController::class, 'getModeOfTravelDate']);
 
     Route::resource('members', SubscribeMemberController::class);
     Route::resource('subscription-plans', SubscriptionPlanController::class);
