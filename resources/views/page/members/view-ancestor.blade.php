@@ -73,7 +73,7 @@
                                         <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                     </a>
                                     @if (count($member->ancestors) > 0)
-                                        <a class="btn btn-success mr-2" href="#">
+                                        <a class="btn btn-success mr-2" href="{{ route('members.editAncestors', $member->id) }}">
                                             <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
                                         </a>
                                     @else
