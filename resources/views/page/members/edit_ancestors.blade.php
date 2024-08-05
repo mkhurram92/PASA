@@ -69,6 +69,7 @@
                         <div class="card-body p-0">
                             <form action="{{ route('members.updateAncestors', $member->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <input type="hidden" name="member_id" value="{{ $member->id }}">
                                 <div id="ancestor-forms">
                                     @foreach ($member->ancestors as $ancestor)
@@ -202,8 +203,10 @@
 
             // Bind addAncestorForm to the button
             $('body').on('click', '.btn-primary', function() {
-                console.log('Add Ancestor Form button clicked');
                 addAncestorForm();
+            });
+            $('form').on('submit', function(event) {
+                console.log('Form is being submitted');
             });
 
         });

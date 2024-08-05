@@ -516,7 +516,7 @@ class SubscribeMemberController extends Controller
         return response()->json([
             "status" => true,
             "message" => "Ancestors updated successfully",
-            "redirectTo" => route("page.members.view-member", ['id' => $member->id])
+            "redirectTo" => route("members.view-ancestor", ['id' => $member->id])
         ]);
     }
 
