@@ -475,6 +475,50 @@ class SubscribeMemberController extends Controller
             "redirectTo" => route("members.view-ancestor", ['id' => $member->id])
         ]);
     }
+    //public function editAncestors($id)
+    //{
+    //    $member = Member::findOrFail($id);
+    //    $ancestors = AncestorData::all();
+    //
+    //    return view('page.members.edit_ancestors', compact('member', 'ancestors'));
+    //}
+
+    public function editAncestors($id)
+    {
+        $member = Member::with(['ancestors.sourceOfArrival', 'ancestors.mode_of_travel'])->findOrFail($id);
+        $ancestors = AncestorData::all();
+
+        return view('page.members.edit_ancestors', compact('member', 'ancestors'));
+    }
+
+    public function updateAncestors(Request $request, $memberId)
+    {
+        //Log::info('Update Ancestors method triggered', ['memberId' => $memberId, 'requestData' => $request->all()]);
+
+        $request->validate([
+            'given_name' => 'required|array',
+            'given_name.*' => 'required|exists:ancestor_data,id',
+        ]);
+
+        $member = Member::findOrFail($memberId);
+
+        // First, detach all existing ancestors
+        $member->ancestors()->detach();
+
+        // Attach the new set of ancestors
+        foreach ($request->given_name as $ancestorId) {
+            if ($ancestorId) {
+                $member->ancestors()->attach($ancestorId);
+            }
+        }
+
+        // Return a response indicating success
+        return response()->json([
+            "status" => true,
+            "message" => "Ancestors updated successfully",
+            "redirectTo" => route("page.members.view-member", ['id' => $member->id])
+        ]);
+    }
 
     public function getModeOfTravelDate($id)
     {

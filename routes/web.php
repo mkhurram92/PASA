@@ -102,6 +102,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('members/add-ancestor/{id}', [SubscribeMemberController::class, 'addAncestor'])->name('members.addAncestor');
     Route::get('members/view-ancestor/{id}', [SubscribeMemberController::class, 'viewAncestor'])->name("members.view-ancestor");
     Route::post('members/store-ancestor/{id}', [SubscribeMemberController::class, 'storeAncestor'])->name('members.storeAncestor');
+    Route::get('members/editAncestors/{id}', [SubscribeMemberController::class, 'editAncestors'])->name('members.editAncestors');
+    Route::put('members/updateAncestors/{id}', [SubscribeMemberController::class, 'updateAncestors'])->name('members.updateAncestors');
     Route::get('/getModeOfTravelDate/{id}', [SubscribeMemberController::class, 'getModeOfTravelDate']);
 
     Route::resource('members', SubscribeMemberController::class);
