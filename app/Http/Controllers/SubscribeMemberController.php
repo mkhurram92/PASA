@@ -55,16 +55,18 @@ class SubscribeMemberController extends Controller
 
     public function index(Request $request)
     {
-        //$members = Member::with('membershipType', 'membershipStatus', 'additionalInfo')->get();
-        $members = Member::with('membershipType', 'membershipStatus', 'additionalInfo')->get();
+        // Fetch members with related models
+        $members = Member::with('subscriptionPlan', 'membershipStatus', 'additionalInfo')->get();
 
-        //$membershipTypeOptions = MembershipType::pluck('name')->toArray();
-        $membershipTypeOptions = SubscriptionPlan::pluck('name')->toArray();
-        array_unshift($membershipTypeOptions, '');
+        // Fetch membership type options
+        $membershipTypeOptions = SubscriptionPlan::pluck('name', 'id')->toArray(); // Associative array for IDs and names
+        $membershipTypeOptions = ['' => ''] + $membershipTypeOptions; // Add an empty option if needed
 
-        $membershipStatusOptions = MembershipStatus::pluck('name')->toArray();
-        array_unshift($membershipStatusOptions, '');
+        // Fetch membership status options
+        $membershipStatusOptions = MembershipStatus::pluck('name', 'id')->toArray(); // Associative array for IDs and names
+        $membershipStatusOptions = ['' => ''] + $membershipStatusOptions; // Add an empty option if needed
 
+        // Return view with data
         return view('page.members.index', compact('members', 'membershipTypeOptions', 'membershipStatusOptions'));
     }
 

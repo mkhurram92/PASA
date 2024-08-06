@@ -21,4 +21,9 @@ class SubscriptionPlan extends Model
         "updated_by",
         "deleted_by"
     ];
+
+    public function members()
+    {
+        return $this->hasMany(Member::class, 'member_type_id');
+    }
 }

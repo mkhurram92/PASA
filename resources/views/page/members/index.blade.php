@@ -216,7 +216,7 @@
                 },
                 {
                     title: 'Membership Type',
-                    field: 'membership_type.name',
+                    field: 'subscription_plan.name',
                     hozAlign: "left",
                     vertAlign: "middle",
                     headerFilter: "select",

@@ -21,12 +21,12 @@ class Member extends Model
     {
         return $this->belongsToMany(AncestorData::class, 'member_ancestor', 'member_id', 'ancestor_id');
     }
-            
+
     public function pedigree()
     {
         return $this->hasMany(MemberPedigree::class);
     }
-    
+
     public function parent_member()
     {
         return $this->hasOne(Member::class, "id", "parent_id");
@@ -79,5 +79,9 @@ class Member extends Model
     public function title()
     {
         return $this->belongsTo(Title::class, 'title_id');
+    }
+    public function subscriptionPlan()
+    {
+        return $this->belongsTo(SubscriptionPlan::class, 'member_type_id');
     }
 }
