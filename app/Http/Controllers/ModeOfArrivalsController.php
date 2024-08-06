@@ -52,15 +52,14 @@ class ModeOfArrivalsController extends Controller
     {
         try {
             $data = $request->validated();
-            //Log::debug('Validated data:', $data);
-
-            // Save only the 'ship_id' and non-null fields from $data
+    
+            // Filter out null values
             $filteredData = array_filter($data, function ($value) {
                 return !is_null($value);
             });
-
+    
             ModeOfArrivals::create($filteredData);
-
+    
             return response()->json([
                 "status" => true,
                 "message" => "Journey Created Successfully",
@@ -69,9 +68,8 @@ class ModeOfArrivalsController extends Controller
         } catch (\Exception $e) {
             return response()->json(["status" => false, "message" => $e->getMessage()]);
         }
-        //return response()->json(['status' => true, "message" => "Arrival created", "redirectTo" => route("mode-of-arrivals.index")]);
     }
-
+    
     /**
      * Display the specified resource.
      *
