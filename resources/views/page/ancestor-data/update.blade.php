@@ -104,10 +104,9 @@
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-
                                                 <label class="col-md-4 form-label">Pioneer's Preferred Name</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control uppercase" type="text"
+                                                    <input class="form-control" type="text"
                                                         placeholder="Pioneer's Preferred Name"
                                                         value="{{ $ancestor?->maiden_surname }}" id="maiden_surname"
                                                         name="maiden_surname">
