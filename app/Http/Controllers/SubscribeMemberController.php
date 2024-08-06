@@ -58,7 +58,8 @@ class SubscribeMemberController extends Controller
         //$members = Member::with('membershipType', 'membershipStatus', 'additionalInfo')->get();
         $members = Member::with('membershipType', 'membershipStatus', 'additionalInfo')->get();
 
-        $membershipTypeOptions = MembershipType::pluck('name')->toArray();
+        //$membershipTypeOptions = MembershipType::pluck('name')->toArray();
+        $membershipTypeOptions = SubscriptionPlan::pluck('name')->toArray();
         array_unshift($membershipTypeOptions, '');
 
         $membershipStatusOptions = MembershipStatus::pluck('name')->toArray();
