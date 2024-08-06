@@ -195,6 +195,7 @@
                      title: "Family Name",
                      field: "ancestor_surname",
                      hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Surname'
@@ -203,11 +204,12 @@
                      title: "Given Name",
                      field: "given_name",
                      hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Given Name'
                  },
-                 {
+                 /**{
                      title: "Gender",
                      field: "gender.name",
                      hozAlign: "center",
@@ -230,11 +232,12 @@
 
                          return formattedValue;
                      }
-                 },
+                 },**/
                  {
                      title: "Birth Date",
                      field: "date_of_birth_combined",
                      hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      mutator: function(value, data, type, params, component) {
@@ -263,6 +266,7 @@
                      title: "Source Of Arrival",
                      field: "source_of_arrival.name",
                      hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Search by Arrival Source',
@@ -270,13 +274,13 @@
                          values: source_of_arrival
                      }
                  },
-                 //{
-                //     title: "Arrival Date",
-                //     field: "ancestor_local_travel_details.travel_date",
-                //     hozAlign: "center",
-                //     vertAlign: "middle",
-                     //headerFilter: "select",
-                 //},
+                 {
+                     title: "Arrival Date",
+                     field: "ancestor_local_travel_details.travel_date",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     headerFilter: "select",
+                 },
                  {
                      title: "Action",
                      field: "actions",
