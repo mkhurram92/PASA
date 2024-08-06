@@ -136,7 +136,7 @@
             const days = [];
             days.push({
                 id: '',
-                text: 'Date'
+                text: 'Day'
             });
             for (let i = 1; i <= 31; i++) {
                 let day = i < 10 ? '0' + i : i.toString();
