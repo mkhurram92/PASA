@@ -139,7 +139,7 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Birth Place</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Birth Date"
+                                                    <input class="form-control" type="text" placeholder="Birth Place"
                                                         value="{{ $ancestor?->place_of_birth }}" name="place_of_birth">
 
                                                 </div>
