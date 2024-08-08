@@ -102,7 +102,7 @@ class AncestorDataController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            Log::error($e->getMessage());
+            //Log::error($e->getMessage());
 
             return response()->json([
                 "status" => false,
@@ -244,7 +244,7 @@ class AncestorDataController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            Log::error($e->getMessage());
+            //Log::error($e->getMessage());
 
             return response()->json([
                 "status" => false,
@@ -257,7 +257,7 @@ class AncestorDataController extends Controller
     {
         try {
             $spouseData = $request->only(['marriage_date', 'marriage_month', 'marriage_year', 'marriage_place', 'spouse_birth_place', 'spouse_death_place', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date','spouse_birth_month','spouse_birth_year', 'spouse_death_date','spouse_death_month','spouse_death_year']);
-            Log::info('Updating ancestor spouse data', $spouseData);
+            //Log::info('Updating ancestor spouse data', $spouseData);
 
             $ancestorSpouse = AncestorSpouse::where('ancestor_id', $ancestorData->id)->first();
 
@@ -270,7 +270,7 @@ class AncestorDataController extends Controller
 
             $ancestorSpouse->save();
 
-            Log::info('Ancestor spouse data updated successfully', ['ancestor_spouse_id' => $ancestorSpouse->id]);
+            //Log::info('Ancestor spouse data updated successfully', ['ancestor_spouse_id' => $ancestorSpouse->id]);
         } catch (\Exception $e) {
             Log::error('Error updating ancestor spouse data: ' . $e->getMessage());
             throw $e; // Rethrow the exception to trigger a rollback

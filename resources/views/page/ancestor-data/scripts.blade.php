@@ -62,6 +62,7 @@
                 }
             }
         })
+        
         $(document).on("change", "#mode_of_arrival_select2", function(e) {
             const id = $(e.target).val();
             if (id) {
@@ -85,15 +86,13 @@
 
                         // Set the mode_of_travel_id in a hidden field
                         $("#mode_of_travel_id").val(id);
-
-                        // Additional code if needed
-                        // ...
                     })
                     .fail(error => {
                         console.error("Error fetching ship data:", error);
                     });
             }
         });
+
 
         $(document).on("input", ".uppercase", function(e) {
             $(e.target).val($(e.target).val().toUpperCase());

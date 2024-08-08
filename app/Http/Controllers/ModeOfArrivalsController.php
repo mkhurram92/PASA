@@ -52,14 +52,14 @@ class ModeOfArrivalsController extends Controller
     {
         try {
             $data = $request->validated();
-    
+
             // Filter out null values
             $filteredData = array_filter($data, function ($value) {
                 return !is_null($value);
             });
-    
+
             ModeOfArrivals::create($filteredData);
-    
+
             return response()->json([
                 "status" => true,
                 "message" => "Journey Created Successfully",
@@ -69,7 +69,7 @@ class ModeOfArrivalsController extends Controller
             return response()->json(["status" => false, "message" => $e->getMessage()]);
         }
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -115,19 +115,21 @@ class ModeOfArrivalsController extends Controller
             $updatedModeOfArrival = ModeOfArrivals::find($modeOfArrivals);
 
             // Redirect to the view of the updated mode of arrival
-        //    return response()->json(['status' => true, "message" => "Arrival Updated", "redirectTo" => route("mode-of-arrivals.show", $updatedModeOfArrival)]);
-        //} catch (\Throwable $th) {
-        //    return response()->json(['status' => false]);
-        //}
+            //    return response()->json(['status' => true, "message" => "Arrival Updated", "redirectTo" => route("mode-of-arrivals.show", $updatedModeOfArrival)]);
+            //} catch (\Throwable $th) {
+            //    return response()->json(['status' => false]);
+            //}
 
-        return response()->json([
-            "status" => true,
-            "message" => "Journey Updated Successfully",
-            "redirectTo" => route("mode-of-arrivals.show", $updatedModeOfArrival)]
-        );
-    } catch (\Exception $e) {
-        return response()->json(["status" => false, "message" => $e->getMessage()]);
-    }
+            return response()->json(
+                [
+                    "status" => true,
+                    "message" => "Journey Updated Successfully",
+                    "redirectTo" => route("mode-of-arrivals.show", $updatedModeOfArrival)
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json(["status" => false, "message" => $e->getMessage()]);
+        }
     }
 
 
@@ -141,7 +143,7 @@ class ModeOfArrivalsController extends Controller
     {
         return ModeOfArrivals::find($modeOfArrivals)->delete();
     }
-    public function getArrivalJson(Request $request)
+/**    public function getArrivalJson(Request $request)
     {
         $search = $request->search;
         $arrivals = ModeOfArrivals::with(['ship'])->when(!empty($search), function ($q) use ($search) {
@@ -160,7 +162,7 @@ class ModeOfArrivalsController extends Controller
 
         return response()->json($response);
     }
-
+**/
     function getShipFirstDate(Request $request)
     {
         $ship = ModeOfArrivals::findOrFail($request->ship_id);
@@ -199,5 +201,27 @@ class ModeOfArrivalsController extends Controller
                 "first_date" => $firstDate
             ]
         );
+    }
+    public function getArrivalJson(Request $request)
+    {
+        $search = $request->search;
+        $arrivals = ModeOfArrivals::with('ship')
+            ->when(!empty($search), function ($q) use ($search) {
+                $q->whereHas('ship', function ($query) use ($search) {
+                    $query->where('name_of_ship', 'like', '%' . $search . '%');
+                });
+            })
+            ->get();
+
+        $response = array();
+
+        foreach ($arrivals as $arrival) {
+            $response[] = array(
+                "id" => $arrival->id,
+                "text" => $arrival->ship->name_of_ship . " - " . $arrival->year
+            );
+        }
+
+        return response()->json($response);
     }
 }
