@@ -1,4 +1,3 @@
-<!-- Renew Modal -->
 <div class="modal fade" id="renewModal" tabindex="-1" aria-labelledby="renewModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -19,20 +18,19 @@
                     </div>
                 </div>
                 <div id="stripePayment" style="display:none;">
-                    <form id="payment-form" action="{{ route('payment.process') }}" method="POST">
-                        @csrf
+                    <form id="payment-form">
                         <div class="form-group">
                             <label for="cardholder-name">Cardholder's Name</label>
-                            <input type="text" id="cardholder-name" name="cardholderName" class="form-control" placeholder="Cardholder's Name" required>
+                            <input type="text" id="cardholder-name" class="form-control" placeholder="Cardholder's Name" required>
                         </div>
                         <div class="form-group">
                             <label for="card-element">Card Details</label>
                             <div id="card-element">
-                                <!-- Stripe Elements will be inserted here -->
+                                <!-- A Stripe Element will be inserted here. -->
                             </div>
-                            <div id="card-errors" role="alert"></div>
                         </div>
                         <button id="submit" class="btn btn-primary mt-3">Submit Payment</button>
+                        <div id="card-errors" role="alert"></div>
                     </form>
                 </div>
             </div>
