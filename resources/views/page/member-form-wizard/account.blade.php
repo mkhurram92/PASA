@@ -4,15 +4,15 @@
         <h3 class="card-title"> Account Information</h3>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Username</label>
-            <input class="form-control" id="username" name="username" value="{{ old('username') }}" required="" type="text">
+            <input class="form-control" id="username" name="username" value="{{ old('username') }}" type="text">
         </div>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Email</label>
-            <input class="form-control" id="email" name="email" value="{{ old('email') }}" required="" type="text">
+            <input class="form-control" id="email" name="email" value="{{ old('email') }}"  type="text">
         </div>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Confirmation Email</label>
-            <input class="form-control" id="email_confirmation" name="email_confirmation" value="{{ old('email_confirmation') }}" required="" type="email">
+            <input class="form-control" id="email_confirmation" name="email_confirmation" value="{{ old('email_confirmation') }}" type="email">
         </div>
     </div>
     <br>

@@ -30,7 +30,7 @@ class MemberFormWizard extends Controller
 
             $step = $data['step'];
             $needToValidate = [
-                'username' => 'required|min:5|unique:members,username',
+                'username' => 'nullable|min:5|unique:members,username',
                 //'password' => 'required|confirmed|min:5',
                 //'email' => 'required|email|confirmed|unique:members,email',
                 'title' => 'required',
