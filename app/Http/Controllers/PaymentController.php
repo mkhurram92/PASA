@@ -445,4 +445,42 @@ class PaymentController extends Controller
         );
         abort(503);
     }
+
+    public function process(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'stripeToken' => 'required|string',
+            'cardholderName' => 'required|string',
+        ]);
+
+        try {
+            // Set the Stripe API key
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+
+            // Create a charge
+            $charge = Charge::create([
+                'amount' => 1000, // Amount in cents
+                'currency' => 'usd',
+                'description' => 'Membership Renewal',
+                'source' => $request->input('stripeToken'),
+                'receipt_email' => $request->user()->email,
+                'metadata' => [
+                    'cardholder_name' => $request->input('cardholderName'),
+                ],
+            ]);
+
+            // Return success response
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment successful!',
+            ]);
+        } catch (\Exception $e) {
+            // Return error response
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }

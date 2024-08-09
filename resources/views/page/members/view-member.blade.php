@@ -49,13 +49,16 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
+                                <a class="btn btn-primary mr-2" data-toggle="modal" data-target="#renewModal">
+                                    <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
+                                </a>
                                 @if (!$member?->additionalInfo?->date_membership_approved && $member?->contact?->email)
                                     <a class="btn btn-success" id="approveButton">
                                         <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
                                     </a>
                                 @endif
-                                <a class="btn btn-warning mr-2" href="{{ url('members/view-ancestor/' . $member?->id) }}"
-                                    id="ancestor-view">
+                                <a class="btn btn-warning mr-2"
+                                    href="{{ url('members/view-ancestor/' . $member?->id) }}" id="ancestor-view">
                                     <i class="fa fa-sitemap" style="font-size:20px;"></i> Ancestor
                                 </a>
                                 <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
@@ -161,7 +164,8 @@
                                             <label class="col-md-4 form-label">Country</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->country?->name }}" readonly disabled>
+                                                    value="{{ $member?->address?->country?->name }}" readonly
+                                                    disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -427,11 +431,17 @@
 
 <!-- MODAL EFFECTS -->
 <div id="crud"></div>
+
 @section('scripts')
     @include('plugins.select2')
+    @include('models.payment-renewal')
 
     <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -453,12 +463,11 @@
                                 '_token': '{{ csrf_token() }}',
                             },
                             success: function(response) {
-                                if (response && response.status === true) {
+                                if (response && response.status) {
                                     Swal.fire({
                                         title: 'Success!',
                                         text: response.message,
                                         icon: 'success',
-                                        showCancelButton: false,
                                         confirmButtonText: 'OK',
                                         timerProgressBar: true,
                                         allowOutsideClick: false,
@@ -479,100 +488,41 @@
                     }
                 });
             });
-        });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var displayStatus = document.getElementById('displayStatus');
-            var volunteerStatus = document.getElementById('volunteerStatus');
-            var registrationFormStatus = document.getElementById('registrationFormStatus');
-            var signedAgreementStatus = document.getElementById('signedAgreementStatus');
-            var journalStatus = document.getElementById('journalStatus');
+            const statusElements = {
+                displayStatus: '{{ $member?->additionalInfo?->key_holder ? 'Yes' : 'No' }}',
+                volunteerStatus: '{{ $member?->additionalInfo?->volunteer ? 'Yes' : 'No' }}',
+                registrationFormStatus: '{{ $member?->additionalInfo?->registration_form_received ? 'Yes' : 'No' }}',
+                signedAgreementStatus: '{{ $member?->additionalInfo?->signed_agreement ? 'Yes' : 'No' }}',
+                journalStatus: '{{ $member?->journal == 0 ? 'Emailed' : 'Posted' }}'
+            };
 
-            // Initial display based on the value
-            displayStatus.textContent =
-                @if ($member?->additionalInfo?->key_holder == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
+            Object.entries(statusElements).forEach(([id, text]) => {
+                document.getElementById(id).textContent = text;
+            });
 
-            volunteerStatus.textContent =
-                @if ($member?->additionalInfo?->volunteer == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            registrationFormStatus.textContent =
-                @if ($member?->additionalInfo?->registration_form_received == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            signedAgreementStatus.textContent =
-                @if ($member?->additionalInfo?->signed_agreement == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            journalStatus.textContent =
-                @if ($member?->journal == 0)
-                    'Emailed'
-                @else
-                    'Posted'
-                @endif ;
+            const navigateTo = (path) => {
+                const currentUrl = window.location.href;
+                window.location.href = currentUrl.replace('/view-member/', `/${path}/`);
+            };
 
-        });
+            document.getElementById('editLink').addEventListener('click', function(event) {
+                event.preventDefault();
+                navigateTo('edit-member');
+            });
 
+            document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
+                event.preventDefault();
+                navigateTo('view-pedigree');
+            });
 
-        document.getElementById('editLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/edit-member/');
-
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
-
-        //var currentUrl = window.location.href;
-
-        // Extract the ID from the URL (assuming it's the last digit after the last '/')
-        //var id = currentUrl.match(/\d+$/)[0];
-
-        // Update the href attribute with the extracted ID
-        //document.getElementById("viewPedigreeLink").href = "/members/view-pedigree/" + id;
-
-        document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/view-pedigree/');
-
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
-        document.getElementById('viewAncestorsLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/view-ancestor/');
-
-            // Redirect to the new URL
-            window.location.href = newUrl;
+            document.getElementById('viewAncestorsLink').addEventListener('click', function(event) {
+                event.preventDefault();
+                navigateTo('view-ancestor');
+            });
         });
     </script>
 @endsection
+
 <!-- app-content end-->
 @include('layout.footer')

@@ -171,7 +171,9 @@ class SubscribeMemberController extends Controller
         //$data['membership_types'] = MembershipType::all();
         $data['membership_status'] = MembershipStatus::all();
 
-        return view('page.members.view-member', compact('member', 'data'));
+        $stripeKey = env('STRIPE_KEY');
+
+        return view('page.members.view-member', compact('member', 'data', 'stripeKey'));
     }
 
     public function editMember($id)

@@ -170,4 +170,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     Route::get('/getSubGlCodes/{parentId}', [TransactionController::class, 'getSubGlCodes']);
+    
+    Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
 });
