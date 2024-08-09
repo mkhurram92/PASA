@@ -130,8 +130,7 @@
     <!-- Custom js-->
     <script src="{{ asset('js/custom.js') }}"></script>
     <script src="{{ asset('js/add-row.js') }}"></script>
-
-
+    
     <script>
         $.ajaxSetup({
             headers: {
