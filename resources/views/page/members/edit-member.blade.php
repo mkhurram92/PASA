@@ -278,8 +278,7 @@
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
                                                     placeholder="Email Address"
-                                                    value="{{ $member?->contact?->email }}" name="email" disabled
-                                                    readonly>
+                                                    value="{{ $member?->contact?->email }}" name="email">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -312,8 +311,7 @@
                                             <label class="col-md-4 form-label">Username </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="User Name"
-                                                    value="{{ $member?->username }}" name="username" readonly
-                                                    disabled>
+                                                    value="{{ $member?->username }}" name="username">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

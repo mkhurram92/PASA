@@ -36,12 +36,11 @@ use PhpParser\Node\Stmt\Else_;
 use Illuminate\Support\Facades\Hash;
 use App\Models\ModeOfArrival;
 use App\Models\ModeOfArrivals;
+use Illuminate\Validation\Rule;
 
 class SubscribeMemberController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
     public function create()
     {
         $data['titles'] = Title::all();
@@ -198,6 +197,7 @@ class SubscribeMemberController extends Controller
             'family_name' => 'required',
             'given_name' => 'required',
             'preferred_name' => 'nullable',
+            'username' => 'nullable',
             'date_of_birth' => 'nullable',
             'month_of_birth' => 'nullable',
             "year_of_birth" => 'nullable|regex:/^\d{4}$/',
@@ -208,6 +208,11 @@ class SubscribeMemberController extends Controller
             'country' => 'nullable',
             'post_code' => 'nullable',
 
+            'email' => [
+                'nullable',
+                'email',
+                Rule::unique('members_contacts', 'email')->ignore($id, 'member_id')
+            ],
             'phone' => 'nullable',
             'mobile' => 'nullable',
             'journal' => 'required',
@@ -220,19 +225,21 @@ class SubscribeMemberController extends Controller
         }
 
         $member = Member::find($id);
+        $oldEmail = $member->contact->email ?? null;
+        $newEmail = $request->email;
+
         $member->title_id = $request->title;
         $member->title_detail = $request->title_detail;
         $member->family_name = $request->family_name;
         $member->given_name = $request->given_name;
         $member->preferred_name = $request->preferred_name;
         $member->initials = $request->initials;
-        $member->post_nominal = $request->post_nominal ?? NULL;
-        //$member->date_of_birth = !empty($request->date_of_birth) ? date('Y-m-d', strtotime($request->date_of_birth)) : null;
-        $member->date_of_birth = $request->date_of_birth; //&& is_numeric($request->date_of_birth) && $request->date_of_birth >= 00 && $request->date_of_birth <= 31) ? (int)$request->date_of_birth : null,
-        $member->month_of_birth = $request->month_of_birth; //&& is_numeric($request->month_of_birth) && $request->month_of_birth >= 01 && $request->month_of_birth <= 12) ? (int)$request->month_of_birth : null,
-        $member->year_of_birth = $request->year_of_birth; //&& is_numeric($request->year_of_birth) && $request->year_of_birth >= 1900 && $request->year_of_birth <= 2100) ? (int)$request->year_of_birth : null,
+        $member->post_nominal = $request->post_nominal ?? null;
+        $member->date_of_birth = $request->date_of_birth;
+        $member->month_of_birth = $request->month_of_birth;
+        $member->year_of_birth = $request->year_of_birth;
 
-        //$member->username = $request->username;
+        $member->username = $request->username;
         $member->member_type_id = $request->member_type_id;
         $member->member_status_id = $request->member_status_id;
         $member->journal = $request->journal;
@@ -248,14 +255,12 @@ class SubscribeMemberController extends Controller
             'post_code' => $request->post_code,
         ]);
 
-
         $member->contact()->updateOrCreate([], [
-            ///'email' => $request->email,
+            'email' => $request->email,
             'mobile' => $request->mobile,
             'phone' => $request->phone,
             'area_code' => $request->area_code,
         ]);
-
 
         AdditionalMemberInfos::updateOrCreate(['member_id' => $member->id], [
             'member_id' => $member->id,
@@ -272,6 +277,7 @@ class SubscribeMemberController extends Controller
             'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
             'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
         ]);
+
         $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
         if ($volunteerEnable && $volunteerEnable->volunteer == 1) {
             VolunteerDetail::updateOrCreate(['member_id' => $member->id], [
@@ -282,6 +288,14 @@ class SubscribeMemberController extends Controller
                 'skills' => $request->skills,
                 'availability' => $request->availability
             ]);
+        }
+
+        if ($oldEmail !== $newEmail && $newEmail) {
+            $user = ModelsUser::where('email', $oldEmail)->first();
+            if ($user) {
+                $user->email = $newEmail;
+                $user->save();
+            }
         }
 
         if (Auth::user()->name == 'Admin') {
