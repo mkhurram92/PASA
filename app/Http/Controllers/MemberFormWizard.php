@@ -256,4 +256,31 @@ class MemberFormWizard extends Controller
         $subsription_plan = SubscriptionPlan::where('name', 'Primary')->first();
         return view("page.member-form-wizard.index", compact('ports', 'voyages', 'states', 'genders', 'subsription_plan', 'titles'));
     }
+    
+    public function validateField(Request $request){
+        if(isset($request->username)){
+            $validator = Validator::make($request->all(),[
+                'username' => 'nullable|min:5|unique:members,username',
+            ]);
+        }
+        elseif(isset($request->title)){
+            $validator = Validator::make($request->all(),[
+                'title' => 'required',
+            ]);
+        }
+        elseif(isset($request->email)){
+            $validator = Validator::make($request->all(),[
+                'email' => 'required|email|confirmed|unique:members,email',
+            ]);
+        }else{
+            $validator='';
+        }
+
+        // return Validation result
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        } else {
+            return response()->json(['success' => true]);
+        }
+    }
 }
