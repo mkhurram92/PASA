@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Confirmation Email</label>
-            <input class="form-control" id="email_confirmation" name="email_confirmation" value="{{ old('email_confirmation') }}" type="email">
+            <input class="form-control getValid" id="email_confirmation" name="email_confirmation" value="{{ old('email_confirmation') }}" type="email">
         </div>
     </div>
     <br>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-2 my-2">
                     <label class="form-control-label">Title</label>
-                    <select name="title" class="form-control form-select select getValid2" id="title">
+                    <select name="title" class="form-control form-select select2 getValid" id="title">
                         @forelse ($titles as $title)
                         <option value="{{ $title?->id }}">
                             {{ $title?->name }}
@@ -58,15 +58,15 @@
                     <div class="row d-flex">
                         <div class="col-md-4 my-2">
                             <label class="form-control-label">Birth Year </label>
-                            <input class="form-control" id="year_of_birth" name="year_of_birth" value="{{ old('year_of_birth') }}" type="text" pattern="\d{4}" maxlength="4" title="Enter a 4-digit year" placeholder="YYYY">
+                            <input class="form-control getValid" id="year_of_birth" name="year_of_birth" value="{{ old('year_of_birth') }}" type="text" pattern="\d{4}" maxlength="4" title="Enter a 4-digit year" placeholder="YYYY">
                         </div>
                         <div class="col-md-4 my-2">
                             <label class="form-control-label">Birth Month</label>
-                            <input class="form-control" id="month_of_birth" name="month_of_birth" value="{{ old('month_of_birth') }}" type="text" pattern="\d{2}" maxlength="4" title="Enter a 2-digit month" placeholder="MM">
+                            <input class="form-control getValid" id="month_of_birth" name="month_of_birth" value="{{ old('month_of_birth') }}" type="text" pattern="\d{2}" maxlength="4" title="Enter a 2-digit month" placeholder="MM">
                         </div>
                         <div class="col-md-4 my-2">
                             <label class="form-control-label">Birth Date</label>
-                            <input class="form-control" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" type="text" pattern="\d{2}" maxlength="4" title="Enter a 2-digit date" placeholder="DD">
+                            <input class="form-control getValid" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" type="text" pattern="\d{2}" maxlength="4" title="Enter a 2-digit date" placeholder="DD">
                         </div>
                     </div>
                 </div>

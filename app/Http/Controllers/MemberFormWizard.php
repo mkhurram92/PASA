@@ -258,22 +258,44 @@ class MemberFormWizard extends Controller
     }
     
     public function validateField(Request $request){
-        if(isset($request->username)){
+        if($request->has('username')){
             $validator = Validator::make($request->all(),[
                 'username' => 'nullable|min:5|unique:members,username',
             ]);
         }
-        elseif(isset($request->title)){
+        elseif($request->has('title')){
             $validator = Validator::make($request->all(),[
                 'title' => 'required',
             ]);
         }
-        elseif(isset($request->email)){
+        elseif($request->has('year_of_birth')){
             $validator = Validator::make($request->all(),[
-                'email' => 'required|email|confirmed|unique:members,email',
+                'year_of_birth' => 'nullable|digits:4|integer|min:1000|max:9999',
             ]);
-        }else{
-            $validator='';
+        }
+        elseif($request->has('month_of_birth')){
+            $validator = Validator::make($request->all(),[
+                'month_of_birth' => 'nullable|digits:2|integer|min:1|max:12',
+            ]);
+        }
+        elseif($request->has('date_of_birth')){
+            $validator = Validator::make($request->all(),[
+                'date_of_birth' => 'nullable|digits:2|integer|min:1|max:31',
+            ]);
+        }
+        elseif($request->has('email')){
+            if ($request->has('email_confirmation')) {
+                $validator = Validator::make($request->all(),[
+                    'email' => 'required|email|confirmed|unique:members_contacts,email',
+                ]);
+            }else{
+                $validator = Validator::make($request->all(),[
+                    'email' => 'required|email|unique:members_contacts,email',
+                ]);
+            }
+        }
+        else{
+            return response()->json(['success' => true]);
         }
 
         // return Validation result
