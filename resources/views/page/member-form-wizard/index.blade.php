@@ -29,6 +29,35 @@
     <script>
         window.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
+                $('.getValid').on('blur', function() {
+                    var inputElement = $(this);
+                    var inputValue = inputElement.val();
+                    var fieldName = inputElement.attr('name'); // assuming the input has a name attribute
+        
+                    $.ajax({
+                        url: '{{ route('validate.field') }}', // replace with your Laravel validation route
+                        type: 'POST',
+                        data: {
+                            [fieldName]: inputValue, // send the field value to the server
+                            _token: '{{ csrf_token() }}' // include CSRF token if needed
+                        },
+                        success: function(response) {
+                            if (response.errors) {
+                                // If there are validation errors
+                                inputElement.addClass('is-invalid');
+                                inputElement.next('.invalid-feedback').remove(); // remove previous errors
+                                inputElement.after('<div class="invalid-feedback">' + response.errors[fieldName][0] + '</div>');
+                            } else {
+                                // If the input is valid
+                                inputElement.removeClass('is-invalid');
+                                inputElement.next('.invalid-feedback').remove();
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log("An error occurred: " + xhr.status + " " + xhr.statusText);
+                        }
+                    });
+                });
                 $("#state").select2();
                 $("#title").select2();
                 $("#name_of_the_ship").select2();

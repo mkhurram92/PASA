@@ -4,11 +4,11 @@
         <h3 class="card-title"> Account Information</h3>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Username</label>
-            <input class="form-control" id="username" name="username" value="{{ old('username') }}" type="text">
+            <input class="form-control getValid" id="username" name="username" value="{{ old('username') }}" type="text">
         </div>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Email</label>
-            <input class="form-control" id="email" name="email" value="{{ old('email') }}"  type="text">
+            <input class="form-control getValid" id="email" name="email" value="{{ old('email') }}"  type="text">
         </div>
         <div class="col-md-4 my-2">
             <label class="form-control-label">Confirmation Email</label>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-2 my-2">
                     <label class="form-control-label">Title</label>
-                    <select name="title" class="form-control form-select select2" id="title">
+                    <select name="title" class="form-control form-select select getValid2" id="title">
                         @forelse ($titles as $title)
                         <option value="{{ $title?->id }}">
                             {{ $title?->name }}
