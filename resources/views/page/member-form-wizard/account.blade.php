@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="col-md-12 my-2">
-                    <label class="form-control-label">Unit No / Number & Street </label>
+                    <label class="form-control-label">Unit No. / Number & Street </label>
                     <input class="form-control" id="number_street" name="number_street" value="{{ old('number_street') }}" type="text">
                 </div>
                 <div class="col-md-6 my-2">
