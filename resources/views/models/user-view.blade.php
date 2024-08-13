@@ -8,22 +8,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="POST" action="{{ route('password.email') }}">
+                    <input type="hidden" name="email" value="{{ $user->email }}">
                     <div class="form-group">
                         <label for="name" class="control-label">Name</label>
                         <input type="text" class="form-control" value="{{ $user->name }}" readonly disabled>
                     </div>
                     <div class="form-group">
                         <label for="email" class="control-label">Email</label>
-                        <input type="text" class="form-control" value="{{ $user->email }}" readonly disabled>
+                        <input id="email" type="email" class="form-control" value="{{ $user->email }}" readonly disabled>
                     </div>
                     <div class="form-group">
                         <label for="role" class="control-label">Role</label>
                         <input type="text" class="form-control" id="role" name="role" value="{{ $roleName }}" readonly disabled>
                     </div>
-
-                    <div class="form-group">
+                    <div class="form-group d-flex justify-content-between mt-3">
                         <button class="btn btn-default close-modal" data-bs-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary" type="submit" >Email Reset Password Link</button>
                     </div>
                 </form>
             </div>

@@ -125,7 +125,6 @@
                 <div class="form-group text-center">
                     <a href="{{ route('login') }}" class="btn btn-link">Back to Login</a>
                 </div>
-
             </form>
         </div>
         <div class="login-info">
