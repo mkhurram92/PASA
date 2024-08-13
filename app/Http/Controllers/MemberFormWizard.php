@@ -271,16 +271,22 @@ class MemberFormWizard extends Controller
         elseif($request->has('year_of_birth')){
             $validator = Validator::make($request->all(),[
                 'year_of_birth' => 'nullable|digits:4|integer|min:1000|max:9999',
+            ],[
+                'year_of_birth.digits' => 'Year must be exactly 4 digits or left blank.',
             ]);
         }
         elseif($request->has('month_of_birth')){
             $validator = Validator::make($request->all(),[
                 'month_of_birth' => 'nullable|digits:2|integer|min:1|max:12',
+            ],[
+                'month_of_birth.digits' => 'Month must be exactly 2 digits or left blank.',
             ]);
         }
         elseif($request->has('date_of_birth')){
             $validator = Validator::make($request->all(),[
                 'date_of_birth' => 'nullable|digits:2|integer|min:1|max:31',
+            ],[
+                'date_of_birth.digits' => 'Day must be exactly 2 digits or left blank.',
             ]);
         }
         elseif($request->has('email')){

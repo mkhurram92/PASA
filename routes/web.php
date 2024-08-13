@@ -1,47 +1,49 @@
 <?php
 
-use App\Http\Controllers\authentications\LoginBasic;
+use App\Models\MembershipStatus;
+use App\Http\Controllers\Account;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AncestorDataController;
+use App\Http\Controllers\RigController;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\CityController;
-use App\Http\Controllers\CountiesController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShipController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\TitleController;
-use App\Http\Controllers\MembershipStatusController;
-use App\Http\Controllers\StatesController;
-use App\Http\Controllers\CountriesController;
-use App\Http\Controllers\FriendMemberFormWizard;
-use App\Http\Controllers\GenderController;
-use App\Http\Controllers\JuniorMemberFormWizard;
-use App\Http\Controllers\MemberFormWizard;
-use App\Http\Controllers\ModeOfArrivalsController;
-use App\Http\Controllers\OccupationController;
-use App\Http\Controllers\PartnerMemberFormWizard;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\PortsController;
-use App\Http\Controllers\RigController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TitleController;
+use App\Http\Controllers\GenderController;
+use App\Http\Controllers\GlCodeController;
+use App\Http\Controllers\MemberFormWizard;
+use App\Http\Controllers\StatesController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CountiesController;
+use App\Http\Controllers\CountriesController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OccupationController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AncestorDataController;
+use App\Http\Controllers\FriendMemberFormWizard;
+use App\Http\Controllers\JuniorMemberFormWizard;
+use App\Http\Controllers\GlCodesParentController;
+use App\Http\Controllers\PartnerMemberFormWizard;
+
+use App\Http\Controllers\AncestorSpouseController;
+use App\Http\Controllers\MemberAncestorController;
+use App\Http\Controllers\MembersContactController;
+use App\Http\Controllers\ModeOfArrivalsController;
 use App\Http\Controllers\SourceOfArrivalController;
 use App\Http\Controllers\SubscribeMemberController;
-use App\Http\Controllers\SubscriptionPlanController;
-use App\Http\Controllers\AncestorLocalTravelDetailController;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Hash;
-
-use App\Http\Controllers\MembersContactController;
-use App\Http\Controllers\AncestorInternationalTravelDetailController;
-use App\Http\Controllers\AncestorSpouseController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\GlCodeController;
-use App\Http\Controllers\GlCodesParentController;
-use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransactionTypeController;
-use App\Http\Controllers\AssetController;
-use App\Http\Controllers\Account;
-use App\Models\MembershipStatus;
-use App\Http\Controllers\MemberAncestorController;
+use App\Http\Controllers\authentications\LoginBasic;
+use App\Http\Controllers\MembershipStatusController;
+use App\Http\Controllers\SubscriptionPlanController;
+use App\Http\Controllers\authentications\ForgotPassword;
+use App\Http\Controllers\AncestorLocalTravelDetailController;
+use App\Http\Controllers\authentications\NewPasswordController;
+use App\Http\Controllers\AncestorInternationalTravelDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,8 +87,13 @@ Route::get("env-clear", function () {
 });
 
 Route::get("login", [LoginBasic::class, "index"])->name("login");
+Route::get("forgot-password", [ForgotPassword::class, "index"])->name("forgot.password");
+Route::post("forgot-password", [ForgotPassword::class, "store"])->name("password.email");
+Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 Route::post("logout", [LoginBasic::class, "logout"])->name("logout");
 Route::post("login", [LoginBasic::class, "login"])->name("loginRequest");
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('members/view-pedigree/{id}', [SubscribeMemberController::class, 'viewPedigree'])->name("members.view-pedigree");
     Route::get('members/view-member/{id}', [SubscribeMemberController::class, 'viewMember'])->name("members.view-member");
