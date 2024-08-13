@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Title -->
-    <title>Pioneers SA</title>
+    <title>Reset Password - Pioneers SA</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/favicons/apple-touch-icon.png') }}">
@@ -113,29 +113,37 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('password.store') }}">
                 @csrf
+                <!-- Password Reset Token -->
+                <input type="hidden" name="token" value="{{ $token }}">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <input id="email" type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', $email) }}" required autocomplete="email" autofocus>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
+                    <label for="password" >{{ __('Password') }}</label>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="password-confirm" >{{ __('Confirm Password') }}</label>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                 </div>
                 <div class="form-group mb-3">
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                </div>
-                <div class="form-group text-center">
-                    <a href="{{ route('forgot.password') }}" class="btn btn-link">Forgot password?</a>
+                    <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
                 </div>
             </form>
         </div>
         <div class="login-info">
             <div>
                 <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" style="width: 200px; margin-bottom: 20px;">
-                <h1>Welcome Back!</h1>
-                <p>Sign in to continue to your account and enjoy our services.</p>
+                <h1>Forgot Password?</h1>
+                <p>Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
             </div>
         </div>
     </div>
