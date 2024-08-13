@@ -13,7 +13,6 @@
                     <div class="card-body">
                         <form action="{{ route('submitFriendMembershipAccount') }}" id="membership_form"
                             onsubmit="return false;">
-
                             <div id="wizard2">
                                 @include('page.friend-member-form-wizard.account')
                                 @include('page.friend-member-form-wizard.payment')

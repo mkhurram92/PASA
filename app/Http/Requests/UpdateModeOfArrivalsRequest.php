@@ -15,7 +15,7 @@ class UpdateModeOfArrivalsRequest extends FormRequest
     {
         return [
             "ship_id" => "required|exists:ships,id",
-            "year"=> "nullable|regex:/^\d{4}$/",
+            "year"=> "nullable",
             "country_id"=> "nullable|exists:countries,id",
             "county_id"=> "nullable|exists:counties,id",
             "city_id"=> "nullable",
@@ -37,7 +37,7 @@ class UpdateModeOfArrivalsRequest extends FormRequest
         return [
             "ship_id.required"=>"Ship field is required",
             "ship_id.exists"=>"Ship Not Found",
-            "year" => "Arrival year must be exactly 4 digits or left blank",
+            //"year" => "Arrival year must be exactly 4 digits or left blank",
             "year_of_arrival"=>"Arrival year must be exactly 4 digits or left blank",
             "year_of_departure"=>"Departure year must be exactly 4 digits or left blank",
         ];

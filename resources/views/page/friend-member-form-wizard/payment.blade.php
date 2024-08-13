@@ -11,12 +11,12 @@
                     <option value="post">Post</option>
                 </select>
             </div>
-            <input type="hidden" value="{{ $subsription_plan->email_price + 20 }}" name="preferred_delivery_price"
+            <input type="hidden" value="{{ 20 }}" name="preferred_delivery_price"
                 id="preferred_delivery_price">
             <div class="col-md-8 d-flex">
                 <div class="col-md-3 my-2">
                     <label class="form-control-label">Membership Fee : </label>
-                    <h4 id="membership_fee_block">${{ number_format($subsription_plan->email_price, 2) }} (Email)</h4>
+                    <h4 id="membership_fee_block">${{ number_format(20, 2) }} (Email)</h4>
                 </div>
                 <div class="col-md-3 my-2">
                     <label class="form-control-label">New Member : </label>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-md-3 my-2">
                     <label class="form-control-label">Total : </label>
-                    <h4 id="total_block">${{ number_format($subsription_plan->email_price + 20, 2) }}</h4>
+                    <h4 id="total_block">${{ number_format(20, 2) }}</h4>
                 </div>
             </div>
         </div>
@@ -53,18 +53,18 @@
 
             if (delivery == "post") {
                 $(membership_fee_block).text(
-                    "${{ number_format($subsription_plan->post_price, 2) }} (Post)"
+                    "${{ number_format(20, 2) }} (Post)"
                 );
-                $(total_block).text("${{ number_format($subsription_plan->post_price + 20, 2) }}");
+                $(total_block).text("${{ number_format(20, 2) }}");
                 $("#preferred_delivery_price").val(
-                    "{{ $subsription_plan->post_price + 20 }}");
+                    "{{ 20 }}");
             } else {
                 $(membership_fee_block).text(
-                    "{{ number_format($subsription_plan->email_price, 2) }} (Email)"
+                    "{{ number_format(20, 2) }} (Email)"
                 );
-                $(total_block).text("${{ number_format($subsription_plan->email_price + 20, 2) }}");
+                $(total_block).text("${{ number_format(20, 2) }}");
                 $("#preferred_delivery_price").val(
-                    "{{ $subsription_plan->email_price + 20 }}");
+                    "{{ 20 }}");
             }
         })
     });
