@@ -137,13 +137,16 @@
                 <div class="form-group mb-3">
                     <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
                 </div>
+                <div class="form-group text-center">
+                    <a href="{{ route('login') }}" class="btn btn-link">Back to Login</a>
+                </div>
             </form>
         </div>
         <div class="login-info">
             <div>
                 <img src="{{ asset('images/logo/logo.png') }}" alt="Logo" style="width: 200px; margin-bottom: 20px;">
                 <h1>Forgot Password?</h1>
-                <p>Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
+                <p>Forgot your password? Enter your email to receive a reset link.</p>
             </div>
         </div>
     </div>
