@@ -16,7 +16,7 @@
             </div>
             
             <!--End Page header-->
-            @if (optional(Auth::user()->role)->name == "Admin")
+            @if (Auth::user()->role->name == "Admin")
             <div class="row">
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
