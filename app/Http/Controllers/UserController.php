@@ -77,7 +77,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $roleName = $user->role ? $user->role->name : 'No role assigned'; // Assuming you have a relationship defined in your User model
+        $roleName = $user->role ? $user->role->name : 'No role assigned'; 
 
         $html = view('models.user-view', compact('user', 'roleName'))->render();
         return response()->json(["status" => true, "html" => $html]);
@@ -91,7 +91,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::all(); // Fetch all roles from your Role model or adjust query as needed
+        $roles = Role::all(); 
         $html = view("models.user-update", compact('user', 'roles'))->render();
 
         return response()->json(["status" => true, "html" => $html]);
@@ -131,8 +131,6 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
