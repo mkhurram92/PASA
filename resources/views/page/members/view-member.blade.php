@@ -444,13 +444,120 @@
             var renewButton = document.getElementById('renewButton');
             if (renewButton) {
                 renewButton.addEventListener('click', function(e) {
-                    e.preventDefault(); // Prevent the default action (if any)
+                    e.preventDefault();
                     var paymentModal = new bootstrap.Modal(document.getElementById('paymentRenewalModal'));
                     paymentModal.show();
                 });
             }
         });
-        
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var stripe = Stripe('{{ env('STRIPE_KEY') }}');
+            var elements = stripe.elements();
+
+            // Create an instance of the card Element
+            var card = elements.create('card', {
+                hidePostalCode: true,
+                style: {
+                    base: {
+                        color: '#32325d',
+                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                        fontSmoothing: 'antialiased',
+                        fontSize: '16px',
+                        '::placeholder': {
+                            color: '#aab7c4'
+                        }
+                    },
+                    invalid: {
+                        color: '#fa755a',
+                        iconColor: '#fa755a'
+                    }
+                }
+            });
+
+            // Mount the card Element to the card-element div
+            card.mount('#card-element');
+
+            var stripeFields = document.getElementById('stripeFields');
+            var onlineOption = document.getElementById('onlineOption');
+            var cashOption = document.getElementById('cashOption');
+            var proceedButton = document.getElementById('submitPaymentMethod');
+
+            // Initially hide the stripe fields
+            stripeFields.style.display = 'none';
+
+            // Show Stripe fields when "Online" is selected
+            onlineOption.addEventListener('change', function() {
+                if (this.checked) {
+                    stripeFields.style.display = 'block';
+                }
+            });
+
+            // Hide Stripe fields when "Cash" is selected
+            cashOption.addEventListener('change', function() {
+                if (this.checked) {
+                    stripeFields.style.display = 'none';
+                }
+            });
+
+            // Handle the form submission or processing on the "Proceed" button click
+            proceedButton.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Check if "Online" is selected
+                if (onlineOption.checked) {
+                    // Get the cardholder name and address details
+                    var cardholderName = document.getElementById('cardholder-name').value;
+                    var billingAddress = {
+                        line1: document.getElementById('billing-address').value,
+                        city: document.getElementById('billing-city').value,
+                        state: document.getElementById('billing-state').value,
+                        postal_code: document.getElementById('billing-postal').value,
+                        country: document.getElementById('billing-country').value,
+                    };
+
+                    // Create a token or payment method with Stripe
+                    stripe.createToken(card, {
+                        name: cardholderName,
+                        address_line1: billingAddress.line1,
+                        address_city: billingAddress.city,
+                        address_state: billingAddress.state,
+                        address_zip: billingAddress.postal_code,
+                        address_country: billingAddress.country
+                    }).then(function(result) {
+                        if (result.error) {
+                            // Inform the customer that there was an error
+                            var errorElement = document.getElementById('card-errors');
+                            errorElement.textContent = result.error.message;
+                        } else {
+                            // Use AJAX to send the token to the server
+                            $.ajax({
+                                url: '{{ route("payment.process") }}', 
+                                method: 'POST',
+                                data: {
+                                    stripeToken: result.token.id,
+                                    _token: '{{ csrf_token() }}' // Laravel CSRF token
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        alert('Payment successful!');
+                                        // You can redirect the user or show a success message
+                                    } else {
+                                        alert('Payment failed: ' + response.message);
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    alert('An error occurred: ' + error);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    alert('Please select an online payment method and fill in the details.');
+                }
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             $('#approveButton').on('click', function() {
                 Swal.fire({

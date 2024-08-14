@@ -144,7 +144,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('profile', [DashboardController::class, "profile"])->name("profile");
     Route::get('juniors', [DashboardController::class, "juniors"])->name("juniors");
     Route::get('partner', [DashboardController::class, "partner"])->name("partner");
-    Route::post('/payment/online', [PaymentController::class, 'process'])->name('payment.online');
+    
+    Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
 
     // add junior
     Route::get('/membership/junior', [JuniorMemberFormWizard::class, "JuniorMemberFormWizard"])->name('JuniorForm');
