@@ -114,6 +114,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('members/updateAncestors/{id}', [SubscribeMemberController::class, 'updateAncestors'])->name('members.updateAncestors');
     Route::get('/getModeOfTravelDate/{id}', [SubscribeMemberController::class, 'getModeOfTravelDate']);
 
+    Route::get('/profile/change-password', [NewPasswordController::class, 'showChangePasswordForm'])->name('password.change');
+    Route::post('/profile/change-password', [NewPasswordController::class, 'changePassword'])->name('password.update');
+
     Route::resource('members', SubscribeMemberController::class);
     Route::resource('subscription-plans', SubscriptionPlanController::class);
     Route::resource('/', DashboardController::class);

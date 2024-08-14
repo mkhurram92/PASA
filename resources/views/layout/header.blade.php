@@ -120,23 +120,28 @@
                                                 </span>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow animated">
+                                                <!-- Change Password Link -->
+                                                <a href="{{ route('password.change') }}" class="dropdown-item d-flex">
+                                                    <svg class="header-icon me-3" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                                        <path d="M12 7h-1V5h1v2zm0 4h-1V9h1v2zm0 4h-1v-2h1v2zm-1-10h2v1h-2V5zm0 8h2v1h-2v-1zm0 4h2v1h-2v-1zm6-3h-2v-1h2v1zm-4 0h-2v-1h2v1zm4 0h-2v-1h2v1zm-4-4h-2V9h2v2zm4 0h-2V9h2v2zM5 5h2v2H5V5zm0 4h2v2H5V9zm0 4h2v2H5v-2zm0 4h2v2H5v-2zM8 5h1v2H8V5zm8 4h-1v2h1V9z" />
+                                                    </svg>
+                                                    <div class="mt-1">Change Password</div>
+                                                </a>
+                                            
+                                                <!-- Sign out Form -->
                                                 <form action="{{ route('logout') }}" method="POST">
                                                     @csrf
                                                     <div class="dropdown-item d-flex" id="logout">
-                                                        <svg class="header-icon me-3" x="1008" y="1248"
-                                                            viewBox="0 0 24 24" height="100%" width="100%"
-                                                            preserveAspectRatio="xMidYMid meet" focusable="false">
+                                                        <svg class="header-icon me-3" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
                                                             <path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none" />
-                                                            <path
-                                                                d="M6 20h12V10H6v10zm2-6h3v-3h2v3h3v2h-3v3h-2v-3H8v-2z"
-                                                                opacity=".3" />
-                                                            <path
-                                                                d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H8.9V6zM18 20H6V10h12v10zm-7-1h2v-3h3v-2h-3v-3h-2v3H8v2h3z" />
+                                                            <path d="M6 20h12V10H6v10zm2-6h3v-3h2v3h3v2h-3v3h-2v-3H8v-2z" opacity=".3" />
+                                                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H8.9V6zM18 20H6V10h12v10zm-7-1h2v-3h3v-2h-3v-3h-2v3H8v2h3z" />
                                                         </svg>
                                                         <div class="mt-1">Sign out</div>
                                                     </div>
                                                 </form>
-                                            </div>
+                                            </div>                                            
                                         </div>
                                     </div>
                                 </div>
