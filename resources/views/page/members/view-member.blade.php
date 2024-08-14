@@ -49,13 +49,16 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
+                                <a class="btn btn-primary mr-2" href="#" id="renewButton">
+                                    <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
+                                </a>
                                 @if (!$member?->additionalInfo?->date_membership_approved && $member?->contact?->email)
                                     <a class="btn btn-success" id="approveButton">
                                         <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
                                     </a>
                                 @endif
-                                <a class="btn btn-warning mr-2" href="{{ url('members/view-ancestor/' . $member?->id) }}"
-                                    id="ancestor-view">
+                                <a class="btn btn-warning mr-2"
+                                    href="{{ url('members/view-ancestor/' . $member?->id) }}" id="ancestor-view">
                                     <i class="fa fa-sitemap" style="font-size:20px;"></i> Ancestor
                                 </a>
                                 <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
@@ -64,7 +67,6 @@
                                 <a class="btn btn-success mr-2" href="{{ url()->current() }}/edit" id="editLink">
                                     <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
                                 </a>
-
                                 <a class="btn btn-info" href="{{ route('members.index') }}">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
@@ -161,7 +163,8 @@
                                             <label class="col-md-4 form-label">Country</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                    value="{{ $member?->address?->country?->name }}" readonly disabled>
+                                                    value="{{ $member?->address?->country?->name }}" readonly
+                                                    disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -427,6 +430,8 @@
 
 <!-- MODAL EFFECTS -->
 <div id="crud"></div>
+@include('models.payment-renewal')
+
 @section('scripts')
     @include('plugins.select2')
 
@@ -434,6 +439,17 @@
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var renewButton = document.getElementById('renewButton');
+            if (renewButton) {
+                renewButton.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent the default action (if any)
+                    var paymentModal = new bootstrap.Modal(document.getElementById('paymentRenewalModal'));
+                    paymentModal.show();
+                });
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             $('#approveButton').on('click', function() {
                 Swal.fire({
@@ -537,14 +553,6 @@
             // Redirect to the new URL
             window.location.href = newUrl;
         });
-
-        //var currentUrl = window.location.href;
-
-        // Extract the ID from the URL (assuming it's the last digit after the last '/')
-        //var id = currentUrl.match(/\d+$/)[0];
-
-        // Update the href attribute with the extracted ID
-        //document.getElementById("viewPedigreeLink").href = "/members/view-pedigree/" + id;
 
         document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
             event.preventDefault(); // Prevent the default behavior of the link
