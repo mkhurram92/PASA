@@ -102,7 +102,7 @@ class PaymentController extends Controller
         }
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
-        $data = $stripe->paymentIntents->all(['limit' => 100]);
+        $data = $stripe->paymentIntents->all(['limit' => 1000]);
         $res = $data->data;
 
         $data = [];
