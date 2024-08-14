@@ -7,6 +7,7 @@ use App\Models\AncestorData;
 use App\Models\AncestorLocalTravelDetail;
 use App\Http\Requests\StoreAncestorDataRequest;
 use App\Http\Requests\UpdateAncestorDataRequest;
+use App\Models\AncestorNote;
 use App\Models\AncestorInternationalTravelDetail;
 use App\Models\AncestorSpouse;
 use App\Models\Countries;
@@ -86,7 +87,12 @@ class AncestorDataController extends Controller
                 $this->saveTravelDetails($ancestorData, $validatedData, $request);
             }
 
+            // Save spouse details
             $this->saveAncestorSpouse($ancestorData, $request);
+
+            // Save ancestor notes, birth details, and death details
+            $this->saveAncestorNotes($ancestorData->id, $validatedData);
+
 
             $filteredData = array_filter($validatedData, function ($value) {
                 return !is_null($value);
@@ -102,7 +108,7 @@ class AncestorDataController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            //Log::error($e->getMessage());
+            Log::error($e->getMessage());
 
             return response()->json([
                 "status" => false,
@@ -117,7 +123,15 @@ class AncestorDataController extends Controller
             $data[$field] = Carbon::createFromFormat('Y-m-d', $data[$field])->format('Y-m-d');
         }
     }
-
+    private function saveAncestorNotes($ancestorId, $validatedData)
+    {
+        AncestorNote::create([
+            'ancestor_id' => $ancestorId,
+            'notes' => $validatedData['notes'] ?? null,
+            'birth_details' => $validatedData['birth_details'] ?? null,
+            'death_details' => $validatedData['death_details'] ?? null,
+        ]);
+    }
     private function saveAncestorSpouse($ancestorData, $request)
     {
         try {
@@ -125,7 +139,7 @@ class AncestorDataController extends Controller
 
             $ancestorSpouse = new AncestorSpouse();
             $ancestorSpouse->ancestor_id = $ancestorData->id;
-            $ancestorSpouse->fill($request->only(['marriage_date', 'marriage_month', 'marriage_year', 'marriage_place', 'spouse_birth_place', 'spouse_death_place', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date','spouse_birth_month','spouse_birth_year', 'spouse_death_date','spouse_death_month','spouse_death_year']));
+            $ancestorSpouse->fill($request->only(['marriage_date', 'marriage_month', 'marriage_year', 'marriage_place', 'spouse_birth_place', 'spouse_death_place', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_birth_month', 'spouse_birth_year', 'spouse_death_date', 'spouse_death_month', 'spouse_death_year']));
             $ancestorSpouse->save();
 
             //Log::info('Ancestor spouse data saved successfully', ['ancestor_spouse_id' => $ancestorSpouse->id]);
@@ -165,7 +179,8 @@ class AncestorDataController extends Controller
                 'mode_of_travel',
                 'occupation_relation',
                 'localTravelDetails',
-                'spouse_details'
+                'spouse_details',
+                'notes'
             ]
         )->find($ancestorData);
 
@@ -186,7 +201,8 @@ class AncestorDataController extends Controller
                 'mode_of_travel',
                 'occupation_relation',
                 'localTravelDetails',
-                'spouse_details'
+                'spouse_details',
+                'notes'
             ]
         )->find($ancestorData);
 
@@ -218,6 +234,11 @@ class AncestorDataController extends Controller
 
             $validatedData = $request->validated();
 
+            // Remove notes, birth_details, and death_details from ancestor data update
+            $ancestorDataInput = array_filter($validatedData, function ($key) {
+                return !in_array($key, ['notes', 'birth_details', 'death_details']);
+            }, ARRAY_FILTER_USE_KEY);
+
             // Update the ancestor data
             $ancestorData->update($validatedData);
 
@@ -233,6 +254,9 @@ class AncestorDataController extends Controller
 
             // Update spouse data
             $this->updateAncestorSpouse($ancestorData, $request);
+
+            // Update ancestor notes, birth details, and death details
+            $this->updateAncestorNotes($ancestorData->id, $validatedData);
 
             DB::commit();
 
@@ -252,11 +276,32 @@ class AncestorDataController extends Controller
             ], 500);
         }
     }
+    private function updateAncestorNotes($ancestorId, $validatedData)
+    {
+        // Find the existing note or create a new one if it doesn't exist
+        $ancestorNote = AncestorNote::where('ancestor_id', $ancestorId)->first();
 
+        if ($ancestorNote) {
+            // Update the existing note
+            $ancestorNote->update([
+                'notes' => $validatedData['notes'] ?? $ancestorNote->notes,
+                'birth_details' => $validatedData['birth_details'] ?? $ancestorNote->birth_details,
+                'death_details' => $validatedData['death_details'] ?? $ancestorNote->death_details,
+            ]);
+        } else {
+            // Create a new note if it doesn't exist
+            AncestorNote::create([
+                'ancestor_id' => $ancestorId,
+                'notes' => $validatedData['notes'] ?? null,
+                'birth_details' => $validatedData['birth_details'] ?? null,
+                'death_details' => $validatedData['death_details'] ?? null,
+            ]);
+        }
+    }
     private function updateAncestorSpouse($ancestorData, $request)
     {
         try {
-            $spouseData = $request->only(['marriage_date', 'marriage_month', 'marriage_year', 'marriage_place', 'spouse_birth_place', 'spouse_death_place', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date','spouse_birth_month','spouse_birth_year', 'spouse_death_date','spouse_death_month','spouse_death_year']);
+            $spouseData = $request->only(['marriage_date', 'marriage_month', 'marriage_year', 'marriage_place', 'spouse_birth_place', 'spouse_death_place', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_birth_month', 'spouse_birth_year', 'spouse_death_date', 'spouse_death_month', 'spouse_death_year']);
             //Log::info('Updating ancestor spouse data', $spouseData);
 
             $ancestorSpouse = AncestorSpouse::where('ancestor_id', $ancestorData->id)->first();

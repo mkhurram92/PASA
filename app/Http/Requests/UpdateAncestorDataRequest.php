@@ -55,6 +55,9 @@ class UpdateAncestorDataRequest extends FormRequest
             'spouse_death_date' => 'nullable',
             'spouse_death_month' => 'nullable',
             'spouse_death_year' => 'nullable',
+            'death_details' => 'nullable',
+            'birth_details' => 'nullable',
+            'notes' => 'nullable',
         ];
 
         return $rules;

@@ -100,11 +100,9 @@
                                                         placeholder="Pioneer's Preferred Name" name="preferred_name">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Birth Date</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Birth Date</label>
+                                                <div class="col-md-8">
                                                     <div class="row">
                                                         <div class="col-4 pr-1">
                                                             <input class="form-control" placeholder="YYYY"
@@ -123,12 +121,20 @@
                                             </div>
 
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Birth Place</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Birth Place</label>
+                                                <div class="col-md-8">
                                                     <input class="form-control" type="text" placeholder="Birth Place"
                                                         name="place_of_birth">
                                                 </div>
                                             </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Birth Details</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" id="birth_details" name="birth_details" placeholder="Birth Details" rows="4" maxlength="300"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
                                             <div class="mb-3 row">
                                                 <label class="col-md-3 form-label">Death Date</label>
                                                 <div class="col-md-9">
@@ -153,6 +159,18 @@
                                                 <div class="col-md-9">
                                                     <input class="form-control" type="text"
                                                         placeholder="Death Place" name="place_of_death">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-3 form-label">Death Details</label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" id="death_details" name="death_details" placeholder="Death Details" rows="4" maxlength="300"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-3 form-label">General Notes</label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" id="notes" name="notes" placeholder="General Notes" rows="8"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -267,14 +285,14 @@
                                                                         type="text" name="spouse_birth_year">
                                                                 </div>
                                                                 <div class="col-4 px-1">
-                                                                        <select class="form-control month-select"
+                                                                    <select class="form-control month-select"
                                                                         id="spouse_birth_month"
                                                                         name="spouse_birth_month"></select>
                                                                 </div>
                                                                 <div class="col-4 pl-1">
                                                                     <select class="form-control day-select"
-                                                                    id="spouse_birth_date"
-                                                                    name="spouse_birth_date"></select>
+                                                                        id="spouse_birth_date"
+                                                                        name="spouse_birth_date"></select>
                                                                 </div>
                                                             </div>
                                                         </div>

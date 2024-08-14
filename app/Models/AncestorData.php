@@ -11,7 +11,23 @@ class AncestorData extends Model
     use HasFactory;
     protected $table = 'ancestor_data';
     protected $fillable = [
-        'ancestor_surname', 'given_name', 'maiden_surname', 'mode_of_travel_id', 'date_of_death', 'month_of_death', 'place_of_birth', 'place_of_death', 'year_of_death', 'first_date', 'date_of_birth', 'month_of_birth', 'year_of_birth', 'notes', 'emigrant_no', 'occupation', 'source_of_arrival', 'gender'
+        'ancestor_surname',
+        'given_name',
+        'maiden_surname',
+        'mode_of_travel_id',
+        'date_of_death',
+        'month_of_death',
+        'place_of_birth',
+        'place_of_death',
+        'year_of_death',
+        'first_date',
+        'date_of_birth',
+        'month_of_birth',
+        'year_of_birth',
+        'emigrant_no',
+        'occupation',
+        'source_of_arrival',
+        'gender'
     ];
 
     public function mode_of_travel()
@@ -72,5 +88,9 @@ class AncestorData extends Model
     public function members()
     {
         return $this->belongsToMany(Member::class, 'member_ancestor', 'ancestor_id', 'member_id');
+    }
+    public function notes()
+    {
+        return $this->hasMany(AncestorNote::class, 'ancestor_id');
     }
 }

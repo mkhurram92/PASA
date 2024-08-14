@@ -112,8 +112,6 @@
                                                         name="maiden_surname">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Birth Date</label>
                                                 <div class="col-md-8">
@@ -145,6 +143,14 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Birth Details</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" id="birth_details" name="birth_details" placeholder="Birth Details" rows="4">{{ $ancestor->notes->first()->birth_details ?? '' }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Death Date</label>
                                                 <div class="col-md-8">
                                                     <div class="row">
@@ -174,6 +180,18 @@
                                                         value="{{ $ancestor?->place_of_death }}"
                                                         name="place_of_death">
 
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-3 form-label">Death Details</label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" id="death_details" name="death_details" placeholder="Death Details" rows="4">{{ $ancestor->notes->first()->death_details ?? '' }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-3 form-label">General Notes</label>
+                                                <div class="col-md-9">
+                                                    <textarea class="form-control" id="notes" name="notes" placeholder="General Notes" rows="8">{{ $ancestor->notes->first()->notes ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
