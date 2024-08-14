@@ -432,11 +432,12 @@
 <div id="crud"></div>
 @include('models.payment-renewal')
 
+<script src="https://js.stripe.com/v3/"></script>
+
 @section('scripts')
     @include('plugins.select2')
 
     <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
-    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -449,7 +450,7 @@
                 });
             }
         });
-
+        
         document.addEventListener('DOMContentLoaded', function() {
             $('#approveButton').on('click', function() {
                 Swal.fire({
