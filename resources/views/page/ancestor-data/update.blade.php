@@ -183,14 +183,14 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">Death Details</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">Death Details</label>
+                                                <div class="col-md-8">
                                                     <textarea class="form-control" id="death_details" name="death_details" placeholder="Death Details" rows="4">{{ $ancestor->notes->first()->death_details ?? '' }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-3 form-label">General Notes</label>
-                                                <div class="col-md-9">
+                                                <label class="col-md-4 form-label">General Notes</label>
+                                                <div class="col-md-8">
                                                     <textarea class="form-control" id="notes" name="notes" placeholder="General Notes" rows="8">{{ $ancestor->notes->first()->notes ?? '' }}</textarea>
                                                 </div>
                                             </div>
