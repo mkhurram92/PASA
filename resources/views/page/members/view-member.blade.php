@@ -482,6 +482,10 @@
             var onlineOption = document.getElementById('onlineOption');
             var cashOption = document.getElementById('cashOption');
             var proceedButton = document.getElementById('submitPaymentMethod');
+            var paymentRenewalModalElement = document.getElementById('paymentRenewalModal');
+            var paymentRenewalModal = new bootstrap.Modal(paymentRenewalModalElement, {
+                keyboard: false
+            });
 
             // Initially hide the stripe fields
             stripeFields.style.display = 'none';
@@ -532,7 +536,7 @@
                         } else {
                             // Use AJAX to send the token to the server
                             $.ajax({
-                                url: '{{ route("payment.process") }}', 
+                                url: '{{ route('payment.process') }}', // Your server-side route to handle the payment
                                 method: 'POST',
                                 data: {
                                     stripeToken: result.token.id,
@@ -541,7 +545,9 @@
                                 success: function(response) {
                                     if (response.success) {
                                         alert('Payment successful!');
-                                        // You can redirect the user or show a success message
+                                        // Hide the modal on success
+                                        paymentRenewalModal
+                                    .hide(); // Ensure this is the correct instance
                                     } else {
                                         alert('Payment failed: ' + response.message);
                                     }
