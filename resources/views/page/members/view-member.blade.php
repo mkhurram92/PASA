@@ -436,11 +436,14 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
 @section('scripts')
     @include('plugins.select2')
-
-    <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var renewButton = document.getElementById('renewButton');

@@ -180,9 +180,9 @@ class SubscribeMemberController extends Controller
 
         if ($membershipEndDate) {
             // Log the dates
-            Log::info("Membership End Date: " . $membershipEndDate->toDateString());
-            Log::info("Current Date: " . $currentDate->toDateString());
-            Log::info("One Month Later: " . $oneMonthLater->toDateString());
+            //Log::info("Membership End Date: " . $membershipEndDate->toDateString());
+            //Log::info("Current Date: " . $currentDate->toDateString());
+            //Log::info("One Month Later: " . $oneMonthLater->toDateString());
 
             // Check if the membership end date is between today and one month later
             if ($membershipEndDate->between($currentDate, $oneMonthLater)) {
@@ -350,8 +350,9 @@ class SubscribeMemberController extends Controller
 
             $usr = ModelsUser::create([
                 "email" => $member->contact->email,
-                "password" => Hash::make($member->password), // Hash the password
-                "name" => $member->given_name . " " . $member->family_name
+                "password" => $member->password, // Hash the password
+                "name" => $member->given_name . " " . $member->family_name,
+                "role_id" => 2
             ]);
 
             $usr->assignRole("user");
