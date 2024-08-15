@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\ModeOfArrival;
 use App\Models\ModeOfArrivals;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class SubscribeMemberController extends Controller
 {
@@ -168,13 +169,32 @@ class SubscribeMemberController extends Controller
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
         $data['name_of_the_ship'] = Helper::getNameofShip($member?->ancestor?->name_of_the_ship);
         $data['membership_types'] = SubscriptionPlan::all();
-        //$data['membership_types'] = MembershipType::all();
         $data['membership_status'] = MembershipStatus::all();
+
+        // Check if the membership end date is within one month
+        $membershipEndDate = $member?->additionalInfo?->date_membership_end ? Carbon::parse($member->additionalInfo->date_membership_end) : null;
+        $currentDate = Carbon::now();
+        $oneMonthLater = $currentDate->copy()->addDays(30);
+
+        $showRenewButton = false;
+
+        if ($membershipEndDate) {
+            // Log the dates
+            Log::info("Membership End Date: " . $membershipEndDate->toDateString());
+            Log::info("Current Date: " . $currentDate->toDateString());
+            Log::info("One Month Later: " . $oneMonthLater->toDateString());
+
+            // Check if the membership end date is between today and one month later
+            if ($membershipEndDate->between($currentDate, $oneMonthLater)) {
+                $showRenewButton = true;
+            }
+        }
 
         $stripeKey = env('STRIPE_KEY');
 
-        return view('page.members.view-member', compact('member', 'data', 'stripeKey'));
+        return view('page.members.view-member', compact('member', 'data', 'stripeKey', 'showRenewButton'));
     }
+
 
     public function editMember($id)
     {

@@ -49,9 +49,11 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
-                                <a class="btn btn-primary mr-2" href="#" id="renewButton">
-                                    <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
-                                </a>
+                                @if ($showRenewButton)
+                                    <a class="btn btn-primary mr-2" href="#" id="renewButton">
+                                        <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
+                                    </a>
+                                @endif
                                 @if (!$member?->additionalInfo?->date_membership_approved && $member?->contact?->email)
                                     <a class="btn btn-success" id="approveButton">
                                         <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
@@ -547,7 +549,7 @@
                                         alert('Payment successful!');
                                         // Hide the modal on success
                                         paymentRenewalModal
-                                    .hide(); // Ensure this is the correct instance
+                                            .hide(); // Ensure this is the correct instance
                                     } else {
                                         alert('Payment failed: ' + response.message);
                                     }
