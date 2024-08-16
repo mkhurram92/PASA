@@ -219,6 +219,11 @@
              paginationSize: 25,
              placeholder: "No Data Available"
          });
+
+         $("#pageSizeDropdown").on("change", function() {
+             var selectedPageSize = parseInt($(this).val(), 10);
+             table.setPageSize(selectedPageSize);
+         });
      </script>
  @endsection
  @include('layout.footer')
