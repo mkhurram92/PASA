@@ -147,10 +147,13 @@
                      sorter: "number",
                      hozAlign: "center",
                      formatter: "money",
-                     formatterParams: {
-                         precision: 2,
-                         symbol: "$",
-                         symbolAfter: false
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var amount = cell.getValue();
+                         if (amount) {
+                             return '$' + (amount / 100).toFixed(
+                             2); // Divide by 100 and format to 2 decimal places
+                         }
+                         return '$0.00';
                      }
                  },
                  {
@@ -189,7 +192,7 @@
                              cell.getElement().style.color = "green";
                              return 'Successful';
                          } else {
-                            cell.getElement().style.color = "red";
+                             cell.getElement().style.color = "red";
                              return status;
                          }
                      }
