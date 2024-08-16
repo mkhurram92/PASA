@@ -82,8 +82,9 @@ class PaymentController extends Controller
 
         // Fetch payment intents or charges directly from Stripe
         $payments = $stripe->charges->all(['limit' => 100]);
-        //dd($data);
-        // Pass the data to the view
+        foreach ($payments->data as $payment) {
+            $payment->formatted_date = date('Y-m-d H:i:s', $payment->created);
+        }        // Pass the data to the view
         return view('page.payment-list.index', compact('payments'));
     }
 

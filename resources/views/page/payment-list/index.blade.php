@@ -138,12 +138,14 @@
              columns: [{
                      title: "Billing Name",
                      field: "billing_details.name",
+                     hozAlign: "center",
                      sorter: "string"
                  },
                  {
                      title: "Amount",
                      field: "amount",
                      sorter: "number",
+                     hozAlign: "center",
                      formatter: "money",
                      formatterParams: {
                          precision: 2,
@@ -154,23 +156,47 @@
                  {
                      title: "Description",
                      field: "description",
+                     hozAlign: "center",
                      sorter: "string"
                  },
 
                  {
                      title: "Card Last 4 Digits",
                      field: "payment_method_details.card.last4",
-                     sorter: "string"
-                 },
-                 {
-                     title: "Card Brand",
-                     field: "payment_method_details.card.brand",
+                     hozAlign: "center",
                      sorter: "string"
                  },
                  {
                      title: "Status",
                      field: "status",
-                     sorter: "string"
+                     hozAlign: "center",
+                     sorter: "string",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var status = cell.getValue();
+                         if (status === 'succeeded') {
+                             cell.getElement().style.color = "green"; // Set text color to green
+                             return 'Successful';
+                         } else {
+                             return status;
+                         }
+                     }
+                 },
+                 {
+                     title: "Transaction Date",
+                     field: "created",
+                     hozAlign: "center",
+                     sorter: "date",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var date = new Date(cell.getValue() * 1000);
+
+                         var year = date.getFullYear();
+                         var month = String(date.getMonth() + 1).padStart(2, '0');
+                         var day = String(date.getDate()).padStart(2, '0');
+                         var hours = String(date.getHours()).padStart(2, '0');
+                         var minutes = String(date.getMinutes()).padStart(2, '0');
+
+                         return `${year}/${month}/${day} ${hours}:${minutes}`;
+                     }
                  },
              ],
              pagination: "local",
