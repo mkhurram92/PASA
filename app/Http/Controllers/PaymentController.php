@@ -75,69 +75,16 @@ class PaymentController extends Controller
         return view("page.payment-list.index", compact('data', 'paymentTypeOptions'));
     }
 
-    // public function index2(Request $request){
-    //     if($request->ajax()){
-
-    //         return response()->json($subscriptions);
-    //     }
-    //     return view("page.payment-list.index");
-    // }
-
     public function index(Request $request)
     {
-        $paymentTypeOptions = PaymentType::pluck('name')->toArray();
-        array_unshift($paymentTypeOptions, '');
-
-        $user = User::with(['roles'])->find(auth()->id());
-        $userRoles = $user->roles;
-        $isAdmin = false;
-        foreach ($userRoles as $role) {
-            if ($role?->name == "Admin") {
-                $isAdmin = true;
-                break;
-            }
-        }
-        if (!$isAdmin) {
-            return redirect()->route("payment.list.user");
-        }
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
-        $data = $stripe->paymentIntents->all(['limit' => 1000]);
-        $res = $data->data;
 
-        $data = [];
-
-        $intentStatusMap = [
-            'requires_payment_method' => 'Payment requires a valid payment method.',
-            'requires_confirmation' => 'Payment requires confirmation.',
-            'requires_action' => 'Payment requires additional action from the customer.',
-            'processing' => 'Payment is being processed.',
-            'succeeded' => 'Payment has succeeded.',
-            'requires_capture' => 'Payment is authorized and requires capture.',
-            'canceled' => 'Payment has been canceled.',
-            'abandoned' => 'Payment has been abandoned.',
-            'failed' => 'Payment has failed.'
-        ];
-
-        collect($res)->each(function ($item) use (&$data, $intentStatusMap) {
-            $keys = array_keys((array)$item->metadata);
-            $pattern = '/^product_\d+$/';
-            $result = preg_grep($pattern, $keys);
-            $key = false;
-            if (!empty($result)) {
-                $key = $item->metadata[current($result)];
-            }
-            $data[] = [
-                "id" => $item->id,
-                "name" => $item->metadata['name'] ?: ($item->metadata['event_name'] ?: ($key ?: (!empty($item->description) ? $item->description : "N/A"))),
-                "email" => $item->metadata['email'] ?: ($item->metadata['purchaser_email'] ?: "N/A"),
-                "member_type" => $item->metadata['level'] ?: "N/A",
-                "amount" => "$" . number_format($item->amount / 100, 2),
-                "created" => date("Y-m-d h:i A", $item->created),
-                "status" => $item->status == "succeeded" ? "Payment Succeeded" : "Payment Incomplete",
-            ];
-        });
-        return view("page.payment-list.index", compact('data', 'paymentTypeOptions'));
+        // Fetch payment intents or charges directly from Stripe
+        $payments = $stripe->charges->all(['limit' => 100]);
+        //dd($data);
+        // Pass the data to the view
+        return view('page.payment-list.index', compact('payments'));
     }
 
     public static function registerCharges(array $user, $level)

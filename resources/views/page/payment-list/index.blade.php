@@ -96,7 +96,7 @@
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                 <option value="25">25</option>
+                                     <option value="25">25</option>
                                      <option value="50">50</option>
                                      <option value="100">100</option>
                                      <option value="1000000">ALL</option>
@@ -111,11 +111,8 @@
                                  <button class="custom-button" id="reset-button">Reset Filter</button>
                              </div>
                              <div class="table-responsive">
-                                 @if (isset($data))
-                                     <div id="payment_list"></div>
-                                 @else
-                                     {{ $dataTable->table() }}
-                                 @endif
+                                 <div id="payment_list"></div>
+
                              </div>
 
                          </div>
@@ -131,168 +128,54 @@
          function customTotalFormatter(cell, formatterParams, onRendered) {
              return "Total Record : " + cell.getValue();
          }
-         var myData = @json($data);
-         var paymentType = @json($paymentTypeOptions);
-         // Create Tabulator
+         var paymentsData = @json($payments->data);
+
+         console.log(paymentsData); // Check the browser console for this output
+
          var table = new Tabulator("#payment_list", {
-             data: myData,
+             data: paymentsData,
              layout: "fitColumns",
              columns: [{
-                     title: "Name",
-                     field: "name",
-                     headerFilter: "input",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     bottomCalc: "count",
-                     headerFilterPlaceholder: 'Filter by Name'
+                     title: "Billing Name",
+                     field: "billing_details.name",
+                     sorter: "string"
                  },
                  {
-                     title: "Email",
-                     field: "email",
-                     headerFilter: "input",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Filter by Email'
-                 },
-                 {
-                     title: "Payment Type",
-                     field: "member_type",
-                     headerFilter: "select",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Filter by Payment Type',
-                     headerFilterParams: {
-                         values: paymentType
-                     }
-                 },
-                 {
-                     title: "Amount Paid",
+                     title: "Amount",
                      field: "amount",
-                     headerFilter: "input",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Filter by Amount'
-                 },
-                 {
-                     title: 'Date of Transaction',
-                     field: 'created',
-                     hozAlign: "center",
-                     headerFilterPlaceholder: 'Filter by Date',
-                     headerFilter: "input",
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var date = new Date(cell.getValue());
-
-                         var day = date.getDate().toString().padStart(2, '0');
-                         var month = (date.getMonth() + 1).toString().padStart(2, '0');
-                         var year = date.getFullYear();
-                         var hours = date.getHours().toString().padStart(2, '0');
-                         var minutes = date.getMinutes().toString().padStart(2, '0');
-                         var seconds = date.getSeconds().toString().padStart(2, '0');
-                         var ampm = hours >= 12 ? 'pm' : 'am';
-
-                         // Convert 24-hour format to 12-hour format
-                         hours = (hours % 12) || 12;
-
-                         var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes +
-                             ':' + seconds + ' ' + ampm;
-
-                         return formattedDate;
+                     sorter: "number",
+                     formatter: "money",
+                     formatterParams: {
+                         precision: 2,
+                         symbol: "$",
+                         symbolAfter: false
                      }
                  },
                  {
-                     title: "Payment Status",
+                     title: "Description",
+                     field: "description",
+                     sorter: "string"
+                 },
+
+                 {
+                     title: "Card Last 4 Digits",
+                     field: "payment_method_details.card.last4",
+                     sorter: "string"
+                 },
+                 {
+                     title: "Card Brand",
+                     field: "payment_method_details.card.brand",
+                     sorter: "string"
+                 },
+                 {
+                     title: "Status",
                      field: "status",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Filter by Payment Status',
-                     headerFilterParams: {
-                         values: ["", "Payment Incomplete", "Payment Succeeded"]
-                     },
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var value = cell.getValue();
-
-                         // Define text colors based on values
-                         var textColorMap = {
-                             "": "", // Default color for empty value
-                             "Payment Incomplete": "red", // Red color for Payment Incomplete text
-                             "Payment Succeeded": "green" // Green color for Payment Succeeded text
-                         };
-
-                         // Apply text color to the cell
-                         cell.getElement().style.color = textColorMap[value];
-
-                         return value; // Return the original value for display
-                     }
-                 }
+                     sorter: "string"
+                 },
              ],
              pagination: "local",
-             paginationSize: 20,
+             paginationSize: 25,
              placeholder: "No Data Available"
-         });
-         // Add Date Range Filter
-         var dateRangePicker = flatpickr("#date-range", {
-             mode: "range",
-             dateFormat: "Y-m-d",
-             onChange: function(selectedDates, dateStr) {
-                 applyDateFilter(selectedDates);
-             }
-         });
-
-         // Function to apply date filter to the table
-         function applyDateFilter(selectedDates) {
-             var dateFilter = selectedDates.map(function(date) {
-                 return date.toISOString().split('T')[0];
-             });
-             table.setFilter([{
-                     field: "created",
-                     type: ">=",
-                     value: dateFilter[0]
-                 },
-                 {
-                     field: "created",
-                     type: "<=",
-                     value: dateFilter[1]
-                 }
-             ]);
-         }
-
-         // Add a reset button
-         var resetButton = document.getElementById("reset-button");
-
-         // Add a click event listener to the reset button
-         resetButton.addEventListener("click", function() {
-             dateRangePicker.clear(); // Clear the date range picker
-             table.clearFilter(); // Clear the table filter
-             table.clearHeaderFilter();
-         });
-
-         $("#pageSizeDropdown").on("change", function() {
-             var selectedPageSize = parseInt($(this).val(), 10);
-             table.setPageSize(selectedPageSize);
-         });
-
-         function printData() {
-             table.print(false, true);
-         }
-         //trigger download of data.csv file
-         document.getElementById("download-csv").addEventListener("click", function() {
-             table.download("csv", "Payment List.csv");
-         });
-
-         //trigger download of data.xlsx file
-         document.getElementById("download-xlsx").addEventListener("click", function() {
-             table.download("xlsx", "Payment List.xlsx", {
-                 sheetName: "PASA01"
-             });
-         });
-
-         //trigger download of data.pdf file
-         document.getElementById("download-pdf").addEventListener("click", function() {
-             table.download("pdf", "Payment List.pdf", {
-                 orientation: "landscape", //set page orientation to landscape
-                 title: "Payment List", //add title to report
-             });
          });
      </script>
  @endsection
