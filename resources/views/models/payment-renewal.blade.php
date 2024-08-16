@@ -31,6 +31,9 @@
         margin: 0;
         /* Remove any default margins */
     }
+    .cash-amount{
+        text-align: left;
+    }
 </style>
 <!-- Payment Renewal Modal -->
 <div class="modal fade" id="paymentRenewalModal" tabindex="-1" role="dialog" aria-labelledby="paymentRenewalLabel"
@@ -44,6 +47,7 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body text-center">
+                <p>Price: $<span id="selectedPriceField"></span></p><br>
                 <p>Please choose your preferred payment method:</p>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="paymentMethod" id="cashOption" value="cash">
@@ -57,6 +61,12 @@
                     <label class="form-check-label" for="onlineOption">
                         Online
                     </label>
+                </div>
+                <div class="mb-3" id="cashFields" style="display: none;margin-top: 20px;">
+                    <div class="form-group">
+                        <label for="cash-amount" class="form-label">Amount to Pay:</label>
+                        <input type="text" id="cash-amount" class="form-control" placeholder="Enter amount">
+                    </div>
                 </div>
 
                 <!-- Stripe Elements (Hidden by default) -->

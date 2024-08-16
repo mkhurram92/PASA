@@ -515,13 +515,6 @@ class SubscribeMemberController extends Controller
             "redirectTo" => route("members.view-ancestor", ['id' => $member->id])
         ]);
     }
-    //public function editAncestors($id)
-    //{
-    //    $member = Member::findOrFail($id);
-    //    $ancestors = AncestorData::all();
-    //
-    //    return view('page.members.edit_ancestors', compact('member', 'ancestors'));
-    //}
 
     public function editAncestors($id)
     {
@@ -533,7 +526,6 @@ class SubscribeMemberController extends Controller
 
     public function updateAncestors(Request $request, $memberId)
     {
-        //Log::info('Update Ancestors method triggered', ['memberId' => $memberId, 'requestData' => $request->all()]);
 
         $request->validate([
             'given_name' => 'required|array',

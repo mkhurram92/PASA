@@ -269,7 +269,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Membership Type </label>
+                                            <label class="col-md-4 form-label">Membership Type</label>
                                             <div class="col-md-8">
                                                 <select name="member_type_id" class="form-control form-select select2"
                                                     id="member_type_id" readonly disabled>
@@ -279,12 +279,17 @@
                                                             {{ $type?->name }}
                                                         </option>
                                                     @empty
-                                                        <option value="">Select Membership Type
-                                                        </option>
+                                                        <option value="">Select Membership Type</option>
                                                     @endforelse
                                                 </select>
+                                                <!-- Hidden fields for prices -->
+                                                <input type="hidden" name="email_price" id="email_price"
+                                                    value="{{ $data['membership_types']->firstWhere('id', $member?->member_type_id)?->email_price }}">
+                                                <input type="hidden" name="post_price" id="post_price"
+                                                    value="{{ $data['membership_types']->firstWhere('id', $member?->member_type_id)?->post_price }}">
                                             </div>
                                         </div>
+
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Membership Status
                                             </label>
@@ -436,11 +441,10 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 
-<!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
-<!-- SweetAlert2 JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @section('scripts')
     @include('plugins.select2')
@@ -450,17 +454,23 @@
             if (renewButton) {
                 renewButton.addEventListener('click', function(e) {
                     e.preventDefault();
+
+                    var emailPrice = document.getElementById('email_price').value;
+                    var postPrice = document.getElementById('post_price').value;
+
+                    var journalStatus = document.getElementById('journalStatus').textContent.trim();
+
+                    var selectedPrice = (journalStatus === 'Emailed') ? emailPrice : postPrice;
+                    document.getElementById('selectedPriceField').innerText = selectedPrice;
+
                     var paymentModal = new bootstrap.Modal(document.getElementById('paymentRenewalModal'));
                     paymentModal.show();
                 });
             }
-        });
 
-        document.addEventListener('DOMContentLoaded', function() {
             var stripe = Stripe('{{ env('STRIPE_KEY') }}');
             var elements = stripe.elements();
 
-            // Create an instance of the card Element
             var card = elements.create('card', {
                 hidePostalCode: true,
                 style: {
@@ -480,10 +490,10 @@
                 }
             });
 
-            // Mount the card Element to the card-element div
             card.mount('#card-element');
 
             var stripeFields = document.getElementById('stripeFields');
+            var cashFields = document.getElementById('cashFields');
             var onlineOption = document.getElementById('onlineOption');
             var cashOption = document.getElementById('cashOption');
             var proceedButton = document.getElementById('submitPaymentMethod');
@@ -492,30 +502,27 @@
                 keyboard: false
             });
 
-            // Initially hide the stripe fields
             stripeFields.style.display = 'none';
+            cashFields.style.display = 'none';
 
-            // Show Stripe fields when "Online" is selected
             onlineOption.addEventListener('change', function() {
                 if (this.checked) {
                     stripeFields.style.display = 'block';
+                    cashFields.style.display = 'none';
                 }
             });
 
-            // Hide Stripe fields when "Cash" is selected
             cashOption.addEventListener('change', function() {
                 if (this.checked) {
                     stripeFields.style.display = 'none';
+                    cashFields.style.display = 'block';
                 }
             });
 
-            // Handle the form submission or processing on the "Proceed" button click
             proceedButton.addEventListener('click', function(e) {
                 e.preventDefault();
 
-                // Check if "Online" is selected
                 if (onlineOption.checked) {
-                    // Get the cardholder name and address details
                     var cardholderName = document.getElementById('cardholder-name').value;
                     var billingAddress = {
                         line1: document.getElementById('billing-address').value,
@@ -525,7 +532,6 @@
                         country: document.getElementById('billing-country').value,
                     };
 
-                    // Create a token or payment method with Stripe
                     stripe.createToken(card, {
                         name: cardholderName,
                         address_line1: billingAddress.line1,
@@ -535,36 +541,65 @@
                         address_country: billingAddress.country
                     }).then(function(result) {
                         if (result.error) {
-                            // Inform the customer that there was an error
                             var errorElement = document.getElementById('card-errors');
                             errorElement.textContent = result.error.message;
                         } else {
-                            // Use AJAX to send the token to the server
                             $.ajax({
-                                url: '{{ route('payment.process') }}', // Your server-side route to handle the payment
+                                url: '{{ route('payment.process') }}',
                                 method: 'POST',
                                 data: {
                                     stripeToken: result.token.id,
-                                    _token: '{{ csrf_token() }}' // Laravel CSRF token
+                                    _token: '{{ csrf_token() }}'
                                 },
                                 success: function(response) {
                                     if (response.success) {
-                                        alert('Payment successful!');
-                                        // Hide the modal on success
-                                        paymentRenewalModal
-                                            .hide(); // Ensure this is the correct instance
+                                        Swal.fire({
+                                            title: 'Payment Successful!',
+                                            text: response.message,
+                                            icon: 'success',
+                                            confirmButtonText: 'OK'
+                                        }).then(() => {
+                                            paymentRenewalModal
+                                                .hide(); // Close modal after confirmation
+                                        });
                                     } else {
-                                        alert('Payment failed: ' + response.message);
+                                        Swal.fire({
+                                            title: 'Payment Failed',
+                                            text: response.message,
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
                                     }
                                 },
                                 error: function(xhr, status, error) {
-                                    alert('An error occurred: ' + error);
+                                    Swal.fire({
+                                        title: 'An error occurred',
+                                        text: error,
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
                                 }
                             });
                         }
                     });
+                } else if (cashOption.checked) {
+                    var cashAmount = document.getElementById('cash-amount').value;
+
+                    Swal.fire({
+                        title: 'Cash Payment Selected',
+                        text: 'Amount to Pay: $' + cashAmount,
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        paymentRenewalModal.hide(); // Close modal after confirmation
+                    });
                 } else {
-                    alert('Please select an online payment method and fill in the details.');
+                    Swal.fire({
+                        title: 'No Payment Method Selected',
+                        text: 'Please select a payment method.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
                 }
             });
         });

@@ -84,4 +84,5 @@ class Member extends Model
     {
         return $this->belongsTo(SubscriptionPlan::class, 'member_type_id');
     }
+    
 }
