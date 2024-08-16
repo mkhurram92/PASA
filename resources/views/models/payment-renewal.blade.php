@@ -76,7 +76,7 @@
                         <label for="cardholder-name" class="form-label">Cardholder Name</label>
                         <input type="text" id="cardholder-name" class="form-control" placeholder="Name on Card">
                     </div>
-
+                    <input type="hidden" id="stripe-amount" name="amount">
                     <!-- Card Number -->
                     <div class="mb-3">
                         <label for="card-element" class="form-label">Credit or Debit Card Number</label>

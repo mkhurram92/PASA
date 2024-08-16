@@ -17,6 +17,11 @@
                 font-size: medium;
                 color: black;
             }
+
+            .swal2-container {
+                z-index: 12000 !important;
+                /* Increase the z-index */
+            }
         </style>
         <div class="container-fluid main-container">
 
@@ -441,9 +446,7 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @section('scripts')
@@ -503,24 +506,23 @@
             });
 
             stripeFields.style.display = 'none';
-            cashFields.style.display = 'none';
 
             onlineOption.addEventListener('change', function() {
                 if (this.checked) {
                     stripeFields.style.display = 'block';
-                    cashFields.style.display = 'none';
                 }
             });
 
             cashOption.addEventListener('change', function() {
                 if (this.checked) {
                     stripeFields.style.display = 'none';
-                    cashFields.style.display = 'block';
                 }
             });
 
             proceedButton.addEventListener('click', function(e) {
                 e.preventDefault();
+
+                var selectedPrice = document.getElementById('selectedPriceField').innerText;
 
                 if (onlineOption.checked) {
                     var cardholderName = document.getElementById('cardholder-name').value;
@@ -549,18 +551,19 @@
                                 method: 'POST',
                                 data: {
                                     stripeToken: result.token.id,
+                                    amount: selectedPrice,
                                     _token: '{{ csrf_token() }}'
                                 },
                                 success: function(response) {
                                     if (response.success) {
                                         Swal.fire({
                                             title: 'Payment Successful!',
-                                            text: response.message,
+                                            text: 'Your payment has been processed successfully.',
                                             icon: 'success',
                                             confirmButtonText: 'OK'
                                         }).then(() => {
                                             paymentRenewalModal
-                                                .hide(); // Close modal after confirmation
+                                        .hide(); 
                                         });
                                     } else {
                                         Swal.fire({
@@ -581,17 +584,6 @@
                                 }
                             });
                         }
-                    });
-                } else if (cashOption.checked) {
-                    var cashAmount = document.getElementById('cash-amount').value;
-
-                    Swal.fire({
-                        title: 'Cash Payment Selected',
-                        text: 'Amount to Pay: $' + cashAmount,
-                        icon: 'info',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        paymentRenewalModal.hide(); // Close modal after confirmation
                     });
                 } else {
                     Swal.fire({
