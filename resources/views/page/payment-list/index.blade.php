@@ -186,9 +186,10 @@
                      formatter: function(cell, formatterParams, onRendered) {
                          var status = cell.getValue();
                          if (status === 'succeeded') {
-                             cell.getElement().style.color = "green"; // Set text color to green
+                             cell.getElement().style.color = "green";
                              return 'Successful';
                          } else {
+                            cell.getElement().style.color = "red";
                              return status;
                          }
                      }
