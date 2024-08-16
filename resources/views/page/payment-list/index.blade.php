@@ -159,12 +159,24 @@
                      hozAlign: "center",
                      sorter: "string"
                  },
-
                  {
                      title: "Card Last 4 Digits",
                      field: "payment_method_details.card.last4",
                      hozAlign: "center",
                      sorter: "string"
+                 },
+                 {
+                     title: "Card Type",
+                     field: "payment_method_details.card.brand",
+                     hozAlign: "center",
+                     sorter: "string",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var brand = cell.getValue();
+                         if (brand) {
+                             return brand.charAt(0).toUpperCase() + brand.slice(1);
+                         }
+                         return brand;
+                     }
                  },
                  {
                      title: "Status",
