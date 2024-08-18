@@ -565,7 +565,7 @@
                                                 renewalDate: new Date()
                                                     .toISOString()
                                                     .slice(0,
-                                                    10) // Format as YYYY-MM-DD
+                                                    10)
                                             },
                                             success: function(updateResponse) {
                                                 if (updateResponse
@@ -576,8 +576,7 @@
                                                         icon: 'success',
                                                         confirmButtonText: 'OK'
                                                     }).then(() => {
-                                                        location
-                                                            .reload(); // Refresh the page after the user clicks "OK"
+                                                        location.reload(); // Refresh the page after the user clicks "OK"
                                                     });
                                                 } else {
                                                     Swal.fire({

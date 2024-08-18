@@ -21,7 +21,7 @@ class LoginBasic extends Controller
     public function login(LoginRequest $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect("/")->with("success", "Logged in");
+            return redirect("/")->with("success", "You have successfully logged in. Welcome back!");
         }
         return redirect()->back()->with("error", "Login failed. Please check your credentials and try again.")->withInput();
     }
