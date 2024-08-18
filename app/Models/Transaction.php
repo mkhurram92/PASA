@@ -21,5 +21,32 @@ class Transaction extends Model
     {
         return $this->belongsTo(TransactionType::class, 'transaction_type_id');
     }
-    
+    public static function createAndProcessTransaction($transactionType, $glCodeId, $accountId, $amount, $description)
+    {
+        // Create a new Transaction instance
+        $transaction = self::create([
+            'transaction_type_id' => $transactionType,
+            'gl_code_id' => $glCodeId,
+            'account_id' => $accountId,
+            'amount' => $amount,
+            'description' => $description,
+        ]);
+
+        // Find the related account
+        $account = Account::find($accountId);
+
+        // Update account balance based on the transaction type
+        if ($transactionType == 1) {
+            // Income (credit)
+            $account->balance += $amount;
+        } elseif ($transactionType == 2) {
+            // Expenditure (debit)
+            $account->balance -= $amount;
+        }
+
+        // Save the account with the updated balance
+        $account->save();
+
+        return $transaction;
+    }
 }

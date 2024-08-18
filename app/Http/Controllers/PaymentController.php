@@ -450,13 +450,9 @@ class PaymentController extends Controller
             ]);
 
             if ($charge->status === 'succeeded') {
-                Transaction::create([
-                    'transaction_type_id' => 1, 
-                    'gl_code_id' => 1,  
-                    'account_id' => 4, 
-                    'amount' => $amount,
-                    'description' => 'Membership Renewal', 
-                ]);
+
+                Transaction::createAndProcessTransaction(1, 1, 4, $amount, 'Membership Renewals');
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Payment successful!',
