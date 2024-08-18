@@ -44,6 +44,7 @@ use App\Http\Controllers\authentications\ForgotPassword;
 use App\Http\Controllers\AncestorLocalTravelDetailController;
 use App\Http\Controllers\authentications\NewPasswordController;
 use App\Http\Controllers\AncestorInternationalTravelDetailController;
+use App\Models\SubscribeMember;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,6 +114,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('members/editAncestors/{id}', [SubscribeMemberController::class, 'editAncestors'])->name('members.editAncestors');
     Route::put('members/updateAncestors/{id}', [SubscribeMemberController::class, 'updateAncestors'])->name('members.updateAncestors');
     Route::get('/getModeOfTravelDate/{id}', [SubscribeMemberController::class, 'getModeOfTravelDate']);
+    
+    Route::post('/update-renewal-date', [SubscribeMemberController::class, 'updateRenewalDate'])->name('update.renewal.date');
 
     Route::get('/profile/change-password', [NewPasswordController::class, 'showChangePasswordForm'])->name('password.change');
     Route::post('/profile/change-password', [NewPasswordController::class, 'changePassword'])->name('password.update');

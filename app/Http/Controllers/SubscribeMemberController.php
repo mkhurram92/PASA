@@ -558,15 +558,60 @@ class SubscribeMemberController extends Controller
             $modeOfArrival = ModeOfArrivals::find($id);
 
             if ($modeOfArrival) {
-                Log::error('Mode of Arrival not found', ['id' => $modeOfArrival->date_of_arrival]);
+                //Log::error('Mode of Arrival not found', ['id' => $modeOfArrival->date_of_arrival]);
                 return response()->json(['date_of_arrival' => $modeOfArrival->date_of_arrival]);
             } else {
-                Log::error('Mode of Arrival not found', ['id' => $id]);
+                //Log::error('Mode of Arrival not found', ['id' => $id]);
                 return response()->json(['error' => 'Mode of Arrival not found'], 404);
             }
         } catch (\Exception $e) {
-            Log::error('Error fetching Mode of Arrival', ['exception' => $e]);
+            //Log::error('Error fetching Mode of Arrival', ['exception' => $e]);
             return response()->json(['error' => 'Error fetching data'], 500);
+        }
+    }
+
+    public function updateRenewalDate(Request $request)
+    {
+        try {
+            // Log the incoming request data for diagnostics
+            //Log::info('Request Data: ', $request->all());
+
+            // Attempt to find the member by member_id field
+            $member = AdditionalMemberInfos::where('member_id', $request->memberId)->first();
+
+            // Log if the member was not found
+            if (!$member) {
+                Log::error('Member not found for member_id: ' . $request->memberId);
+                return response()->json(['success' => false, 'message' => 'Member not found.']);
+            }
+
+            $currentDate = date('Y-m-d');
+
+            // Check if $currentDate is empty and provide a fallback
+            if (empty($currentDate)) {
+                $currentDate = (new \DateTime())->format('Y-m-d');
+            }
+
+            if ($member->date_membership_end) {
+                // Add one year to the existing date_membership_end
+                $currentRenewalDate = new \DateTime($member->date_membership_end);
+                $currentRenewalDate->modify('+1 year');
+            } else {
+                // Set date_membership_end to the current date plus one year
+                $currentRenewalDate = new \DateTime($currentDate);
+                $currentRenewalDate->modify('+1 year');
+            }
+
+            // Save the updated date_membership_end
+            $member->date_membership_end = $currentRenewalDate->format('Y-m-d');
+            $member->save();
+
+            Log::info('Renewal date updated successfully for member_id: ' . $request->memberId);
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            Log::error('Failed to update renewal date for member_id: ' . $request->memberId . '. Error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred while updating the renewal date.']);
         }
     }
 }

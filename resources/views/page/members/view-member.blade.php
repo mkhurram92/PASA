@@ -460,7 +460,6 @@
 
                     var emailPrice = document.getElementById('email_price').value;
                     var postPrice = document.getElementById('post_price').value;
-
                     var journalStatus = document.getElementById('journalStatus').textContent.trim();
 
                     var selectedPrice = (journalStatus === 'Emailed') ? emailPrice : postPrice;
@@ -556,14 +555,48 @@
                                 },
                                 success: function(response) {
                                     if (response.success) {
-                                        Swal.fire({
-                                            title: 'Payment Successful!',
-                                            text: 'Your payment has been processed successfully.',
-                                            icon: 'success',
-                                            confirmButtonText: 'OK'
-                                        }).then(() => {
-                                            paymentRenewalModal
-                                        .hide(); 
+                                        // Send AJAX request to update the renewal date
+                                        $.ajax({
+                                            url: '{{ route('update.renewal.date') }}',
+                                            method: 'POST',
+                                            data: {
+                                                _token: '{{ csrf_token() }}',
+                                                memberId: '{{ $member->id }}',
+                                                renewalDate: new Date()
+                                                    .toISOString()
+                                                    .slice(0,
+                                                    10) // Format as YYYY-MM-DD
+                                            },
+                                            success: function(updateResponse) {
+                                                if (updateResponse
+                                                    .success) {
+                                                    Swal.fire({
+                                                        title: 'Membership Renewal Successful!',
+                                                        text: 'Your membership has been renewed successfully.',
+                                                        icon: 'success',
+                                                        confirmButtonText: 'OK'
+                                                    }).then(() => {
+                                                        location
+                                                            .reload(); // Refresh the page after the user clicks "OK"
+                                                    });
+                                                } else {
+                                                    Swal.fire({
+                                                        title: 'Error',
+                                                        text: 'Failed to update the renewal date.',
+                                                        icon: 'error',
+                                                        confirmButtonText: 'OK'
+                                                    });
+                                                }
+                                            },
+                                            error: function(xhr, status,
+                                            error) {
+                                                Swal.fire({
+                                                    title: 'Error',
+                                                    text: 'An error occurred while updating the renewal date.',
+                                                    icon: 'error',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            }
                                         });
                                     } else {
                                         Swal.fire({
@@ -684,7 +717,6 @@
                 @endif ;
 
         });
-
 
         document.getElementById('editLink').addEventListener('click', function(event) {
             event.preventDefault(); // Prevent the default behavior of the link

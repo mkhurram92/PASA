@@ -142,6 +142,12 @@
                      sorter: "string"
                  },
                  {
+                     title: "Description",
+                     field: "description",
+                     hozAlign: "center",
+                     sorter: "string"
+                 },
+                 {
                      title: "Amount",
                      field: "amount",
                      sorter: "number",
@@ -151,16 +157,10 @@
                          var amount = cell.getValue();
                          if (amount) {
                              return '$' + (amount / 100).toFixed(
-                             2); // Divide by 100 and format to 2 decimal places
+                                 2);
                          }
                          return '$0.00';
                      }
-                 },
-                 {
-                     title: "Description",
-                     field: "description",
-                     hozAlign: "center",
-                     sorter: "string"
                  },
                  {
                      title: "Card Last 4 Digits",
