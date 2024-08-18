@@ -606,11 +606,11 @@ class SubscribeMemberController extends Controller
             $member->date_membership_end = $currentRenewalDate->format('Y-m-d');
             $member->save();
 
-            Log::info('Renewal date updated successfully for member_id: ' . $request->memberId);
+           // Log::info('Renewal date updated successfully for member_id: ' . $request->memberId);
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
-            Log::error('Failed to update renewal date for member_id: ' . $request->memberId . '. Error: ' . $e->getMessage());
+            //Log::error('Failed to update renewal date for member_id: ' . $request->memberId . '. Error: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'An error occurred while updating the renewal date.']);
         }
     }
