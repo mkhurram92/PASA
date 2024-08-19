@@ -328,29 +328,57 @@ class PaymentController extends Controller
             Stripe::setApiKey(env('STRIPE_SECRET'));
             $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
             $amount = $user['preferred_delivery_price'];
-
-            // Create a customer in Stripe
+            $address = $user['address']['address'];
+            $state = States::where("name", $address['state'])->value("code");
             $customerDetails = [
                 'description' => $level . ' Member.',
                 'name' => $user['username'],
                 'email' => $user['email'],
+                //"address" => [
+                //    "city" => $user['suburb'],
+                //    "country" => "AU",
+                //    "line1" => $user['number_street'],
+                //    "line2" => "",
+                //    "postal_code" => $user['post_code'],
+                //]
             ];
             $customer = $stripe->customers->create($customerDetails);
-
-            // Create the payment intent
+            Transaction::create([
+                'transaction_type_id' => 1,
+                'gl_code_id' => 85,
+                'account_id' => 3,
+                'amount' => $amount,
+                'description' => 'New Applicant'
+            ]);
+            // create payment intent
             $res = $stripe->paymentIntents->create([
                 'amount' => $amount * 100,
                 'currency' => 'aud',
                 'automatic_payment_methods' => [
                     'enabled' => true,
                 ],
-                'description' => 'New Applicant',
-                'customer' => $customer->id,
-                'metadata' => [
-                    'member_id' => $user['member_id'],
+                //"description" => "New Applicant : " . $user['given_name'],
+                "description" => "New Applicant",
+                "customer" => $customer->id,
+                "metadata" => [
+                    'name' => $user['given_name'],
+                    "member_id" => auth()->id() ?? "N/A",
+                    "dob" => $user['date_of_birth'],
+                    "gender" => Gender::find($user['gender'])?->value("name"),
+                    'level' => $level,
+                    "email" => $user['email'],
+                    // "order_id" => $order_id
                 ]
             ]);
-
+            //Subscription::create([
+            //    "payment_intent_id" => $res?->id,
+            //    "amount" => $amount,
+            //    "created_by" => auth()->id() ?? 0,
+            //    "member_type" => "PRIMARY",
+            //    "payment_method" => "CARD",
+            //    "status" => "PENDING",
+            //    'meta_description' => $customerDetails,
+            //]);
             return $res?->client_secret;
         } catch (\Exception $e) {
             Log::error('Error creating payment intent: ' . $e->getMessage());

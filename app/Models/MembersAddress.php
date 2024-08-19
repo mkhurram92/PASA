@@ -9,6 +9,7 @@ class MembersAddress extends Model
     protected $table = 'members_addresses';
     
     protected $fillable = [
+        'member_id',
         'unit_no',
         'number_street',
         'suburb',
