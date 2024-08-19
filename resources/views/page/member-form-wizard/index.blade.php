@@ -32,7 +32,7 @@
                 $('.getValid').on('blur', function() {
                     var inputElement = $(this);
                     var inputValue = inputElement.val();
-                    var fieldName = inputElement.attr('name'); // assuming the input has a name attribute
+                    var fieldName = inputElement.attr('name');
                     var fieldConfirm = inputElement.attr('name').includes('_confirmation');
                     if (fieldConfirm) {
                         var parentName =inputElement.attr('name').replace('_confirmation','');
@@ -41,32 +41,29 @@
                     inputElement.removeClass('is-invalid');
                     inputElement.next('.invalid-feedback').remove();
                     $.ajax({
-                        url: '{{ route('validate.field') }}', // replace with your Laravel validation route
+                        url: '{{ route('validate.field') }}',
                         type: 'POST',
                         data: (function() {
                             let data = {
-                                [fieldName]: inputValue, // send the field value to the server
-                                _token: '{{ csrf_token() }}' // include CSRF token
+                                [fieldName]: inputValue, 
+                                _token: '{{ csrf_token() }}' 
                             };
                             
-                            // Add conditionally to the data object
                             if (fieldConfirm) {
-                                data[parentName] = parentField.val(); // Add custom data if 'confirm' is in the field name
+                                data[parentName] = parentField.val(); 
                             }
                             return data;
                         })(),
                         success: function(response) {
                             if (response.errors) {
-                                // If there are validation errors
                                 inputElement.addClass('is-invalid');
-                                inputElement.next('.invalid-feedback').remove(); // remove previous errors
+                                inputElement.next('.invalid-feedback').remove();
                                 if(fieldConfirm){
                                     inputElement.after('<div class="invalid-feedback">' + response.errors[parentName][0] + '</div>');
                                 }else{
                                     inputElement.after('<div class="invalid-feedback">' + response.errors[fieldName][0] + '</div>');
                                 }
                             } else {
-                                // If the input is valid
                                 inputElement.removeClass('is-invalid');
                                 inputElement.next('.invalid-feedback').remove();
                             }

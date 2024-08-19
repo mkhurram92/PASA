@@ -120,7 +120,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile/change-password', [NewPasswordController::class, 'showChangePasswordForm'])->name('password.change');
     Route::post('/profile/change-password', [NewPasswordController::class, 'changePassword'])->name('password.update');
 
-    Route::resource('members', SubscribeMemberController::class);
+    //Route::resource('members', SubscribeMemberController::class);
     Route::resource('subscription-plans', SubscriptionPlanController::class);
     Route::resource('/', DashboardController::class);
     Route::resource('/user', UserController::class);
