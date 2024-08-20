@@ -188,13 +188,10 @@
                      sorter: "string",
                      formatter: function(cell, formatterParams, onRendered) {
                          var status = cell.getValue();
-                         if (status === 'succeeded') {
-                             cell.getElement().style.color = "green";
-                             return 'Successful';
-                         } else {
-                             cell.getElement().style.color = "red";
-                             return status;
+                         if (status) {
+                             return status.charAt(0).toUpperCase() + status.slice(1);
                          }
+                         return status
                      }
                  },
                  {

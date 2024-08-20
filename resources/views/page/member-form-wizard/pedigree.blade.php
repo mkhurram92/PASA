@@ -3,22 +3,18 @@
     <div class="row">
         <div class="row mb-3">
             <h3 class="card-title"> Pedigree Chart</h3>
-            <div class="col-sm-6 d-flex align-items-center">
-                <label class="form-label mb-0 me-2">Applicant's Father - This is the Pioneer line</label>
-                <input id="father_1" type="radio" class="radio-input" name="pioneer_parents" value="0">
-            </div>
-            <div class="col-sm-6 d-flex align-items-center">
-                <label class="form-label mb-0 me-2">This is my Pioneer</label>
-                <input id="fatherpioneer_1" type="radio" class="radio-input ancestor_father" name="ancestor">
-            </div>
         </div>
         <div id="pedigree-forms">
             <!-- Initial form -->
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-md-4">
-                        <a class="form-control-label" style="color: #022ff8; font-size:16px">Generation x <span
-                                class="pedigree-level">1</span></a>
+                    <a class="form-control-label" style="color: #022ff8; font-size:16px">Generation x <span
+                            class="pedigree-level">1</span></a>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 d-flex align-items-center">
+                        <label class="form-label mb-0 me-2">Applicant's Father - This is the Pioneer line</label>
+                        <input id="father_1" type="radio" class="radio-input" name="pioneer_parents" value="0">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -51,14 +47,9 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <h3 class="card-title"> Pedigree Chart</h3>
-                    <div class="col-sm-6 d-flex align-items-center">
+                    <div class="col-md-6 d-flex align-items-center">
                         <label class="form-label mb-0 me-2">Applicant's Mother - This is the Pioneer line</label>
                         <input id="mother" type="radio" class="radio-input" name="pioneer_parents" value="0">
-                    </div>
-                    <div class="col-sm-6 d-flex align-items-center">
-                        <label class="form-label mb-0 me-2">This is my Pioneer</label>
-                        <input id="motherpioneer_1" type="radio" class="radio-input ancestor_mother" name="ancestor">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -92,11 +83,6 @@
                         <label class="form-control-label">Additional Notes</label>
                         <textarea class="form-control" rows="4" name="pedigrees[0][notes]"></textarea>
                     </div>
-                    <br>
-                    <div class="col-md-1 remove-button">
-                        <button type="button" class="btn btn-danger"
-                            onclick="removePedigreeForm(this)">Remove</button>
-                    </div>
                 </div>
                 <br>
                 <br>
@@ -116,6 +102,13 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <a class="form-control-label" style="color: #022ff8; font-size:16px">Generation x <span class="pedigree-level">${pedigreeIndex + 1}</span></a>
+                        </div>
+                        
+                    </div>
+                    <div class="row mb-3">
+                        <div class='col-md-4 d-flex align-items-center'>
+                            <label class='form-label mb-0 me-2'>Fathers - This is the Pioneer line</label>
+                            <input name='pedigrees[${pedigreeIndex}][pedigree_key]' class='radio-input' type='radio' value='1' />
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -143,6 +136,14 @@
                             <label class="form-control-label">Marriage Date</label>
                             <input class="form-control" name="pedigrees[${pedigreeIndex}][date_of_marriage]" type="text">
                         </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class='col-md-4 d-flex align-items-center'>
+                            <label class='form-label mb-0 me-2'>Fathers - This is the Pioneer line</label>
+                            <input name='pedigrees[${pedigreeIndex}][pedigree_key]' class='radio-input' type='radio' value='1' />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-md-2">
                             <label class="form-control-label">Mother Name</label>
                             <input class="form-control" name="pedigrees[${pedigreeIndex}][m_name]" type="text">
@@ -172,6 +173,7 @@
                             <textarea class="form-control" rows="3" name="pedigrees[${pedigreeIndex}][notes]"></textarea>
                         </div>
                         <div class="col-md-1 remove-button">
+                            <br>
                             <button type="button" class="btn btn-danger" onclick="removePedigreeForm(this)">Remove</button>
                         </div>
                     </div>

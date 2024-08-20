@@ -329,14 +329,6 @@ class PaymentController extends Controller
             $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
             $amount = $user['preferred_delivery_price'];
 
-            // Create a customer in Stripe
-            $customerDetails = [
-                'description' => $level . ' Member.',
-                'name' => $user['username'],
-                'email' => $user['email'],
-            ];
-            $customer = $stripe->customers->create($customerDetails);
-
             // Create the payment intent
             $res = $stripe->paymentIntents->create([
                 'amount' => $amount * 100,
@@ -344,11 +336,7 @@ class PaymentController extends Controller
                 'automatic_payment_methods' => [
                     'enabled' => true,
                 ],
-                'description' => 'New Applicant',
-                'customer' => $customer->id,
-                'metadata' => [
-                    'member_id' => $user['member_id'],
-                ]
+                'description' => 'New Applicant'
             ]);
 
             return $res?->client_secret;

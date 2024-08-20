@@ -102,11 +102,11 @@ class MemberFormWizard extends Controller
 
     private function handleSuccessfulPayment($values, $payment)
     {
-        Log::info('Handling successful payment', ['payment' => $payment]);
+        //Log::info('Handling successful payment', ['payment' => $payment]);
 
         $member = $this->createMember($values);
         if ($member) {
-            Log::info('Member created successfully', ['member_id' => $member->id]);
+            //Log::info('Member created successfully', ['member_id' => $member->id]);
 
             try {
                 $this->createOrUpdateAddress($member->id, $values);

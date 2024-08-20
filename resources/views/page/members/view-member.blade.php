@@ -545,78 +545,11 @@
                             var errorElement = document.getElementById('card-errors');
                             errorElement.textContent = result.error.message;
                         } else {
-                            $.ajax({
-                                url: '{{ route('payment.process') }}',
-                                method: 'POST',
-                                data: {
-                                    stripeToken: result.token.id,
-                                    amount: selectedPrice,
-                                    _token: '{{ csrf_token() }}'
-                                },
-                                success: function(response) {
-                                    if (response.success) {
-                                        // Send AJAX request to update the renewal date
-                                        $.ajax({
-                                            url: '{{ route('update.renewal.date') }}',
-                                            method: 'POST',
-                                            data: {
-                                                _token: '{{ csrf_token() }}',
-                                                memberId: '{{ $member->id }}',
-                                                renewalDate: new Date()
-                                                    .toISOString()
-                                                    .slice(0,
-                                                    10)
-                                            },
-                                            success: function(updateResponse) {
-                                                if (updateResponse
-                                                    .success) {
-                                                    Swal.fire({
-                                                        title: 'Membership Renewal Successful!',
-                                                        text: 'Your membership has been renewed successfully.',
-                                                        icon: 'success',
-                                                        confirmButtonText: 'OK'
-                                                    }).then(() => {
-                                                        location.reload(); // Refresh the page after the user clicks "OK"
-                                                    });
-                                                } else {
-                                                    Swal.fire({
-                                                        title: 'Error',
-                                                        text: 'Failed to update the renewal date.',
-                                                        icon: 'error',
-                                                        confirmButtonText: 'OK'
-                                                    });
-                                                }
-                                            },
-                                            error: function(xhr, status,
-                                            error) {
-                                                Swal.fire({
-                                                    title: 'Error',
-                                                    text: 'An error occurred while updating the renewal date.',
-                                                    icon: 'error',
-                                                    confirmButtonText: 'OK'
-                                                });
-                                            }
-                                        });
-                                    } else {
-                                        Swal.fire({
-                                            title: 'Payment Failed',
-                                            text: response.message,
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    }
-                                },
-                                error: function(xhr, status, error) {
-                                    Swal.fire({
-                                        title: 'An error occurred',
-                                        text: error,
-                                        icon: 'error',
-                                        confirmButtonText: 'OK'
-                                    });
-                                }
-                            });
+                            processPayment(result.token.id, selectedPrice);
                         }
                     });
+                } else if (cashOption.checked) {
+                    updateRenewalDate();
                 } else {
                     Swal.fire({
                         title: 'No Payment Method Selected',
@@ -626,6 +559,78 @@
                     });
                 }
             });
+
+            function processPayment(token, amount) {
+                $.ajax({
+                    url: '{{ route('payment.process') }}',
+                    method: 'POST',
+                    data: {
+                        stripeToken: token,
+                        amount: amount,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            updateRenewalDate();
+                        } else {
+                            Swal.fire({
+                                title: 'Payment Failed',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'An error occurred',
+                            text: error,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
+
+            function updateRenewalDate() {
+                $.ajax({
+                    url: '{{ route('update.renewal.date') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        memberId: '{{ $member->id }}',
+                        renewalDate: new Date().toISOString().slice(0, 10)
+                    },
+                    success: function(updateResponse) {
+                        if (updateResponse.success) {
+                            Swal.fire({
+                                title: 'Membership Renewal Successful!',
+                                text: 'Your membership has been renewed successfully.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                location
+                            .reload(); // Refresh the page after the user clicks "OK"
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to update the renewal date.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'An error occurred while updating the renewal date.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
         });
 
         document.addEventListener('DOMContentLoaded', function() {
