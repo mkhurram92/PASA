@@ -463,4 +463,22 @@ class PaymentController extends Controller
             ], 500);
         }
     }
+    public function cashPayment(Request $request)
+    {
+        $amount = $request->input('amount');
+
+        try {
+            Transaction::createAndProcessTransaction(1, 1, 1, $amount, 'Membership Renewals');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Cash payment processed successfully.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to process cash payment. ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }

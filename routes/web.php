@@ -149,6 +149,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('partner', [DashboardController::class, "partner"])->name("partner");
     
     Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+    Route::post('/payment/cash', [PaymentController::class, 'cashPayment'])->name('payment.cash');
 
     // add junior
     Route::get('/membership/junior', [JuniorMemberFormWizard::class, "JuniorMemberFormWizard"])->name('JuniorForm');

@@ -549,7 +549,7 @@
                         }
                     });
                 } else if (cashOption.checked) {
-                    updateRenewalDate();
+                    callCashPaymentRoute(selectedPrice);
                 } else {
                     Swal.fire({
                         title: 'No Payment Method Selected',
@@ -568,6 +568,38 @@
                         stripeToken: token,
                         amount: amount,
                         _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            updateRenewalDate();
+                        } else {
+                            Swal.fire({
+                                title: 'Payment Failed',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'An error occurred',
+                            text: error,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
+
+            function callCashPaymentRoute(amount) {
+                $.ajax({
+                    url: '{{ route('payment.cash') }}', // Replace with your actual route
+                    method: 'POST',
+                    data: {
+                        amount: amount,
+                        _token: '{{ csrf_token() }}',
+                        memberId: '{{ $member->id }}',
                     },
                     success: function(response) {
                         if (response.success) {
