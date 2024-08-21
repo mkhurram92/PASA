@@ -103,45 +103,40 @@ class MemberFormWizard extends Controller
 
     private function handleSuccessfulPayment($values, $payment)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-        $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
-
         Log::info('Handling successful payment', ['payment' => $payment]);
 
-        DB::beginTransaction();
-
-        try {
-            $member = $this->createMember($values);
+        $member = $this->createMember($values);
+        if ($member) {
             Log::info('Member created successfully', ['member_id' => $member->id]);
 
-            $this->createOrUpdateAddress($member->id, $values);
-            $this->createOrUpdateContact($member->id, $values);
-            $this->handlePedigree($member->id, $values);
-            $this->createOrUpdateAncestor($member->id, $values);
+            try {
+                $this->createOrUpdateAddress($member->id, $values);
 
-            // Commit the transaction if all operations are successful
-            DB::commit();
+                $this->createOrUpdateContact($member->id, $values);
 
-            // Capture the payment since the registration was successful
-            //$stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
-            $stripe->paymentIntents->capture($payment->id);
+                $this->handlePedigree($member->id, $values);
 
-            return response()->json(['success' => "Member added", "redirectTo" => route("login")]);
-        } catch (\Exception $e) {
-            // Rollback the transaction on error
-            DB::rollBack();
+                $this->createOrUpdateAncestor($member->id, $values);
 
-            // Optionally, you can cancel the payment intent to release the funds
-            $stripe->paymentIntents->cancel($payment->id);
+                //$this->updateSubscriptionStatus($payment->id, 'SUCCESS', $payment->status, $member->id);
+                //Log::info('Subscription status updated successfully', ['payment_id' => $payment->id]);
 
-            Log::error('Error during post-payment processing', [
-                'member_id' => $member->id ?? null,
-                'error' => $e->getMessage()
-            ]);
-            return response()->json(['error' => "Failed to complete member registration"]);
+                ///Mail::to($values['email'])->send(new RegisterEmail($member));
+                //Log::info('Member registration email sent', ['email' => $values['email']]);
+
+                return response()->json(['success' => "Member added", "redirectTo" => route("login")]);
+            } catch (\Exception $e) {
+                Log::error('Error during post-payment processing', [
+                    'member_id' => $member->id,
+                    'error' => $e->getMessage()
+                ]);
+                return response()->json(['error' => "Failed to complete member registration"]);
+            }
         }
-    }
 
+        Log::error('Failed to create member');
+        return response()->json(['error' => "Failed to create member"]);
+    }
 
     private function createMember($values)
     {
