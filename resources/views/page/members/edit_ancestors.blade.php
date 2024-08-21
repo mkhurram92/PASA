@@ -82,9 +82,8 @@
                                                         @foreach ($ancestors as $anc)
                                                             <option value="{{ $anc->id }}"
                                                                 data-source="{{ $anc->sourceOfArrival->name ?? '' }}"
-                                                                data-day="{{ $anc->mode_of_travel->date_of_arrival ?? '' }}"
-                                                                data-month="{{ $anc->mode_of_travel->month_of_arrival ?? '' }}"
-                                                                data-year="{{ $anc->mode_of_travel->year_of_arrival ?? '' }}"
+                                                                data-ship-name="{{ $anc->mode_of_travel->ship->name_of_ship ?? '' }}"
+                                                                data-ship-year="{{ $anc->mode_of_travel->year_of_arrival ?? '' }}"
                                                                 {{ $ancestor->id == $anc->id ? 'selected' : '' }}>
                                                                 {{ $anc->given_name }}
                                                                 {{ $anc->ancestor_surname }}
@@ -99,10 +98,10 @@
                                                         value="{{ $ancestor->sourceOfArrival->name ?? '' }}" disabled>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <label class="form-control-label">Arrival Date</label>
-                                                    <input name="mode_of_travel_id[]"
-                                                        class="form-control mode_of_travel_id"
-                                                        value="{{ $ancestor->mode_of_travel->year_of_arrival ?? '' }}-{{ $ancestor->mode_of_travel->month_of_arrival ?? '' }}-{{ $ancestor->mode_of_travel->date_of_arrival ?? '' }}"
+                                                    <label class="form-control-label">Ship Name - Year</label>
+                                                    <input name="ship_name_year[]"
+                                                        class="form-control ship_name_year"
+                                                        value="{{ $ancestor->mode_of_travel->ship->name_of_ship ?? '' }} - {{ $ancestor->mode_of_travel->year_of_arrival ?? '' }}"
                                                         disabled>
                                                 </div>
                                             </div>
@@ -139,26 +138,13 @@
             function handleSelectChange(selectElement) {
                 var selectedOption = $(selectElement).find('option:selected');
                 var sourceOfArrival = selectedOption.data('source');
-                var day = selectedOption.data('day');
-                var month = selectedOption.data('month');
-                var year = selectedOption.data('year');
+                var shipName = selectedOption.data('ship-name');
+                var shipYear = selectedOption.data('ship-year');
 
                 var formContainer = $(selectElement).closest('.card-body');
 
                 formContainer.find('.source_of_arrival').val(sourceOfArrival);
-
-                var formattedDate = '';
-                if (year) {
-                    formattedDate = year;
-                    if (month) {
-                        formattedDate += '-' + String(month).padStart(2, '0');
-                        if (day) {
-                            formattedDate += '-' + String(day).padStart(2, '0');
-                        }
-                    }
-                }
-
-                formContainer.find('.mode_of_travel_id').val(formattedDate);
+                formContainer.find('.ship_name_year').val(shipName + ' - ' + shipYear);
             }
 
             // Attach the change event handler to the initial given_name select element
@@ -182,7 +168,7 @@
                 // Ensure that the cloned form elements have unique names
                 $newAncestorForm.find('.given_name').attr('name', 'given_name[]');
                 $newAncestorForm.find('.source_of_arrival').attr('name', 'source_of_arrival[]');
-                $newAncestorForm.find('.mode_of_travel_id').attr('name', 'mode_of_travel_id[]');
+                $newAncestorForm.find('.ship_name_year').attr('name', 'ship_name_year[]');
 
                 // Remove any existing remove buttons in the cloned form
                 $newAncestorForm.find('.remove-button').remove();
@@ -205,9 +191,9 @@
             $('body').on('click', '.btn-primary', function() {
                 addAncestorForm();
             });
-            $('form').on('submit', function(event) {
-                console.log('Form is being submitted');
-            });
+
+            // Initialize Select2 on all select elements
+            $('.given_name').select2();
 
         });
     </script>

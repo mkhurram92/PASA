@@ -82,9 +82,8 @@
                                                     @foreach ($ancestors as $ancestor)
                                                         <option value="{{ $ancestor->id }}"
                                                             data-source="{{ $ancestor->sourceOfArrival->name ?? '' }}"
-                                                            data-day="{{ $ancestor->mode_of_travel->date_of_arrival ?? '' }}"
-                                                            data-month="{{ $ancestor->mode_of_travel->month_of_arrival ?? '' }}"
-                                                            data-year="{{ $ancestor->mode_of_travel->year_of_arrival ?? '' }}">
+                                                            data-ship-year="{{ $ancestor->mode_of_travel->year_of_arrival ?? '' }}"
+                                                            data-ship-name="{{ $ancestor->mode_of_travel->ship->name_of_ship ?? '' }}">
                                                             {{ $ancestor->given_name }}
                                                             {{ $ancestor->ancestor_surname }}
                                                         </option>
@@ -97,8 +96,8 @@
                                                     disabled>
                                             </div>
                                             <div class="col-md-4">
-                                                <label class="form-control-label">Arrival Date</label>
-                                                <input name="mode_of_travel_id[]" class="form-control mode_of_travel_id"
+                                                <label class="form-control-label">Ship Name - Arrival Year</label>
+                                                <input name="ship_name_year[]" class="form-control ship_name_year"
                                                     disabled>
                                             </div>
                                         </div>
@@ -124,74 +123,70 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            // Function to handle the change event for given_name select elements
-            function handleSelectChange(selectElement) {
-                var selectedOption = $(selectElement).find('option:selected');
-                var sourceOfArrival = selectedOption.data('source');
-                var day = selectedOption.data('day');
-                var month = selectedOption.data('month');
-                var year = selectedOption.data('year');
-
-                var formContainer = $(selectElement).closest('.card-body');
-
-                formContainer.find('.source_of_arrival').val(sourceOfArrival);
-
-                var formattedDate = '';
-                if (year) {
-                    formattedDate = year;
-                    if (month) {
-                        formattedDate += '-' + String(month).padStart(2, '0');
-                        if (day) {
-                            formattedDate += '-' + String(day).padStart(2, '0');
-                        }
-                    }
-                }
-
-                formContainer.find('.mode_of_travel_id').val(formattedDate);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to initialize event listeners on given_name dropdowns
+            function initializeGivenNameListeners() {
+                document.querySelectorAll('.given_name').forEach(function(select) {
+                    select.removeEventListener('change',
+                    handleAncestorChange); // Remove any existing listener to avoid duplicates
+                    select.addEventListener('change', handleAncestorChange);
+                });
             }
 
-            // Attach the change event handler to the initial given_name select element
-            $('#ancestor-forms').on('change', '.given_name', function() {
-                handleSelectChange(this);
-            });
-        });
+            // Event handler for when a given_name dropdown changes
+            function handleAncestorChange() {
+                const selectedOption = this.options[this.selectedIndex];
+                const source = selectedOption.getAttribute('data-source');
+                const shipName = selectedOption.getAttribute('data-ship-name');
+                const shipYear = selectedOption.getAttribute('data-ship-year');
 
-        // Function to add a new ancestor form
-        function addAncestorForm() {
-            var ancestorFormCount = $('#ancestor-forms .card-body').length;
+                const parentRow = this.closest('.row.mb-3');
+                parentRow.querySelector('.source_of_arrival').value = source;
+                parentRow.querySelector('.ship_name_year').value = `${shipName} - ${shipYear}`;
+            }
 
-            // Clone the initial form
-            var newAncestorForm = $('#ancestor-forms .card-body:first').clone();
+            // Initialize listeners on page load
+            initializeGivenNameListeners();
 
-            // Update the IDs and names of the cloned elements
-            newAncestorForm.find('select, input').each(function() {
-                var newId = $(this).attr('id') + '_' + ancestorFormCount;
-                $(this).attr('id', newId).val('');
+            // Function to add a new ancestor form
+            window.addAncestorForm = function() {
+                var ancestorFormCount = $('#ancestor-forms .card-body').length;
 
-                // Update the class to ensure the cloned elements can be targeted
-                if ($(this).attr('name') === 'given_name') {
-                    $(this).addClass('given_name');
-                } else if ($(this).attr('name') === 'source_of_arrival') {
-                    $(this).addClass('source_of_arrival');
-                } else if ($(this).attr('name') === 'mode_of_travel_id') {
-                    $(this).addClass('mode_of_travel_id');
-                }
-            });
+                // Clone the initial form
+                var newAncestorForm = $('#ancestor-forms .card-body:first').clone();
 
-            // Add a remove button to the cloned form
-            newAncestorForm.append(
-                '<div class="col-md-2"><button type="button" class="btn btn-danger remove-button" onclick="removeAncestorForm(this)">Remove</button></div>'
+                // Update the IDs and names of the cloned elements
+                newAncestorForm.find('select, input').each(function() {
+                    var newId = $(this).attr('id') + '_' + ancestorFormCount;
+                    $(this).attr('id', newId).val('');
+
+                    // Update the class to ensure the cloned elements can be targeted
+                    if ($(this).attr('name') === 'given_name') {
+                        $(this).addClass('given_name');
+                    } else if ($(this).attr('name') === 'source_of_arrival') {
+                        $(this).addClass('source_of_arrival');
+                    } else if ($(this).attr('name') === 'mode_of_travel_id') {
+                        $(this).addClass('mode_of_travel_id');
+                    }
+                });
+
+                // Add a remove button to the cloned form
+                newAncestorForm.append(
+                    '<div class="col-md-2"><button type="button" class="btn btn-danger remove-button" onclick="removeAncestorForm(this)">Remove</button></div>'
                 );
 
-            // Insert the cloned form before the button container
-            newAncestorForm.insertBefore($('#ancestor-forms .card-footer'));
-        }
+                // Insert the cloned form before the button container
+                newAncestorForm.insertBefore($('#ancestor-forms .card-footer'));
 
-        // Function to remove an ancestor form
-        function removeAncestorForm(element) {
-            $(element).closest('.card-body').remove();
-        }
+                // Re-initialize listeners for the new dropdown
+                initializeGivenNameListeners();
+            }
+
+            // Function to remove an ancestor form
+            window.removeAncestorForm = function(element) {
+                $(element).closest('.card-body').remove();
+            }
+        });
     </script>
 @endsection
 

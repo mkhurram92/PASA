@@ -107,34 +107,17 @@
                                                         class="form-control" disabled>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <label class="form-control-label">Arrival Date</label>
+                                                    <label class="form-control-label">Ship Name - Year</label>
                                                     @php
-                                                        $arrivalDate = '';
-                                                        if ($ancestor->mode_of_travel?->year_of_arrival) {
-                                                            $arrivalDate = $ancestor->mode_of_travel?->year_of_arrival;
-                                                            if ($ancestor->mode_of_travel->month_of_arrival) {
-                                                                $arrivalDate .=
-                                                                    '-' .
-                                                                    str_pad(
-                                                                        $ancestor->mode_of_travel?->month_of_arrival,
-                                                                        2,
-                                                                        '0',
-                                                                        STR_PAD_LEFT,
-                                                                    );
-                                                                if ($ancestor->mode_of_travel->date_of_arrival) {
-                                                                    $arrivalDate .=
-                                                                        '-' .
-                                                                        str_pad(
-                                                                            $ancestor->mode_of_travel?->date_of_arrival,
-                                                                            2,
-                                                                            '0',
-                                                                            STR_PAD_LEFT,
-                                                                        );
-                                                                }
+                                                        $shipNameYear = '';
+                                                        if ($ancestor->mode_of_travel?->ship?->name_of_ship) {
+                                                            $shipNameYear = $ancestor->mode_of_travel->ship->name_of_ship;
+                                                            if ($ancestor->mode_of_travel?->year_of_arrival) {
+                                                                $shipNameYear .= ' - ' . $ancestor->mode_of_travel->year_of_arrival;
                                                             }
                                                         }
                                                     @endphp
-                                                    <input name="mode_of_travel_id" value="{{ $arrivalDate }}"
+                                                    <input name="ship_name_year" value="{{ $shipNameYear }}"
                                                         class="form-control" disabled>
                                                 </div>
                                             </div>

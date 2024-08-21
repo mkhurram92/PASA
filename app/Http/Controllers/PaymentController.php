@@ -100,18 +100,17 @@ class PaymentController extends Controller
             } else {
                 $amount = 75;
             }
-            // search for client in stripe api
             $customer = $stripe->customers->search([
                 'query' => "email:'" . $user['email'] . "' AND username:'" . $user['username'] . "'",
             ]);
-            if (empty($customer)) {
+            //if (empty($customer)) {
                 // create client if it not exists
-                $stripe->customers->create([
-                    'description' => $level . ' level customer.',
-                    'name' => $user['username'],
-                    'email' => $user['email']
-                ]);
-            }
+            //    $stripe->customers->create([
+            //        'description' => $level . ' level customer.',
+            //        'name' => $user['username'],
+            //        'email' => $user['email']
+            //    ]);
+            //}
             // store card details to verify card
 
             // create payment intent and confirm payment
@@ -145,23 +144,23 @@ class PaymentController extends Controller
             // $customer = $stripe->customers->search([
             //     'query' => "email:'".$user['email']."' AND username:'".$user['username']."'",
             // ]);
-            $customer = [];
-            if (empty($customer)) {
+            //$customer = [];
+            //if (empty($customer)) {
                 // create client if it not exists
-                $customer = $stripe->customers->create([
-                    'description' => $level . ' Member.',
-                    'name' => $user['username'],
-                    'email' => $user['email'],
-                    "address" => [
-                        "city" => $user['suburb'],
-                        "country" => "AU",
-                        "line1" => $user['number_street'],
-                        "line2" => "",
-                        "postal_code" => $user['post_code'],
-                        "state" => States::find($user['state'])->code
-                    ]
-                ]);
-            }
+            //    $customer = $stripe->customers->create([
+            //        'description' => $level . ' Member.',
+            //        'name' => $user['username'],
+            //        'email' => $user['email'],
+            //        "address" => [
+            //            "city" => $user['suburb'],
+            //            "country" => "AU",
+            //            "line1" => $user['number_street'],
+            //            "line2" => "",
+            //            "postal_code" => $user['post_code'],
+            //            "state" => States::find($user['state'])->code
+            //        ]
+            //    ]);
+            //}
             Transaction::create([
                 'transaction_type_id' => 1,
                 'gl_code_id' => 85,
@@ -178,7 +177,7 @@ class PaymentController extends Controller
                     "allow_redirects" => "never"
                 ],
                 "description" => "New Applicant: " . $user['username'],
-                "customer" => $customer->id,
+                //"customer" => $customer->id,
                 "metadata" => [
                     'name' => $user['username'],
                     'email' => $user['email'],
@@ -213,7 +212,7 @@ class PaymentController extends Controller
                     "state" => $state
                 ]
             ];
-            $customer = $stripe->customers->create($customerDetails);
+            //$customer = $stripe->customers->create($customerDetails);
             Transaction::create([
                 'transaction_type_id' => 1,
                 'gl_code_id' => 85,
@@ -229,7 +228,7 @@ class PaymentController extends Controller
                     'enabled' => true,
                 ],
                 "description" => "Friend Registration: " . $user['given_name'],
-                "customer" => $customer->id,
+                //"customer" => $customer->id,
                 "metadata" => [
                     'name' => $user['given_name'],
                     "member_id" => auth()->id() ?? "N/A",
@@ -280,7 +279,7 @@ class PaymentController extends Controller
                     "state" => $state
                 ]
             ];
-            $customer = $stripe->customers->create($customerDetails);
+            //$customer = $stripe->customers->create($customerDetails);
             Transaction::create([
                 'transaction_type_id' => 1,
                 'gl_code_id' => 85,
@@ -296,7 +295,7 @@ class PaymentController extends Controller
                     'enabled' => true,
                 ],
                 "description" => "Junior Registration: " . $user['given_name'],
-                "customer" => $customer->id,
+                //"customer" => $customer->id,
                 "metadata" => [
                     'name' => $user['given_name'],
                     "member_id" => auth()->id(),

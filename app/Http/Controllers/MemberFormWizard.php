@@ -103,44 +103,38 @@ class MemberFormWizard extends Controller
 
     private function handleSuccessfulPayment($values, $payment)
     {
-        Log::info('Handling successful payment', ['payment' => $payment]);
+        //Log::info('Handling successful payment', ['payment' => $payment]);
 
-        $member = $this->createMember($values);
-        if ($member) {
-            Log::info('Member created successfully', ['member_id' => $member->id]);
+        DB::beginTransaction();
 
-            try {
-                $this->createOrUpdateAddress($member->id, $values);
+        try {
+            $member = $this->createMember($values);
+            //Log::info('Member created successfully', ['member_id' => $member->id]);
 
-                $this->createOrUpdateContact($member->id, $values);
+            $this->createOrUpdateAddress($member->id, $values);
+            $this->createOrUpdateContact($member->id, $values);
+            $this->handlePedigree($member->id, $values);
+            $this->createOrUpdateAncestor($member->id, $values);
 
-                $this->handlePedigree($member->id, $values);
+            // Commit the transaction if all operations are successful
+            DB::commit();
 
-                $this->createOrUpdateAncestor($member->id, $values);
+            return response()->json(['success' => "Member added", "redirectTo" => route("login")]);
+        } catch (\Exception $e) {
+            // Rollback the transaction on error
+            DB::rollBack();
 
-                //$this->updateSubscriptionStatus($payment->id, 'SUCCESS', $payment->status, $member->id);
-                //Log::info('Subscription status updated successfully', ['payment_id' => $payment->id]);
-
-                ///Mail::to($values['email'])->send(new RegisterEmail($member));
-                //Log::info('Member registration email sent', ['email' => $values['email']]);
-
-                return response()->json(['success' => "Member added", "redirectTo" => route("login")]);
-            } catch (\Exception $e) {
-                Log::error('Error during post-payment processing', [
-                    'member_id' => $member->id,
-                    'error' => $e->getMessage()
-                ]);
-                return response()->json(['error' => "Failed to complete member registration"]);
-            }
+            Log::error('Error during post-payment processing', [
+                'member_id' => $member->id ?? null,
+                'error' => $e->getMessage()
+            ]);
+            return response()->json(['error' => "Failed to complete member registration"]);
         }
-
-        Log::error('Failed to create member');
-        return response()->json(['error' => "Failed to create member"]);
     }
 
     private function createMember($values)
     {
-        Log::info('Creating member', ['values' => $values]);
+        //Log::info('Creating member', ['values' => $values]);
         return Member::create([
             "username" => $values['username'],
             "title_id" => $values['title'],
@@ -181,7 +175,7 @@ class MemberFormWizard extends Controller
 
     private function handlePedigree(int $member_id, array $values)
     {
-        Log::info('Handling pedigree', ['values' => json_encode($values)]);
+        //Log::info('Handling pedigree', ['values' => json_encode($values)]);
 
         if (isset($values['pedigrees']) && is_array($values['pedigrees'])) {
             foreach ($values['pedigrees'] as $index => $pedigree) {
@@ -189,7 +183,6 @@ class MemberFormWizard extends Controller
                     'member_id' => $member_id,
                     'pedigree_level' => $index + 1,
                     'pioneer_parents' => $pedigree['pioneer_parents'] ?? null,
-                    //'full_name' => $pedigree['full_name'],
                     'f_name' => $pedigree['f_name'],
                     'm_name' => $pedigree['m_name'],
 
