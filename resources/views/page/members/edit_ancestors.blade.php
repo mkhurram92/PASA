@@ -99,8 +99,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label class="form-control-label">Ship Name - Year</label>
-                                                    <input name="ship_name_year[]"
-                                                        class="form-control ship_name_year"
+                                                    <input name="ship_name_year[]" class="form-control ship_name_year"
                                                         value="{{ $ancestor->mode_of_travel->ship->name_of_ship ?? '' }} - {{ $ancestor->mode_of_travel->year_of_arrival ?? '' }}"
                                                         disabled>
                                                 </div>
@@ -113,8 +112,8 @@
                                     @endforeach
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="btn btn-primary" onclick="addAncestorForm()">Add
-                                        Another Ancestor</button>
+                                    <button type="button" class="btn btn-primary add-ancestor-btn">Add Another
+                                        Ancestor</button>
                                     <button type="submit" class="btn btn-success">Save Ancestors</button>
                                 </div>
                             </form>
@@ -127,10 +126,6 @@
 </div>
 
 @section('scripts')
-    <!-- Include Select2 CSS and JS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
     <script>
         $(document).ready(function() {
 
@@ -157,18 +152,17 @@
                 var $ancestorForms = $('#ancestor-forms');
                 var $lastForm = $ancestorForms.find('.card-body').last();
 
-                // Clone the last form
-                var $newAncestorForm = $lastForm.clone();
+                // Clone the last form but don't copy over event handlers or data
+                var $newAncestorForm = $lastForm.clone(false);
+
+                // Destroy any Select2 instance on the cloned form
+                $newAncestorForm.find('.given_name').select2('destroy');
 
                 // Reset the values of the cloned form
                 $newAncestorForm.find('select, input').each(function() {
-                    $(this).val('').removeAttr('id');
+                    $(this).val(''); // Clear values
+                    $(this).removeAttr('id'); // Remove any ID to avoid duplicates
                 });
-
-                // Ensure that the cloned form elements have unique names
-                $newAncestorForm.find('.given_name').attr('name', 'given_name[]');
-                $newAncestorForm.find('.source_of_arrival').attr('name', 'source_of_arrival[]');
-                $newAncestorForm.find('.ship_name_year').attr('name', 'ship_name_year[]');
 
                 // Remove any existing remove buttons in the cloned form
                 $newAncestorForm.find('.remove-button').remove();
@@ -178,8 +172,11 @@
                     '<div class="col-md-2"><button type="button" class="btn btn-danger remove-button" onclick="removeAncestorForm(this)">Remove</button></div>'
                 );
 
-                // Append the new form before the footer
+                // Append the new form to the form container
                 $ancestorForms.append($newAncestorForm);
+
+                // Reinitialize Select2 for the new dropdown
+                $newAncestorForm.find('.given_name').select2();
             }
 
             // Function to remove an ancestor form
@@ -187,13 +184,13 @@
                 $(element).closest('.card-body').remove();
             }
 
-            // Bind addAncestorForm to the button
-            $('body').on('click', '.btn-primary', function() {
+            // Initialize Select2 on all existing select elements
+            $('.given_name').select2();
+
+            // Bind addAncestorForm to the button using jQuery
+            $('.btn-primary').on('click', function() {
                 addAncestorForm();
             });
-
-            // Initialize Select2 on all select elements
-            $('.given_name').select2();
 
         });
     </script>
