@@ -177,7 +177,7 @@ class PaymentController extends Controller
                     'enabled' => true,
                     "allow_redirects" => "never"
                 ],
-                "description" => "Registration charges for user: " . $user['username'],
+                "description" => "New Applicant: " . $user['username'],
                 "customer" => $customer->id,
                 "metadata" => [
                     'name' => $user['username'],
@@ -228,7 +228,7 @@ class PaymentController extends Controller
                 'automatic_payment_methods' => [
                     'enabled' => true,
                 ],
-                "description" => "Registration charges for user: " . $user['given_name'],
+                "description" => "Friend Registration: " . $user['given_name'],
                 "customer" => $customer->id,
                 "metadata" => [
                     'name' => $user['given_name'],
@@ -295,7 +295,7 @@ class PaymentController extends Controller
                 'automatic_payment_methods' => [
                     'enabled' => true,
                 ],
-                "description" => "Registration charges for user: " . $user['given_name'],
+                "description" => "Junior Registration: " . $user['given_name'],
                 "customer" => $customer->id,
                 "metadata" => [
                     'name' => $user['given_name'],
@@ -360,16 +360,16 @@ class PaymentController extends Controller
             );
 
             // Log the payment intent details
-            Log::info('Payment Intent Retrieved:', [
-                'payment_intent_id' => $payment_intent_id,
-                'payment_intent_details' => $payment,
-            ]);
+            //::info('Payment Intent Retrieved:', [
+            //    'payment_intent_id' => $payment_intent_id,
+            //    'payment_intent_details' => $payment,
+            //]);
         } catch (\Exception $e) {
             // Log any errors that occur during the retrieval
-            Log::error('Error retrieving Payment Intent:', [
-                'payment_intent_id' => $payment_intent_id,
-                'error_message' => $e->getMessage(),
-            ]);
+            //Log::error('Error retrieving Payment Intent:', [
+            //    'payment_intent_id' => $payment_intent_id,
+            //    'error_message' => $e->getMessage(),
+            //]);
 
             abort(500, 'Error retrieving payment intent.');
         }

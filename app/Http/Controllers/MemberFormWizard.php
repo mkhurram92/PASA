@@ -25,6 +25,7 @@ use App\Models\Pedigree;
 use App\Models\AncestorData;
 use App\Models\Subscription;
 use App\Http\Controllers\PaymentController;
+use Illuminate\Support\Facades\DB;
 
 class MemberFormWizard extends Controller
 {
@@ -102,45 +103,49 @@ class MemberFormWizard extends Controller
 
     private function handleSuccessfulPayment($values, $payment)
     {
-        //Log::info('Handling successful payment', ['payment' => $payment]);
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+        $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
 
-        $member = $this->createMember($values);
-        if ($member) {
-            //Log::info('Member created successfully', ['member_id' => $member->id]);
+        Log::info('Handling successful payment', ['payment' => $payment]);
 
-            try {
-                $this->createOrUpdateAddress($member->id, $values);
+        DB::beginTransaction();
 
-                $this->createOrUpdateContact($member->id, $values);
+        try {
+            $member = $this->createMember($values);
+            Log::info('Member created successfully', ['member_id' => $member->id]);
 
-                $this->handlePedigree($member->id, $values);
+            $this->createOrUpdateAddress($member->id, $values);
+            $this->createOrUpdateContact($member->id, $values);
+            $this->handlePedigree($member->id, $values);
+            $this->createOrUpdateAncestor($member->id, $values);
 
-                //$this->createOrUpdateAncestor($member->id, $values);
-                //Log::info('Ancestor created/updated successfully', ['member_id' => $member->id]);
+            // Commit the transaction if all operations are successful
+            DB::commit();
 
-                //$this->updateSubscriptionStatus($payment->id, 'SUCCESS', $payment->status, $member->id);
-                //Log::info('Subscription status updated successfully', ['payment_id' => $payment->id]);
+            // Capture the payment since the registration was successful
+            //$stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
+            $stripe->paymentIntents->capture($payment->id);
 
-                ///Mail::to($values['email'])->send(new RegisterEmail($member));
-                //Log::info('Member registration email sent', ['email' => $values['email']]);
+            return response()->json(['success' => "Member added", "redirectTo" => route("login")]);
+        } catch (\Exception $e) {
+            // Rollback the transaction on error
+            DB::rollBack();
 
-                return response()->json(['success' => "Member added", "redirectTo" => route("login")]);
-            } catch (\Exception $e) {
-                Log::error('Error during post-payment processing', [
-                    'member_id' => $member->id,
-                    'error' => $e->getMessage()
-                ]);
-                return response()->json(['error' => "Failed to complete member registration"]);
-            }
+            // Optionally, you can cancel the payment intent to release the funds
+            $stripe->paymentIntents->cancel($payment->id);
+
+            Log::error('Error during post-payment processing', [
+                'member_id' => $member->id ?? null,
+                'error' => $e->getMessage()
+            ]);
+            return response()->json(['error' => "Failed to complete member registration"]);
         }
-
-        Log::error('Failed to create member');
-        return response()->json(['error' => "Failed to create member"]);
     }
+
 
     private function createMember($values)
     {
-        //Log::info('Creating member', ['values' => $values]);
+        Log::info('Creating member', ['values' => $values]);
         return Member::create([
             "username" => $values['username'],
             "title_id" => $values['title'],
@@ -181,7 +186,7 @@ class MemberFormWizard extends Controller
 
     private function handlePedigree(int $member_id, array $values)
     {
-        //Log::info('Handling pedigree', ['values' => json_encode($values)]);
+        Log::info('Handling pedigree', ['values' => json_encode($values)]);
 
         if (isset($values['pedigrees']) && is_array($values['pedigrees'])) {
             foreach ($values['pedigrees'] as $index => $pedigree) {
@@ -189,7 +194,7 @@ class MemberFormWizard extends Controller
                     'member_id' => $member_id,
                     'pedigree_level' => $index + 1,
                     'pioneer_parents' => $pedigree['pioneer_parents'] ?? null,
-                    'full_name' => $values['full_name'],
+                    //'full_name' => $pedigree['full_name'],
                     'f_name' => $pedigree['f_name'],
                     'm_name' => $pedigree['m_name'],
 
@@ -216,11 +221,27 @@ class MemberFormWizard extends Controller
 
     private function createOrUpdateAncestor(int $member_id, array $values)
     {
-        Log::info('Creating or updating ancestor', ['values' => $values]);
-        AncestorData::updateOrCreate(
-            ['member_id' => $member_id],
-            $values['ancestor']
-        );
+        //Log::info('Creating or updating ancestor', ['member_id' => $member_id, 'values' => $values]);
+
+        if (!empty($values['ancestor_given_name'])) {
+            foreach ($values['ancestor_given_name'] as $ancestor_id) {
+                if ($ancestor_id) {
+                    MemberAncestor::updateOrCreate(
+                        [
+                            'member_id' => $member_id,
+                            'ancestor_id' => $ancestor_id
+                        ],
+                        [
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]
+                    );
+                }
+            }
+            //Log::info('Ancestors associated successfully', ['member_id' => $member_id]);
+        } else {
+            Log::warning('No ancestors provided for association', ['member_id' => $member_id]);
+        }
     }
 
     private function updateSubscriptionStatus($payment_id, $status, $payment_status, $member_id = null)
@@ -239,8 +260,9 @@ class MemberFormWizard extends Controller
         $voyages = ModeOfArrivals::with(["ship"])->get();
         $genders = Gender::get();
         $titles = Title::all();
+        $ancestors = AncestorData::with(['sourceOfArrival', 'mode_of_travel'])->get();
         $subsription_plan = SubscriptionPlan::where('name', 'Primary')->first();
-        return view("page.member-form-wizard.index", compact('ports', 'voyages', 'states', 'genders', 'subsription_plan', 'titles'));
+        return view("page.member-form-wizard.index", compact('ancestors', 'ports', 'voyages', 'states', 'genders', 'subsription_plan', 'titles'));
     }
 
     public function validateField(Request $request)
