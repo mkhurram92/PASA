@@ -128,8 +128,6 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-
-            // Function to handle the change event for given_name select elements
             function handleSelectChange(selectElement) {
                 var selectedOption = $(selectElement).find('option:selected');
                 var sourceOfArrival = selectedOption.data('source');
@@ -142,55 +140,51 @@
                 formContainer.find('.ship_name_year').val(shipName + ' - ' + shipYear);
             }
 
-            // Attach the change event handler to the initial given_name select element
             $('#ancestor-forms').on('change', '.given_name', function() {
                 handleSelectChange(this);
             });
 
-            // Function to add a new ancestor form
+            // Bind addAncestorForm to the button using jQuery
+            $('.add-ancestor-btn').on('click', function() {
+                addAncestorForm();
+            });
+
             function addAncestorForm() {
                 var $ancestorForms = $('#ancestor-forms');
-                var $lastForm = $ancestorForms.find('.card-body').last();
+                var $lastRow = $ancestorForms.find('.card-body').last();
 
-                // Clone the last form but don't copy over event handlers or data
-                var $newAncestorForm = $lastForm.clone(false);
-
-                // Destroy any Select2 instance on the cloned form
-                $newAncestorForm.find('.given_name').select2('destroy');
+                // Clone only the specific row within the card-body
+                var $newRow = $lastRow.clone(false);
 
                 // Reset the values of the cloned form
-                $newAncestorForm.find('select, input').each(function() {
+                $newRow.find('select, input').each(function() {
                     $(this).val(''); // Clear values
-                    $(this).removeAttr('id'); // Remove any ID to avoid duplicates
+                    if (!$(this).is(':disabled')) {
+                        $(this).removeAttr('disabled'); // Ensure new inputs are enabled
+                    }
+                    $(this).removeAttr('id'); // Remove IDs to prevent duplication conflicts
                 });
 
                 // Remove any existing remove buttons in the cloned form
-                $newAncestorForm.find('.remove-button').remove();
+                $newRow.find('.remove-button').remove();
 
                 // Add a remove button to the cloned form
-                $newAncestorForm.append(
+                $newRow.append(
                     '<div class="col-md-2"><button type="button" class="btn btn-danger remove-button" onclick="removeAncestorForm(this)">Remove</button></div>'
                 );
 
                 // Append the new form to the form container
-                $ancestorForms.append($newAncestorForm);
+                $ancestorForms.append($newRow);
 
-                // Reinitialize Select2 for the new dropdown
-                $newAncestorForm.find('.given_name').select2();
             }
-
-            // Function to remove an ancestor form
+            // Reinitialize Select2 for the new dropdown
+            //$newRow.find('.given_name').select2();
             window.removeAncestorForm = function(element) {
                 $(element).closest('.card-body').remove();
             }
 
             // Initialize Select2 on all existing select elements
-            $('.given_name').select2();
-
-            // Bind addAncestorForm to the button using jQuery
-            $('.btn-primary').on('click', function() {
-                addAncestorForm();
-            });
+            $('.given_name').attach();
 
         });
     </script>
