@@ -112,9 +112,9 @@
                                     @endforeach
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="btn btn-success add-ancestor-btn">Add Another
+                                    <button type="button" class="btn btn-primary add-ancestor-btn">Add Another
                                         Ancestor</button>
-                                    <button type="submit" class="btn btn-primary">Save Ancestors</button>
+                                    <button type="submit" class="btn btn-success">Save Ancestors</button>
                                 </div>
                             </form>
                         </div>

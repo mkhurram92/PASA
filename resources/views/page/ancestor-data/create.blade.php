@@ -4,28 +4,22 @@
 <div class="app-content main-content">
     <div class="side-app">
         <style>
-            /* Increase the size of the day cells */
             .ui-datepicker-calendar td {
                 font-size: 22px;
-                /* Adjust the padding as needed */
             }
 
             .ui-datepicker-calendar a {
                 font-size: 22px !important;
-                /* Adjust the padding as needed */
             }
 
-            /* Increase the size of the month/year dropdowns */
             .ui-datepicker select.ui-datepicker-year,
             .ui-datepicker select.ui-datepicker-month {
                 font-size: 22px;
-                /* Adjust the font size as needed */
             }
 
             .ui-datepicker-calendar {
                 width: 300px;
                 height: 300px;
-                /* Set the height to 100% */
             }
         </style>
         <div class="container-fluid main-container">
