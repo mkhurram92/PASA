@@ -113,7 +113,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <button type="button" class="btn btn-primary add-ancestor-btn">Add Another Ancestor</button>
-                                    <button type="submit" class="btn btn-success">Save Ancestors</button>
+                                    <button type="submit" class="btn btn-success">Update Ancestors</button>
                                 </div>
                             </form>
 

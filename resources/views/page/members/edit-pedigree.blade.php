@@ -175,9 +175,9 @@
                                     @endforeach
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="btn btn-success" onclick="addPedigreeForm()">Add
+                                    <button type="button" class="btn btn-primary" onclick="addPedigreeForm()">Add
                                         Another Pedigree</button>
-                                    <button type="submit" class="btn btn-primary">Update Pedigree</button>
+                                    <button type="submit" class="btn btn-success">Update Pedigree</button>
                                 </div>
                             </form>
                         </div>
