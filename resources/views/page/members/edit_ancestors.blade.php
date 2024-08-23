@@ -175,8 +175,9 @@
             $(element).closest('.card-body').remove();
         }
 
+        
         // Initialize Select2 if used
-        $('.given_name').select2();
+        $('.given_name').attach();
     });
 </script>
 @endsection
