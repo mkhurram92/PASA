@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'expiry_date',
     ];
 
     /**
@@ -42,6 +43,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'expiry_date' => 'datetime',
     ];
 
     /**
@@ -64,5 +66,14 @@ class User extends Authenticatable
         // Assuming 'Admin' is the name of the admin role
         return $this->role->name === 'Admin';
     }
-
+    
+    /**
+     * Check if the user's account is expired.
+     *
+     * @return bool
+     */
+    public function isExpired()
+    {
+        return $this->expiry_date && $this->expiry_date->isPast();
+    }
 }

@@ -217,7 +217,7 @@
                      }
                  },
                  {
-                     title: "Date",
+                     title: "Transaction Date",
                      field: "created_at",
                      hozAlign: "center",
                      vertAlign: "middle",

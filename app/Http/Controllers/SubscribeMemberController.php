@@ -172,7 +172,6 @@ class SubscribeMemberController extends Controller
         $data['membership_types'] = SubscriptionPlan::all();
         $data['membership_status'] = MembershipStatus::all();
 
-        // Check if the membership end date is within one month
         $membershipEndDate = $member?->additionalInfo?->date_membership_end ? Carbon::parse($member->additionalInfo->date_membership_end) : null;
         $currentDate = Carbon::now();
         $oneMonthLater = $currentDate->copy()->addDays(30);
@@ -180,13 +179,8 @@ class SubscribeMemberController extends Controller
         $showRenewButton = false;
 
         if ($membershipEndDate) {
-            // Log the dates
-            //Log::info("Membership End Date: " . $membershipEndDate->toDateString());
-            //Log::info("Current Date: " . $currentDate->toDateString());
-            //Log::info("One Month Later: " . $oneMonthLater->toDateString());
-
-            // Check if the membership end date is between today and one month later
-            if ($membershipEndDate->between($currentDate, $oneMonthLater)) {
+            // Checking if the membership end date is between today and one month later, or if it's in the past
+            if ($membershipEndDate->between($currentDate, $oneMonthLater) || $membershipEndDate->isPast()) {
                 $showRenewButton = true;
             }
         }
@@ -204,7 +198,6 @@ class SubscribeMemberController extends Controller
         $data['state_name'] = Helper::getState($member?->address?->state);
         $data['states'] = States::all();
         $data['membership_status'] = MembershipStatus::all();
-        //$data['membership_types'] = MembershipType::all();
         $data['membership_types'] = SubscriptionPlan::all();
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
         $data['place_of_arrival'] = Helper::getPlaceOfArrival($member?->ancestor?->place_of_arrival);
