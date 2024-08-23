@@ -401,6 +401,17 @@ class SubscribeMemberController extends Controller
 
         $member = Member::findOrFail($id);
 
+        // Check if the pedigree array is empty, and if so, delete all existing pedigrees
+        if (empty($request->pedigree)) {
+            MemberPedigree::where('member_id', $member->id)->delete();
+
+            return response()->json([
+                "status" => true,
+                "message" => "All pedigrees deleted successfully",
+                "redirectTo" => Auth::user()->name == 'Admin' ? route("members.view-pedigree", ['id' => $member->id]) : route("profile")
+            ]);
+        }
+
         $existingPedigreeIds = MemberPedigree::where('member_id', $member->id)->pluck('id')->toArray();
 
         $updatedPedigreeIds = [];
@@ -422,19 +433,12 @@ class SubscribeMemberController extends Controller
         MemberPedigree::where('member_id', $member->id)
             ->whereNotIn('id', $updatedPedigreeIds)
             ->delete();
-        if (Auth::user()->name == 'Admin') {
-            return response()->json([
-                "status" => true,
-                "message" => "Pedigree updated successfully",
-                "redirectTo" => route("members.view-pedigree", ['id' => $member->id])
-            ]);
-        } else {
-            return response()->json([
-                "status" => true,
-                "message" => "Pedigree updated successfully",
-                "redirectTo" => route("profile")
-            ]);
-        }
+
+        return response()->json([
+            "status" => true,
+            "message" => "Pedigree updated successfully",
+            "redirectTo" => Auth::user()->name == 'Admin' ? route("members.view-pedigree", ['id' => $member->id]) : route("profile")
+        ]);
     }
 
     public function addPedigree($id)
