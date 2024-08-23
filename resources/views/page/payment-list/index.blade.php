@@ -130,8 +130,6 @@
          }
          var paymentsData = @json($payments->data);
 
-         console.log(paymentsData); // Check the browser console for this output
-
          var table = new Tabulator("#payment_list", {
              data: paymentsData,
              layout: "fitColumns",
@@ -198,9 +196,11 @@
                      title: "Transaction Date",
                      field: "created",
                      hozAlign: "center",
-                     sorter: "date",
+                     sorter: "number", 
+                     headerSortStartingDir: "desc", 
                      formatter: function(cell, formatterParams, onRendered) {
-                         var date = new Date(cell.getValue() * 1000);
+                         var date = new Date(cell.getValue() *
+                         1000); 
 
                          var year = date.getFullYear();
                          var month = String(date.getMonth() + 1).padStart(2, '0');
