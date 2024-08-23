@@ -527,31 +527,42 @@ class SubscribeMemberController extends Controller
 
     public function updateAncestors(Request $request, $memberId)
     {
+        try {
+            // Validate the request
+            $request->validate([
+                'given_name' => 'array',
+                'given_name.*' => 'exists:ancestor_data,id',
+            ]);
 
-        $request->validate([
-            'given_name' => 'required|array',
-            'given_name.*' => 'required|exists:ancestor_data,id',
-        ]);
+            $member = Member::findOrFail($memberId);
 
-        $member = Member::findOrFail($memberId);
+            // Detach all existing ancestors
+            $member->ancestors()->detach();
 
-        // First, detach all existing ancestors
-        $member->ancestors()->detach();
-
-        // Attach the new set of ancestors
-        foreach ($request->given_name as $ancestorId) {
-            if ($ancestorId) {
-                $member->ancestors()->attach($ancestorId);
+            // Attach the new set of ancestors if provided
+            if (!empty($request->given_name)) {
+                foreach ($request->given_name as $ancestorId) {
+                    if ($ancestorId) {
+                        $member->ancestors()->attach($ancestorId);
+                    }
+                }
             }
-        }
 
-        // Return a response indicating success
-        return response()->json([
-            "status" => true,
-            "message" => "Ancestors updated successfully",
-            "redirectTo" => route("members.view-ancestor", ['id' => $member->id])
-        ]);
+            // Return a response indicating success
+            return response()->json([
+                "status" => true,
+                "message" => "Ancestors updated successfully",
+                "redirectTo" => route("members.view-ancestor", ['id' => $member->id])
+            ]);
+        } catch (\Exception $e) {
+            // Handle exceptions and return an error response
+            return response()->json([
+                "status" => false,
+                "message" => "An error occurred: " . $e->getMessage()
+            ], 500);
+        }
     }
+
 
     public function getModeOfTravelDate($id)
     {
