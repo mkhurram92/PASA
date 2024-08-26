@@ -292,8 +292,34 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-8 form-label">Date Membership
-                                                Commenced (Membership Approval Date) </label>
+                                            <label class="col-md-4 form-label">Approval Date</label>
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        @php
+                                                            $year = $member?->additionalInfo?->year_membership_approved ?? '';
+                                                            $month = $member?->additionalInfo?->month_membership_approved ?? '';
+                                                            $day = $member?->additionalInfo?->date_membership_approved ?? '';
+
+                                                            $date = $year;
+
+                                                            if ($month) {
+                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                            }
+
+                                                            if ($day) {
+                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                                        @endphp
+
+                                                        <input class="form-control" value="{{ $date }}"
+                                                            readonly disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="mb-3 row">
+                                            <label class="col-md-8 form-label">Approval Date</label>
                                             <div class="col-md-4">
                                                 <input class="form-control fc-datepicker" type="text"
                                                     value="{{ $member?->approved_at }}"
@@ -308,6 +334,33 @@
                                                 <input class="form-control fc-datepicker" type="text"
                                                     value="{{ $member?->additionalInfo?->date_membership_end }}"
                                                     name="date_membership_end" readonly disabled>
+                                            </div>
+                                        </div>-->
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">Date Membership Ended</label>
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        @php
+                                                            $year = $member?->additionalInfo?->year_membership_end ?? '';
+                                                            $month = $member?->additionalInfo?->month_membership_end ?? '';
+                                                            $day = $member?->additionalInfo?->date_membership_end ?? '';
+
+                                                            $date = $year;
+
+                                                            if ($month) {
+                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                            }
+
+                                                            if ($day) {
+                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                                        @endphp
+
+                                                        <input class="form-control" value="{{ $date }}"
+                                                            readonly disabled>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
