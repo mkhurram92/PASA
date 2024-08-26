@@ -143,8 +143,6 @@ class TransactionController extends Controller
 
     public function update(Request $request, Transaction $transaction)
     {
-        // Validate the request
-
         $transaction->update($request->all());
 
         return redirect()->route('transaction.index')->with('success', 'Transaction updated successfully!');

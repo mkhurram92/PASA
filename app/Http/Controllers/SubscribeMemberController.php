@@ -623,28 +623,22 @@ class SubscribeMemberController extends Controller
     public function updateRenewalDate(Request $request)
     {
         try {
-
             $member = AdditionalMemberInfos::where('member_id', $request->memberId)->first();
 
             if (!$member) {
                 return response()->json(['success' => false, 'message' => 'Member not found.']);
             }
 
-            $currentDate = date('Y-m-d');
+            // Get today's date
+            $today = new \DateTime();
 
-            if (empty($currentDate)) {
-                $currentDate = (new \DateTime())->format('Y-m-d');
-            }
+            // Add one year to today's date
+            $currentRenewalDate = (clone $today)->modify('+1 year');
 
-            if ($member->date_membership_end) {
-                $currentRenewalDate = new \DateTime($member->date_membership_end);
-                $currentRenewalDate->modify('+1 year');
-            } else {
-                $currentRenewalDate = new \DateTime($currentDate);
-                $currentRenewalDate->modify('+1 year');
-            }
-
-            $member->date_membership_end = $currentRenewalDate->format('Y-m-d');
+            // Update the member's renewal date fields
+            $member->date_membership_end = $currentRenewalDate->format('d'); // Day
+            $member->month_membership_end = $currentRenewalDate->format('m'); // Month
+            $member->year_membership_end = $currentRenewalDate->format('Y'); // Year
             $member->save();
 
             return response()->json(['success' => true]);
