@@ -107,6 +107,13 @@ class SubscribeMemberController extends Controller
                 'area_code' => $request->area_code,
             ]);
 
+            $currentDate = Carbon::now();
+
+            // Format date, month, and year
+            $dateMembershipEnd = $currentDate->format('d'); // Two digits for the day
+            $monthMembershipEnd = $currentDate->format('m'); // Two digits for the month
+            $yearMembershipEnd = $currentDate->format('Y'); // Four digits for the year
+
             AdditionalMemberInfos::updateOrCreate(['member_id' => $member->id], [
                 'member_id' => $member->id,
                 'membership_number' => $request->membership_number,
@@ -119,7 +126,10 @@ class SubscribeMemberController extends Controller
                 'signed_agreement' => (int)$request->signed_agreement,
                 'key_holder' => (int)$request->key_holder,
                 'key_held' => $request->key_held,
-                'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
+                'date_membership_end' => $dateMembershipEnd,
+                'month_membership_end' => $monthMembershipEnd,
+                'year_membership_end' => $yearMembershipEnd,
+                //'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
 
                 //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
             ]);
@@ -172,15 +182,33 @@ class SubscribeMemberController extends Controller
         $data['membership_types'] = SubscriptionPlan::all();
         $data['membership_status'] = MembershipStatus::all();
 
-        $membershipEndDate = $member?->additionalInfo?->date_membership_end ? Carbon::parse($member->additionalInfo->date_membership_end) : null;
+        // Retrieve and combine date, month, and year into a Carbon instance
+        $membershipEndDate = $member?->additionalInfo?->date_membership_end;
+        $membershipEndMonth = $member?->additionalInfo?->month_membership_end;
+        $membershipEndYear = $member?->additionalInfo?->year_membership_end;
+
+        $membershipEndDateTime = null;
+
+        if ($membershipEndYear) {
+            // Ensure date and month are two digits
+            $day = str_pad($membershipEndDate ?? '01', 2, '0', STR_PAD_LEFT);
+            $month = str_pad($membershipEndMonth ?? '01', 2, '0', STR_PAD_LEFT);
+
+            // Combine year, month, and date into a single date string
+            $dateString = "{$membershipEndYear}-{$month}-{$day}";
+
+            // Parse the date string into a Carbon instance
+            $membershipEndDateTime = Carbon::parse($dateString);
+        }
+
         $currentDate = Carbon::now();
         $oneMonthLater = $currentDate->copy()->addDays(30);
 
         $showRenewButton = false;
 
-        if ($membershipEndDate) {
+        if ($membershipEndDateTime) {
             // Checking if the membership end date is between today and one month later, or if it's in the past
-            if ($membershipEndDate->between($currentDate, $oneMonthLater) || $membershipEndDate->isPast()) {
+            if ($membershipEndDateTime->between($currentDate, $oneMonthLater) || $membershipEndDateTime->isPast()) {
                 $showRenewButton = true;
             }
         }
@@ -290,8 +318,14 @@ class SubscribeMemberController extends Controller
             'signed_agreement' => (int)$request->signed_agreement,
             'key_holder' => (int)$request->key_holder,
             'key_held' => $request->key_held,
-            'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
-            'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
+            //'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
+            'date_membership_end' => !empty($request->date_membership_end) ? $request->date_membership_end : null,
+            'month_membership_end' => !empty($request->month_membership_end) ? $request->month_membership_end : null,
+            'year_membership_end' => !empty($request->year_membership_end) ? $request->year_membership_end : null,
+            //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
+            'date_membership_approved' => !empty($request->date_membership_approved) ? $request->date_membership_approved : null,
+            'month_membership_approved' => !empty($request->month_membership_approved) ? $request->month_membership_approved : null,
+            'year_membership_approved' => !empty($request->year_membership_approved) ? $request->year_membership_approved : null,
         ]);
 
         $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
@@ -334,17 +368,34 @@ class SubscribeMemberController extends Controller
         try {
             DB::beginTransaction();
 
+            // Get the current date and time
+            $currentDate = Carbon::now();
+            $nextYearDate = $currentDate->copy()->addYear();
+
+            // Format date, month, and year for the current date and next year date
+            $dateMembershipApproved = $currentDate->format('d'); // Two digits for the day
+            $monthMembershipApproved = $currentDate->format('m'); // Two digits for the month
+            $yearMembershipApproved = $currentDate->format('Y'); // Four digits for the year
+
+            $dateMembershipEnd = $nextYearDate->format('d'); // Two digits for the day of next year
+            $monthMembershipEnd = $nextYearDate->format('m'); // Two digits for the month of next year
+            $yearMembershipEnd = $nextYearDate->format('Y'); // Four digits for the year of next year
+
             AdditionalMemberInfos::updateOrCreate(
                 ['member_id' => $member->id],
                 [
-                    'date_membership_approved' => now(),
-                    'date_membership_end' => now()->addYear(),
+                    'date_membership_approved' => $dateMembershipApproved,
+                    'month_membership_approved' => $monthMembershipApproved,
+                    'year_membership_approved' => $yearMembershipApproved,
+                    'date_membership_end' => $dateMembershipEnd,
+                    'month_membership_end' => $monthMembershipEnd,
+                    'year_membership_end' => $yearMembershipEnd,
                 ]
             );
 
             $usr = ModelsUser::create([
                 "email" => $member->contact->email,
-                "password" => $member->password, // Hash the password
+                "password" => $member->password,
                 "name" => $member->given_name . " " . $member->family_name,
                 "role_id" => 2
             ]);

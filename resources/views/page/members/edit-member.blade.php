@@ -223,8 +223,7 @@
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
                                                     placeholder="City / Town / Suburb"
-                                                    value="{{ $member?->address?->suburb }}"
-                                                    name="city_id">
+                                                    value="{{ $member?->address?->suburb }}" name="city_id">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -349,23 +348,49 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-8 form-label">Date Membership
-                                                Commenced (Membership Approval Date) </label>
-                                            <div class="col-md-4">
-                                                <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->additionalInfo?->date_membership_approved }}"
-                                                    name="date_membership_approved">
-                                            </div>
-                                        </div>
 
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Date Membership Ended
-                                            </label>
+                                            <label class="col-md-4 form-label">Approval Date </label>
                                             <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->additionalInfo?->date_membership_end }}"
-                                                    name="date_membership_end">
+                                                <div class="row">
+                                                    <div class="col-4 pr-1">
+                                                        <input class="form-control"
+                                                            value="{{ $member?->additionalInfo?->year_membership_approved }}"
+                                                            type="text" name="year_membership_approved">
+                                                    </div>
+                                                    <div class="col-4 px-1">
+                                                        <select class="form-control month-select"
+                                                            id="month_membership_approved"
+                                                            name="month_membership_approved"></select>
+                                                    </div>
+                                                    <div class="col-4 px-1">
+                                                        <select class="form-control day-select"
+                                                            id="date_membership_approved"
+                                                            name="date_membership_approved"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">Date Membership Ended </label>
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    <div class="col-4 pr-1">
+                                                        <input class="form-control"
+                                                            value="{{ $member?->additionalInfo?->year_membership_end }}"
+                                                            type="text" name="year_membership_end">
+                                                    </div>
+                                                    <div class="col-4 px-1">
+                                                        <select class="form-control month-select"
+                                                            id="month_membership_end"
+                                                            name="month_membership_end"></select>
+                                                    </div>
+                                                    <div class="col-4 px-1">
+                                                        <select class="form-control day-select"
+                                                            id="date_membership_end"
+                                                            name="date_membership_end"></select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -497,10 +522,22 @@
         const existingMonthOfBirth = "{{ $member->month_of_birth }}";
         const existingDayOfBirth = "{{ $member->date_of_birth }}";
 
-        initMonthSelect2(null, existingMonthOfBirth);
-        initDaySelect2(null, existingDayOfBirth);
+        const existingMonthOfMembershipApproval = "{{ $member?->additionalInfo?->month_membership_approved }}";
+        const existingDayofMembershipApproval = "{{ $member?->additionalInfo?->date_membership_approved }}";
+
+        const existingMonthOfMembershipEnd = "{{ $member?->additionalInfo?->month_membership_end }}";
+        const existingDayofMembershipEnd = "{{ $member?->additionalInfo?->date_membership_end }}";
 
         $(document).ready(function() {
+            
+            initMonthSelect2($('#month_of_birth'), existingMonthOfBirth);
+            initDaySelect2($('#date_of_birth'), existingDayOfBirth);
+
+            initMonthSelect2($('#month_membership_approved'), existingMonthOfMembershipApproval);
+            initDaySelect2($('#date_membership_approved'), existingDayofMembershipApproval);
+
+            initMonthSelect2($('#month_membership_end'), existingMonthOfMembershipEnd);
+            initDaySelect2($('#date_membership_end'), existingDayofMembershipEnd);
 
             $("#title_detail").hide();
 
@@ -535,16 +572,6 @@
             if (typeof initPortsSelect !== "undefined") {
                 initPortsSelect();
             }
-
-            // Datepicker
-            $('.fc-datepicker').datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                dateFormat: 'yy-mm-dd',
-                changeYear: true,
-                changeMonth: true //, // Customize the date format as needed
-                //yearRange: 'c-250:c+nn'
-            });
 
             $(document).on("change", "#daterange-btn", function() {
                 initDataTable()

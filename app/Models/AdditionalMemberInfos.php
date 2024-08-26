@@ -22,6 +22,10 @@ class AdditionalMemberInfos extends Model
         "key_holder",
         "key_held",
         "date_membership_end",
-        "date_membership_approved"
+        "month_membership_end",
+        "year_membership_end",
+        "date_membership_approved",
+        "month_membership_approved",
+        "year_membership_approved"
     ];
 }

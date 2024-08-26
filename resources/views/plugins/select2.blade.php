@@ -117,7 +117,7 @@
                     }
                 ]
             }).val(selectedValue).trigger('change');
-            console.log('Month Select2 initialized for element:', this, 'with value:', selectedValue);
+            //console.log('Month Select2 initialized for element:', this, 'with value:', selectedValue);
         });
     }
 
@@ -150,7 +150,7 @@
                 dropdownParent: $(this).parent(),
                 data: days
             }).val(selectedValue).trigger('change');
-            console.log('Day Select2 initialized for element:', this, 'with value:', selectedValue);
+            //console.log('Day Select2 initialized for element:', this, 'with value:', selectedValue);
         });
     }
 
