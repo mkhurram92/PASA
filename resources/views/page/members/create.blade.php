@@ -313,53 +313,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Volunteer</label>
-                                            <div class="col-md-8">
-                                                <input id="volunteer" type="checkbox" class="checkbox-input"
-                                                    name="volunteer" value='1'>
-                                            </div>
-                                        </div>
-                                        <div class="volunteer_details" style="display: none;">
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Experience</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" placeholder="Experience" name="experience" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Health Issues</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" placeholder="Health Issues" name="health_issues" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Contact Received</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" placeholder="Contact Received" name="contact" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Skills</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" placeholder="Skills" name="skills" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Availability</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" placeholder="Availability" name="availability" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Volunteer Skills and
-                                                    Working Preferences</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="volunteer_skills_working" rows="3"
-                                                        placeholder="Volunteer Skills and Working Preferences"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
@@ -407,6 +360,25 @@
                                             <label class="col-md-4 form-label">Key Held</label>
                                             <div class="col-md-8">
                                                 <textarea class="form-control" name="key_held" rows="3" placeholder="Key Held"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">Volunteer</label>
+                                            <div class="col-md-8">
+                                                <input id="volunteer" type="checkbox" class="checkbox-input"
+                                                    name="volunteer" value='1'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="volunteer_details" style="display: none;">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Volunteer Experience</label>
+                                                <div class="col-md-12">
+                                                    <textarea class="form-control" placeholder="Experience" name="experience" rows="10"></textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

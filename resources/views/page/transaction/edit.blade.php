@@ -275,7 +275,8 @@
                                 title: 'Success!',
                                 text: data.message || 'Transaction updated successfully!',
                                 icon: 'success',
-                                confirmButtonText: 'OK'
+                                confirmButtonText: 'OK',
+                                timer:'10000',
                             }).then(() => {
                                 window.location.href = "{{ route('transaction.index') }}";
                             });

@@ -339,9 +339,15 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         @php
-                                                            $year = $member?->additionalInfo?->year_membership_approved ?? '';
-                                                            $month = $member?->additionalInfo?->month_membership_approved ?? '';
-                                                            $day = $member?->additionalInfo?->date_membership_approved ?? '';
+                                                            $year =
+                                                                $member?->additionalInfo?->year_membership_approved ??
+                                                                '';
+                                                            $month =
+                                                                $member?->additionalInfo?->month_membership_approved ??
+                                                                '';
+                                                            $day =
+                                                                $member?->additionalInfo?->date_membership_approved ??
+                                                                '';
 
                                                             $date = $year;
 
@@ -366,8 +372,10 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         @php
-                                                            $year = $member?->additionalInfo?->year_membership_end ?? '';
-                                                            $month = $member?->additionalInfo?->month_membership_end ?? '';
+                                                            $year =
+                                                                $member?->additionalInfo?->year_membership_end ?? '';
+                                                            $month =
+                                                                $member?->additionalInfo?->month_membership_end ?? '';
                                                             $day = $member?->additionalInfo?->date_membership_end ?? '';
 
                                                             $date = $year;
@@ -394,57 +402,6 @@
                                                 <textarea class="form-control" name="end_status_notes" rows="3" readonly disabled>{{ $member?->additionalInfo?->end_status_notes }}</textarea>
                                             </div>
                                         </div>
-
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Volunteer</label>
-                                            <div class="col-md-8">
-                                                <span id="volunteerStatus" class="custom-font"></span>
-                                            </div>
-                                        </div>
-
-                                        @if ($member?->additionalInfo?->volunteer == 1)
-                                            <div class="volunteer_details">
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Experience</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="experience" readonly disabled>{{ $member?->volunteerDetails?->experience }} </textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Health
-                                                        Issues</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="health_issues" readonly disabled>{{ $member?->volunteerDetails?->health_issues }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Contact
-                                                        received</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="contact" readonly disabled>{{ $member?->volunteerDetails?->contact }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Skills</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="skills" readonly disabled>{{ $member?->volunteerDetails?->skills }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Availability</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" name="availability" readonly disabled>{{ $member?->volunteerDetails?->availability }}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Volunteer Skills and
-                                                        Working Preferences</label>
-                                                    <div class="col-md-8">
-                                                        <textarea class="form-control" readonly disabled name="volunteer_skills_working" rows="3">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
                                     </div>
 
                                     <div class="col-lg-6">
@@ -484,6 +441,29 @@
                                             </div>
                                         @endif
                                     </div>
+                                    <div class="col-md-8">
+
+
+
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">Volunteer</label>
+                                            <div class="col-md-8">
+                                                <span id="volunteerStatus" class="custom-font"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        @if ($member?->additionalInfo?->volunteer == 1)
+                                            <div class="volunteer_details">
+                                                <div class="mb-3 row">
+                                                    <label class="col-md-4 form-label">Volunteer Experience</label>
+                                                    <div class="col-md-12">
+                                                        <textarea class="form-control" name="experience" rows="10" readonly disabled>{{ $member?->volunteerDetails?->experience }} </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -493,7 +473,6 @@
         </div>
     </div>
 </div>
-
 <!-- MODAL EFFECTS -->
 <div id="crud"></div>
 @include('models.payment-renewal')
@@ -696,7 +675,7 @@
                                 confirmButtonText: 'OK'
                             }).then(() => {
                                 location
-                            .reload(); // Refresh the page after the user clicks "OK"
+                                    .reload(); // Refresh the page after the user clicks "OK"
                             });
                         } else {
                             Swal.fire({
@@ -848,6 +827,7 @@
             // Redirect to the new URL
             window.location.href = newUrl;
         });
+        
     </script>
 @endsection
 <!-- app-content end-->

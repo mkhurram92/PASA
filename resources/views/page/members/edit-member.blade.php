@@ -400,55 +400,6 @@
                                                 <textarea class="form-control" name="end_status_notes" rows="3" placeholder="End Status Notes">{{ $member?->additionalInfo?->end_status_notes }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Volunteer</label>
-                                            <div class="col-md-8">
-                                                <input id="volunteer" type="checkbox" class="checkbox-input"
-                                                    name="volunteer" value='1'
-                                                    @if ($member?->additionalInfo?->volunteer == 1) checked @endif>
-                                            </div>
-                                        </div>
-                                        <div class="volunteer_details" style="display: none;">
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Experience</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="experience" rows="3">{{ $member?->volunteerDetails?->experience }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Health
-                                                    Issues</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="health_issues" rows="3">{{ $member?->volunteerDetails?->health_issues }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Contact
-                                                    received</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="contact" rows="3">{{ $member?->volunteerDetails?->contact }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Skills</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="skills" rows="3">{{ $member?->volunteerDetails?->skills }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Availability</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="availability" rows="3">{{ $member?->volunteerDetails?->availability }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Volunteer Skills and
-                                                    Working Preferences</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="volunteer_skills_working" rows="3">{{ $member?->additionalInfo?->volunteer_skills_working }}</textarea>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3 row">
@@ -505,6 +456,26 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-3 row">
+                                            <label class="col-md-4 form-label">Volunteer</label>
+                                            <div class="col-md-8">
+                                                <input id="volunteer" type="checkbox" class="checkbox-input"
+                                                    name="volunteer" value='1'
+                                                    @if ($member?->additionalInfo?->volunteer == 1) checked @endif>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="volunteer_details" style="display: none;">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Volunteer Experience</label>
+                                                <div class="col-md-12">
+                                                    <textarea class="form-control" name="experience" rows="10">{{ $member?->volunteerDetails?->experience }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -529,7 +500,7 @@
         const existingDayofMembershipEnd = "{{ $member?->additionalInfo?->date_membership_end }}";
 
         $(document).ready(function() {
-            
+
             initMonthSelect2($('#month_of_birth'), existingMonthOfBirth);
             initDaySelect2($('#date_of_birth'), existingDayOfBirth);
 
