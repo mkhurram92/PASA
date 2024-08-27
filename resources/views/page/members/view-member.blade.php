@@ -442,10 +442,7 @@
                                         @endif
                                     </div>
                                     <div class="col-md-8">
-
-
-
-                                        <div class="mb-3 row">
+                                       <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Volunteer</label>
                                             <div class="col-md-8">
                                                 <span id="volunteerStatus" class="custom-font"></span>
