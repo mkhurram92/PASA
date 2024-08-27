@@ -70,9 +70,9 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Transaction Details</h3>
                             <div>
-                                <!--<a class="btn btn-success mr-2">
+                                <a class="btn btn-success mr-2" href="{{ route('transaction.edit', $transaction->id) }}">
                                     <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
-                                </a>-->
+                                </a>
                                 <a class="btn btn-info" href="{{ route('transaction.index') }}">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>

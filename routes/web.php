@@ -173,7 +173,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('cities-select2', [CityController::class, 'getCitiesJson'])->name('cities.select2');
     Route::post('states-select2', [StatesController::class, 'getStatesJson'])->name('states.select2');
 
-    // utilities
+    // Utilities
     Route::post('get-ship-first-date', [ModeOfArrivalsController::class, "getShipFirstDate"])->name("get-ship-first-date");
 
     //Finance Module

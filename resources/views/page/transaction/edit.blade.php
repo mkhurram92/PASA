@@ -1,3 +1,5 @@
+<!-- resources/views/page/gl_codes/edit.blade.php -->
+
 @include('layout.header')
 @include('layout.sidebar')
 
@@ -13,7 +15,6 @@
 
             .ui-datepicker-calendar a {
                 font-size: 22px !important;
-
                 /* Adjust the padding as needed */
             }
 
@@ -67,13 +68,15 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
-                        <form class="form-horizontal" id="transaction_update_form" action="{{ route('transaction.update', $transaction->id) }}" method="POST">
+                        <form class="form-horizontal" id="transaction_update_form"
+                            action="{{ route('transaction.update', $transaction->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="card-header justify-content-between">
-                                <h3 class="card-title">Update Transaction</h3>
+                                <h3 class="card-title">Edit Transaction</h3>
                                 <div class="text-right">
                                     <button type="button" class="btn btn-primary btn-block" id="submitBtn">
-                                        Save Transaction
+                                        Update Transaction
                                     </button>
                                 </div>
                             </div>
@@ -82,49 +85,87 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Transaction Type<span class="text-danger"></span></label>
+                                                <label class="col-md-4 form-label">Transaction Type</label>
                                                 <div class="col-md-8">
+                                                    @foreach ($transactionType as $transaction_type)
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="transaction_type_id"
+                                                                id="transaction_type_{{ $transaction_type->id }}"
+                                                                value="{{ $transaction_type->id }}"
+                                                                {{ (string) $transaction->transaction_type_id === (string) $transaction_type->id ? 'checked' : '' }}>
+                                                            <label class="form-check-label"
+                                                                for="transaction_type_{{ $transaction_type->id }}">
+                                                                {{ $transaction_type->name }}
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
-                                            <!-- Your existing Blade code for Parent G/L dropdown -->
+                                            <!-- Parent G/L Dropdown -->
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Parent G/L<span class="text-danger"></span></label>
+                                                <label class="col-md-4 form-label">Parent G/L</label>
                                                 <div class="col-md-8 custom-select-wrapper">
-                                                    <select name="parent_id" id="parent_id" class="custom-select" onchange="updateSubGlCodes()">
+                                                    <select name="parent_id" id="parent_id" class="custom-select"
+                                                        onchange="updateSubGlCodes()">
+                                                        <option value="">Select a Parent G/L</option>
+                                                        @foreach ($parentGlCodes as $parentGlCode)
+                                                            <option value="{{ $parentGlCode->id }}"
+                                                                {{ isset($transaction->glCode->parent_id) && (int) $transaction->glCode->parent_id === (int) $parentGlCode->id ? 'selected' : '' }}>
+                                                                {{ $parentGlCode->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
 
-                                            <!-- Sub G/L dropdown -->
+                                            <!-- Sub G/L Dropdown -->
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Sub G/L<span class="text-danger"></span></label>
+                                                <label class="col-md-4 form-label">Sub G/L</label>
                                                 <div class="col-md-8 custom-select-wrapper">
-                                                    <select name="subGlCodes" id="subGlCodes" class="custom-select">
-                                                        <option value=""></option>
-                                                        <!-- Options will be dynamically populated using JavaScript -->
+                                                    <select name="gl_code_id" id="subGlCodes" class="custom-select"
+                                                        onchange="updateParentGl()">
+                                                        <option value="">Select a Sub G/L</option>
+                                                        @foreach ($subGlCodes as $subGlCode)
+                                                            <option value="{{ $subGlCode->id }}"
+                                                                {{ (int) $transaction->gl_code_id === (int) $subGlCode->id ? 'selected' : '' }}>
+                                                                {{ $subGlCode->name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
+                                            <!-- Transaction Account Dropdown -->
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Transaction Account<span class="text-danger"></span></label>
-
+                                                <label class="col-md-4 form-label">Transaction Account</label>
                                                 <div class="col-md-8 custom-select-wrapper">
-                                                    <select name="account_type" id="account_type" class="custom-select">
+                                                    <select name="account_id" id="account_id" class="custom-select">
+                                                        <option value="">Select a Transaction Account</option>
+                                                        @foreach ($accounts as $account)
+                                                            <option value="{{ $account->id }}"
+                                                                {{ (int) $transaction->account_id === (int) $account->id ? 'selected' : '' }}>
+                                                                {{ $account->name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Amount<span class="text-danger"></span></label>
+                                                <label class="col-md-4 form-label">Amount<span
+                                                        class="text-danger"></span></label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" placeholder="Amount" value="" id="amount" name="amount">
+                                                    <input class="form-control" type="text" placeholder="Amount"
+                                                        value="{{ $transaction->amount }}" id="amount"
+                                                        name="amount">
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label" for="description">Description<span class="text-danger"></span></label>
-
+                                                <label class="col-md-4 form-label" for="description">Description<span
+                                                        class="text-danger"></span></label>
                                                 <div class="col-md-8">
-                                                    <textarea name="description" id="description" class="form-control"></textarea>
+                                                    <textarea name="description" id="description" class="form-control">{{ $transaction->description }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,108 +179,131 @@
         </div>
     </div>
 </div>
-@section('scripts')
-<link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
-<script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
-<script>
-    document.getElementById('submitBtn').addEventListener('click', function(event) {
-        event.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('transaction.store') }}',
-            data: $('#transaction_save_form').serialize(),
-            dataType: 'json',
-            success: function(response) {
-                if (response.status) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: response.message,
-                        icon: 'success',
-                        showCancelButton: false,
-                        confirmButtonText: 'OK',
-                        timer: 10000,
-                        timerProgressBar: true,
-                    }).then((result) => {
-                        if (response.redirectTo) {
-                            window.location.href = response.redirectTo;
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Convert PHP data to JavaScript
+        var subGlCodes = @json($subGlCodes);
+
+        function updateSubGlCodes() {
+            var parentId = document.getElementById('parent_id').value;
+            var subGlSelect = document.getElementById('subGlCodes');
+
+            console.log("Selected Parent ID:", parentId); // Debug output
+            console.log("Sub G/L Codes:", subGlCodes); // Debug output
+
+            // Clear existing options
+            subGlSelect.innerHTML = '<option value="">Select a Sub G/L</option>';
+
+            // Filter sub G/L codes based on selected parent
+            if (parentId) { // Check if parentId is not empty
+                var filteredSubGlCodes = subGlCodes.filter(function(glCode) {
+                    return glCode.parent_id == parentId;
+                });
+
+                console.log("Filtered Sub G/L Codes:", filteredSubGlCodes); // Debug output
+
+                // Populate sub G/L dropdown
+                filteredSubGlCodes.forEach(function(glCode) {
+                    var option = document.createElement('option');
+                    option.value = glCode.id;
+                    option.text = glCode.name;
+                    subGlSelect.appendChild(option);
+                });
+
+                // Set the selected sub G/L code if applicable
+                @if (isset($transaction->gl_code_id))
+                    var selectedSubGlId = {{ $transaction->gl_code_id }};
+                    subGlSelect.value = selectedSubGlId;
+                @endif
+            } else {
+                console.log("No Parent G/L selected.");
+            }
+        }
+
+        function updateParentGl() {
+            var subGlSelect = document.getElementById('subGlCodes');
+            var selectedSubGlId = subGlSelect.value;
+            var selectedSubGl = subGlCodes.find(glCode => glCode.id == selectedSubGlId);
+
+            if (selectedSubGl && selectedSubGl.parent_id) {
+                document.getElementById('parent_id').value = selectedSubGl.parent_id;
+            } else {
+                document.getElementById('parent_id').value = '';
+            }
+        }
+
+        // Initialize sub G/L options on page load if editing an existing transaction
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSubGlCodes();
+            updateParentGl();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('submitBtn').addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Serialize the form data
+                var formData = new FormData(document.getElementById('transaction_update_form'));
+
+                // Send the form data via AJAX
+                fetch(document.getElementById('transaction_update_form').action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content')
                         }
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: response.message,
-                        icon: 'error',
-                        showCancelButton: false,
-                        confirmButtonText: 'OK',
-                    }).then(() => {
-                        let exceptionMessage = "";
-                        if (response.exception) {
-                            exceptionMessage = response.exception;
-                        }
-                        if (exceptionMessage) {
-                            Swal.fire({
-                                title: 'Exception Details',
-                                html: `<p>${exceptionMessage}</p>`,
-                                icon: 'error',
-                                showCancelButton: false,
-                                confirmButtonText: 'OK',
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            // If response is not OK, treat it as an error
+                            return response.json().then(data => {
+                                throw new Error(data.message ||
+                                    'An error occurred while updating the transaction.');
                             });
                         }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Success alert
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.message || 'Transaction updated successfully!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = "{{ route('transaction.index') }}";
+                            });
+                        } else {
+                            // Error alert with message from response
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.message ||
+                                    'An error occurred while updating the transaction.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        // Handle any errors
+                        Swal.fire({
+                            title: 'Error!',
+                            text: error.message ||
+                                'An unexpected error occurred while updating the transaction.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                        console.error('Error:', error);
                     });
-                }
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                let errorMessage = "An error occurred while processing your request.";
-
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    errorMessage = xhr.responseJSON.message;
-                } else if (xhr.statusText) {
-                    errorMessage = xhr.statusText;
-                }
-                Swal.fire({
-                    title: 'Error!',
-                    text: errorMessage,
-                    icon: 'error',
-                    showCancelButton: false,
-                    confirmButtonText: 'OK',
-                });
-            }
+            });
         });
-    });
-
-    $(document).ready(function() {
-        $('#amount').on('input', function() {
-            // Allow digits and a single dot
-            $(this).val($(this).val().replace(/[^0-9.]/g, ''));
-
-            // Ensure there's only one dot
-            if ($(this).val().split('.').length > 2) {
-                var parts = $(this).val().split('.');
-                $(this).val(parts[0] + '.' + parts.slice(1).join(''));
-            }
-        });
-    });
-
-    function updateSubGlCodes() {
-        var parentId = document.getElementById('parent_id').value;
-        var subGlCodesDropdown = document.getElementById('subGlCodes');
-
-        // Clear existing options
-        subGlCodesDropdown.innerHTML = '<option value=""></option>';
-
-        // Populate options based on the selected Parent G/L
-        @foreach ($subGlCodes as $subGlCode)
-            if ({{ $subGlCode->glCodesParent->id }} == parentId) {
-                var option = document.createElement('option');
-                option.value = {{ $subGlCode->id }};
-                option.text = '{{ $subGlCode->name }}';
-                subGlCodesDropdown.add(option);
-            }
-        @endforeach
-    }
-
-</script>
+    </script>
 @endsection
 
 @include('layout.footer')

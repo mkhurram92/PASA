@@ -21,6 +21,7 @@ class Transaction extends Model
     {
         return $this->belongsTo(TransactionType::class, 'transaction_type_id');
     }
+    
     public static function createAndProcessTransaction($transactionType, $glCodeId, $accountId, $amount, $description)
     {
         // Create a new Transaction instance

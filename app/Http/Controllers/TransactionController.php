@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use App\Models\TransactionType;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -87,7 +88,7 @@ class TransactionController extends Controller
             ]);
 
             $transaction->save();
-            
+
             $account = Account::find($request->input('account_type'));
             if ($request->input('transaction_type') == 1) {
                 // Income (credit)
@@ -97,7 +98,7 @@ class TransactionController extends Controller
                 $account->balance -= $request->input('amount');
             }
             $account->save();
-    
+
             // Commit the database transaction
             DB::commit();
 
@@ -121,13 +122,16 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::with(
             [
-                'glCode', 'account', 'transactionType', 'glCode.glCodesParent'
+                'glCode',
+                'account',
+                'transactionType',
+                'glCode.glCodesParent'
             ]
         )->find($transaction_id);
 
         return view('page.transaction.view', compact('transaction'));
     }
-    
+
     public function edit(Transaction $transaction)
     {
         $transactionType = TransactionType::OrderBy('name')->get();
@@ -137,15 +141,40 @@ class TransactionController extends Controller
         $subGlCodes = GlCode::OrderBy('name')->get();
 
         $accounts = Account::OrderBy('name')->get();
-        
+
         return view('page.transaction.edit', compact('transaction', 'parentGlCodes', 'subGlCodes', 'transactionType', 'accounts'));
     }
 
     public function update(Request $request, Transaction $transaction)
     {
-        $transaction->update($request->all());
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'transaction_type_id' => 'required|integer|exists:transaction_types,id',
+            'gl_code_id' => 'required|integer|exists:gl_codes,id',
+            'account_id' => 'required|integer|exists:accounts,id',
+            'amount' => 'required|numeric|min:0',
+            'description' => 'nullable|string|max:255',
+        ]);
 
-        return redirect()->route('transaction.index')->with('success', 'Transaction updated successfully!');
+        try {
+            // Update the transaction with validated data
+            $transaction->update($validatedData);
+
+            // Return a JSON response for AJAX
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaction updated successfully!'
+            ]);
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            //Log::error('Error updating transaction: ' . $e->getMessage());
+
+            // Return a JSON response with an error
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating the transaction.'
+            ], 500);
+        }
     }
 
     public function destroy(Transaction $transaction)
