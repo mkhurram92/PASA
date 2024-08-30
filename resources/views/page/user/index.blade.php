@@ -157,140 +157,141 @@
  <div id="crud"></div>
  @include('plugins.select2')
 
-@section('scripts')
-    <script>
-        var myData = @json($data);
+ @section('scripts')
+     <script>
+         var myData = @json($data);
 
-        var table = new Tabulator("#users-table", {
-            data: myData,
-            layout: "fitColumns",
-            columns: [{
-                    title: 'ID',
-                    field: 'id',
-                    headerFilter: 'input',
-                    hozAlign: 'center',
-                    vertAlign: "middle",
-                    headerFilterPlaceholder: 'Search by ID'
-                },
-                {
-                    title: 'Name',
-                    field: 'name',
-                    headerFilter: 'input',
-                    hozAlign: 'center',
-                    vertAlign: "middle",
-                    headerFilterPlaceholder: 'Search by Name'
-                },
-                {
-                    title: 'Email',
-                    field: 'email',
-                    hozAlign: 'center',
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Search by Email'
-                },
-                {
-                    title: 'Role',
-                    field: 'role_name',
-                    hozAlign: 'center',
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Search by Email'
-                },
-                {
-                    title: "Action",
-                    field: "actions",
-                    hozAlign: "center",
-                    vertAlign: "middle",
-                    width: "8%",
-                    formatter: function(cell, formatterParams, onRendered) {
-                        var id = cell.getData().id;
+         var table = new Tabulator("#users-table", {
+             data: myData,
+             layout: "fitColumns",
+             columns: [
+                 {
+                     title: 'Given Name',
+                     field: 'given_name',
+                     headerFilter: 'input',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilterPlaceholder: 'Search by Given Name'
+                 },
+                 {
+                     title: 'Family Name',
+                     field: 'family_name',
+                     headerFilter: 'input',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilterPlaceholder: 'Search by Family Name'
+                 },
+                 {
+                     title: 'Email',
+                     field: 'email',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Email'
+                 },
+                 {
+                     title: 'Role',
+                     field: 'role_name',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Role'
+                 },
+                 {
+                     title: "Action",
+                     field: "actions",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     width: "8%",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var id = cell.getData().id;
 
-                        // Add buttons for each row
-                        return '<div class="button-container">' +
-                            '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
-                            '"></button>' +
-                            '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
-                            '</div>';
-                    }
-                }
-            ],
-            pagination: 'local',
-            paginationSize: 10,
-            placeholder: "No Data Available"
-        });
+                         // Add buttons for each row
+                         return '<div class="button-container">' +
+                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                             '"></button>' +
+                             '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
+                             '</div>';
+                     }
+                 }
+             ],
+             pagination: 'local',
+             paginationSize: 10,
+             placeholder: "No Data Available"
+         });
 
-        $('#create-record').click(function() {
-            $.get("{{ route('user.create') }}", form => {
-                $('#crud').html(form.html);
-                $('#crud').find(".modal").modal('show');
-            });
-        });
+         $('#create-record').click(function() {
+             $.get("{{ route('user.create') }}", form => {
+                 $('#crud').html(form.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         });
 
-        // Attach the event listener directly to the table element
-        document.getElementById('users-table').addEventListener("click", function(e) {
-            if (e.target.classList.contains("view-button")) {
-                var cityId = e.target.getAttribute("data-id");
-                openViewModal(cityId);
-            } else if (e.target.classList.contains("edit-button")) {
-                var cityId = e.target.getAttribute("data-id");
-                openUpdateModal(cityId);
-            }
-        });
+         // Attach the event listener directly to the table element
+         document.getElementById('users-table').addEventListener("click", function(e) {
+             if (e.target.classList.contains("view-button")) {
+                 var cityId = e.target.getAttribute("data-id");
+                 openViewModal(cityId);
+             } else if (e.target.classList.contains("edit-button")) {
+                 var cityId = e.target.getAttribute("data-id");
+                 openUpdateModal(cityId);
+             }
+         });
 
-        function openUpdateModal(cityId) {
-            $.get("{{ route('user.edit', ['user' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
-                $('#crud').html(response.html);
-                $('#crud').find(".modal").modal('show');
-            });
-        }
+         function openUpdateModal(cityId) {
+             $.get("{{ route('user.edit', ['user' => '__cityId__']) }}".replace('__cityId__', cityId), function(response) {
+                 $('#crud').html(response.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         }
 
-        // Function to open the view modal
-        function openViewModal(cityId) {
-            $.get("{{ route('user.show', ['user' => '__city__']) }}".replace('__city__', cityId), function(response) {
-                $('#crud').html(response.html);
-                $('#crud').find(".modal").modal('show');
-            });
-        }
+         // Function to open the view modal
+         function openViewModal(cityId) {
+             $.get("{{ route('user.show', ['user' => '__city__']) }}".replace('__city__', cityId), function(response) {
+                 $('#crud').html(response.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         }
 
-        function printData() {
-            //console.log("Print button clicked");
+         function printData() {
+             //console.log("Print button clicked");
 
-            table.print(false, true);
-        }
+             table.print(false, true);
+         }
 
-        // Add a reset button
-        var resetButton = document.getElementById("reset-button");
+         // Add a reset button
+         var resetButton = document.getElementById("reset-button");
 
-        resetButton.addEventListener("click", function() {
-            table.clearFilter();
-            table.clearHeaderFilter();
-        });
+         resetButton.addEventListener("click", function() {
+             table.clearFilter();
+             table.clearHeaderFilter();
+         });
 
-        $("#pageSizeDropdown").on("change", function() {
-            var selectedPageSize = parseInt($(this).val(), 10);
-            table.setPageSize(selectedPageSize);
-        });
+         $("#pageSizeDropdown").on("change", function() {
+             var selectedPageSize = parseInt($(this).val(), 10);
+             table.setPageSize(selectedPageSize);
+         });
 
-        //trigger download of data.csv file
-        document.getElementById("download-csv").addEventListener("click", function() {
-            table.download("csv", "User List.csv");
-        });
+         //trigger download of data.csv file
+         document.getElementById("download-csv").addEventListener("click", function() {
+             table.download("csv", "User List.csv");
+         });
 
-        //trigger download of data.xlsx file
-        document.getElementById("download-xlsx").addEventListener("click", function() {
-            table.download("xlsx", "User List.xlsx", {
-                sheetName: "PASA01",
-            });
-        });
+         //trigger download of data.xlsx file
+         document.getElementById("download-xlsx").addEventListener("click", function() {
+             table.download("xlsx", "User List.xlsx", {
+                 sheetName: "PASA01",
+             });
+         });
 
-        //trigger download of data.pdf file
-        document.getElementById("download-pdf").addEventListener("click", function() {
-            table.download("pdf", "User List.pdf", {
-                orientation: "landscape",
-                title: "User List",
-            });
-        });
-    </script>
-@endsection
+         //trigger download of data.pdf file
+         document.getElementById("download-pdf").addEventListener("click", function() {
+             table.download("pdf", "User List.pdf", {
+                 orientation: "landscape",
+                 title: "User List",
+             });
+         });
+     </script>
+ @endsection
 
-@include('layout.footer')
+ @include('layout.footer')

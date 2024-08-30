@@ -165,13 +165,14 @@
         var table = new Tabulator("#counties-table", {
             data: myData,
             layout: "fitColumns",
-            columns: [{
-                    title: 'ID',
-                    field: 'id',
-                    headerFilter: 'input',
-                    hozAlign: 'center',
-                    vertAlign: "middle"
-                },
+            columns: [
+                //{
+                //    title: 'ID',
+                ///    field: 'id',
+                //    headerFilter: 'input',
+                //    hozAlign: 'center',
+                //    vertAlign: "middle"
+                //},
                 {
                     title: 'County / State',
                     field: 'name',

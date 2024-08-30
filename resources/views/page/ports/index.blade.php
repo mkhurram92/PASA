@@ -165,14 +165,15 @@
      var table = new Tabulator("#ports-table", {
          data: myData,
          layout: "fitColumns",
-         columns: [{
-                 title: "ID",
-                 field: "id",
-                 headerFilter: "input",
-                 hozAlign: "center",
-                 vertAlign: "middle",
-                 headerFilterPlaceholder: 'Filter by ID'
-             },
+         columns: [
+            //{
+            //     title: "ID",
+            //     field: "id",
+            //     headerFilter: "input",
+            //     hozAlign: "center",
+            ///     vertAlign: "middle",
+            //     headerFilterPlaceholder: 'Filter by ID'
+            // },
              {
                  title: "Port Name",
                  field: "name",

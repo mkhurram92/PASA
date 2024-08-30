@@ -394,6 +394,7 @@ class SubscribeMemberController extends Controller
             );
 
             $usr = ModelsUser::create([
+                "member_id" => $member->id,
                 "email" => $member->contact->email,
                 "password" => $member->password,
                 "name" => $member->given_name . " " . $member->family_name,

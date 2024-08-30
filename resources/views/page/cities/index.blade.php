@@ -166,14 +166,15 @@
      var table = new Tabulator("#cities-table", {
          data: myData,
          layout: "fitColumns",
-         columns: [{
-                 title: 'ID',
-                 field: 'id',
-                 headerFilter: 'input',
-                 hozAlign: 'center',
-                 vertAlign: "middle",
-                 headerFilterPlaceholder: 'Search by ID'
-             },
+         columns: [
+            //{
+            //     title: 'ID',
+            //     field: 'id',
+            //     headerFilter: 'input',
+            //     hozAlign: 'center',
+            //     vertAlign: "middle",
+            //     headerFilterPlaceholder: 'Search by ID'
+            // },
              {
                  title: 'City',
                  field: 'name',

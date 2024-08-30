@@ -169,13 +169,14 @@
      var table = new Tabulator("#ship-table", {
          data: myData,
          layout: "fitColumns",
-         columns: [{
-                 title: 'ID',
-                 field: 'id',
-                 headerFilter: 'input',
-                 hozAlign: 'center',
-                 vertAlign: "middle"
-             },
+         columns: [
+            //{
+            //     title: 'ID',
+            //     field: 'id',
+            //     headerFilter: 'input',
+            //     hozAlign: 'center',
+            //     vertAlign: "middle"
+            // },
              {
                  title: 'Ship Name',
                  field: 'name_of_ship',

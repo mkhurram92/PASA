@@ -24,13 +24,15 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $request)
     {
-        $users = User::with('role')->get();
+        // Eager load the role and member relationships
+        $users = User::with(['role', 'member'])->get();
 
-        // Transform the data to include role name
+        // Transform the data to include role name and member name
         $data = $users->map(function ($user) {
             return [
                 'id' => $user->id,
-                'name' => $user->name,
+                'given_name' => $user->member ? $user->member->given_name : 'No given name',
+                'family_name' => $user->member ? $user->member->family_name : 'No family name',
                 'email' => $user->email,
                 'role_name' => $user->role ? $user->role->name : 'No role assigned',
             ];
@@ -38,6 +40,7 @@ class UserController extends Controller
 
         return $request->render('page.user.index', compact('data'));
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -77,7 +80,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $roleName = $user->role ? $user->role->name : 'No role assigned'; 
+        $roleName = $user->role ? $user->role->name : 'No role assigned';
 
         $html = view('models.user-view', compact('user', 'roleName'))->render();
         return response()->json(["status" => true, "html" => $html]);
@@ -91,7 +94,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::all(); 
+        $roles = Role::all();
         $html = view("models.user-update", compact('user', 'roles'))->render();
 
         return response()->json(["status" => true, "html" => $html]);

@@ -98,7 +98,7 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">Membership Status List</h3>
+                     <h3 class="page-title">Membership Status</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
@@ -166,14 +166,15 @@
          var table = new Tabulator("#membership-status-table", {
              data: myData,
              layout: "fitColumns",
-             columns: [{
-                     title: 'ID',
-                     field: 'id',
-                     headerFilter: 'input',
-                     hozAlign: 'center',
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Search by ID'
-                 },
+             columns: [
+                //{
+                //     title: 'ID',
+                //     field: 'id',
+                //     headerFilter: 'input',
+                //     hozAlign: 'center',
+                //     vertAlign: "middle",
+                //     headerFilterPlaceholder: 'Search by ID'
+                 //},
                  {
                      title: 'Name',
                      field: 'name',

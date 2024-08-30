@@ -178,7 +178,8 @@
          var table = new Tabulator("#modeofarrivals-table", {
              data: myData,
              layout: "fitColumns",
-             columns: [{
+             columns: [
+                {
                      title: "ID",
                      field: "id",
                      width: "8%",

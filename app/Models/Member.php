@@ -84,5 +84,8 @@ class Member extends Model
     {
         return $this->belongsTo(SubscriptionPlan::class, 'member_type_id');
     }
-    
+    public function user()
+    {
+        return $this->hasOne(User::class, 'member_id');
+    }
 }
