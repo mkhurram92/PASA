@@ -111,10 +111,10 @@
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                 <option value="25">25</option>
+                                     <option value="1000000">ALL</option>
+                                     <option value="25">25</option>
                                      <option value="50">50</option>
                                      <option value="100">100</option>
-                                     <option value="1000000">ALL</option>
                                  </select>
                                  <label style="padding: 10px;" for="date-range">Date Range:</label>
                                  <input style="padding: 10px 20px;" type="text" id="date-range">
@@ -235,7 +235,7 @@
                      vertAlign: "middle",
                      width: "8%",
                      download: false,
-                     print:false,
+                     print: false,
                      formatter: function(cell, formatterParams, onRendered) {
                          var id = cell.getData().id;
 
@@ -265,7 +265,7 @@
          });
 
          $("#pageSizeDropdown").on("change", function() {
-             var selectedPageSize = parseInt($(this).val(), 10);
+             var selectedPageSize = parseInt($(this).val(), 25);
              table.setPageSize(selectedPageSize);
          });
 

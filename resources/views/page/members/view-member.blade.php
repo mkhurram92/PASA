@@ -453,7 +453,7 @@
                                         @if ($member?->additionalInfo?->volunteer == 1)
                                             <div class="volunteer_details">
                                                 <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Volunteer Experience</label>
+                                                    <label class="col-md-4 form-label">Volunteer Notes</label>
                                                     <div class="col-md-12">
                                                         <textarea class="form-control" name="experience" rows="10" readonly disabled>{{ $member?->volunteerDetails?->experience }} </textarea>
                                                     </div>
