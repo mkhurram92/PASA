@@ -192,15 +192,15 @@
                      field: "ship.name_of_ship",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Name',
-                     headerFilterParams: {
-                         values: shipName
-                     },
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var rowShipName = cell.getValue();
-                         return rowShipName;
-                     }
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Name'//,
+                     //headerFilterParams: {
+                     //    values: shipName
+                     //},
+                     //formatter: function(cell, formatterParams, onRendered) {
+                     //    var rowShipName = cell.getValue();
+                      //   return rowShipName;
+                     //}
                  },
                  {
                      title: "Arrival Year",
