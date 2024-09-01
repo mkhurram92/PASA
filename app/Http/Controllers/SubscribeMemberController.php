@@ -397,7 +397,7 @@ class SubscribeMemberController extends Controller
                 "member_id" => $member->id,
                 "email" => $member->contact->email,
                 "password" => $member->password,
-                "name" => $member->given_name . " " . $member->family_name,
+                //"name" => $member->given_name . " " . $member->family_name,
                 "role_id" => 2
             ]);
 

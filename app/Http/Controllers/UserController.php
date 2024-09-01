@@ -17,11 +17,6 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(UsersDataTable $request)
     {
         // Eager load the role and member relationships
@@ -63,7 +58,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create([
-            'name' => $request->name,
+            //'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => $request->role_id,

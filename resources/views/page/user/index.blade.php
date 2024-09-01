@@ -164,8 +164,14 @@
          var table = new Tabulator("#users-table", {
              data: myData,
              layout: "fitColumns",
-             columns: [
-                 {
+             columns: [{
+                     title: 'Family Name',
+                     field: 'family_name',
+                     headerFilter: 'input',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilterPlaceholder: 'Search by Family Name'
+                 }, {
                      title: 'Given Name',
                      field: 'given_name',
                      headerFilter: 'input',
@@ -173,14 +179,7 @@
                      vertAlign: "middle",
                      headerFilterPlaceholder: 'Search by Given Name'
                  },
-                 {
-                     title: 'Family Name',
-                     field: 'family_name',
-                     headerFilter: 'input',
-                     hozAlign: 'center',
-                     vertAlign: "middle",
-                     headerFilterPlaceholder: 'Search by Family Name'
-                 },
+
                  {
                      title: 'Email',
                      field: 'email',
