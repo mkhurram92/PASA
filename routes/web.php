@@ -45,6 +45,7 @@ use App\Http\Controllers\AncestorLocalTravelDetailController;
 use App\Http\Controllers\authentications\NewPasswordController;
 use App\Http\Controllers\AncestorInternationalTravelDetailController;
 use App\Models\SubscribeMember;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -187,4 +188,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     Route::get('/getSubGlCodes/{parentId}', [TransactionController::class, 'getSubGlCodes']);
+    Route::get('/report/{type}', [ReportController::class, 'show'])->name('report.show');
+
 });

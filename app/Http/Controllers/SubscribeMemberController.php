@@ -368,11 +368,9 @@ class SubscribeMemberController extends Controller
         try {
             DB::beginTransaction();
 
-            // Get the current date and time
             $currentDate = Carbon::now();
             $nextYearDate = $currentDate->copy()->addYear();
 
-            // Format date, month, and year for the current date and next year date
             $dateMembershipApproved = $currentDate->format('d'); // Two digits for the day
             $monthMembershipApproved = $currentDate->format('m'); // Two digits for the month
             $yearMembershipApproved = $currentDate->format('Y'); // Four digits for the year
@@ -441,7 +439,6 @@ class SubscribeMemberController extends Controller
         $this->validate($request, [
             'pedigree.*.f_name' => 'nullable|string|max:255',
             'pedigree.*.m_name' => 'nullable|string|max:255',
-            // Add more validation rules as needed
         ]);
 
         $member = Member::findOrFail($id);
