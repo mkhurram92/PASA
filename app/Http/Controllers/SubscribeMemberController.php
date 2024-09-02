@@ -402,7 +402,7 @@ class SubscribeMemberController extends Controller
             ]);
 
             $usr->assignRole("user");
-            Mail::to($member->contact->email)->send(new ApprovalEmail($member));
+            //Mail::to($member->contact->email)->send(new ApprovalEmail($member));
 
             DB::commit();
 
