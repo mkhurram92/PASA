@@ -147,14 +147,14 @@
              columns: [{
                      title: "No.",
                      field: "id",
-                     hozAlign: "center",
+                     hozAlign: "right",
                      vertAlign: "middle",
                      headerFilter: "input"
                  },
                  {
                      title: "Parent G/L",
                      field: "gl_code.gl_codes_parent.name",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Filter by Parent Account',
@@ -165,7 +165,7 @@
                  {
                      title: "Sub G/L",
                      field: "gl_code.name",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Filter by Sub Account',
@@ -176,7 +176,7 @@
                  {
                      title: "Type",
                      field: "transaction_type.name",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Filter by Transaction Type',
@@ -200,7 +200,7 @@
                  {
                      title: "Amount",
                      field: "amount",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Amount'
@@ -208,7 +208,7 @@
                  {
                      title: "Account",
                      field: "account.name",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Filter by Transaction Account',
@@ -219,7 +219,7 @@
                  {
                      title: "Transaction Date",
                      field: "created_at",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Creation Date',
