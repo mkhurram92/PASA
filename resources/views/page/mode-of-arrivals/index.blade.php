@@ -171,6 +171,11 @@
              window.location.href = currentPath + '/' + id;
          }
 
+         function nullToEmptyString(value) {
+             return value === null ? '' : value;
+         }
+
+
          var myData = @json($mode_of_arrival);
          var shipName = @json($shipNames);
          var arrivalAt = @json($arrivalAt);
@@ -178,12 +183,11 @@
          var table = new Tabulator("#modeofarrivals-table", {
              data: myData,
              layout: "fitColumns",
-             columns: [
-                {
+             columns: [{
                      title: "ID",
                      field: "id",
                      width: "8%",
-                     hozAlign: "center",
+                     hozAlign: "right",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by ID'
@@ -191,54 +195,56 @@
                  {
                      title: "Ship Name",
                      field: "ship.name_of_ship",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Name'//,
+                     headerFilterPlaceholder: 'Search by Name' //,
                      //headerFilterParams: {
                      //    values: shipName
                      //},
                      //formatter: function(cell, formatterParams, onRendered) {
                      //    var rowShipName = cell.getValue();
-                      //   return rowShipName;
+                     //   return rowShipName;
                      //}
                  },
                  {
                      title: "Arrival Year",
                      field: "year",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      width: "10%",
                      headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Arrival Year'
+                     headerFilterPlaceholder: 'Search by Arrival Year',
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Departure Place",
-                     field: "location",
-                     hozAlign: "center",
+                     field: "city_id",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Departure Place',
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var city = cell.getData().city ? cell.getData().city.name : "";
-                         var county = cell.getData().county ? cell.getData().county.name : "";
-                         var country = cell.getData().country ? cell.getData().country.name : "";
+                     mutator: nullToEmptyString //,
+                     //formatter: function(cell, formatterParams, onRendered) {
+                     //    var city = cell.getData().city ? cell.getData().city.name : "";
+                     //    var county = cell.getData().county ? cell.getData().county.name : "";
+                     //     var country = cell.getData().country ? cell.getData().country.name : "";
 
-                         var result = city + (city && (county || country) ? ", " : "") + county + (county &&
-                             country ? ", " : "") + country;
+                     //     var result = city + (city && (county || country) ? ", " : "") + county + (county &&
+                     //         country ? ", " : "") + country;
 
-                         // Check if all parts are empty and return null if they are
-                         if (!city && !county && !country) {
-                             return null;
-                         }
+                     // Check if all parts are empty and return null if they are
+                     //    if (!city && !county && !country) {
+                     //         return null;
+                     //     }
 
-                         return result;
-                     }
+                     //     return result;
+                     //  }
                  },
                  {
                      title: "Departure Date",
                      field: "departure_date_combined",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Departure Date',
@@ -267,7 +273,7 @@
                  {
                      title: "Arrival Date",
                      field: "arrival_date_combined",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Arrival Date',
@@ -296,37 +302,50 @@
                  {
                      title: "Arrival Place in SA",
                      field: "port.name",
-                     hozAlign: "center",
+                     hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Search by Arrival Place in SA',
                      headerFilterParams: {
                          values: arrivalAt
-                     }
+                     },
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Ship Commandar",
                      field: "ship_commander",
                      visible: false,
-                     download: true
+                     download: true,
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Embarkation Number",
                      field: "embarkation_number",
                      visible: false,
-                     download: true
+                     download: true,
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Port of Call",
                      field: "ports_of_call",
                      visible: false,
-                     download: true
+                     download: true,
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Notes",
                      field: "notes",
                      visible: false,
-                     download: true
+                     download: true,
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Action",
