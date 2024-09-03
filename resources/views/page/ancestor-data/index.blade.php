@@ -182,15 +182,7 @@
          var table = new Tabulator("#ancestor-data-table", {
              data: ancestorData,
              layout: "fitColumns",
-             columns: [{
-                     title: "ID",
-                     field: "id",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     width: "8%",
-                     headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by ID'
-                 },
+             columns: [
                  {
                      title: "Family Name",
                      field: "ancestor_surname",
@@ -273,13 +265,6 @@
                      headerFilterParams: {
                          values: source_of_arrival
                      }
-                 },
-                 {
-                     title: "Arrival Date",
-                     field: "ancestor_local_travel_details.travel_date",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "select",
                  },
                  {
                      title: "Action",

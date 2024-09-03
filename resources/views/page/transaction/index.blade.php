@@ -144,13 +144,7 @@
          var table = new Tabulator("#transaction-table", {
              data: gl_Codes,
              layout: "fitColumns",
-             columns: [{
-                     title: "No.",
-                     field: "id",
-                     hozAlign: "right",
-                     vertAlign: "middle",
-                     headerFilter: "input"
-                 },
+             columns: [
                  {
                      title: "Parent G/L",
                      field: "gl_code.gl_codes_parent.name",
@@ -224,9 +218,17 @@
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Creation Date',
                      formatter: function(cell) {
-                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD HH:mm:ss');
+                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD');
                          return formattedDate;
                      }
+                 },
+                 {
+                     title: "Description",
+                     field: "description",
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Description',
                  },
                  {
                      title: "Action",

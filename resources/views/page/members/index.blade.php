@@ -178,27 +178,13 @@
             layout: "fitColumns",
             columns: [
                 {
-                    title: 'ID',
+                    title: 'Membership No',
                     field: 'id',
                     hozAlign: "right",
                     vertAlign: "middle",
                     headerFilter: "input",
                     width: "8%",
-                    headerFilterPlaceholder: 'Filter by ID'
-                },
-                {
-                    title: 'Title',
-                    field: 'title_id',
-                     visible: false,
-                     download: true
-                },
-                {
-                    title: 'Given Name',
-                    field: 'given_name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Name'
+                    headerFilterPlaceholder: 'Filter by Membership No'
                 },
                 {
                     title: 'Family Name',
@@ -207,6 +193,14 @@
                     vertAlign: "middle",
                     headerFilter: "input",
                     headerFilterPlaceholder: 'Filter by Family Name'
+                },
+                {
+                    title: 'Given Name',
+                    field: 'given_name',
+                    hozAlign: "left",
+                    vertAlign: "middle",
+                    headerFilter: "input",
+                    headerFilterPlaceholder: 'Filter by Name'
                 },
                 {
                     title: 'Approval Date',
@@ -255,7 +249,7 @@
                     }
                 },
                 {
-                    title: "Actions",
+                    title: "Action",
                     field: "actions",
                     hozAlign: "center",
                     width: "8%",
