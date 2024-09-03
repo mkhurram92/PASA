@@ -190,6 +190,7 @@
                      hozAlign: "right",
                      vertAlign: "middle",
                      headerFilter: "input",
+                     download: false,
                      headerFilterPlaceholder: 'Search by ID'
                  },
                  {
