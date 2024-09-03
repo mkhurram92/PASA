@@ -198,16 +198,16 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Address Line 1 </label>
+                                            <label class="col-md-4 form-label">Address Line 1</label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text"
-                                                    placeholder="Unit/Apartment No." name="unit_no">
+                                                    placeholder="Address Line 1" name="unit_no">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Address Line 2 </label>
+                                            <label class="col-md-4 form-label">Address Line 2</label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" placeholder="Street Name"
+                                                <input class="form-control" type="text" placeholder="Address Line 2"
                                                     name="number_street">
                                             </div>
                                         </div>
