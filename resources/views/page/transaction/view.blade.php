@@ -92,7 +92,8 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Parent G/L<span class="text-danger"></span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{$transaction->glCode->glCodesParent->name}}" disabled readonly>
+                                                <input class="form-control" type="text" value="{{ optional(optional($transaction->glCode)->glCodesParent)->name ?? 'Select Parent GL' }}" disabled readonly>
+
                                             </div>
                                         </div>
 
@@ -100,7 +101,7 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Sub G/L<span class="text-danger"></span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{$transaction->glCode->name}}" disabled readonly>
+                                                <input class="form-control" type="text" value="{{ optional($transaction->glCode)->name ?? 'Select Sub GL' }}" disabled readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +110,8 @@
                                             <label class="col-md-4 form-label">Transaction Account<span class="text-danger"></span></label>
 
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{$transaction->account->name}}" disabled readonly>
+                                                <input class="form-control" type="text" value="{{ optional($transaction->account)->name ?? 'Select Sub GL' }}" disabled readonly>
+
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
