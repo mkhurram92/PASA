@@ -244,7 +244,7 @@
                  },
                  {
                      title: "Ship Name - Year",
-                     field: "source_of_arrival.name",
+                     field: "null",
                      hozAlign: "center",
                      hozAlign: "left",
                      vertAlign: "middle",
