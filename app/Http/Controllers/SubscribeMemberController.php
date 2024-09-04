@@ -54,22 +54,49 @@ class SubscribeMemberController extends Controller
         return view('page.members.create', compact('data'));
     }
 
-    public function index(Request $request)
+    /**public function index(Request $request)
     {
         // Fetch members with related models
         $members = Member::with('subscriptionPlan', 'membershipStatus', 'additionalInfo')->get();
 
         // Fetch membership type options
-        $membershipTypeOptions = SubscriptionPlan::pluck('name', 'id')->toArray(); // Associative array for IDs and names
-        $membershipTypeOptions = ['' => ''] + $membershipTypeOptions; // Add an empty option if needed
+        $membershipTypeOptions = SubscriptionPlan::pluck('name', 'id')->toArray(); 
+        $membershipTypeOptions = ['' => ''] + $membershipTypeOptions;
 
         // Fetch membership status options
-        $membershipStatusOptions = MembershipStatus::pluck('name', 'id')->toArray(); // Associative array for IDs and names
-        $membershipStatusOptions = ['' => ''] + $membershipStatusOptions; // Add an empty option if needed
+        $membershipStatusOptions = MembershipStatus::pluck('name', 'id')->toArray();
+        $membershipStatusOptions = ['' => ''] + $membershipStatusOptions;
+
+        // Return view with data
+        return view('page.members.index', compact('members', 'membershipTypeOptions', 'membershipStatusOptions'));
+    }**/
+
+    public function index(Request $request)
+    {
+        // Fetch members with related models
+        $members = Member::with([
+            'subscriptionPlan',
+            'membershipStatus',
+            'additionalInfo', // This is where membership_number is located
+            'contact',
+            'address',
+            'title'
+        ])->get();
+
+        //dd($members);
+
+        // Fetch membership type options
+        $membershipTypeOptions = SubscriptionPlan::pluck('name', 'id')->toArray();
+        $membershipTypeOptions = ['' => ''] + $membershipTypeOptions;
+
+        // Fetch membership status options
+        $membershipStatusOptions = MembershipStatus::pluck('name', 'id')->toArray();
+        $membershipStatusOptions = ['' => ''] + $membershipStatusOptions;
 
         // Return view with data
         return view('page.members.index', compact('members', 'membershipTypeOptions', 'membershipStatusOptions'));
     }
+
 
     public function store(StoreMemberRequest $request)
     {

@@ -170,6 +170,7 @@
 @section('scripts')
     <script>
         var membersData = <?php echo json_encode($members); ?>;
+        console.log(membersData);
         var membershipTypeOptions = <?php echo json_encode($membershipTypeOptions); ?>;
         var membershipStatusOptions = <?php echo json_encode($membershipStatusOptions); ?>;
 
@@ -179,7 +180,8 @@
             columns: [
                 {
                     title: 'Membership No',
-                    field: 'id',
+                    field: 'additional_info.membership_number',
+                    
                     hozAlign: "right",
                     vertAlign: "middle",
                     headerFilter: "input",
@@ -247,6 +249,15 @@
                         var value = cell.getValue();
                         return value == 0 ? "Email" : "Post";
                     }
+                },
+                {
+                    title: 'Email',
+                    field: 'contact.email',
+                    hozAlign: "left",
+                    vertAlign: "middle",
+                    headerFilter: "input",
+                    headerFilterPlaceholder: 'Filter by Email'
+                    
                 },
                 {
                     title: "Action",
