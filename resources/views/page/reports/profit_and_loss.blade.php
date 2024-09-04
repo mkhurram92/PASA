@@ -57,13 +57,13 @@
         }
         tbody {
             display: block;
-            max-height: 400px; /* Set max height for the table body */
-            overflow-y: auto; /* Make the table body scrollable */
+            max-height: 400px;
+            overflow-y: auto; 
         }
         thead, tbody tr {
             display: table;
             width: 100%;
-            table-layout: fixed; /* Ensure cells stay aligned */
+            table-layout: fixed;
         }
         tr:nth-child(even) {
             background-color: #f7f9fc;

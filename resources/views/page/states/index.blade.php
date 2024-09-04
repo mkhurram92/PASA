@@ -52,8 +52,6 @@
                     </div>
                 </div>
             </div>
-            <!-- End Row -->
-
         </div>
     </div>
 </div>
