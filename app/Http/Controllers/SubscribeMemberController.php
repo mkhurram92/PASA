@@ -54,23 +54,6 @@ class SubscribeMemberController extends Controller
         return view('page.members.create', compact('data'));
     }
 
-    /**public function index(Request $request)
-    {
-        // Fetch members with related models
-        $members = Member::with('subscriptionPlan', 'membershipStatus', 'additionalInfo')->get();
-
-        // Fetch membership type options
-        $membershipTypeOptions = SubscriptionPlan::pluck('name', 'id')->toArray(); 
-        $membershipTypeOptions = ['' => ''] + $membershipTypeOptions;
-
-        // Fetch membership status options
-        $membershipStatusOptions = MembershipStatus::pluck('name', 'id')->toArray();
-        $membershipStatusOptions = ['' => ''] + $membershipStatusOptions;
-
-        // Return view with data
-        return view('page.members.index', compact('members', 'membershipTypeOptions', 'membershipStatusOptions'));
-    }**/
-
     public function index(Request $request)
     {
         // Fetch members with related models
@@ -85,14 +68,9 @@ class SubscribeMemberController extends Controller
 
         //dd($members);
 
-        // Fetch membership type options
-        $membershipTypeOptions = SubscriptionPlan::pluck('name', 'id')->toArray();
-        $membershipTypeOptions = ['' => ''] + $membershipTypeOptions;
-
-        // Fetch membership status options
-        $membershipStatusOptions = MembershipStatus::pluck('name', 'id')->toArray();
-        $membershipStatusOptions = ['' => ''] + $membershipStatusOptions;
-
+        $membershipTypeOptions = SubscriptionPlan::pluck('name', 'name');
+        $membershipStatusOptions = MembershipStatus::pluck('name', 'name');
+                
         // Return view with data
         return view('page.members.index', compact('members', 'membershipTypeOptions', 'membershipStatusOptions'));
     }
