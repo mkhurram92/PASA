@@ -329,6 +329,7 @@
                     hozAlign: "center",
                     download: false,
                     vertAlign: "middle",
+                    width:"7%",
                     formatter: function(cell, formatterParams, onRendered) {
                         var id = cell.getData().id;
                         return '<div class="button-container">' +
@@ -352,7 +353,6 @@
 
         // Add a reset button
         var resetButton = document.getElementById("reset-button");
-
 
         resetButton.addEventListener("click", function() {
             table.clearFilter();

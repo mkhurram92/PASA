@@ -49,13 +49,16 @@
                         <div class="card-header justify-content-between">
                             <h3 class="card-title">Pioneer Member's Pedigree Chart</h3>
                             <div>
-                                <button class="btn btn-primary" onclick="window.print();">
+                                <!--<button class="btn btn-primary" onclick="window.print();">
                                     <i class="fa fa-print" style="font-size:20px;"> Print</i>
-                                </button>
+                                </button>-->
                                 @if (Auth::user()->name == 'Admin')
                                     <a class="btn btn-danger" href="{{ route('members.index') }}">
                                         <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                     </a>
+                                    <button class="btn btn-info" onclick="downloadExcel()">
+                                        <i class="fa fa-file-excel-o" style="font-size:20px;"> Download</i>
+                                    </button>
                                 @endif
                                 @if (count($member->pedigree) > 0)
                                     <a class="btn btn-success mr-2"
@@ -195,7 +198,47 @@
 <div id="crud"></div>
 @section('scripts')
     @include('plugins.select2')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
+        // Function to export pedigree data to Excel
+        function downloadExcel() {
+            // Prepare data for Excel
+            var data = [
+                ["Generation", "Father Name", "Birth Date", "Birth Place", "Death Date", "Death Place", "Marriage Date",
+                    "Mother Name", "Mother Birth Date", "Mother Birth Place", "Mother Death Date", "Mother Death Place",
+                    "Marriage Place", "Additional Notes"
+                ],
+                @foreach ($member->pedigree as $pedigree)
+                    [
+                        "Generation {{ $loop->iteration }}",
+                        "{{ $pedigree->f_name }}",
+                        "{{ $pedigree->date_of_birth ?? '' }}",
+                        "{{ $pedigree->place_of_birth ?? '' }}",
+                        "{{ $pedigree->date_of_death ?? '' }}",
+                        "{{ $pedigree->place_of_death ?? '' }}",
+                        "{{ $pedigree->date_of_marriage ?? '' }}",
+                        "{{ $pedigree->m_name }}",
+                        "{{ $pedigree->m_birth_date ?? '' }}",
+                        "{{ $pedigree->m_birth_place ?? '' }}",
+                        "{{ $pedigree->m_death_date ?? '' }}",
+                        "{{ $pedigree->m_death_place ?? '' }}",
+                        "{{ $pedigree->place_of_marriage ?? '' }}",
+                        "{{ $pedigree->notes ?? '' }}"
+                    ],
+                @endforeach
+            ];
+
+            // Create a worksheet from the data
+            var ws = XLSX.utils.aoa_to_sheet(data);
+
+            // Create a new workbook and append the worksheet
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Pedigree");
+
+            // Generate Excel file and trigger download
+            XLSX.writeFile(wb, "pedigree_data.xlsx");
+        }
+
         document.getElementById('view-members').addEventListener('click', function(event) {
             event.preventDefault(); // Prevent the default behavior of the link
 
@@ -211,5 +254,6 @@
         });
     </script>
 @endsection
+
 <!-- app-content end-->
 @include('layout.footer')

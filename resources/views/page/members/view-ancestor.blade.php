@@ -55,6 +55,9 @@
                                         <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                     </a>
                                     @if (count($member->ancestors) > 0)
+                                    <a class="btn btn-info" onclick="downloadExcel()">
+                                        <i class="fa fa-file-excel-o" style="font-size:20px;"> Download</i>
+                                    </a>                                    
                                         <a class="btn btn-success mr-2"
                                             href="{{ route('members.editAncestors', $member->id) }}">
                                             <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
@@ -138,4 +141,48 @@
         </div>
     </div>
 </div>
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        // Function to export ancestor data to Excel
+        function downloadExcel() {
+            // Prepare data for Excel
+            var data = [
+                ["Pioneer Name", "Source of Arrival", "Ship Name - Year"],
+                @foreach ($member->ancestors as $ancestor)
+                [
+                    "{{ $ancestor->given_name }} {{ $ancestor->ancestor_surname }}",
+                    "{{ $ancestor->sourceOfArrival->name ?? '' }}",
+                    "{{ $ancestor->mode_of_travel?->ship?->name_of_ship ? $ancestor->mode_of_travel->ship->name_of_ship . ($ancestor->mode_of_travel?->year_of_arrival ? ' - ' . $ancestor->mode_of_travel->year_of_arrival : '') : '' }}"
+                ],
+                @endforeach
+            ];
+
+            // Create a worksheet from the data
+            var ws = XLSX.utils.aoa_to_sheet(data);
+
+            // Create a new workbook and append the worksheet
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Ancestors");
+
+            // Generate Excel file and trigger download
+            XLSX.writeFile(wb, "ancestor_data.xlsx");
+        }
+
+        document.getElementById('view-members').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Extract the current URL and the id from it
+            var currentUrl = window.location.href;
+            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+
+            // Construct the new URL for editing
+            var newUrl = currentUrl.replace('/view-ancestor/', '/view-member/');
+
+            // Redirect to the new URL
+            window.location.href = newUrl;
+        });
+    </script>
+@endsection
+
 @include('layout.footer')
