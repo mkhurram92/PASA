@@ -294,7 +294,7 @@
                      field: "actions",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     download:'false',
+                     download: false,
                      width: "8%",
                      formatter: function(cell, formatterParams, onRendered) {
                          var id = cell.getData().id;
