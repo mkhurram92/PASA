@@ -56,11 +56,11 @@
                                     <a class="btn btn-danger" href="{{ route('members.index') }}">
                                         <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                     </a>
+                                @endif
+                                @if (count($member->pedigree) > 0)
                                     <button class="btn btn-info" onclick="downloadExcel()">
                                         <i class="fa fa-file-excel-o" style="font-size:20px;"> Download</i>
                                     </button>
-                                @endif
-                                @if (count($member->pedigree) > 0)
                                     <a class="btn btn-success mr-2"
                                         href="{{ route('members.editPedigree', $member->id) }}">
                                         <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
