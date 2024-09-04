@@ -119,23 +119,23 @@
             <div class="row">
                 <div class="col-md-12 p-12">
                     @if ($errors->any() || session('error') || session('success'))
-                        <div class="card">
-                            <div class="card-body">
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        {{ $errors->first() }}
-                                    </div>
-                                @elseif(session('error'))
-                                    <div class="alert alert-danger">
-                                        {{ session('error') }}
-                                    </div>
-                                @elseif(session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
+                    <div class="card">
+                        <div class="card-body">
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
                             </div>
+                            @elseif(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                            @elseif(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                            @endif
                         </div>
+                    </div>
                     @endif
                     <div class="card">
                         <div class="card-body p-2">
@@ -168,162 +168,154 @@
 <div id="crud"></div>
 
 @section('scripts')
-    <script>
-        var membersData = <?php echo json_encode($members); ?>;
-        console.log(membersData);
-        var membershipTypeOptions = <?php echo json_encode($membershipTypeOptions); ?>;
-        var membershipStatusOptions = <?php echo json_encode($membershipStatusOptions); ?>;
+<script>
+    var membersData = <?php echo json_encode($members); ?>;
+    var membershipTypeOptions = <?php echo json_encode($membershipTypeOptions); ?>;
+    var membershipStatusOptions = <?php echo json_encode($membershipStatusOptions); ?>;
 
-        var table = new Tabulator("#members-table", {
-            data: membersData,
-            layout: "fitColumns",
-            columns: [
-                {
-                    title: 'Membership No',
-                    field: 'additional_info.membership_number',
-                    
-                    hozAlign: "right",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    width: "8%",
-                    headerFilterPlaceholder: 'Filter by Membership No'
-                },
-                {
-                    title: 'Family Name',
-                    field: 'family_name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Family Name'
-                },
-                {
-                    title: 'Given Name',
-                    field: 'given_name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Name'
-                },
-                {
-                    title: 'Approval Date',
-                    field: 'approved_at',
-                     visible: false,
-                     download: true
-                },
-                {
-                    title: 'Membership Type',
-                    field: 'subscription_plan.name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "select",
-                    headerFilterPlaceholder: 'Filter by Membership Type',
-                    headerFilterParams: {
-                        values: membershipTypeOptions
+    var table = new Tabulator("#members-table", {
+        data: membersData,
+        layout: "fitColumns",
+        columns: [{
+                title: 'Membership No',
+                field: 'additional_info.membership_number',
+
+                hozAlign: "right",
+                vertAlign: "middle",
+                headerFilter: "input",
+                width: "8%",
+                headerFilterPlaceholder: 'Filter by Membership No'
+            },
+            {
+                title: 'Family Name',
+                field: 'family_name',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Family Name'
+            },
+            {
+                title: 'Given Name/s',
+                field: 'given_name',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Given Name/s'
+            },
+            {
+                title: 'Membership Type',
+                field: 'subscription_plan.name',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Membership Type',
+                //headerFilterParams: {
+                //    values: membershipTypeOptions
+                //}
+            },
+            {
+                title: 'Membership Status',
+                field: 'membership_status.name',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Membership Status',
+                //headerFilterParams: {
+                //    values: membershipStatusOptions
+                //}
+            },
+            {
+                title: 'Journal',
+                field: 'journal',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "select",
+                headerFilterParams: {
+                    values: {
+                        "0": "Email",
+                        "1": "Post",
                     }
                 },
-                {
-                    title: 'Membership Status',
-                    field: 'membership_status.name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "select",
-                    headerFilterPlaceholder: 'Filter by Membership Status',
-                    headerFilterParams: {
-                        values: membershipStatusOptions
-                    }
-                },
-                {
-                    title: 'Journal',
-                    field: 'journal',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "select",
-                    headerFilterParams: {
-                        values: {
-                            "0": "Email",
-                            "1": "Post",
-                        }
-                    },
-                    headerFilterPlaceholder: 'Filter by Journal',
-                    formatter: function(cell, formatterParams, onRendered) {
-                        var value = cell.getValue();
-                        return value == 0 ? "Email" : "Post";
-                    }
-                },
-                {
-                    title: 'Email',
-                    field: 'contact.email',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Email'
-                    
-                },
-                {
-                    title: "Action",
-                    field: "actions",
-                    hozAlign: "center",
-                    width: "8%",
-                    download: false,
-                    vertAlign: "middle",
-                    formatter: function(cell, formatterParams, onRendered) {
-                        var id = cell.getData().id;
-                        return '<div class="button-container">' +
-                            '<button class="fa fa-eye view-button" onclick="redirectToView(' +
-                            id +
-                            ')"> View</button>' +
-                            '</div>';
-                    }
+                headerFilterPlaceholder: 'Filter by Journal',
+                formatter: function(cell, formatterParams, onRendered) {
+                    var value = cell.getValue();
+                    return value == 0 ? "Email" : "Post";
                 }
-            ],
-            pagination: "local",
-            paginationSize: 25,
-            placeholder: "No Data Available"
+            },
+            {
+                title: 'Email Address',
+                field: 'contact.email',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Email'
+
+            },
+            {
+                title: "Action",
+                field: "actions",
+                hozAlign: "center",
+                width: "8%",
+                download: false,
+                vertAlign: "middle",
+                formatter: function(cell, formatterParams, onRendered) {
+                    var id = cell.getData().id;
+                    return '<div class="button-container">' +
+                        '<button class="fa fa-eye view-button" onclick="redirectToView(' +
+                        id +
+                        ')"> View</button>' +
+                        '</div>';
+                }
+            }
+        ],
+        pagination: "local",
+        paginationSize: 25,
+        placeholder: "No Data Available"
+    });
+
+    function redirectToView(id) {
+        var baseUrl = 'members/view-member/';
+        var url = baseUrl + id;
+        window.location.href = url;
+    }
+
+    // Add a reset button
+    var resetButton = document.getElementById("reset-button");
+
+
+    resetButton.addEventListener("click", function() {
+        table.clearFilter();
+        table.clearHeaderFilter();
+    });
+
+    $("#pageSizeDropdown").on("change", function() {
+        var selectedPageSize = parseInt($(this).val(), 10);
+        table.setPageSize(selectedPageSize);
+    });
+
+    function printData() {
+        table.print(false, true);
+    }
+    //trigger download of data.csv file
+    document.getElementById("download-csv").addEventListener("click", function() {
+        table.download("csv", "Member List.csv");
+    });
+
+    //trigger download of data.xlsx file
+    document.getElementById("download-xlsx").addEventListener("click", function() {
+        table.download("xlsx", "Member List.xlsx", {
+            sheetName: "PASA01"
         });
+    });
 
-        function redirectToView(id) {
-            var baseUrl = 'members/view-member/';
-            var url = baseUrl + id;
-            window.location.href = url;
-        }
-
-        // Add a reset button
-        var resetButton = document.getElementById("reset-button");
-
-
-        resetButton.addEventListener("click", function() {
-            table.clearFilter();
-            table.clearHeaderFilter();
+    //trigger download of data.pdf file
+    document.getElementById("download-pdf").addEventListener("click", function() {
+        table.download("pdf", "Member List.pdf", {
+            orientation: "landscape",
+            title: "Member List",
         });
-
-        $("#pageSizeDropdown").on("change", function() {
-            var selectedPageSize = parseInt($(this).val(), 10);
-            table.setPageSize(selectedPageSize);
-        });
-
-        function printData() {
-            table.print(false, true);
-        }
-        //trigger download of data.csv file
-        document.getElementById("download-csv").addEventListener("click", function() {
-            table.download("csv", "Member List.csv");
-        });
-
-        //trigger download of data.xlsx file
-        document.getElementById("download-xlsx").addEventListener("click", function() {
-            table.download("xlsx", "Member List.xlsx", {
-                sheetName: "PASA01"
-            });
-        });
-
-        //trigger download of data.pdf file
-        document.getElementById("download-pdf").addEventListener("click", function() {
-            table.download("pdf", "Member List.pdf", {
-                orientation: "landscape",
-                title: "Member List",
-            });
-        });
-    </script>
+    });
+</script>
 @endsection
 
 <!-- app-content end-->
