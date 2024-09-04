@@ -48,7 +48,7 @@ class AncestorDataController extends Controller
         $source_of_arrivals = SourceOfArrival::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($source_of_arrivals, '');
 
-        $ancestor = AncestorData::with('occupation_relation', 'Gender', 'Ships', 'departureCountry', 'state', 'sourceOfArrival')->get();
+        $ancestor = AncestorData::with('occupation_relation', 'Gender', 'Ships', 'departureCountry', 'state', 'sourceOfArrival', 'spouse_details')->get();
 
         return $request->render('page.ancestor-data.index', compact('ancestor', 'state', 'occupation', 'gender_name', 'country', 'ship', 'source_of_arrivals'));
     }
@@ -135,7 +135,7 @@ class AncestorDataController extends Controller
     private function saveAncestorSpouse($ancestorData, $request)
     {
         try {
-            //Log::info('Saving ancestor spouse data', $request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
+            Log::info('Saving ancestor spouse data', $request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
 
             $ancestorSpouse = new AncestorSpouse();
             $ancestorSpouse->ancestor_id = $ancestorData->id;
@@ -144,7 +144,7 @@ class AncestorDataController extends Controller
 
             //Log::info('Ancestor spouse data saved successfully', ['ancestor_spouse_id' => $ancestorSpouse->id]);
         } catch (\Exception $e) {
-            //Log::error('Error saving ancestor spouse data: ' . $e->getMessage());
+            Log::error('Error saving ancestor spouse data: ' . $e->getMessage());
             throw $e; // Rethrow the exception to trigger a rollback
         }
     }
@@ -268,7 +268,7 @@ class AncestorDataController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            //Log::error($e->getMessage());
+            Log::error($e->getMessage());
 
             return response()->json([
                 "status" => false,
@@ -282,14 +282,14 @@ class AncestorDataController extends Controller
         $ancestorNote = AncestorNote::where('ancestor_id', $ancestorId)->first();
 
         if ($ancestorNote) {
-            // Update the existing note
+            // Update the existing note, allowing null values
             $ancestorNote->update([
-                'notes' => $validatedData['notes'] ?? $ancestorNote->notes,
-                'birth_details' => $validatedData['birth_details'] ?? $ancestorNote->birth_details,
-                'death_details' => $validatedData['death_details'] ?? $ancestorNote->death_details,
+                'notes' => $validatedData['notes'] ?? null,
+                'birth_details' => $validatedData['birth_details'] ?? null,
+                'death_details' => $validatedData['death_details'] ?? null,
             ]);
         } else {
-            // Create a new note if it doesn't exist
+            // Create a new note if it doesn't exist, allowing null values
             AncestorNote::create([
                 'ancestor_id' => $ancestorId,
                 'notes' => $validatedData['notes'] ?? null,

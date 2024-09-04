@@ -207,22 +207,22 @@
                 field: 'subscription_plan.name',
                 hozAlign: "left",
                 vertAlign: "middle",
-                headerFilter: "input",
+                headerFilter: "select",
                 headerFilterPlaceholder: 'Filter by Membership Type',
-                //headerFilterParams: {
-                //    values: membershipTypeOptions
-                //}
+                headerFilterParams: {
+                    values: membershipTypeOptions
+                }
             },
             {
                 title: 'Membership Status',
                 field: 'membership_status.name',
                 hozAlign: "left",
                 vertAlign: "middle",
-                headerFilter: "input",
+                headerFilter: "select",
                 headerFilterPlaceholder: 'Filter by Membership Status',
-                //headerFilterParams: {
-                //    values: membershipStatusOptions
-                //}
+                headerFilterParams: {
+                    values: membershipStatusOptions
+                }
             },
             {
                 title: 'Journal',

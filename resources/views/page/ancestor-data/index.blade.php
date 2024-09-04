@@ -200,31 +200,7 @@
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Given Name'
-                 },
-                 /**{
-                     title: "Gender",
-                     field: "gender.name",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Gender',
-                     headerFilterParams: {
-                         values: gender_name
-                     },
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var genderValue = cell.getValue();
-
-                         var style = '';
-                         if (genderValue === 'Male') {
-                             style = 'color: green;';
-                         } else if (genderValue === 'Female') {
-                             style = 'color: red;';
-                         }
-                         var formattedValue = '<span style="' + style + '">' + genderValue + '</span>';
-
-                         return formattedValue;
-                     }
-                 },**/
+                 },                 
                  {
                      title: "Birth Date",
                      field: "date_of_birth_combined",
@@ -250,18 +226,54 @@
                                  return `${year}`;
                              }
                          } else {
-                             return ""; // Return empty string if year is not present
+                             return "";
                          }
                      }
                  },
                  {
-                     title: "Source Of Arrival",
+                     title: "Mode of Travel",
                      field: "source_of_arrival.name",
                      hozAlign: "center",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Arrival Source',
+                     headerFilterPlaceholder: 'Search by Mode of Travel',
+                     headerFilterParams: {
+                         values: source_of_arrival
+                     }
+                 },
+                 {
+                     title: "Ship Name - Year",
+                     field: "source_of_arrival.name",
+                     hozAlign: "center",
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     headerFilter: "select",
+                     headerFilterPlaceholder: 'Search by Ship Name - Year',
+                     headerFilterParams: {
+                         values: source_of_arrival
+                     }
+                 },
+                 {
+                     title: "Spouse Family Name",
+                     field: "spouse_details.spouse_family_name",
+                     hozAlign: "center",
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     headerFilter: "select",
+                     headerFilterPlaceholder: 'Search by Spouse Family Name',
+                     headerFilterParams: {
+                         values: source_of_arrival
+                     }
+                 },
+                 {
+                     title: "Spouse Given Name/s",
+                     field: "spouse_details.spouse_given_name",
+                     hozAlign: "center",
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     headerFilter: "select",
+                     headerFilterPlaceholder: 'Search by Spouse Given Name/s',
                      headerFilterParams: {
                          values: source_of_arrival
                      }
@@ -274,7 +286,6 @@
                      width: "8%",
                      formatter: function(cell, formatterParams, onRendered) {
                          var id = cell.getData().id;
-                         // Add buttons for each row
                          return '<div class="button-container">' +
                              '<button class="fa fa-eye view-button" onclick="redirectToView(' +
                              id +

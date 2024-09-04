@@ -447,8 +447,6 @@
         initMonthSelect2($("#month_of_death"), existingMonthOfDeath);
         initDaySelect2($("#date_of_death"), existingDateOfDeath);
 
-
-
         function handleSourceOfArrivalChange() {
             const selectedValue = $("#source_of_arrival_select2").val();
 
@@ -480,14 +478,14 @@
         // Attach the function to the change event of the element with ID "source_of_arrival_select2"
         $(document).on("change", "#source_of_arrival_select2", handleSourceOfArrivalChange);
 
-        $('.fc-datepicker').datepicker({
+        /**$('.fc-datepicker').datepicker({
             showOtherMonths: true,
             selectOtherMonths: true,
             dateFormat: 'yy-mm-dd',
             changeMonth: true, // Customize the date format as needed
             changeYear: true,
             yearRange: 'c-250:c+nn'
-        });
+        });**/
     </script>
 
     @include('page.ancestor-data.scripts')
