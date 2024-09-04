@@ -180,7 +180,7 @@
 
         //Filter Ship Name - Year
         membersData = membersData.map(member => {
-            member.shipNameYear = 'N/A';
+            member.shipNameYear = '';
 
             if (member.ancestors && member.ancestors.length > 0) {
                 let ancestor = member.ancestors[0];
