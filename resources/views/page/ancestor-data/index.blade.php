@@ -130,7 +130,7 @@
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                    <option value="1000000">ALL</option>
+                                     <option value="1000000">ALL</option>
                                      <option value="25">25</option>
                                      <option value="50">50</option>
                                      <option value="100">100</option>
@@ -187,11 +187,9 @@
          var table = new Tabulator("#ancestor-data-table", {
              data: ancestorData,
              layout: "fitColumns",
-             columns: [
-                 {
+             columns: [{
                      title: "Family Name",
                      field: "ancestor_surname",
-                     hozAlign: "center",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
@@ -201,25 +199,21 @@
                  {
                      title: "Given Name",
                      field: "given_name",
-                     hozAlign: "center",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Given Name',
                      mutator: nullToEmptyString
-                 },                 
+                 },
                  {
                      title: "Birth Date",
                      field: "date_of_birth_combined",
-                     hozAlign: "center",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
                      mutator: function(value, data, type, params, component) {
-                         let date = data.date_of_birth ? String(data.date_of_birth).padStart(2,
-                             '0') : "";
-                         let month = data.month_of_birth ? String(data.month_of_birth).padStart(2,
-                             '0') : "";
+                         let date = data.date_of_birth ? String(data.date_of_birth).padStart(2, '0') : "";
+                         let month = data.month_of_birth ? String(data.month_of_birth).padStart(2, '0') : "";
                          let year = data.year_of_birth ? String(data.year_of_birth) : "";
 
                          if (year) {
@@ -240,7 +234,6 @@
                  {
                      title: "Mode of Travel",
                      field: "source_of_arrival.name",
-                     hozAlign: "center",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
@@ -252,41 +245,43 @@
                  },
                  {
                      title: "Ship Name - Year",
-                     field: "null",
-                     hozAlign: "center",
+                     field: "ship_name_year",
                      hozAlign: "left",
                      vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Search by Ship Name - Year',
-                     headerFilterParams: {
-                         values: source_of_arrival
-                     },
-                     mutator: nullToEmptyString
+                     headerFilter: "input",
+                     mutator: function(value, data, type, params, component) {
+                         // Constructing "Ship Name - Year"
+                         if (data.mode_of_travel) {
+                             let shipName = data.mode_of_travel.ship ? data.mode_of_travel.ship
+                                 .name_of_ship : '';
+                             let year = data.mode_of_travel.year;
+                             if (shipName && year) {
+                                 return `${shipName} - ${year}`;
+                             } else if (shipName) {
+                                 return `${shipName}`;
+                             } else if (year) {
+                                 return `${year}`;
+                             }
+                         }
+                         return ""; // Return empty if conditions are not met
+                     }
                  },
                  {
                      title: "Spouse Family Name",
                      field: "spouse_details.spouse_family_name",
-                     hozAlign: "center",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Search by Spouse Family Name',
-                     headerFilterParams: {
-                         values: source_of_arrival
-                     },
                      mutator: nullToEmptyString
                  },
                  {
                      title: "Spouse Given Name/s",
                      field: "spouse_details.spouse_given_name",
-                     hozAlign: "center",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Search by Spouse Given Name/s',
-                     headerFilterParams: {
-                         values: source_of_arrival
-                     },
                      mutator: nullToEmptyString
                  },
                  {
@@ -299,8 +294,7 @@
                      formatter: function(cell, formatterParams, onRendered) {
                          var id = cell.getData().id;
                          return '<div class="button-container">' +
-                             '<button class="fa fa-eye view-button" onclick="redirectToView(' +
-                             id +
+                             '<button class="fa fa-eye view-button" onclick="redirectToView(' + id +
                              ')"> </button>' +
                              '</div>';
                      }
@@ -336,7 +330,7 @@
          //trigger download of data.xlsx file
          document.getElementById("download-xlsx").addEventListener("click", function() {
              table.download("xlsx", "Ancestor List.xlsx", {
-                 sheetName: "PASA01",
+                 sheetName: "Ancestor List",
              });
          });
 
