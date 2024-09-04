@@ -171,6 +171,11 @@
              var currentPath = window.location.pathname;
              window.location.href = currentPath + '/' + id;
          }
+
+         function nullToEmptyString(value) {
+             return value === null ? '' : value;
+         }
+
          var ancestorData = @json($ancestor);
          var state = @json($state);
          var occulation = @json($occupation);
@@ -190,7 +195,8 @@
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Surname'
+                     headerFilterPlaceholder: 'Search by Surname',
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Given Name",
@@ -199,7 +205,8 @@
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Given Name'
+                     headerFilterPlaceholder: 'Search by Given Name',
+                     mutator: nullToEmptyString
                  },                 
                  {
                      title: "Birth Date",
@@ -240,7 +247,8 @@
                      headerFilterPlaceholder: 'Search by Mode of Travel',
                      headerFilterParams: {
                          values: source_of_arrival
-                     }
+                     },
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Ship Name - Year",
@@ -252,7 +260,8 @@
                      headerFilterPlaceholder: 'Search by Ship Name - Year',
                      headerFilterParams: {
                          values: source_of_arrival
-                     }
+                     },
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Spouse Family Name",
@@ -264,7 +273,8 @@
                      headerFilterPlaceholder: 'Search by Spouse Family Name',
                      headerFilterParams: {
                          values: source_of_arrival
-                     }
+                     },
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Spouse Given Name/s",
@@ -276,13 +286,15 @@
                      headerFilterPlaceholder: 'Search by Spouse Given Name/s',
                      headerFilterParams: {
                          values: source_of_arrival
-                     }
+                     },
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Action",
                      field: "actions",
                      hozAlign: "center",
                      vertAlign: "middle",
+                     download:'false',
                      width: "8%",
                      formatter: function(cell, formatterParams, onRendered) {
                          var id = cell.getData().id;
