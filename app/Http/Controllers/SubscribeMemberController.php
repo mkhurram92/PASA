@@ -60,10 +60,11 @@ class SubscribeMemberController extends Controller
         $members = Member::with([
             'subscriptionPlan',
             'membershipStatus',
-            'additionalInfo', // This is where membership_number is located
+            'additionalInfo',
             'contact',
             'address',
-            'title'
+            'title',
+            'ancestors.mode_of_travel.ship'
         ])->get();
 
         //dd($members);

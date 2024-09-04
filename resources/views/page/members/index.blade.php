@@ -169,9 +169,41 @@
 
 @section('scripts')
 <script>
+    function nullToEmptyString(value) {
+        return value === null ? '' : value;
+    }
+
+
     var membersData = <?php echo json_encode($members); ?>;
     var membershipTypeOptions = <?php echo json_encode($membershipTypeOptions); ?>;
     var membershipStatusOptions = <?php echo json_encode($membershipStatusOptions); ?>;
+
+    //Filter Ship Name - Year
+    membersData = membersData.map(member => {
+        // Initialize a new field to store the processed "Ship Name - Year" data
+        member.shipNameYear = 'N/A';
+
+        // Check if ancestors exist
+        if (member.ancestors && member.ancestors.length > 0) {
+            // Access the first ancestor
+            let ancestor = member.ancestors[0];
+
+            // Check the source_of_arrival and mode_of_travel conditions
+            if ((ancestor.source_of_arrival == 1 || ancestor.source_of_arrival == 2) && ancestor.mode_of_travel) {
+                let shipName = ancestor.mode_of_travel.ship ? ancestor.mode_of_travel.ship.name_of_ship : '';
+                let year = ancestor.mode_of_travel.year;
+                member.shipNameYear = `${shipName} - ${year}`;
+            }
+        }
+
+        if (member.journal === 0) {
+            member.journalValue = 'Email'; // Map ID 0 to "Email"
+        } else {
+            member.journalValue = 'Post'; // Map ID 1 to "Post"
+        }
+
+        return member;
+    });
 
     var table = new Tabulator("#members-table", {
         data: membersData,
@@ -184,7 +216,8 @@
                 vertAlign: "middle",
                 headerFilter: "input",
                 width: "8%",
-                headerFilterPlaceholder: 'Filter by Membership No'
+                headerFilterPlaceholder: 'Filter by Membership No',
+                mutator: nullToEmptyString
             },
             {
                 title: 'Family Name',
@@ -192,7 +225,8 @@
                 hozAlign: "left",
                 vertAlign: "middle",
                 headerFilter: "input",
-                headerFilterPlaceholder: 'Filter by Family Name'
+                headerFilterPlaceholder: 'Filter by Family Name',
+                mutator: nullToEmptyString
             },
             {
                 title: 'Given Name/s',
@@ -200,7 +234,8 @@
                 hozAlign: "left",
                 vertAlign: "middle",
                 headerFilter: "input",
-                headerFilterPlaceholder: 'Filter by Given Name/s'
+                headerFilterPlaceholder: 'Filter by Given Name/s',
+                mutator: nullToEmptyString
             },
             {
                 title: 'Membership Type',
@@ -211,7 +246,8 @@
                 headerFilterPlaceholder: 'Filter by Membership Type',
                 headerFilterParams: {
                     values: membershipTypeOptions
-                }
+                },
+                mutator: nullToEmptyString
             },
             {
                 title: 'Membership Status',
@@ -222,25 +258,23 @@
                 headerFilterPlaceholder: 'Filter by Membership Status',
                 headerFilterParams: {
                     values: membershipStatusOptions
-                }
+                },
+                mutator: nullToEmptyString
             },
             {
                 title: 'Journal',
-                field: 'journal',
+                field: 'journalValue',
                 hozAlign: "left",
                 vertAlign: "middle",
                 headerFilter: "select",
                 headerFilterParams: {
                     values: {
-                        "0": "Email",
-                        "1": "Post",
+                        "Email": "Email",
+                        "Post": "Post"
                     }
                 },
                 headerFilterPlaceholder: 'Filter by Journal',
-                formatter: function(cell, formatterParams, onRendered) {
-                    var value = cell.getValue();
-                    return value == 0 ? "Email" : "Post";
-                }
+                mutator: nullToEmptyString
             },
             {
                 title: 'Email Address',
@@ -248,8 +282,18 @@
                 hozAlign: "left",
                 vertAlign: "middle",
                 headerFilter: "input",
-                headerFilterPlaceholder: 'Filter by Email'
+                headerFilterPlaceholder: 'Filter by Email',
+                mutator: nullToEmptyString
 
+            },
+            {
+                title: 'Ship Name - Year',
+                field: 'shipNameYear',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Ship Name - Year',
+                mutator: nullToEmptyString
             },
             {
                 title: "Action",
