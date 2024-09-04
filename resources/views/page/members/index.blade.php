@@ -327,7 +327,6 @@
                     title: "Action",
                     field: "actions",
                     hozAlign: "center",
-                    width: "8%",
                     download: false,
                     vertAlign: "middle",
                     formatter: function(cell, formatterParams, onRendered) {
@@ -335,7 +334,7 @@
                         return '<div class="button-container">' +
                             '<button class="fa fa-eye view-button" onclick="redirectToView(' +
                             id +
-                            ')"> View</button>' +
+                            ')"></button>' +
                             '</div>';
                     }
                 }
@@ -376,7 +375,7 @@
         //trigger download of data.xlsx file
         document.getElementById("download-xlsx").addEventListener("click", function() {
             table.download("xlsx", "Member List.xlsx", {
-                sheetName: "PASA01"
+                sheetName: "Member List"
             });
         });
 

@@ -301,7 +301,7 @@
                          return '<div class="button-container">' +
                              '<button class="fa fa-eye view-button" onclick="redirectToView(' +
                              id +
-                             ')"> View</button>' +
+                             ')"> </button>' +
                              '</div>';
                      }
                  }

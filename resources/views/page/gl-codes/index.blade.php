@@ -192,7 +192,7 @@
                          // Add buttons for each row
                          return '<div class="button-container">' +
                              '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
-                             '"> View</button>' +
+                             '"> </button>' +
                              //'<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
                              '</div>';
                      }
