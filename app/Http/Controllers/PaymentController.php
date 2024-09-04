@@ -18,6 +18,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Stripe\PaymentIntent;
 use Stripe\Exception\ApiErrorException;
 use Illuminate\Support\Facades\Log;
+use App\Models\Member;
 
 
 class PaymentController extends Controller
@@ -465,9 +466,25 @@ class PaymentController extends Controller
     public function cashPayment(Request $request)
     {
         $amount = $request->input('amount');
+        $memberId = $request->memberId;
 
+        $member = Member::findOrFail($memberId);
+
+        $description = "Membership Renewal for";
+
+        if (!empty($member->family_name)) {
+            $description .= " {$member->family_name}";
+        }
+        
+        if (!empty($member->given_name)) {
+            $description .= " {$member->given_name}";
+        }
+        
+        if (!empty($member->additionalInfo->membership_number)) {
+            $description .= " Membership No. {$member->additionalInfo->membership_number}";
+        }        
         try {
-            Transaction::createAndProcessTransaction(1, 1, 1, $amount, 'Membership Renewals');
+            Transaction::createAndProcessTransaction(1, 1, 1, $amount, $description);
 
             return response()->json([
                 'success' => true,

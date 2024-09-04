@@ -314,25 +314,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--<div class="mb-3 row">
-                                            <label class="col-md-8 form-label">Date Membership
-                                                Commenced (Membership Approval Date) </label>
-                                            <div class="col-md-4">
-                                                <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->additionalInfo?->date_membership_approved }}"
-                                                    name="date_membership_approved" readonly disabled>
-                                            </div>
-                                        </div>-->
-
-                                        <!--<div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Date Membership Ended
-                                            </label>
-                                            <div class="col-md-8">
-                                                <input class="form-control fc-datepicker" type="text"
-                                                    value="{{ $member?->additionalInfo?->date_membership_end }}"
-                                                    name="date_membership_end" readonly disabled>
-                                            </div>
-                                        </div>-->
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Approval Date</label>
                                             <div class="col-md-8">
@@ -624,7 +605,7 @@
 
             function callCashPaymentRoute(amount) {
                 $.ajax({
-                    url: '{{ route('payment.cash') }}', // Replace with your actual route
+                    url: '{{ route('payment.cash') }}',
                     method: 'POST',
                     data: {
                         amount: amount,
@@ -672,7 +653,7 @@
                                 confirmButtonText: 'OK'
                             }).then(() => {
                                 location
-                                    .reload(); // Refresh the page after the user clicks "OK"
+                                    .reload();
                             });
                         } else {
                             Swal.fire({
