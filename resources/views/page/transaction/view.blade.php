@@ -117,7 +117,7 @@
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Amount<span class="text-danger"></span></label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text" value="{{$transaction->amount}}" disabled readonly>
+                                                <input class="form-control" type="text" value="${{$transaction->amount}}" disabled readonly>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">

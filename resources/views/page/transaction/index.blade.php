@@ -144,8 +144,7 @@
          var table = new Tabulator("#transaction-table", {
              data: gl_Codes,
              layout: "fitColumns",
-             columns: [
-                 {
+             columns: [{
                      title: "Parent G/L",
                      field: "gl_code.gl_codes_parent.name",
                      hozAlign: "left",
@@ -197,7 +196,15 @@
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Amount'
+                     headerFilterPlaceholder: 'Search by Amount',
+                     formatter: "money",
+                     formatterParams: {
+                         decimal: ".",
+                         thousand: ",",
+                         symbol: "$",
+                         symbolAfter: false,
+                         precision: 2
+                     }
                  },
                  {
                      title: "Account",
