@@ -38,31 +38,31 @@
                 <div class="col-md-12 col-lg-12">
                     <div class="card">
                         @if ($errors->any())
-                            <div class="alert alert-danger">
-                                {{ $errors->first() }}
-                            </div>
+                        <div class="alert alert-danger">
+                            {{ $errors->first() }}
+                        </div>
                         @elseif(session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
                         @elseif(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
                         @endif
 
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
                                 @if ($showRenewButton)
-                                    <a class="btn btn-primary mr-2" href="#" id="renewButton">
-                                        <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
-                                    </a>
+                                <a class="btn btn-primary mr-2" href="#" id="renewButton">
+                                    <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
+                                </a>
                                 @endif
                                 @if (!$member?->additionalInfo?->date_membership_approved && $member?->contact?->email)
-                                    <a class="btn btn-success" id="approveButton">
-                                        <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
-                                    </a>
+                                <a class="btn btn-success" id="approveButton">
+                                    <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
+                                </a>
                                 @endif
                                 <a class="btn btn-warning mr-2"
                                     href="{{ url('members/view-ancestor/' . $member?->id) }}" id="ancestor-view">
@@ -134,19 +134,19 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         @php
-                                                            $year = $member?->year_of_birth ?? '';
-                                                            $month = $member?->month_of_birth ?? '';
-                                                            $day = $member?->date_of_birth ?? '';
+                                                        $year = $member?->year_of_birth ?? '';
+                                                        $month = $member?->month_of_birth ?? '';
+                                                        $day = $member?->date_of_birth ?? '';
 
-                                                            $date = $year;
+                                                        $date = $year;
 
-                                                            if ($month) {
-                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
-                                                            }
+                                                        if ($month) {
+                                                        $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                        }
 
-                                                            if ($day) {
-                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
-                                                            }
+                                                        if ($day) {
+                                                        $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                        }
                                                         @endphp
 
                                                         <input class="form-control" value="{{ $date }}"
@@ -279,12 +279,12 @@
                                                 <select name="member_type_id" class="form-control form-select select2"
                                                     id="member_type_id" readonly disabled>
                                                     @forelse ($data['membership_types'] as $type)
-                                                        <option value="{{ $type?->id }}"
-                                                            @if ($type?->id == $member?->member_type_id) selected @endif>
-                                                            {{ $type?->name }}
-                                                        </option>
+                                                    <option value="{{ $type?->id }}"
+                                                        @if ($type?->id == $member?->member_type_id) selected @endif>
+                                                        {{ $type?->name }}
+                                                    </option>
                                                     @empty
-                                                        <option value="">Select Membership Type</option>
+                                                    <option value="">Select Membership Type</option>
                                                     @endforelse
                                                 </select>
                                                 <!-- Hidden fields for prices -->
@@ -303,13 +303,13 @@
                                                     class="form-control form-select select2" id="member_status_id"
                                                     readonly disabled>
                                                     @forelse ($data['membership_status'] as $status)
-                                                        <option value="{{ $status?->id }}"
-                                                            @if ($status?->id == $member?->member_status_id) selected @endif>
-                                                            {{ $status?->name }}
-                                                        </option>
+                                                    <option value="{{ $status?->id }}"
+                                                        @if ($status?->id == $member?->member_status_id) selected @endif>
+                                                        {{ $status?->name }}
+                                                    </option>
                                                     @empty
-                                                        <option value="">Select Membership Status
-                                                        </option>
+                                                    <option value="">Select Membership Status
+                                                    </option>
                                                     @endforelse
                                                 </select>
                                             </div>
@@ -320,25 +320,25 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         @php
-                                                            $year =
-                                                                $member?->additionalInfo?->year_membership_approved ??
-                                                                '';
-                                                            $month =
-                                                                $member?->additionalInfo?->month_membership_approved ??
-                                                                '';
-                                                            $day =
-                                                                $member?->additionalInfo?->date_membership_approved ??
-                                                                '';
+                                                        $year =
+                                                        $member?->additionalInfo?->year_membership_approved ??
+                                                        '';
+                                                        $month =
+                                                        $member?->additionalInfo?->month_membership_approved ??
+                                                        '';
+                                                        $day =
+                                                        $member?->additionalInfo?->date_membership_approved ??
+                                                        '';
 
-                                                            $date = $year;
+                                                        $date = $year;
 
-                                                            if ($month) {
-                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
-                                                            }
+                                                        if ($month) {
+                                                        $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                        }
 
-                                                            if ($day) {
-                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
-                                                            }
+                                                        if ($day) {
+                                                        $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                        }
                                                         @endphp
 
                                                         <input class="form-control" value="{{ $date }}"
@@ -353,21 +353,21 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         @php
-                                                            $year =
-                                                                $member?->additionalInfo?->year_membership_end ?? '';
-                                                            $month =
-                                                                $member?->additionalInfo?->month_membership_end ?? '';
-                                                            $day = $member?->additionalInfo?->date_membership_end ?? '';
+                                                        $year =
+                                                        $member?->additionalInfo?->year_membership_end ?? '';
+                                                        $month =
+                                                        $member?->additionalInfo?->month_membership_end ?? '';
+                                                        $day = $member?->additionalInfo?->date_membership_end ?? '';
 
-                                                            $date = $year;
+                                                        $date = $year;
 
-                                                            if ($month) {
-                                                                $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
-                                                            }
+                                                        if ($month) {
+                                                        $date .= '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
+                                                        }
 
-                                                            if ($day) {
-                                                                $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
-                                                            }
+                                                        if ($day) {
+                                                        $date .= '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                        }
                                                         @endphp
 
                                                         <input class="form-control" value="{{ $date }}"
@@ -414,16 +414,16 @@
                                         </div>
 
                                         @if ($member?->additionalInfo?->key_holder == 1)
-                                            <div class="mb-3 row key_held">
-                                                <label class="col-md-4 form-label">Key Held</label>
-                                                <div class="col-md-8">
-                                                    <textarea class="form-control" name="key_held" readonly disabled rows="3">{{ $member?->additionalInfo?->key_held }}</textarea>
-                                                </div>
+                                        <div class="mb-3 row key_held">
+                                            <label class="col-md-4 form-label">Key Held</label>
+                                            <div class="col-md-8">
+                                                <textarea class="form-control" name="key_held" readonly disabled rows="3">{{ $member?->additionalInfo?->key_held }}</textarea>
                                             </div>
+                                        </div>
                                         @endif
                                     </div>
                                     <div class="col-md-8">
-                                       <div class="mb-3 row">
+                                        <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Volunteer</label>
                                             <div class="col-md-8">
                                                 <span id="volunteerStatus" class="custom-font"></span>
@@ -432,19 +432,73 @@
                                     </div>
                                     <div class="col-lg-12">
                                         @if ($member?->additionalInfo?->volunteer == 1)
-                                            <div class="volunteer_details">
-                                                <div class="mb-3 row">
-                                                    <label class="col-md-4 form-label">Volunteer Notes</label>
-                                                    <div class="col-md-12">
-                                                        <textarea class="form-control" name="experience" rows="10" readonly disabled>{{ $member?->volunteerDetails?->experience }} </textarea>
-                                                    </div>
+                                        <div class="volunteer_details">
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Volunteer Notes</label>
+                                                <div class="col-md-12">
+                                                    <textarea class="form-control" name="experience" rows="10" readonly disabled>{{ $member?->volunteerDetails?->experience }} </textarea>
                                                 </div>
                                             </div>
+                                        </div>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title">Ancestor Details</h3>
+                        </div>
+                        @if (count($member->ancestors) > 0)
+                            <div class="card-body p-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5>Pioneer Name</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5>Source of Arrival</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5>Ship Name - Year</h5>
+                                        </div>
+                                    </div>
+                                    @foreach ($member->ancestors as $ancestor)
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <input name="ancestor_given_name" value="{{ $ancestor->given_name }} {{ $ancestor->ancestor_surname }}" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <input name="source_of_arrival" value="{{ $ancestor->sourceOfArrival->name ?? '' }}" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    @php
+                                                        $shipNameYear = '';
+                                                        if ($ancestor->mode_of_travel?->ship?->name_of_ship) {
+                                                            $shipNameYear = $ancestor->mode_of_travel->ship->name_of_ship;
+                                                            if ($ancestor->mode_of_travel?->year_of_arrival) {
+                                                                $shipNameYear .= ' - ' . $ancestor->mode_of_travel->year_of_arrival;
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    <input name="ship_name_year" value="{{ $shipNameYear }}" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @else
+                            <div class="card">
+                                <div class="card-header justify-content-between">
+                                    <h3 class="card-title">No Ancestor Found</h3>
+                                </div>
+                            </div>
+                        @endif                        
                     </div>
                 </div>
             </div>
@@ -461,352 +515,352 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @section('scripts')
-    @include('plugins.select2')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var renewButton = document.getElementById('renewButton');
-            if (renewButton) {
-                renewButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    var emailPrice = document.getElementById('email_price').value;
-                    var postPrice = document.getElementById('post_price').value;
-                    var journalStatus = document.getElementById('journalStatus').textContent.trim();
-
-                    var selectedPrice = (journalStatus === 'Emailed') ? emailPrice : postPrice;
-                    document.getElementById('selectedPriceField').innerText = selectedPrice;
-
-                    var paymentModal = new bootstrap.Modal(document.getElementById('paymentRenewalModal'));
-                    paymentModal.show();
-                });
-            }
-
-            var stripe = Stripe('{{ env('STRIPE_KEY') }}');
-            var elements = stripe.elements();
-
-            var card = elements.create('card', {
-                hidePostalCode: true,
-                style: {
-                    base: {
-                        color: '#32325d',
-                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                        fontSmoothing: 'antialiased',
-                        fontSize: '16px',
-                        '::placeholder': {
-                            color: '#aab7c4'
-                        }
-                    },
-                    invalid: {
-                        color: '#fa755a',
-                        iconColor: '#fa755a'
-                    }
-                }
-            });
-
-            card.mount('#card-element');
-
-            var stripeFields = document.getElementById('stripeFields');
-            var cashFields = document.getElementById('cashFields');
-            var onlineOption = document.getElementById('onlineOption');
-            var cashOption = document.getElementById('cashOption');
-            var proceedButton = document.getElementById('submitPaymentMethod');
-            var paymentRenewalModalElement = document.getElementById('paymentRenewalModal');
-            var paymentRenewalModal = new bootstrap.Modal(paymentRenewalModalElement, {
-                keyboard: false
-            });
-
-            stripeFields.style.display = 'none';
-
-            onlineOption.addEventListener('change', function() {
-                if (this.checked) {
-                    stripeFields.style.display = 'block';
-                }
-            });
-
-            cashOption.addEventListener('change', function() {
-                if (this.checked) {
-                    stripeFields.style.display = 'none';
-                }
-            });
-
-            proceedButton.addEventListener('click', function(e) {
+@include('plugins.select2')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var renewButton = document.getElementById('renewButton');
+        if (renewButton) {
+            renewButton.addEventListener('click', function(e) {
                 e.preventDefault();
 
-                var selectedPrice = document.getElementById('selectedPriceField').innerText;
+                var emailPrice = document.getElementById('email_price').value;
+                var postPrice = document.getElementById('post_price').value;
+                var journalStatus = document.getElementById('journalStatus').textContent.trim();
 
-                if (onlineOption.checked) {
-                    var cardholderName = document.getElementById('cardholder-name').value;
-                    var billingAddress = {
-                        line1: document.getElementById('billing-address').value,
-                        city: document.getElementById('billing-city').value,
-                        state: document.getElementById('billing-state').value,
-                        postal_code: document.getElementById('billing-postal').value,
-                        country: document.getElementById('billing-country').value,
-                    };
+                var selectedPrice = (journalStatus === 'Emailed') ? emailPrice : postPrice;
+                document.getElementById('selectedPriceField').innerText = selectedPrice;
 
-                    stripe.createToken(card, {
-                        name: cardholderName,
-                        address_line1: billingAddress.line1,
-                        address_city: billingAddress.city,
-                        address_state: billingAddress.state,
-                        address_zip: billingAddress.postal_code,
-                        address_country: billingAddress.country
-                    }).then(function(result) {
-                        if (result.error) {
-                            var errorElement = document.getElementById('card-errors');
-                            errorElement.textContent = result.error.message;
-                        } else {
-                            processPayment(result.token.id, selectedPrice);
-                        }
-                    });
-                } else if (cashOption.checked) {
-                    callCashPaymentRoute(selectedPrice);
-                } else {
+                var paymentModal = new bootstrap.Modal(document.getElementById('paymentRenewalModal'));
+                paymentModal.show();
+            });
+        }
+
+        var stripe = Stripe('{{ env('
+            STRIPE_KEY ') }}');
+        var elements = stripe.elements();
+
+        var card = elements.create('card', {
+            hidePostalCode: true,
+            style: {
+                base: {
+                    color: '#32325d',
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: '#aab7c4'
+                    }
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
+                }
+            }
+        });
+
+        card.mount('#card-element');
+
+        var stripeFields = document.getElementById('stripeFields');
+        var cashFields = document.getElementById('cashFields');
+        var onlineOption = document.getElementById('onlineOption');
+        var cashOption = document.getElementById('cashOption');
+        var proceedButton = document.getElementById('submitPaymentMethod');
+        var paymentRenewalModalElement = document.getElementById('paymentRenewalModal');
+        var paymentRenewalModal = new bootstrap.Modal(paymentRenewalModalElement, {
+            keyboard: false
+        });
+
+        stripeFields.style.display = 'none';
+
+        onlineOption.addEventListener('change', function() {
+            if (this.checked) {
+                stripeFields.style.display = 'block';
+            }
+        });
+
+        cashOption.addEventListener('change', function() {
+            if (this.checked) {
+                stripeFields.style.display = 'none';
+            }
+        });
+
+        proceedButton.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            var selectedPrice = document.getElementById('selectedPriceField').innerText;
+
+            if (onlineOption.checked) {
+                var cardholderName = document.getElementById('cardholder-name').value;
+                var billingAddress = {
+                    line1: document.getElementById('billing-address').value,
+                    city: document.getElementById('billing-city').value,
+                    state: document.getElementById('billing-state').value,
+                    postal_code: document.getElementById('billing-postal').value,
+                    country: document.getElementById('billing-country').value,
+                };
+
+                stripe.createToken(card, {
+                    name: cardholderName,
+                    address_line1: billingAddress.line1,
+                    address_city: billingAddress.city,
+                    address_state: billingAddress.state,
+                    address_zip: billingAddress.postal_code,
+                    address_country: billingAddress.country
+                }).then(function(result) {
+                    if (result.error) {
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        processPayment(result.token.id, selectedPrice);
+                    }
+                });
+            } else if (cashOption.checked) {
+                callCashPaymentRoute(selectedPrice);
+            } else {
+                Swal.fire({
+                    title: 'No Payment Method Selected',
+                    text: 'Please select a payment method.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+
+        function processPayment(token, amount) {
+            $.ajax({
+                url: '{{ route('payment.process') }}',
+                method: 'POST',
+                data: {
+                    stripeToken: token,
+                    amount: amount,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        updateRenewalDate();
+                    } else {
+                        Swal.fire({
+                            title: 'Payment Failed',
+                            text: response.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
                     Swal.fire({
-                        title: 'No Payment Method Selected',
-                        text: 'Please select a payment method.',
-                        icon: 'warning',
+                        title: 'An error occurred',
+                        text: error,
+                        icon: 'error',
                         confirmButtonText: 'OK'
                     });
                 }
             });
+        }
 
-            function processPayment(token, amount) {
-                $.ajax({
-                    url: '{{ route('payment.process') }}',
-                    method: 'POST',
-                    data: {
-                        stripeToken: token,
-                        amount: amount,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            updateRenewalDate();
-                        } else {
-                            Swal.fire({
-                                title: 'Payment Failed',
-                                text: response.message,
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    },
-                    error: function(xhr, status, error) {
+        function callCashPaymentRoute(amount) {
+            $.ajax({
+                url: '{{ route('payment.cash') }}',
+                method: 'POST',
+                data: {
+                    amount: amount,
+                    _token: '{{ csrf_token() }}',
+                    memberId: '{{ $member->id }}',
+                },
+                success: function(response) {
+                    if (response.success) {
+                        updateRenewalDate();
+                    } else {
                         Swal.fire({
-                            title: 'An error occurred',
-                            text: error,
+                            title: 'Payment Failed',
+                            text: response.message,
                             icon: 'error',
                             confirmButtonText: 'OK'
                         });
                     }
-                });
-            }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'An error occurred',
+                        text: error,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
 
-            function callCashPaymentRoute(amount) {
-                $.ajax({
-                    url: '{{ route('payment.cash') }}',
-                    method: 'POST',
-                    data: {
-                        amount: amount,
-                        _token: '{{ csrf_token() }}',
-                        memberId: '{{ $member->id }}',
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            updateRenewalDate();
-                        } else {
-                            Swal.fire({
-                                title: 'Payment Failed',
-                                text: response.message,
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    },
-                    error: function(xhr, status, error) {
+        function updateRenewalDate() {
+            $.ajax({
+                url: '{{ route('update.renewal.date') }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    memberId: '{{ $member->id }}',
+                    renewalDate: new Date().toISOString().slice(0, 10)
+                },
+                success: function(updateResponse) {
+                    if (updateResponse.success) {
                         Swal.fire({
-                            title: 'An error occurred',
-                            text: error,
-                            icon: 'error',
+                            title: 'Membership Renewal Successful!',
+                            text: 'Your membership has been renewed successfully.',
+                            icon: 'success',
                             confirmButtonText: 'OK'
+                        }).then(() => {
+                            location
+                                .reload();
                         });
-                    }
-                });
-            }
-
-            function updateRenewalDate() {
-                $.ajax({
-                    url: '{{ route('update.renewal.date') }}',
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        memberId: '{{ $member->id }}',
-                        renewalDate: new Date().toISOString().slice(0, 10)
-                    },
-                    success: function(updateResponse) {
-                        if (updateResponse.success) {
-                            Swal.fire({
-                                title: 'Membership Renewal Successful!',
-                                text: 'Your membership has been renewed successfully.',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            }).then(() => {
-                                location
-                                    .reload();
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Error',
-                                text: 'Failed to update the renewal date.',
-                                icon: 'error',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-                    },
-                    error: function(xhr, status, error) {
+                    } else {
                         Swal.fire({
                             title: 'Error',
-                            text: 'An error occurred while updating the renewal date.',
+                            text: 'Failed to update the renewal date.',
                             icon: 'error',
                             confirmButtonText: 'OK'
                         });
                     }
-                });
-            }
-        });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'An error occurred while updating the renewal date.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
+    });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            $('#approveButton').on('click', function() {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'You are about to approve the membership.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, approve it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '{{ route('members.update', ['member' => $member?->id]) }}',
-                            method: 'PUT',
-                            data: {
-                                '_token': '{{ csrf_token() }}',
-                            },
-                            success: function(response) {
-                                if (response && response.status === true) {
-                                    Swal.fire({
-                                        title: 'Success!',
-                                        text: response.message,
-                                        icon: 'success',
-                                        showCancelButton: false,
-                                        confirmButtonText: 'OK',
-                                        timerProgressBar: true,
-                                        allowOutsideClick: false,
-                                        timer: 10000,
-                                    }).then(() => {
-                                        window.location.href = response
-                                            .redirectTo;
-                                    });
-                                } else {
-                                    console.error('Error updating member:', response
-                                        .message);
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                console.error('Error updating member:', error);
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#approveButton').on('click', function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to approve the membership.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, approve it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{{ route('members.update', ['member'=> $member?->id]) }}',
+                        method: 'PUT',
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                        },
+                        success: function(response) {
+                            if (response && response.status === true) {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: response.message,
+                                    icon: 'success',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'OK',
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    timer: 10000,
+                                }).then(() => {
+                                    window.location.href = response
+                                        .redirectTo;
+                                });
+                            } else {
+                                console.error('Error updating member:', response
+                                    .message);
                             }
-                        });
-                    }
-                });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error updating member:', error);
+                        }
+                    });
+                }
             });
         });
+    });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var displayStatus = document.getElementById('displayStatus');
-            var volunteerStatus = document.getElementById('volunteerStatus');
-            var registrationFormStatus = document.getElementById('registrationFormStatus');
-            var signedAgreementStatus = document.getElementById('signedAgreementStatus');
-            var journalStatus = document.getElementById('journalStatus');
+    document.addEventListener('DOMContentLoaded', function() {
+        var displayStatus = document.getElementById('displayStatus');
+        var volunteerStatus = document.getElementById('volunteerStatus');
+        var registrationFormStatus = document.getElementById('registrationFormStatus');
+        var signedAgreementStatus = document.getElementById('signedAgreementStatus');
+        var journalStatus = document.getElementById('journalStatus');
 
-            // Initial display based on the value
-            displayStatus.textContent =
-                @if ($member?->additionalInfo?->key_holder == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
+        // Initial display based on the value
+        displayStatus.textContent =
+            @if($member?->additionalInfo?->key_holder == 1)
+        'Yes'
+        @else
+            'No'
+        @endif;
 
-            volunteerStatus.textContent =
-                @if ($member?->additionalInfo?->volunteer == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            registrationFormStatus.textContent =
-                @if ($member?->additionalInfo?->registration_form_received == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            signedAgreementStatus.textContent =
-                @if ($member?->additionalInfo?->signed_agreement == 1)
-                    'Yes'
-                @else
-                    'No'
-                @endif ;
-            journalStatus.textContent =
-                @if ($member?->journal == 0)
-                    'Emailed'
-                @else
-                    'Posted'
-                @endif ;
+        volunteerStatus.textContent =
+            @if($member?->additionalInfo?->volunteer == 1)
+        'Yes'
+        @else
+            'No'
+        @endif;
+        registrationFormStatus.textContent =
+            @if($member?->additionalInfo?->registration_form_received == 1)
+        'Yes'
+        @else
+            'No'
+        @endif;
+        signedAgreementStatus.textContent =
+            @if($member?->additionalInfo?->signed_agreement == 1)
+        'Yes'
+        @else
+            'No'
+        @endif;
+        journalStatus.textContent =
+            @if($member?->journal == 0)
+        'Emailed'
+        @else
+            'Posted'
+        @endif;
 
-        });
+    });
 
-        document.getElementById('editLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
+    document.getElementById('editLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
 
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+        // Extract the current URL and the id from it
+        var currentUrl = window.location.href;
+        var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/edit-member/');
+        // Construct the new URL for editing
+        var newUrl = currentUrl.replace('/view-member/', '/edit-member/');
 
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
+        // Redirect to the new URL
+        window.location.href = newUrl;
+    });
 
-        document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
+    document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
 
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+        // Extract the current URL and the id from it
+        var currentUrl = window.location.href;
+        var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/view-pedigree/');
+        // Construct the new URL for editing
+        var newUrl = currentUrl.replace('/view-member/', '/view-pedigree/');
 
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
-        document.getElementById('viewAncestorsLink').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
+        // Redirect to the new URL
+        window.location.href = newUrl;
+    });
+    document.getElementById('viewAncestorsLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
 
-            // Extract the current URL and the id from it
-            var currentUrl = window.location.href;
-            var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+        // Extract the current URL and the id from it
+        var currentUrl = window.location.href;
+        var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
-            // Construct the new URL for editing
-            var newUrl = currentUrl.replace('/view-member/', '/view-ancestor/');
+        // Construct the new URL for editing
+        var newUrl = currentUrl.replace('/view-member/', '/view-ancestor/');
 
-            // Redirect to the new URL
-            window.location.href = newUrl;
-        });
-        
-    </script>
+        // Redirect to the new URL
+        window.location.href = newUrl;
+    });
+</script>
 @endsection
 <!-- app-content end-->
 @include('layout.footer')
