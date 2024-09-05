@@ -405,7 +405,6 @@ class SubscribeMemberController extends Controller
                 "member_id" => $member->id,
                 "email" => $member->contact->email,
                 "password" => $member->password,
-                //"name" => $member->given_name . " " . $member->family_name,
                 "role_id" => 2
             ]);
 
@@ -421,10 +420,6 @@ class SubscribeMemberController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-
-            // Log the exception for debugging purposes
-            Log::error('Error updating member: ' . $e->getMessage());
-
             return response()->json([
                 "status" => false,
                 "message" => "Error updating member",
@@ -545,7 +540,6 @@ class SubscribeMemberController extends Controller
             return redirect()->route('members.index')->with('error', 'Member not found.');
         }
 
-        //return view('page.members.add-ancestor', ['member' => $member]);
         return view('page.members.add-ancestor', compact('member', 'ancestors'));
     }
 
@@ -558,14 +552,12 @@ class SubscribeMemberController extends Controller
 
         $member = Member::findOrFail($memberId);
 
-        // Loop through the ancestors and attach them to the member
         foreach ($request->given_name as $ancestorId) {
             if ($ancestorId) {
                 $member->ancestors()->attach($ancestorId);
             }
         }
 
-        //return redirect()->route('members.show', $member->id)->with('success', 'Ancestors added successfully.');
         return response()->json([
             "status" => true,
             "message" => "Ancestors added successfully",

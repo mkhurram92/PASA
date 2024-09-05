@@ -105,7 +105,7 @@ class PaymentController extends Controller
                 'query' => "email:'" . $user['email'] . "' AND username:'" . $user['username'] . "'",
             ]);
             //if (empty($customer)) {
-                // create client if it not exists
+            // create client if it not exists
             //    $stripe->customers->create([
             //        'description' => $level . ' level customer.',
             //        'name' => $user['username'],
@@ -147,7 +147,7 @@ class PaymentController extends Controller
             // ]);
             //$customer = [];
             //if (empty($customer)) {
-                // create client if it not exists
+            // create client if it not exists
             //    $customer = $stripe->customers->create([
             //        'description' => $level . ' Member.',
             //        'name' => $user['username'],
@@ -417,52 +417,69 @@ class PaymentController extends Controller
     }
     public function processPayment(Request $request)
     {
-        $amount = $request->input('amount');
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+        //Log::info('Request Data:', $request->all());
+        $amount = $request->input('amount') * 100;
+        $member = Member::findOrFail($request->memberId);
+
+        $description = "Membership Renewal for";
+
+        if (!empty($member->family_name)) {
+            $description .= " {$member->family_name}";
+        }
+
+        if (!empty($member->given_name)) {
+            $description .= " {$member->given_name}";
+        }
+
+        if (!empty($member->additionalInfo->membership_number)) {
+            $description .= ". Membership No. {$member->additionalInfo->membership_number}";
+        }
 
         try {
+            // Set Stripe API key
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+
+            // Create Stripe charge
             $charge = Charge::create([
-                'amount' => $amount * 100,
+                'amount' => $amount,
                 'currency' => 'aud',
-                'description' => 'Membership Renewal',
+                'description' => $description,
                 'source' => $request->input('stripeToken'),
                 'receipt_email' => $request->user()->email,
-                'metadata' => [
-                    'cardholder_name' => $request->input('cardholderName'),
-                ],
+                'metadata' => ['cardholder_name' => $request->input('cardholderName')],
             ]);
 
+            // Check if payment was successful
             if ($charge->status === 'succeeded') {
-
-                Transaction::createAndProcessTransaction(1, 1, 4, $amount, 'Membership Renewals');
+                // Log the transaction
+                Transaction::createAndProcessTransaction(1, 1, 4, $amount / 100, $description);
 
                 return response()->json([
                     'success' => true,
                     'message' => 'Payment successful!',
                 ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Payment not successful. Status: ' . $charge->status,
-                ], 400);
             }
-        } catch (CardException $e) {
+
+            // If payment was not successful
             return response()->json([
                 'success' => false,
-                'message' => 'Card error: ' . $e->getError()->message,
-            ], 500);
-        } catch (ApiErrorException $e) {
+                'message' => 'Payment not successful. Status: ' . $charge->status,
+            ], 400);
+        } catch (CardException | ApiErrorException $e) {
+            // Handle Stripe-specific errors
             return response()->json([
                 'success' => false,
-                'message' => 'Stripe API error: ' . $e->getMessage(),
+                'message' => 'Stripe error: ' . $e->getMessage(),
             ], 500);
         } catch (\Exception $e) {
+            // Handle general errors
             return response()->json([
                 'success' => false,
-                'message' => 'General error: ' . $e->getMessage(),
+                'message' => 'Error: ' . $e->getMessage(),
             ], 500);
         }
     }
+
     public function cashPayment(Request $request)
     {
         $amount = $request->input('amount');
@@ -475,14 +492,14 @@ class PaymentController extends Controller
         if (!empty($member->family_name)) {
             $description .= " {$member->family_name}";
         }
-        
+
         if (!empty($member->given_name)) {
             $description .= " {$member->given_name}";
         }
-        
+
         if (!empty($member->additionalInfo->membership_number)) {
-            $description .= " Membership No. {$member->additionalInfo->membership_number}";
-        }        
+            $description .= ". Membership No. {$member->additionalInfo->membership_number}";
+        }
         try {
             Transaction::createAndProcessTransaction(1, 1, 1, $amount, $description);
 

@@ -632,7 +632,8 @@
             data: {
                 stripeToken: token,
                 amount: amount,
-                _token: '{{ csrf_token() }}'
+                _token: '{{ csrf_token() }}',
+                memberId: '{{ $member->id }}'
             },
             success: function(response) {
                 if (response.success) {
