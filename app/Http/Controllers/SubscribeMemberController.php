@@ -644,8 +644,8 @@ class SubscribeMemberController extends Controller
             $currentRenewalDate = (clone $today)->modify('+1 year');
 
             // Update the member's renewal date fields
-            $member->date_membership_end = $currentRenewalDate->format('d'); // Day
-            $member->month_membership_end = $currentRenewalDate->format('m'); // Month
+            $member->date_membership_end = "30"; // Day
+            $member->month_membership_end = "06"; // Month
             $member->year_membership_end = $currentRenewalDate->format('Y'); // Year
             $member->save();
 

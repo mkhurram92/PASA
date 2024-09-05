@@ -511,7 +511,6 @@
 </div>
 <!-- MODAL EFFECTS -->
 <div id="crud"></div>
-@include('models.payment-renewal')
 
 <script src="https://js.stripe.com/v3/"></script>
 
@@ -520,210 +519,205 @@
 
 @section('scripts')
 @include('plugins.select2')
+@include('models.payment-renewal')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var renewButton = document.getElementById('renewButton');
-        if (renewButton) {
-            renewButton.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                var emailPrice = document.getElementById('email_price').value;
-                var postPrice = document.getElementById('post_price').value;
-                var journalStatus = document.getElementById('journalStatus').textContent.trim();
-
-                var selectedPrice = (journalStatus === 'Emailed') ? emailPrice : postPrice;
-                document.getElementById('selectedPriceField').innerText = selectedPrice;
-
-                var paymentModal = new bootstrap.Modal(document.getElementById('paymentRenewalModal'));
-                paymentModal.show();
-            });
-        }
-
-        var stripe = Stripe('{{ env('
-            STRIPE_KEY ') }}');
-        var elements = stripe.elements();
-
-        var card = elements.create('card', {
-            hidePostalCode: true,
-            style: {
-                base: {
-                    color: '#32325d',
-                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                    fontSmoothing: 'antialiased',
-                    fontSize: '16px',
-                    '::placeholder': {
-                        color: '#aab7c4'
-                    }
-                },
-                invalid: {
-                    color: '#fa755a',
-                    iconColor: '#fa755a'
-                }
-            }
-        });
-
-        card.mount('#card-element');
-
-        var stripeFields = document.getElementById('stripeFields');
-        var cashFields = document.getElementById('cashFields');
-        var onlineOption = document.getElementById('onlineOption');
-        var cashOption = document.getElementById('cashOption');
-        var proceedButton = document.getElementById('submitPaymentMethod');
-        var paymentRenewalModalElement = document.getElementById('paymentRenewalModal');
-        var paymentRenewalModal = new bootstrap.Modal(paymentRenewalModalElement, {
-            keyboard: false
-        });
-
-        stripeFields.style.display = 'none';
-
-        onlineOption.addEventListener('change', function() {
-            if (this.checked) {
-                stripeFields.style.display = 'block';
-            }
-        });
-
-        cashOption.addEventListener('change', function() {
-            if (this.checked) {
-                stripeFields.style.display = 'none';
-            }
-        });
-
-        proceedButton.addEventListener('click', function(e) {
+    var renewButton = document.getElementById('renewButton');
+    if (renewButton) {
+        renewButton.addEventListener('click', function(e) {
             e.preventDefault();
 
-            var selectedPrice = document.getElementById('selectedPriceField').innerText;
+            var emailPrice = document.getElementById('email_price').value;
+            var postPrice = document.getElementById('post_price').value;
+            var journalStatus = document.getElementById('journalStatus').textContent.trim();
 
-            if (onlineOption.checked) {
-                var cardholderName = document.getElementById('cardholder-name').value;
-                var billingAddress = {
-                    line1: document.getElementById('billing-address').value,
-                    city: document.getElementById('billing-city').value,
-                    state: document.getElementById('billing-state').value,
-                    postal_code: document.getElementById('billing-postal').value,
-                    country: document.getElementById('billing-country').value,
-                };
+            var selectedPrice = (journalStatus === 'Emailed') ? emailPrice : postPrice;
+            document.getElementById('selectedPriceField').innerText = selectedPrice;
 
-                stripe.createToken(card, {
-                    name: cardholderName,
-                    address_line1: billingAddress.line1,
-                    address_city: billingAddress.city,
-                    address_state: billingAddress.state,
-                    address_zip: billingAddress.postal_code,
-                    address_country: billingAddress.country
-                }).then(function(result) {
-                    if (result.error) {
-                        var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
-                    } else {
-                        processPayment(result.token.id, selectedPrice);
-                    }
-                });
-            } else if (cashOption.checked) {
-                callCashPaymentRoute(selectedPrice);
-            } else {
+            var paymentModal = new bootstrap.Modal(document.getElementById('paymentRenewalModal'));
+            paymentModal.show();
+        });
+    }
+
+    var stripe = Stripe('{{ env('STRIPE_KEY') }}');
+    var elements = stripe.elements();
+    var card = elements.create('card', {
+        hidePostalCode: true,
+        style: {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        }
+    });
+
+    card.mount('#card-element');
+
+    var stripeFields = document.getElementById('stripeFields');
+    var cashFields = document.getElementById('cashFields');
+    var onlineOption = document.getElementById('onlineOption');
+    var cashOption = document.getElementById('cashOption');
+    var proceedButton = document.getElementById('submitPaymentMethod');
+
+    stripeFields.style.display = 'none';
+
+    onlineOption.addEventListener('change', function() {
+        if (this.checked) {
+            stripeFields.style.display = 'block';
+        }
+    });
+
+    cashOption.addEventListener('change', function() {
+        if (this.checked) {
+            stripeFields.style.display = 'none';
+        }
+    });
+
+    proceedButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var selectedPrice = document.getElementById('selectedPriceField').innerText;
+
+        if (onlineOption.checked) {
+            var cardholderName = document.getElementById('cardholder-name').value;
+            var billingAddress = {
+                line1: document.getElementById('billing-address').value,
+                city: document.getElementById('billing-city').value,
+                state: document.getElementById('billing-state').value,
+                postal_code: document.getElementById('billing-postal').value,
+                country: document.getElementById('billing-country').value,
+            };
+
+            stripe.createToken(card, {
+                name: cardholderName,
+                address_line1: billingAddress.line1,
+                address_city: billingAddress.city,
+                address_state: billingAddress.state,
+                address_zip: billingAddress.postal_code,
+                address_country: billingAddress.country
+            }).then(function(result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    console.log("Stripe Token:", result.token); // For debugging
+                    processPayment(result.token.id, selectedPrice);
+                }
+            });
+        } else if (cashOption.checked) {
+            callCashPaymentRoute(selectedPrice);
+        } else {
+            Swal.fire({
+                title: 'No Payment Method Selected',
+                text: 'Please select a payment method.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+
+    function processPayment(token, amount) {
+        $.ajax({
+            url: '{{ route('payment.process') }}',
+            method: 'POST',
+            data: {
+                stripeToken: token,
+                amount: amount,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    updateRenewalDate();
+                } else {
+                    Swal.fire({
+                        title: 'Payment Failed',
+                        text: response.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
                 Swal.fire({
-                    title: 'No Payment Method Selected',
-                    text: 'Please select a payment method.',
-                    icon: 'warning',
+                    title: 'An error occurred',
+                    text: error,
+                    icon: 'error',
                     confirmButtonText: 'OK'
                 });
             }
         });
+    }
 
-        function processPayment(token, amount) {
-            $.ajax({
-                url: '{{ route('payment.process') }}',
-                method: 'POST',
-                data: {
-                    stripeToken: token,
-                    amount: amount,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        updateRenewalDate();
-                    } else {
-                        Swal.fire({
-                            title: 'Payment Failed',
-                            text: response.message,
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
+    function callCashPaymentRoute(amount) {
+        $.ajax({
+            url: '{{ route('payment.cash') }}',
+            method: 'POST',
+            data: {
+                amount: amount,
+                _token: '{{ csrf_token() }}',
+                memberId: '{{ $member->id }}',
+            },
+            success: function(response) {
+                if (response.success) {
+                    updateRenewalDate();
+                } else {
                     Swal.fire({
-                        title: 'An error occurred',
-                        text: error,
+                        title: 'Payment Failed',
+                        text: response.message,
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
                 }
-            });
-        }
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: 'An error occurred',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    }
 
-        function callCashPaymentRoute(amount) {
-            $.ajax({
-                url: '{{ route('payment.cash') }}',
-                method: 'POST',
-                data: {
-                    amount: amount,
-                    _token: '{{ csrf_token() }}',
-                    memberId: '{{ $member->id }}',
-                },
-                success: function(response) {
-                    if (response.success) {
-                        updateRenewalDate();
-                    } else {
-                        Swal.fire({
-                            title: 'Payment Failed',
-                            text: response.message,
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
+    function updateRenewalDate() {
+        $.ajax({
+            url: '{{ route('update.renewal.date') }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                memberId: '{{ $member->id }}',
+                renewalDate: new Date().toISOString().slice(0, 10)
+            },
+            success: function(updateResponse) {
+                if (updateResponse.success) {
                     Swal.fire({
-                        title: 'An error occurred',
-                        text: error,
+                        title: 'Membership Renewal Successful!',
+                        text: 'Your membership has been renewed successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to update the renewal date.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
                 }
-            });
-        }
-
-        function updateRenewalDate() {
-            $.ajax({
-                url: '{{ route('update.renewal.date') }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    memberId: '{{ $member->id }}',
-                    renewalDate: new Date().toISOString().slice(0, 10)
-                },
-                success: function(updateResponse) {
-                    if (updateResponse.success) {
-                        Swal.fire({
-                            title: 'Membership Renewal Successful!',
-                            text: 'Your membership has been renewed successfully.',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            location
-                                .reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'Failed to update the renewal date.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
+            },
+            error: function(xhr, status, error) {
                     Swal.fire({
                         title: 'Error',
                         text: 'An error occurred while updating the renewal date.',
@@ -825,43 +819,34 @@
     });
 
     document.getElementById('editLink').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default behavior of the link
+        event.preventDefault(); 
 
-        // Extract the current URL and the id from it
         var currentUrl = window.location.href;
         var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
-        // Construct the new URL for editing
         var newUrl = currentUrl.replace('/view-member/', '/edit-member/');
 
-        // Redirect to the new URL
         window.location.href = newUrl;
     });
 
     document.getElementById('viewPedigreeLink').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default behavior of the link
+        event.preventDefault();
 
-        // Extract the current URL and the id from it
         var currentUrl = window.location.href;
         var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
-        // Construct the new URL for editing
         var newUrl = currentUrl.replace('/view-member/', '/view-pedigree/');
 
-        // Redirect to the new URL
         window.location.href = newUrl;
     });
     document.getElementById('viewAncestorsLink').addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default behavior of the link
+        event.preventDefault();
 
-        // Extract the current URL and the id from it
         var currentUrl = window.location.href;
         var id = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
-        // Construct the new URL for editing
         var newUrl = currentUrl.replace('/view-member/', '/view-ancestor/');
 
-        // Redirect to the new URL
         window.location.href = newUrl;
     });
 </script>
