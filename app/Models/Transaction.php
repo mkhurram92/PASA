@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $table = 'transactions';
-    protected $fillable = ['amount', 'transaction_type_id', 'account_id', 'gl_code_id', 'description'];
+    protected $fillable = ['amount', 'transaction_type_id', 'account_id', 'gl_code_id', 'description', 'member_id'];
 
     public function glCode()
     {
@@ -22,7 +22,7 @@ class Transaction extends Model
         return $this->belongsTo(TransactionType::class, 'transaction_type_id');
     }
     
-    public static function createAndProcessTransaction($transactionType, $glCodeId, $accountId, $amount, $description)
+    public static function createAndProcessTransaction($transactionType, $glCodeId, $accountId, $amount, $description, $memberId)
     {
         // Create a new Transaction instance
         $transaction = self::create([
@@ -31,6 +31,7 @@ class Transaction extends Model
             'account_id' => $accountId,
             'amount' => $amount,
             'description' => $description,
+            'member_id' => $memberId,
         ]);
 
         // Find the related account

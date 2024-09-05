@@ -419,7 +419,8 @@ class PaymentController extends Controller
     {
         //Log::info('Request Data:', $request->all());
         $amount = $request->input('amount') * 100;
-        $member = Member::findOrFail($request->memberId);
+        $memberId = $request->memberId;
+        $member = Member::findOrFail($memberId);
 
         $description = "Membership Renewal for";
 
@@ -452,7 +453,7 @@ class PaymentController extends Controller
             // Check if payment was successful
             if ($charge->status === 'succeeded') {
                 // Log the transaction
-                Transaction::createAndProcessTransaction(1, 1, 4, $amount / 100, $description);
+                Transaction::createAndProcessTransaction(1, 1, 4, $amount / 100, $description, $memberId);
 
                 return response()->json([
                     'success' => true,
@@ -501,7 +502,7 @@ class PaymentController extends Controller
             $description .= ". Membership No. {$member->additionalInfo->membership_number}";
         }
         try {
-            Transaction::createAndProcessTransaction(1, 1, 1, $amount, $description);
+            Transaction::createAndProcessTransaction(1, 1, 1, $amount, $description, $memberId);
 
             return response()->json([
                 'success' => true,
