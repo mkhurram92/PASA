@@ -12,7 +12,7 @@
                     <input type="hidden" name="email" value="{{ $user->email }}">
                     <div class="form-group">
                         <label for="name" class="control-label">Name</label>
-                        <input type="text" class="form-control" value="{{ $user->name }}" readonly disabled>
+                        <input type="text" class="form-control" value="{{ $user?->member?->family_name . ' ' . $user?->member?->given_name }}" readonly disabled>
                     </div>
                     <div class="form-group">
                         <label for="email" class="control-label">Email</label>

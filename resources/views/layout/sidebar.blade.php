@@ -11,7 +11,7 @@
                     </div>
                     <div class="user-info text-center">
                         <h5 class="mb-1 font-weight-bold">
-                            {{ trim((auth()->user()->member->given_name ?? '') . ' ' . (auth()->user()->member->family_name ?? '')) }}
+                            {{ trim((auth()->user()->member->family_name ?? '') . ' ' . (auth()->user()->member->given_name ?? '')) }}
                         </h5>
                     </div>
                 </div>

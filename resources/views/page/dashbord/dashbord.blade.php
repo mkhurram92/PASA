@@ -11,7 +11,7 @@
                     <h4 class="page-title">Dashboard</h4>
                 </div>
                 <div>
-                    <h5 class="page-title">Welcome back {{ Auth::user()->name }}</h5>
+                    <h5 class="page-title">Welcome back {{ Auth::user()->member?->family_name . ' ' . Auth::user()->member?->given_name }}</h5>
                 </div>
             </div>
             

@@ -106,15 +106,15 @@ class UserController extends Controller
     {
         // Validate input
         $request->validate([
-            'name' => 'required|max:50',
-            'email' => 'required|email|max:50',
+            'name' => 'nullable|max:50',
+            'email' => 'nullable|email|max:50',
             'role_id' => 'required|exists:roles,id',
             'password' => 'nullable',
         ]);
 
         // Update user fields
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
+        //$user->name = $request->input('name');
+        //$user->email = $request->input('email');
         $user->role_id = $request->input('role_id');
 
         // Update password if provided

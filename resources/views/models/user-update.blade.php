@@ -14,11 +14,11 @@
 
                     <div class="form-group">
                         <label for="name" class="control-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="{{$user->name}}" maxlength="50" required="">
+                        <input type="text" class="form-control" id="name" name="name" value="{{$user?->member?->family_name . ' ' . $user?->member?->given_name}}" maxlength="50" required="" disabled>
                     </div>
                     <div class="form-group">
                         <label for="email" class="control-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="{{$user->email}}" maxlength="50" required="">
+                        <input type="email" class="form-control" id="email" name="email" value="{{$user->email}}" maxlength="50" required="" disabled>
                     </div>
                     <div class="form-group">
                         <label for="role_id" class="control-label">Role</label>
