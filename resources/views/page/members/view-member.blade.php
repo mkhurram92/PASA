@@ -478,11 +478,15 @@
                                                 <div class="mb-3">
                                                     @php
                                                         $shipNameYear = '';
-                                                        if ($ancestor->mode_of_travel?->ship?->name_of_ship) {
-                                                            $shipNameYear = $ancestor->mode_of_travel->ship->name_of_ship;
-                                                            if ($ancestor->mode_of_travel?->year_of_arrival) {
-                                                                $shipNameYear .= ' - ' . $ancestor->mode_of_travel->year_of_arrival;
+                                                        if ($ancestor->source_of_arrival == 1 || $ancestor->source_of_arrival == 2) {
+                                                            if ($ancestor->mode_of_travel?->ship?->name_of_ship) {
+                                                                $shipNameYear = $ancestor->mode_of_travel->ship->name_of_ship;
+                                                                if ($ancestor->mode_of_travel?->year_of_arrival) {
+                                                                    $shipNameYear .= ' - ' . $ancestor->mode_of_travel->year_of_arrival;
+                                                                }
                                                             }
+                                                        } elseif ($ancestor->source_of_arrival == 3) {
+                                                            $shipNameYear = $ancestor->localTravelDetails?->travel_date;
                                                         }
                                                     @endphp
                                                     <input name="ship_name_year" value="{{ $shipNameYear }}" class="form-control" disabled>

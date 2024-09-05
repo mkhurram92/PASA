@@ -180,8 +180,10 @@ class SubscribeMemberController extends Controller
     public function viewMember($id)
     {
         $member = Member::with([
-            'ancestors.mode_of_travel.ship'
+            'ancestors.mode_of_travel.ship', 'ancestors.localTravelDetails'
         ])->find($id);
+
+        //dd($member);
 
         $data['state_name'] = Helper::getState($member?->address?->state);
         $data['gender_name'] = Helper::getGender($member?->ancestor?->gender);
