@@ -616,14 +616,11 @@ class SubscribeMemberController extends Controller
             $modeOfArrival = ModeOfArrivals::find($id);
 
             if ($modeOfArrival) {
-                //Log::error('Mode of Arrival not found', ['id' => $modeOfArrival->date_of_arrival]);
                 return response()->json(['date_of_arrival' => $modeOfArrival->date_of_arrival]);
             } else {
-                //Log::error('Mode of Arrival not found', ['id' => $id]);
                 return response()->json(['error' => 'Mode of Arrival not found'], 404);
             }
         } catch (\Exception $e) {
-            //Log::error('Error fetching Mode of Arrival', ['exception' => $e]);
             return response()->json(['error' => 'Error fetching data'], 500);
         }
     }
@@ -637,13 +634,10 @@ class SubscribeMemberController extends Controller
                 return response()->json(['success' => false, 'message' => 'Member not found.']);
             }
 
-            // Get today's date
             $today = new \DateTime();
 
-            // Add one year to today's date
             $currentRenewalDate = (clone $today)->modify('+1 year');
 
-            // Update the member's renewal date fields
             $member->date_membership_end = "30"; // Day
             $member->month_membership_end = "06"; // Month
             $member->year_membership_end = $currentRenewalDate->format('Y'); // Year
