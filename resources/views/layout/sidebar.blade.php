@@ -10,7 +10,9 @@
                             src="{{ asset('images/logo/2023-02-09-Pioneers-SA-Badge-Clear-Background.png') }}">
                     </div>
                     <div class="user-info text-center">
-                        <h5 class=" mb-1 font-weight-bold">{{ auth()->user()->name }}</h5>
+                        <h5 class="mb-1 font-weight-bold">
+                            {{ trim((auth()->user()->member->given_name ?? '') . ' ' . (auth()->user()->member->family_name ?? '')) }}
+                        </h5>
                     </div>
                 </div>
             </div>
@@ -60,7 +62,7 @@
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-bank fa-2x mx-3"></i>
                             <span class="side-menu__label">Finance</span><i class="angle fe fe-chevron-right"></i></a>
-                        <ul class="slide-menu @if (Route::is('gl-codes-parent.index','gl-codes.create', 'gl-codes.index', 'transaction.index')) open @endif">
+                        <ul class="slide-menu @if (Route::is('gl-codes-parent.index', 'gl-codes.create', 'gl-codes.index', 'transaction.index')) open @endif">
                             @can('finance-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('transaction.index')) active @endif"
@@ -171,8 +173,9 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['title-list','user-list', 'states-list', 'ports-list', 'counties-list', 'occupations-list', 'rigs-list',
-                    'ships-list', 'role-list', 'source-of-arrival-list', 'cities-list', 'subscription-plans-list', 'membership-status-list','gl_codes-list'])
+                @canany(['title-list', 'user-list', 'states-list', 'ports-list', 'counties-list', 'occupations-list',
+                    'rigs-list', 'ships-list', 'role-list', 'source-of-arrival-list', 'cities-list',
+                    'subscription-plans-list', 'membership-status-list', 'gl_codes-list'])
                     <li class="slide @if (Route::is(
                             'title.index',
                             'user.index',
@@ -185,7 +188,8 @@
                             'ship.index',
                             'source-of-arrivals.index',
                             'subscription-plans.index',
-                            'cities.index', 'membership-status.index')) is-expanded @endif">
+                            'cities.index',
+                            'membership-status.index')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-gears fa-2x mx-3"></i>
                             <span class="side-menu__label">Settings</span><i class="angle fe fe-chevron-right"></i></a>
@@ -199,7 +203,8 @@
                                 'occupations.index',
                                 'rigs.index',
                                 'ship.index',
-                                'subscription-plans.index', 'membership-status.index')) open @endif">
+                                'subscription-plans.index',
+                                'membership-status.index')) open @endif">
                             @can('user-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('user.index')) active @endif"

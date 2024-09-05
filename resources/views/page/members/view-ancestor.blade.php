@@ -50,14 +50,15 @@
                         <div class="card-header justify-content-between">
                             <h3 class="card-title">View Member's Ancestor</h3>
                             <div>
+                                <a class="btn btn-info" onclick="downloadExcel()">
+                                    <i class="fa fa-file-excel-o" style="font-size:20px;"> Download</i>
+                                </a> 
                                 @if (Auth::user()->name == 'Admin')
                                     <a class="btn btn-danger" href="{{ route('members.index') }}">
                                         <i class="fa fa-home" style="font-size:20px;"> Home</i>
                                     </a>
                                     @if (count($member->ancestors) > 0)
-                                    <a class="btn btn-info" onclick="downloadExcel()">
-                                        <i class="fa fa-file-excel-o" style="font-size:20px;"> Download</i>
-                                    </a>                                    
+                                                                       
                                         <a class="btn btn-success mr-2"
                                             href="{{ route('members.editAncestors', $member->id) }}">
                                             <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
@@ -72,9 +73,6 @@
                                         <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                     </a>
                                 @else
-                                    <a class="btn btn-danger" href="{{ route('profile') }}">
-                                        <i class="fa fa-home" style="font-size:20px;"> Home</i>
-                                    </a>
                                     @if (count($member->ancestors) > 0)
                                         <a class="btn btn-success mr-2" href="{{ route('members.editAncestors', $member->id) }}">
                                             <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
