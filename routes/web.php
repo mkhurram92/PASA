@@ -46,6 +46,7 @@ use App\Http\Controllers\authentications\NewPasswordController;
 use App\Http\Controllers\AncestorInternationalTravelDetailController;
 use App\Models\SubscribeMember;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,7 +116,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('members/editAncestors/{id}', [SubscribeMemberController::class, 'editAncestors'])->name('members.editAncestors');
     Route::put('members/updateAncestors/{id}', [SubscribeMemberController::class, 'updateAncestors'])->name('members.updateAncestors');
     Route::get('/getModeOfTravelDate/{id}', [SubscribeMemberController::class, 'getModeOfTravelDate']);
-    
+
     Route::post('/update-renewal-date', [SubscribeMemberController::class, 'updateRenewalDate'])->name('update.renewal.date');
 
     Route::get('/profile/change-password', [NewPasswordController::class, 'showChangePasswordForm'])->name('password.change');
@@ -148,7 +149,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('profile', [DashboardController::class, "profile"])->name("profile");
     Route::get('juniors', [DashboardController::class, "juniors"])->name("juniors");
     Route::get('partner', [DashboardController::class, "partner"])->name("partner");
-    
+
     Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
     Route::post('/payment/cash', [PaymentController::class, 'cashPayment'])->name('payment.cash');
 

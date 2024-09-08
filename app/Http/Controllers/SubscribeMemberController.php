@@ -71,7 +71,7 @@ class SubscribeMemberController extends Controller
 
         $membershipTypeOptions = SubscriptionPlan::pluck('name', 'name');
         $membershipStatusOptions = MembershipStatus::pluck('name', 'name');
-                
+
         // Return view with data
         return view('page.members.index', compact('members', 'membershipTypeOptions', 'membershipStatusOptions'));
     }
@@ -180,7 +180,8 @@ class SubscribeMemberController extends Controller
     public function viewMember($id)
     {
         $member = Member::with([
-            'ancestors.mode_of_travel.ship', 'ancestors.localTravelDetails'
+            'ancestors.mode_of_travel.ship',
+            'ancestors.localTravelDetails'
         ])->find($id);
 
         //dd($member);
@@ -378,16 +379,18 @@ class SubscribeMemberController extends Controller
         try {
             DB::beginTransaction();
 
-            $currentDate = Carbon::now();
-            $nextYearDate = $currentDate->copy()->addYear();
+            $currentDate = Carbon::now(); // Current date
+            $nextYearDate = Carbon::create($currentDate->year + 1, 6, 30); // June 30 of the next year
 
+            // Approval date (today's date)
             $dateMembershipApproved = $currentDate->format('d'); // Two digits for the day
             $monthMembershipApproved = $currentDate->format('m'); // Two digits for the month
             $yearMembershipApproved = $currentDate->format('Y'); // Four digits for the year
 
-            $dateMembershipEnd = $nextYearDate->format('d'); // Two digits for the day of next year
-            $monthMembershipEnd = $nextYearDate->format('m'); // Two digits for the month of next year
-            $yearMembershipEnd = $nextYearDate->format('Y'); // Four digits for the year of next year
+            // End date (June 30 of the following year)
+            $dateMembershipEnd = $nextYearDate->format('d'); // Day 30
+            $monthMembershipEnd = $nextYearDate->format('m'); // Month 06 (June)
+            $yearMembershipEnd = $nextYearDate->format('Y'); // Year of the following year
 
             AdditionalMemberInfos::updateOrCreate(
                 ['member_id' => $member->id],
@@ -427,6 +430,7 @@ class SubscribeMemberController extends Controller
             ]);
         }
     }
+
 
     public function editPedigree($id)
     {
