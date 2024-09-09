@@ -17,19 +17,11 @@
                 </div>
             </div>
             <div class="slide-left disabled" id="slide-left">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24"
-                    viewBox="0 0 24 24">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
                     <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
                 </svg>
             </div>
             <ul class="side-menu">
-                <li class="slide">
-                    <a class="side-menu__item  @if (Route::is('index')) active @endif" data-bs-toggle="slide"
-                        href="{{ route('index') }}">
-                        <i class="fa fa-dashboard fa-2x mx-3"></i>
-                        <span class="side-menu__label">Dashboard</span>
-                    </a>
-                </li>
                 @php
                     $user = \App\Models\User::with(['roles'])->find(auth()->id());
                     $userRoles = $user->roles;
@@ -41,6 +33,29 @@
                         }
                     }
                 @endphp
+
+                <!-- Show Dashboard only if Admin is logged in -->
+                @if ($isAdmin)
+                <li class="slide">
+                    <a class="side-menu__item  @if (Route::is('index')) active @endif" data-bs-toggle="slide"
+                        href="{{ route('index') }}">
+                        <i class="fa fa-dashboard fa-2x mx-3"></i>
+                        <span class="side-menu__label">Dashboard</span>
+                    </a>
+                </li>
+                @endif
+
+                <!-- Show Member View (Name Profile Details) only if user is logged in and not an Admin -->
+                @if (!$isAdmin && auth()->check())
+                <li class="slide">
+                    <a class="side-menu__item  @if (Route::is('members.view-member', ['id' => $user->member_id])) active @endif"
+                        data-bs-toggle="slide" href="{{ route('members.view-member', ['id' => $user->member_id]) }}">
+                        <i class="fa fa-user fa-2x mx-3"></i>
+                        <span class="side-menu__label">{{ $user->name }} Profile Details</span>
+                    </a>
+                </li>
+                @endif
+
                 <li class="slide">
                     <a class="side-menu__item  @if (Route::is('payment.list')) active @endif" data-bs-toggle="slide"
                         href="{{ route('payment.list') }}">
@@ -48,15 +63,7 @@
                         <span class="side-menu__label">Stripe Payments</span>
                     </a>
                 </li>
-                @if (!$isAdmin)
-                    <li class="slide">
-                        <a class="side-menu__item  @if (Route::is('profile')) active @endif"
-                            data-bs-toggle="slide" href="{{ route('profile') }}">
-                            <i class="fa fa-user fa-2x mx-3"></i>
-                            <span class="side-menu__label">Profile</span>
-                        </a>
-                    </li>
-                @endif
+
                 @canany(['finance-list'])
                     <li class="slide @if (Route::is('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">

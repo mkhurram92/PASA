@@ -59,26 +59,36 @@
                                     <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
                                 </a>
                                 @endif
-                                @if (!$member?->additionalInfo?->year_membership_approved && $member?->contact?->email)
-                                <a class="btn btn-success" id="approveButton">
-                                    <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
-                                </a>
+
+                                @if (auth()->user()->role_id == 1)
+                                    @if (!$member?->additionalInfo?->year_membership_approved && $member?->contact?->email)
+                                    <a class="btn btn-success" id="approveButton">
+                                        <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
+                                    </a>
+                                    @endif
                                 @endif
-                                <a class="btn btn-warning mr-2"
-                                    href="{{ url('members/view-ancestor/' . $member?->id) }}" id="ancestor-view">
-                                    <i class="fa fa-sitemap" style="font-size:20px;"></i> Ancestor
-                                </a>
-                                <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
-                                    <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
-                                </a>
-                                <a class="btn btn-success mr-2" href="{{ url()->current() }}/edit" id="editLink">
-                                    <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
-                                </a>
-                                <a class="btn btn-info" href="{{ route('members.index') }}">
-                                    <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                <!-- Show Ancestor, Pedigree, and Edit buttons only for Admin -->
+                                <!-- Assuming 1 is the Admin role -->
+                                    <a class="btn btn-warning mr-2" href="{{ url('members/view-ancestor/' . $member?->id) }}" id="ancestor-view">
+                                        <i class="fa fa-sitemap" style="font-size:20px;"></i> Ancestor
+                                    </a>
+
+                                    <a class="btn btn-danger mr-2" href="#" id="viewPedigreeLink">
+                                        <i class="fa fa-users" style="font-size:20px;"> Pedigree</i>
+                                    </a>
+
+                                    <a class="btn btn-success mr-2" href="{{ url()->current() }}/edit" id="editLink">
+                                        <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
+                                    </a>
+
+                                    @if (auth()->user()->role_id == 1)
+                                    <a class="btn btn-info" href="{{ route('members.index') }}">
+                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                    @endif
                                 </a>
                             </div>
                         </div>
+
                         <div class="card-body p-0">
                             <div class="card-body">
                                 <div class="row">
