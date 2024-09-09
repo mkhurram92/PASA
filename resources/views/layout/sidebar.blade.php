@@ -51,7 +51,7 @@
                     <a class="side-menu__item  @if (Route::is('members.view-member', ['id' => $user->member_id])) active @endif"
                         data-bs-toggle="slide" href="{{ route('members.view-member', ['id' => $user->member_id]) }}">
                         <i class="fa fa-user fa-2x mx-3"></i>
-                        <span class="side-menu__label">{{ $user->name }} Profile Details</span>
+                        <span class="side-menu__label">Profile Details</span>
                     </a>
                 </li>
                 @endif
