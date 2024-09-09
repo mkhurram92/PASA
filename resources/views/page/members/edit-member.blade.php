@@ -79,16 +79,10 @@
                                     <button type='submit' class='btn btn-primary'>
                                         Save Member Details
                                     </button>
-                                    @if (Auth::user()->name == 'Admin')
                                         <a class="btn btn-info"
                                             href="{{ route('members.view-member', ['id' => $member->id]) }}">
                                             <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                         </a>
-                                    @else
-                                        <a class="btn btn-info" href="{{ route('profile') }}">
-                                            <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                        </a>
-                                    @endif
                                 </div>
                             </div>
 

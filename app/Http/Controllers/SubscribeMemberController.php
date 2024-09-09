@@ -386,19 +386,19 @@ class SubscribeMemberController extends Controller
             }
         }
 
-        if (Auth::user()->name == 'Admin') {
+        //if (Auth::user()->name == 'Admin') {
             return response()->json([
                 "status" => true,
                 "message" => "Member Updated successfully",
                 "redirectTo" => route("members.view-member", ['id' => $member->id])
             ]);
-        } else {
-            return response()->json([
-                "status" => true,
-                "message" => "Member Updated successfully",
-                "redirectTo" => route("profile")
-            ]);
-        }
+        //} else {
+        //    return response()->json([
+        //        "status" => true,
+        //        "message" => "Member Updated successfully",
+        //        "redirectTo" => route("profile")
+        //    ]);
+        //}
     }
 
     public function update(Member $member)
