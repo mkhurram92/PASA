@@ -221,6 +221,24 @@
             }
         }
 
+        function mergeDateFields1(value, data, type, params, component) {
+            let year = data.additional_info.year_membership_end || '';
+            let month = data.additional_info.month_membership_end || '';
+            let day = data.additional_info.	date_membership_end || '';
+
+            if (year && month && day) {
+                if (month.length === 1) month = '0' + month;
+                if (day.length === 1) day = '0' + day;
+                return `${year}-${month}-${day}`;
+            } else if (year && month) {
+                if (month.length === 1) month = '0' + month;
+                return `${year}-${month}`;
+            } else if (year) {
+                return `${year}`;
+            } else {
+                return '';
+            }
+        }
 
         var table = new Tabulator("#members-table", {
             data: membersData,
@@ -320,6 +338,28 @@
                     headerFilter: "input",
                     headerFilterPlaceholder: 'Filter by Ship Name - Year',
                     mutator: mergeDateFields,
+                    visible: false,
+                    download: true
+                },
+                {
+                    title: 'Date Membership Ended',
+                    field: 'additional_info.date_membership_end',
+                    //hozAlign: "left",
+                    //vertAlign: "middle",
+                    //headerFilter: "input",
+                    //headerFilterPlaceholder: 'Filter by Ship Name - Year',
+                    mutator: mergeDateFields1,
+                    visible: false,
+                    download: true
+                },
+                {
+                    title: 'General Notes',
+                    field: 'additional_info.general_notes',
+                    //hozAlign: "left",
+                    //vertAlign: "middle",
+                   // headerFilter: "input",
+                    //headerFilterPlaceholder: 'Filter by Ship Name - Year',
+                   // mutator: mergeDateFields,
                     visible: false,
                     download: true
                 },

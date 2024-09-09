@@ -75,7 +75,12 @@ class User extends Authenticatable
      */
     public function isExpired()
     {
-        return $this->expiry_date && $this->expiry_date->isPast();
+        if ($this->member && $this->member->additionalInfo) {
+            $membershipEndDate = $this->member->additionalInfo->membershipEndDate;
+            return $membershipEndDate && $membershipEndDate->isPast();
+        }
+
+        return false;
     }
     public function member()
     {

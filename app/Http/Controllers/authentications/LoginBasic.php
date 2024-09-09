@@ -7,6 +7,7 @@ use App\Http\Requests\AdminLoginRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LoginBasic extends Controller
 {
@@ -26,17 +27,29 @@ class LoginBasic extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
 
-            // Check if the user's account is expired
-            if ($user->isExpired()) {
-                Auth::logout(); // Log out the user
-                return redirect()->route('login')->with("error", "Your account has expired. Please contact Pioneers SA.");
-            }
+            // Ensure the member and additionalInfo relationships are loaded
+            $user->load('member.additionalInfo');
 
-            // If not expired, redirect to the homepage with success message
-            return redirect("/")->with("success", "You have successfully logged in. Welcome back!");
+            // Check if the user's account is expired
+            if ($user->member && $user->member->additionalInfo) {
+                if ($user->isExpired()) {
+                    Auth::logout(); // Log out the user
+                    return redirect()->route('login')->with("error", "Your account has expired. Please contact Pioneers SA.");
+                }
+
+                // If not expired, redirect to the homepage with success message
+                return redirect("/")->with("success", "You have successfully logged in. Welcome back!");
+            } else {
+                // Handle the case where member or additionalInfo is missing
+
+                if ($user->role_id != 1) {
+                    Auth::logout();
+                    return redirect()->route('login')->with("error", "Account details are incomplete. Please contact support.");
+                }
+            }
         }
 
-        // If authentication fails, redirect back with an error message
+        // Redirect back with an error message if authentication fails
         return redirect()->back()->with("error", "Login failed. Please check your credentials and try again.")->withInput();
     }
 

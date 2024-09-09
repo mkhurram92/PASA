@@ -423,6 +423,14 @@ class SubscribeMemberController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+
+            // Log the error details
+            Log::error('Error updating member:', [
+                'member_id' => $member->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             return response()->json([
                 "status" => false,
                 "message" => "Error updating member",
