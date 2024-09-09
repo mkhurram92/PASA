@@ -486,7 +486,7 @@ class SubscribeMemberController extends Controller
                 "status" => true,
                 "message" => "All pedigrees deleted successfully",
                 "redirectTo" => Auth::user()->name == 'Admin' ? route("members.view-pedigree", ['id' => $member->id]) : route("members.view-member", ['id' => $member->id])
-            ]);            
+            ]);
         }
 
         $existingPedigreeIds = MemberPedigree::where('member_id', $member->id)->pluck('id')->toArray();
@@ -511,11 +511,11 @@ class SubscribeMemberController extends Controller
             ->whereNotIn('id', $updatedPedigreeIds)
             ->delete();
 
-            return response()->json([
-                "status" => true,
-                "message" => "Pedigree updated successfully",
-                "redirectTo" => Auth::user()->name == 'Admin' ? route("members.view-pedigree", ['id' => $member->id]) : route("members.view-pedigree", ['id' => $member->id])
-            ]);
+        return response()->json([
+            "status" => true,
+            "message" => "Pedigree updated successfully",
+            "redirectTo" => Auth::user()->name == 'Admin' ? route("members.view-pedigree", ['id' => $member->id]) : route("members.view-pedigree", ['id' => $member->id])
+        ]);
     }
 
     public function addPedigree($id)
@@ -526,9 +526,9 @@ class SubscribeMemberController extends Controller
         if ($user->role_id != 1 && $user->member_id != $id) {
             // If the user is not an admin and tries to access another member's page
             return redirect()->route('members.view-pedigree', ['id' => $user->member_id])
-                             ->with('error', 'You are not authorized to add pedigrees for this member.');
+                ->with('error', 'You are not authorized to add pedigrees for this member.');
         }
-    
+
         $member = Member::find($id);
 
         if (!$member) {
@@ -566,9 +566,9 @@ class SubscribeMemberController extends Controller
         if ($user->role_id != 1 && $user->member_id != $id) {
             // Redirect to the user's own ancestors page with a flash message
             return redirect()->route('members.view-ancestor', ['id' => $user->member_id])
-                             ->with('error', 'You are not authorized to view this member\'s ancestors.');
+                ->with('error', 'You are not authorized to view this member\'s ancestors.');
         }
-    
+
         $member = Member::find($id);
         $ancestors = AncestorData::with(['sourceOfArrival', 'mode_of_travel'])->get();
 
@@ -581,15 +581,30 @@ class SubscribeMemberController extends Controller
 
     public function addAncestor($id)
     {
-        $member = Member::find($id);
-        $ancestors = AncestorData::with(['sourceOfArrival', 'mode_of_travel'])->get();
+        $user = auth()->user(); // Get the logged-in user
 
-        if (!$member) {
-            return redirect()->route('members.index')->with('error', 'Member not found.');
+        // Check if the user is trying to access their own member ID, or they are admin
+        if ($user->role_id != 1 && $user->member_id != $id) {
+            // If the user is not an admin and tries to access another member's page
+            return redirect()->route('members.add-ancestor', ['id' => $user->member_id])
+                ->with('error', 'You are not authorized to add ancestors for this member.');
         }
 
+        // Find the member by the provided ID
+        $member = Member::find($id);
+
+        // Check if the member exists
+        if (!$member) {
+            return redirect()->back()->with('error', 'Member not found.');
+        }
+
+        // Retrieve the ancestors' data
+        $ancestors = AncestorData::with(['sourceOfArrival', 'mode_of_travel'])->get();
+
+        // If everything is valid, show the add ancestor page for the member
         return view('page.members.add-ancestor', compact('member', 'ancestors'));
     }
+
 
     public function storeAncestor(Request $request, $memberId)
     {
