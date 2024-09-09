@@ -68,7 +68,7 @@
                                         <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Add</i>
                                     </a>
                                 @endif
-                                <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
+                                <a class="btn btn-info" href="{{ url()->current() }}" id="view-members">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
                             </div>
