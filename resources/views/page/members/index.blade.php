@@ -361,7 +361,8 @@
                     //headerFilterPlaceholder: 'Filter by Ship Name - Year',
                    // mutator: mergeDateFields,
                     visible: false,
-                    download: true
+                    download: true,
+                    mutator: nullToEmptyString
                 },
                 {
                     title: "Action",
