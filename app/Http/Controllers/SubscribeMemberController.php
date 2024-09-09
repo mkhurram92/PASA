@@ -586,7 +586,7 @@ class SubscribeMemberController extends Controller
         // Check if the user is trying to access their own member ID, or they are admin
         if ($user->role_id != 1 && $user->member_id != $id) {
             // If the user is not an admin and tries to access another member's page
-            return redirect()->route('members.add-ancestor', ['id' => $user->member_id])
+            return redirect()->route('members.view-ancestor', ['id' => $user->member_id])
                 ->with('error', 'You are not authorized to add ancestors for this member.');
         }
 
