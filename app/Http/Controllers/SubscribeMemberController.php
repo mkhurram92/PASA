@@ -520,10 +520,19 @@ class SubscribeMemberController extends Controller
 
     public function addPedigree($id)
     {
+        $user = auth()->user(); // Get the logged-in user
+
+        // Check if the user is trying to access their own member ID, or they are admin
+        if ($user->role_id != 1 && $user->member_id != $id) {
+            // If the user is not an admin and tries to access another member's page
+            return redirect()->route('members.add-pedigree', ['id' => $user->member_id])
+                             ->with('error', 'You are not authorized to add pedigrees for this member.');
+        }
+    
         $member = Member::find($id);
 
         if (!$member) {
-            return redirect()->route('members.index')->with('error', 'Member not found.');
+            return redirect()->back()->with('error', 'Member not found.');
         }
 
         return view('page.members.add-pedigree', ['member' => $member]);
