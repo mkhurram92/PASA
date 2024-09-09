@@ -250,6 +250,15 @@ class SubscribeMemberController extends Controller
 
     public function editMember($id)
     {
+        $user = auth()->user(); // Get the logged-in user
+
+        // Check if the user is trying to access their own member ID, or they are admin
+        if ($user->role_id != 1 && $user->member_id != $id) {
+            // If the user is not an admin and tries to access another member's page, redirect to their own view-pedigree page
+            return redirect()->route('members.view-member', ['id' => $user->member_id])
+                ->with('error', 'You are not authorized to edit the details for other member.');
+        }
+
         $member = Member::find($id);
         $data['titles'] = Title::all();
         $data['state_name'] = Helper::getState($member?->address?->state);
@@ -265,15 +274,7 @@ class SubscribeMemberController extends Controller
 
     public function memberDetailUpdate(Request $request, $id)
     {
-        $user = auth()->user(); // Get the logged-in user
-
-        // Check if the user is trying to access their own member ID, or they are admin
-        if ($user->role_id != 1 && $user->member_id != $id) {
-            // If the user is not an admin and tries to access another member's page, redirect to their own view-pedigree page
-            return redirect()->route('members.view-member', ['id' => $user->member_id])
-                ->with('error', 'You are not authorized to edit the details for other member.');
-        }
-
+        
         $needToValidate = [
             'title' => 'required',
             'family_name' => 'required',
