@@ -619,7 +619,7 @@
                     var errorElement = document.getElementById('card-errors');
                     errorElement.textContent = result.error.message;
                 } else {
-                    console.log("Stripe Token:", result.token); // For debugging
+                    //console.log("Stripe Token:", result.token); // For debugging
                     processPayment(result.token.id, selectedPrice);
                 }
             });
@@ -779,7 +779,7 @@
                             }
                         },
                         error: function(xhr, status, error) {
-                            console.error('Error updating member:', error);
+                            console.error('Error1 updating member:', error);
                         }
                     });
                 }
