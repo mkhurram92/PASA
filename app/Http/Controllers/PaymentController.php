@@ -28,10 +28,6 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index2(SubscriptionDataTable $request)
-    // {
-    //     return $request->render('page.payment-list.index');
-    // }
 
     public function index2(Request $request)
     {
@@ -84,7 +80,7 @@ class PaymentController extends Controller
         $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
 
         // Fetch payment intents or charges directly from Stripe
-        $payments = $stripe->charges->all(['limit' => 100]);
+        $payments = $stripe->charges->all(['limit' => 1000]);
         foreach ($payments->data as $payment) {
             $payment->formatted_date = date('Y-m-d H:i:s', $payment->created);
         }        // Pass the data to the view
