@@ -59,7 +59,7 @@
                                     <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
                                 </a>
                                 @endif
-                                @if (!$member?->additionalInfo?->date_membership_approved && $member?->contact?->email)
+                                @if (!$member?->additionalInfo?->year_membership_approved && $member?->contact?->email)
                                 <a class="btn btn-success" id="approveButton">
                                     <i class="fa fa-thumbs-up" style="font-size:20px;"> Approve</i>
                                 </a>
