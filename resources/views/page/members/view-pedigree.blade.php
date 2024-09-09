@@ -68,16 +68,9 @@
                                         <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Add</i>
                                     </a>
                                 @endif
-                                @if (Auth::user()->name == 'Admin')
-                                    <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
-                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                    </a>
-                                @else
-                                    <a class="btn btn-info" href="{{ route('profile') }}">
-                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
-                                    </a>
-                                @endif
-
+                                <a class="btn btn-info" href="{{ url()->current() }}/edit" id="view-members">
+                                    <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
+                                </a>
                             </div>
                         </div>
                         <div id="print-content" class="print-area">

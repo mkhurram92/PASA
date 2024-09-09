@@ -247,7 +247,6 @@ class SubscribeMemberController extends Controller
         return view('page.members.view-member', compact('member', 'data', 'stripeKey', 'showRenewButton'));
     }
 
-
     public function editMember($id)
     {
         $user = auth()->user(); // Get the logged-in user
