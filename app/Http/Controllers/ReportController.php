@@ -41,14 +41,7 @@ class ReportController extends Controller
         $year = $request->input('year');
 
         // Convert start_date and end_date from dd/mm/yyyy to YYYY-MM-DD
-        if ($startDate) {
-            // Convert to YYYY-MM-DD format
-            $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
-        }
-        if ($endDate) {
-            // Convert to YYYY-MM-DD and append '23:59:59' to include the full day
-            $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d') . ' 23:59:59';
-        }
+        
         Log::info('Filters applied:', [
             'start_date' => $startDate,
             'end_date' => $endDate,

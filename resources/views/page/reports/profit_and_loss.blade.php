@@ -108,7 +108,7 @@
         <div class="container-fluid main-container">
             <div class="page-header">
                 <div class="page-leftheader">
-                    <h3 class="page-title">Profit and Loss Report</h3>
+                    <h3 class="page-title"></h3>
                 </div>
             </div>
 
@@ -116,7 +116,7 @@
                 <div class="col-md-12 p-12">
                     <div class="card">
                         <div class="card-body p-2">
-                            <form action="{{ route('report.show', 'profit-and-loss') }}" method="GET" class="mb-4">
+                            <form id="profit-loss-filter-form" action="{{ route('report.show', 'profit-and-loss') }}" method="GET" class="mb-4">
                                 <div class="row">
                                     <!-- Month Filter -->
                                     <div class="col-md-3">
@@ -162,7 +162,7 @@
 
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
-                                        <button type="submit" class="btn btn-primary">Filter</button>
+                                        <button type="submit" class="btn btn-primary" id="filter-btn">Filter</button>
                                         <a href="{{ route('report.show', 'profit-and-loss') }}"
                                             class="btn btn-secondary">Reset</a>
                                     </div>
@@ -264,4 +264,34 @@
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+    document.getElementById('profit-loss-filter-form').addEventListener('submit', function(event) {
+        // Prevent the form from submitting immediately for logging purposes
+        event.preventDefault();
+
+        // Get the filter form values
+        var month = document.getElementById('month').value;
+        var year = document.getElementById('year').value;
+        var startDate = document.getElementById('start_date').value;
+        var endDate = document.getElementById('end_date').value;
+
+        // Construct the query parameters
+        var queryParams = [];
+        if (month) queryParams.push('month=' + encodeURIComponent(month));
+        if (year) queryParams.push('year=' + encodeURIComponent(year));
+        if (startDate) queryParams.push('start_date=' + encodeURIComponent(startDate));
+        if (endDate) queryParams.push('end_date=' + encodeURIComponent(endDate));
+
+        // Construct the full URL
+        var baseUrl = window.location.origin + "{{ route('report.show', 'profit-and-loss') }}";
+        var fullUrl = baseUrl + '?' + queryParams.join('&');
+
+        // Log the full URL
+        console.log('Submitted URL:', fullUrl);
+
+        // Now submit the form
+        this.submit();
+    });
+</script>
+
 @include('layout.footer')
