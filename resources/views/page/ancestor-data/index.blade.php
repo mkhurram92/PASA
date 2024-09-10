@@ -187,7 +187,15 @@
          var table = new Tabulator("#ancestor-data-table", {
              data: ancestorData,
              layout: "fitColumns",
-             columns: [{
+             columns: [
+                {
+                     title: "Gender",
+                     field: "gender.name",
+                     mutator: nullToEmptyString, 
+                     download: true,
+                     visible:false
+                 },
+                {
                      title: "Family Name",
                      field: "ancestor_surname",
                      hozAlign: "left",
@@ -206,30 +214,11 @@
                      mutator: nullToEmptyString
                  },
                  {
-                     title: "Birth Date",
-                     field: "date_of_birth_combined",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     mutator: function(value, data, type, params, component) {
-                         let date = data.date_of_birth ? String(data.date_of_birth).padStart(2, '0') : "";
-                         let month = data.month_of_birth ? String(data.month_of_birth).padStart(2, '0') : "";
-                         let year = data.year_of_birth ? String(data.year_of_birth) : "";
-
-                         if (year) {
-                             if (month) {
-                                 if (date) {
-                                     return `${year}-${month}-${date}`;
-                                 } else {
-                                     return `${year}-${month}`;
-                                 }
-                             } else {
-                                 return `${year}`;
-                             }
-                         } else {
-                             return "";
-                         }
-                     }
+                     title: "Preferred Name",
+                     field: "maiden_surname",
+                     mutator: nullToEmptyString, 
+                     download: true,
+                     visible:false
                  },
                  {
                      title: "Mode of Travel",
@@ -267,6 +256,118 @@
                      }
                  },
                  {
+                     title: "Birth Date",
+                     field: "date_of_birth_combined",
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     headerFilter: "input",
+                     mutator: function(value, data, type, params, component) {
+                         let date = data.date_of_birth ? String(data.date_of_birth).padStart(2, '0') : "";
+                         let month = data.month_of_birth ? String(data.month_of_birth).padStart(2, '0') : "";
+                         let year = data.year_of_birth ? String(data.year_of_birth) : "";
+
+                         if (year) {
+                             if (month) {
+                                 if (date) {
+                                     return `${year}-${month}-${date}`;
+                                 } else {
+                                     return `${year}-${month}`;
+                                 }
+                             } else {
+                                 return `${year}`;
+                             }
+                         } else {
+                             return "";
+                         }
+                     }
+                 },
+                 {
+                     title: "Birth Place",
+                     field: "place_of_birth",
+                     mutator: nullToEmptyString, 
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "Birth Details",
+                     field: "notes.0.birth_details",
+                     mutator: nullToEmptyString, 
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "Death Date",
+                     field: "date_of_death_combined",
+                     mutator: function(value, data, type, params, component) {
+                         let date = data.date_of_death ? String(data.date_of_death).padStart(2, '0') : "";
+                         let month = data.month_of_death ? String(data.month_of_death).padStart(2, '0') : "";
+                         let year = data.year_of_death ? String(data.year_of_death) : "";
+
+                         if (year) {
+                             if (month) {
+                                 if (date) {
+                                     return `${year}-${month}-${date}`;
+                                 } else {
+                                     return `${year}-${month}`;
+                                 }
+                             } else {
+                                 return `${year}`;
+                             }
+                         } else {
+                             return "";
+                         }
+                     },
+                     //mutator: nullToEmptyString, 
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "Death Place",
+                     field: "place_of_death",
+                     mutator: nullToEmptyString, 
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "Death Details",
+                     field: "notes.0.death_details",
+                     mutator: nullToEmptyString, 
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "General Notes",
+                     field: "notes.0.notes",
+                     mutator: nullToEmptyString, 
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "Marriage Date",
+                     field: "date_of_marriage_combined",
+                     mutator: function(value, data, type, params, component) {
+                         let date = data.spouse_details.marriage_date ? String(data.spouse_details.marriage_date).padStart(2, '0') : "";
+                         let month = data.spouse_details.marriage_month ? String(data.spouse_details.marriage_month).padStart(2, '0') : "";
+                         let year = data.spouse_details.marriage_year ? String(data.spouse_details.marriage_year) : "";
+
+                         if (year) {
+                             if (month) {
+                                 if (date) {
+                                     return `${year}-${month}-${date}`;
+                                 } else {
+                                     return `${year}-${month}`;
+                                 }
+                             } else {
+                                 return `${year}`;
+                             }
+                         } else {
+                             return "";
+                         }
+                     },
+                     download: true,
+                     visible:false
+                 },          
+                 {
                      title: "Spouse Family Name",
                      field: "spouse_details.spouse_family_name",
                      hozAlign: "left",
@@ -283,6 +384,70 @@
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Search by Spouse Given Name/s',
                      mutator: nullToEmptyString
+                 },
+                 {
+                     title: "Spouse Birth Date",
+                     field: "spouse_date_of_birth_combined",
+                     mutator: function(value, data, type, params, component) {
+                         let date = data.spouse_details.spouse_birth_date ? String(data.spouse_details.marriage_date).padStart(2, '0') : "";
+                         let month = data.spouse_details.spouse_birth_month ? String(data.spouse_details.spouse_birth_month).padStart(2, '0') : "";
+                         let year = data.spouse_details.spouse_birth_year ? String(data.spouse_details.spouse_birth_year) : "";
+
+                         if (year) {
+                             if (month) {
+                                 if (date) {
+                                     return `${year}-${month}-${date}`;
+                                 } else {
+                                     return `${year}-${month}`;
+                                 }
+                             } else {
+                                 return `${year}`;
+                             }
+                         } else {
+                             return "";
+                         }
+                     },
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "Spouse Birth Place",
+                     field: "spouse_details.spouse_birth_place",
+                     mutator: nullToEmptyString,
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "Spouse Death Date",
+                     field: "spouse_date_of_death_combined",
+                     mutator: function(value, data, type, params, component) {
+                         let date = data.spouse_details.spouse_death_date ? String(data.spouse_details.marriage_date).padStart(2, '0') : "";
+                         let month = data.spouse_details.spouse_death_month ? String(data.spouse_details.spouse_death_month).padStart(2, '0') : "";
+                         let year = data.spouse_details.spouse_death_year ? String(data.spouse_details.spouse_death_year) : "";
+
+                         if (year) {
+                             if (month) {
+                                 if (date) {
+                                     return `${year}-${month}-${date}`;
+                                 } else {
+                                     return `${year}-${month}`;
+                                 }
+                             } else {
+                                 return `${year}`;
+                             }
+                         } else {
+                             return "";
+                         }
+                     },
+                     download: true,
+                     visible:false
+                 },
+                 {
+                     title: "Spouse Death Place",
+                     field: "spouse_details.spouse_death_place",
+                     mutator: nullToEmptyString,
+                     download: true,
+                     visible:false
                  },
                  {
                      title: "Action",

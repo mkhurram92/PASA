@@ -47,8 +47,8 @@ class AncestorDataController extends Controller
 
         $source_of_arrivals = SourceOfArrival::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($source_of_arrivals, '');
-
-        $ancestor = AncestorData::with('occupation_relation', 'Gender', 'Ships', 'departureCountry', 'state', 'sourceOfArrival', 'spouse_details', 'mode_of_travel.ship')->get();
+        
+        $ancestor = AncestorData::with('occupation_relation', 'Gender', 'Ships', 'departureCountry', 'state', 'sourceOfArrival', 'spouse_details', 'mode_of_travel.ship', 'notes')->get();
 
         //dd($ancestor);
 
