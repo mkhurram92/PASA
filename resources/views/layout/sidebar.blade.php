@@ -180,6 +180,17 @@
                         </ul>
                     </li>
                 @endcanany
+                @canany(['reports-list'])
+                    <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                            <i class="fa fa-bar-chart-o fa-2x mx-3"></i> 
+                            <span class="side-menu__label">Reports</span><i class="angle fe fe-chevron-right"></i>
+                        </a>
+                        <ul class="slide-menu">
+                            <li><a class="slide-item" href="{{ route('report.show', 'profit-and-loss') }}">Profit and Loss</a></li>
+                        </ul>
+                    </li>
+                @endcanany
                 @canany(['title-list', 'user-list', 'states-list', 'ports-list', 'counties-list', 'occupations-list',
                     'rigs-list', 'ships-list', 'role-list', 'source-of-arrival-list', 'cities-list',
                     'subscription-plans-list', 'membership-status-list', 'gl_codes-list'])

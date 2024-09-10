@@ -198,6 +198,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     Route::get('/getSubGlCodes/{parentId}', [TransactionController::class, 'getSubGlCodes']);
+
+    //Reports
     Route::get('/report/{type}', [ReportController::class, 'show'])->name('report.show');
 
 });
