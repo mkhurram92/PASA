@@ -691,18 +691,17 @@
                 }
             },
             error: function(xhr, status, error) {
-        console.error("Error Status: ", status);
-        console.error("Error Thrown: ", error);
-        console.error("Response Text: ", xhr.responseText);
+                console.error("Error Status: ", status);
+                console.error("Error Thrown: ", error);
+                console.error("Response Text: ", xhr.responseText);
 
-        Swal.fire({
-            title: 'An error occurred',
-            text: error,
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    }
-
+                Swal.fire({
+                    title: 'An error occurred',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
         });
     }
 
