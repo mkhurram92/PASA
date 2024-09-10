@@ -466,7 +466,6 @@ class SubscribeMemberController extends Controller
         }
     }
 
-
     public function editPedigree($id)
     {
         $user = auth()->user(); // Get the logged-in user

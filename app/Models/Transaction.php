@@ -21,10 +21,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(TransactionType::class, 'transaction_type_id');
     }
-    
+
     public static function createAndProcessTransaction($transactionType, $glCodeId, $accountId, $amount, $description, $memberId)
     {
-        // Create a new Transaction instance
         $transaction = self::create([
             'transaction_type_id' => $transactionType,
             'gl_code_id' => $glCodeId,
@@ -34,20 +33,19 @@ class Transaction extends Model
             'member_id' => $memberId,
         ]);
 
-        // Find the related account
-        $account = Account::find($accountId);
+        // Dynamically get the ID for 'Active' status
+        $activeStatus = \App\Models\MembershipStatus::where('name', 'Active')->first();
 
-        // Update account balance based on the transaction type
-        if ($transactionType == 1) {
-            // Income (credit)
-            $account->balance += $amount;
-        } elseif ($transactionType == 2) {
-            // Expenditure (debit)
-            $account->balance -= $amount;
+        // Find the member
+        $member = Member::find($memberId);
+
+        if ($activeStatus && $member) {
+            // Set the member's status to 'Active'
+            $member->membership_status_id = $activeStatus->id;
+
+            // Save the updated member status
+            $member->save();
         }
-
-        // Save the account with the updated balance
-        $account->save();
 
         return $transaction;
     }
