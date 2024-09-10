@@ -550,6 +550,7 @@
     }
 
     var stripe = Stripe('{{ env('STRIPE_KEY') }}');
+    //console.log("Stripe Key:", stripe);
     var elements = stripe.elements();
     var card = elements.create('card', {
         hidePostalCode: true,
@@ -619,7 +620,7 @@
                     var errorElement = document.getElementById('card-errors');
                     errorElement.textContent = result.error.message;
                 } else {
-                    //console.log("Stripe Token:", result.token); // For debugging
+                    console.log("Stripe Token:", result.token); // For debugging
                     processPayment(result.token.id, selectedPrice);
                 }
             });
@@ -690,13 +691,18 @@
                 }
             },
             error: function(xhr, status, error) {
-                Swal.fire({
-                    title: 'An error occurred',
-                    text: error,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
+        console.error("Error Status: ", status);
+        console.error("Error Thrown: ", error);
+        console.error("Response Text: ", xhr.responseText);
+
+        Swal.fire({
+            title: 'An error occurred',
+            text: error,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    }
+
         });
     }
 

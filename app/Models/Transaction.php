@@ -41,7 +41,7 @@ class Transaction extends Model
 
         if ($activeStatus && $member) {
             // Set the member's status to 'Active'
-            $member->membership_status_id = $activeStatus->id;
+            $member->member_status_id = $activeStatus->id;
 
             // Save the updated member status
             $member->save();
