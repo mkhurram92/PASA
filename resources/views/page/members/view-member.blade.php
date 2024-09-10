@@ -417,8 +417,8 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
-                                            <label class="col-md-4 form-label">Key Holder</label>
-                                            <div class="col-md-8">
+                                            <label class="col-md-6 form-label">Key Holder</label>
+                                            <div class="col-md-6">
                                                 <span id="displayStatus" class="custom-font"></span>
                                             </div>
                                         </div>
