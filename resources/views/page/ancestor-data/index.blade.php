@@ -239,7 +239,6 @@
                      vertAlign: "middle",
                      headerFilter: "input",
                      mutator: function(value, data, type, params, component) {
-                         // Constructing "Ship Name - Year"
                          if (data.mode_of_travel) {
                              let shipName = data.mode_of_travel.ship ? data.mode_of_travel.ship
                                  .name_of_ship : '';
@@ -252,7 +251,7 @@
                                  return `${year}`;
                              }
                          }
-                         return ""; // Return empty if conditions are not met
+                         return "";
                      }
                  },
                  {
