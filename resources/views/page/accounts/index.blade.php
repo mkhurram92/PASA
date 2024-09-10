@@ -156,13 +156,6 @@
                      headerFilter: "input"
                  },
                  {
-                     title: "Account Balance",
-                     field: "balance",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input"
-                 },
-                 {
                      title: "Description",
                      field: "description",
                      hozAlign: "center",
@@ -176,7 +169,7 @@
                      vertAlign: "middle",
                      headerFilter: "input",
                      formatter: function(cell) {
-                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD HH:mm:ss');
+                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD');
                          return formattedDate;
                      }
                  }

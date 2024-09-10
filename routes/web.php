@@ -108,6 +108,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('members/update-pedigree/{id}', [SubscribeMemberController::class, 'updatePedigree'])->name('members.updatePedigree');
     Route::get('members/add-pedigree/{id}', [SubscribeMemberController::class, 'addPedigree'])->name('members.addPedigree');
     Route::post('members/store-pedigree/{id}', [SubscribeMemberController::class, 'storePedigree'])->name('members.storePedigree');
+    
+    //Member Approval
     Route::put('members/update/{member}', [SubscribeMemberController::class, 'update'])->name('members.update');
 
     Route::get('members/add-ancestor/{id}', [SubscribeMemberController::class, 'addAncestor'])->name('members.addAncestor');
@@ -117,6 +119,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('members/updateAncestors/{id}', [SubscribeMemberController::class, 'updateAncestors'])->name('members.updateAncestors');
     Route::get('/getModeOfTravelDate/{id}', [SubscribeMemberController::class, 'getModeOfTravelDate']);
 
+    //Member Renewal
     Route::post('/update-renewal-date', [SubscribeMemberController::class, 'updateRenewalDate'])->name('update.renewal.date');
 
     Route::get('/profile/change-password', [NewPasswordController::class, 'showChangePasswordForm'])->name('password.change');
@@ -150,7 +153,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('juniors', [DashboardController::class, "juniors"])->name("juniors");
     Route::get('partner', [DashboardController::class, "partner"])->name("partner");
 
+    //Stripe Payment
     Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+    
+    //Cash Payment
     Route::post('/payment/cash', [PaymentController::class, 'cashPayment'])->name('payment.cash');
 
     // add junior

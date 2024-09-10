@@ -620,7 +620,7 @@
                     var errorElement = document.getElementById('card-errors');
                     errorElement.textContent = result.error.message;
                 } else {
-                    console.log("Stripe Token:", result.token); // For debugging
+                    //console.log("Stripe Token:", result.token); // For debugging
                     processPayment(result.token.id, selectedPrice);
                 }
             });
@@ -636,6 +636,7 @@
         }
     });
 
+    //Stripe Payment
     function processPayment(token, amount) {
         $.ajax({
             url: '{{ route('payment.process') }}',
@@ -669,6 +670,7 @@
         });
     }
 
+    //Cash Payment
     function callCashPaymentRoute(amount) {
         $.ajax({
             url: '{{ route('payment.cash') }}',
@@ -705,6 +707,7 @@
         });
     }
 
+    //Membership Renewal
     function updateRenewalDate() {
         $.ajax({
             url: '{{ route('update.renewal.date') }}',
@@ -745,6 +748,7 @@
         }
     });
 
+    //Membership Approval
     document.addEventListener('DOMContentLoaded', function() {
         $('#approveButton').on('click', function() {
             Swal.fire({
@@ -855,6 +859,7 @@
 
         window.location.href = newUrl;
     });
+
     document.getElementById('viewAncestorsLink').addEventListener('click', function(event) {
         event.preventDefault();
 

@@ -273,7 +273,7 @@ class SubscribeMemberController extends Controller
 
     public function memberDetailUpdate(Request $request, $id)
     {
-        
+
         $needToValidate = [
             'title' => 'required',
             'family_name' => 'required',
@@ -386,21 +386,14 @@ class SubscribeMemberController extends Controller
             }
         }
 
-        //if (Auth::user()->name == 'Admin') {
-            return response()->json([
-                "status" => true,
-                "message" => "Member Updated successfully",
-                "redirectTo" => route("members.view-member", ['id' => $member->id])
-            ]);
-        //} else {
-        //    return response()->json([
-        //        "status" => true,
-        //        "message" => "Member Updated successfully",
-        //        "redirectTo" => route("profile")
-        //    ]);
-        //}
+        return response()->json([
+            "status" => true,
+            "message" => "Member Updated successfully",
+            "redirectTo" => route("members.view-member", ['id' => $member->id])
+        ]);
     }
 
+    //Membership Approval
     public function update(Member $member)
     {
         try {

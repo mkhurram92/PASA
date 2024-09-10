@@ -74,16 +74,16 @@ class PaymentController extends Controller
         return view("page.payment-list.index", compact('data', 'paymentTypeOptions'));
     }
 
+    //Payment Listing - Stripe Payments in Views
     public function index(Request $request)
     {
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
 
-        // Fetch payment intents or charges directly from Stripe
         $payments = $stripe->charges->all(['limit' => 1000]);
         foreach ($payments->data as $payment) {
             $payment->formatted_date = date('Y-m-d H:i:s', $payment->created);
-        }        // Pass the data to the view
+        }
         return view('page.payment-list.index', compact('payments'));
     }
 
@@ -411,6 +411,8 @@ class PaymentController extends Controller
             ], 500);
         }
     }
+
+    //Stripe Payment Used on Members View
     public function processPayment(Request $request)
     {
         //Log::info('Request Data:', $request->all());
@@ -477,6 +479,7 @@ class PaymentController extends Controller
         }
     }
 
+    //Cash Payment Used on Members View
     public function cashPayment(Request $request)
     {
         $amount = $request->input('amount');
