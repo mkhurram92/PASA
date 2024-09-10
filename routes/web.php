@@ -64,7 +64,10 @@ use App\Http\Controllers\RegisterController;
 
 Route::get('/membership/primary', [MemberFormWizard::class, "MemberFormWizard"])->name('level');
 Route::post('/membership/validate', [MemberFormWizard::class, "validateField"])->name('validate.field');
+
+//Primary Membership Registration
 Route::post('/membership/primary', [MemberFormWizard::class, "MemberFormWizard"])->name('submitMembershipAccount');
+
 Route::get('/membership/friend', [FriendMemberFormWizard::class, "FriendMemberFormWizard"])->name('friendForm');
 Route::post('/membership/friend', [FriendMemberFormWizard::class, "FriendMemberFormWizard"])->name('submitFriendMembershipAccount');
 
