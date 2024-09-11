@@ -118,8 +118,15 @@
             <h1>Pioneers Association of South Australia</h1>
             <h4>23 Leigh Street, Adelaide 5000</h4>
             <h3>Profit and Loss Report</h3>
-        </div>
 
+            @if (request('start_date') && request('end_date'))
+                <p>From: {{ request('start_date') }} To: {{ request('end_date') }}</p>
+            @elseif(request('month') && request('year'))
+                <p>Month: {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
+            @elseif(request('year'))
+                <p>Year: {{ request('year') }}</p>
+            @endif
+        </div>
 
         <!-- Income Section -->
         <h2>Income</h2>
@@ -203,4 +210,5 @@
         </div>
     </div>
 </body>
+
 </html>
