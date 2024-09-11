@@ -22,27 +22,22 @@ class ReportController extends Controller
             case 'profit-and-loss':
                 return $this->profitAndLoss($request);
             default:
-                abort(404); // Handle unknown report types
+                abort(404);
         }
     }
 
-
     public function profitAndLoss(Request $request)
     {
-        // Get filters from request
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $month = $request->input('month');
         $year = $request->input('year');
 
-        // Get transaction type IDs for income and expenditure
         $incomeTypeId = TransactionType::where('name', 'Income')->value('id');
         $expenditureTypeId = TransactionType::where('name', 'Expenditure')->value('id');
 
-        // Fetch report data based on filters
         $reportData = $this->getProfitAndLossData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year);
 
-        // Generate PDF and stream it for preview
         return $this->generatePDF($reportData);
     }
 
@@ -58,7 +53,6 @@ class ReportController extends Controller
             ->join('gl_codes_parent', 'gl_codes.parent_id', '=', 'gl_codes_parent.id')
             ->groupBy('gl_codes_parent.name', 'gl_codes.name');
 
-        // Apply filters
         if ($startDate && $endDate) {
             $query->whereBetween('transactions.created_at', [$startDate, $endDate . ' 23:59:59']);
         } elseif ($month && $year) {
@@ -80,7 +74,6 @@ class ReportController extends Controller
     // Example Income and Expenditure method
     private function incomeAndExpenditure(Request $request)
     {
-        // Similar to profitAndLoss, fetch data based on filters and generate the PDF
         // Placeholder logic for now
         return $this->generatePDF(['data' => []]);
     }
