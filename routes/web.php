@@ -47,6 +47,7 @@ use App\Http\Controllers\AncestorInternationalTravelDetailController;
 use App\Models\SubscribeMember;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RegisterController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,7 +112,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('members/update-pedigree/{id}', [SubscribeMemberController::class, 'updatePedigree'])->name('members.updatePedigree');
     Route::get('members/add-pedigree/{id}', [SubscribeMemberController::class, 'addPedigree'])->name('members.addPedigree');
     Route::post('members/store-pedigree/{id}', [SubscribeMemberController::class, 'storePedigree'])->name('members.storePedigree');
-    
+
     //Member Approval
     Route::put('members/update/{member}', [SubscribeMemberController::class, 'update'])->name('members.update');
 
@@ -158,7 +159,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Stripe Payment
     Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
-    
+
     //Cash Payment
     Route::post('/payment/cash', [PaymentController::class, 'cashPayment'])->name('payment.cash');
 
@@ -199,7 +200,10 @@ Route::group(['middleware' => ['auth']], function () {
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     Route::get('/getSubGlCodes/{parentId}', [TransactionController::class, 'getSubGlCodes']);
 
-    //Reports
+    // Route to render the index page with the form
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
+    // Route to handle the Profit and Loss report generation
     Route::get('/report/{type}', [ReportController::class, 'show'])->name('report.show');
 
 });

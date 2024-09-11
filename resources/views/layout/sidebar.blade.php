@@ -181,13 +181,19 @@
                     </li>
                 @endcanany
                 @canany(['reports-list'])
-                    <li class="slide">
+                    <li class="slide @if (Route::is('reports-list')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
-                            <i class="fa fa-bar-chart-o fa-2x mx-3"></i> 
-                            <span class="side-menu__label">Reports</span><i class="angle fe fe-chevron-right"></i>
-                        </a>
-                        <ul class="slide-menu">
-                            <li><a class="slide-item" href="{{ route('report.show', 'profit-and-loss') }}">Profit and Loss</a></li>
+                            <i class="fa fa-bar-chart-o fa-2x mx-3"></i>
+                            <span class="side-menu__label">Reports</span><i class="angle fe fe-chevron-right"></i></a>
+                        <ul class="slide-menu  @if (Route::is('reports-list')) open @endif">
+                            @can('reports-list')
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item mx-5 @if (Route::is('reports.index')) active @endif"
+                                        data-bs-toggle="sub-slide" href="{{ route('reports.index') }}">
+                                        <span class="sub-side-menu__label">List</span>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endcanany

@@ -194,6 +194,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // ...
         'DataTables' => Illuminate\Database\DatabaseServiceProvider::class,
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
     ])->toArray(),
 
 ];
