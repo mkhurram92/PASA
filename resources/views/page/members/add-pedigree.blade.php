@@ -58,9 +58,6 @@
                                         <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                     </a>
                                 @else
-                                    <a class="btn btn-danger" href="{{ route('profile') }}">
-                                        <i class="fa fa-home" style="font-size:20px;"> Home</i>
-                                    </a>
                                     <a class="btn btn-info" href="{{ url()->previous() }}" id="view-members">
                                         <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                     </a>
