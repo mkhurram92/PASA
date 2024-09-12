@@ -128,7 +128,7 @@
             }
 
             function initializeGivenNameListeners() {
-                document.querySelectorAll('.ancestor_surname').forEach(function(select) {
+                document.querySelectorAll('.given_name').forEach(function(select) {
                     select.removeEventListener('change',
                     handleAncestorChange); 
                     select.addEventListener('change', handleAncestorChange);
@@ -146,7 +146,7 @@
                 parentRow.querySelector('.ship_name_year').value = `${shipName} - ${shipYear}`;
             }
 
-            initializeSelect2('.ancestor_surname:first');
+            initializeSelect2('.given_name:first');
             initializeGivenNameListeners();
 
             window.addAncestorForm = function() {
@@ -157,7 +157,7 @@
                 newAncestorForm.find('select, input').each(function() {
                     $(this).val('');
 
-                    if ($(this).hasClass('ancestor_surname')) {
+                    if ($(this).hasClass('given_name')) {
                         $(this).removeClass('select2-hidden-accessible');
                         $(this).next('.select2').remove();
                         initializeSelect2(this); 
