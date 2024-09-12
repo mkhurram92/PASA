@@ -173,7 +173,6 @@
         return value === null ? '' : value;
     }
 
-
     var membersData = <?php echo json_encode($members); ?>;
     var membershipTypeOptions = <?php echo json_encode($membershipTypeOptions); ?>;
     var membershipStatusOptions = <?php echo json_encode($membershipStatusOptions); ?>;
@@ -257,11 +256,34 @@
         let phone = data.contact.phone;
 
         if (areaCode && phone) {
-            return `(${areaCode}) ${phone}`; 
+            return `(${areaCode}) ${phone}`;
         } else if (phone) {
             return phone;
         } else {
-            return ''; 
+            return '';
+        }
+    }
+
+    function mergeBirthDate(cell, formatterParams) {
+        // Access the full row data
+        let data = cell.getData();
+
+        let year = data.year_of_birth || '';
+        let month = data.month_of_birth || '';
+        let day = data.date_of_birth || '';
+
+        // The same logic for formatting
+        if (year && month && day) {
+            if (month.length === 1) month = '0' + month;
+            if (day.length === 1) day = '0' + day;
+            return `${year}-${month}-${day}`;
+        } else if (year && month) {
+            if (month.length === 1) month = '0' + month;
+            return `${year}-${month}`;
+        } else if (year) {
+            return `${year}`;
+        } else {
+            return '';
         }
     }
 
@@ -296,6 +318,32 @@
                 headerFilter: "input",
                 headerFilterPlaceholder: 'Filter by Given Name/s',
                 mutator: nullToEmptyString
+            },
+            {
+                title: "Birth Date",
+                field: "date_of_birth_combined",
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                mutator: function(value, data, type, params, component) {
+                    let date = data.date_of_birth ? String(data.date_of_birth).padStart(2, '0') : "";
+                    let month = data.month_of_birth ? String(data.month_of_birth).padStart(2, '0') : "";
+                    let year = data.year_of_birth ? String(data.year_of_birth) : "";
+
+                    if (year) {
+                        if (month) {
+                            if (date) {
+                                return `${year}-${month}-${date}`;
+                            } else {
+                                return `${year}-${month}`;
+                            }
+                        } else {
+                            return `${year}`;
+                        }
+                    } else {
+                        return "";
+                    }
+                }
             },
             {
                 title: 'Membership Type',
