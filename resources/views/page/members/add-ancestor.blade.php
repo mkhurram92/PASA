@@ -115,71 +115,64 @@
 </div>
 
 @section('scripts')
-    <!-- Include Select2 CSS and JS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Function to initialize event listeners on given_name dropdowns
+            function initializeSelect2(element) {
+                $(element).select2({
+                    placeholder: 'Select Ancestor',
+                    allowClear: true
+                }).on('change', handleAncestorChange);
+            }
+
             function initializeGivenNameListeners() {
                 document.querySelectorAll('.given_name').forEach(function(select) {
                     select.removeEventListener('change',
-                    handleAncestorChange); // Remove any existing listener to avoid duplicates
+                    handleAncestorChange); 
                     select.addEventListener('change', handleAncestorChange);
                 });
             }
 
-            // Event handler for when a given_name dropdown changes
             function handleAncestorChange() {
                 const selectedOption = this.options[this.selectedIndex];
-                const source = selectedOption.getAttribute('data-source');
-                const shipName = selectedOption.getAttribute('data-ship-name');
-                const shipYear = selectedOption.getAttribute('data-ship-year');
+                const source = selectedOption.getAttribute('data-source') || '';
+                const shipName = selectedOption.getAttribute('data-ship-name') || '';
+                const shipYear = selectedOption.getAttribute('data-ship-year') || '';
 
                 const parentRow = this.closest('.row.mb-3');
                 parentRow.querySelector('.source_of_arrival').value = source;
                 parentRow.querySelector('.ship_name_year').value = `${shipName} - ${shipYear}`;
             }
 
-            // Initialize listeners on page load
+            initializeSelect2('.given_name:first');
             initializeGivenNameListeners();
 
-            // Function to add a new ancestor form
             window.addAncestorForm = function() {
                 var ancestorFormCount = $('#ancestor-forms .card-body').length;
 
-                // Clone the initial form
                 var newAncestorForm = $('#ancestor-forms .card-body:first').clone();
 
-                // Update the IDs and names of the cloned elements
                 newAncestorForm.find('select, input').each(function() {
-                    var newId = $(this).attr('id') + '_' + ancestorFormCount;
-                    $(this).attr('id', newId).val('');
+                    $(this).val('');
 
-                    // Update the class to ensure the cloned elements can be targeted
-                    if ($(this).attr('name') === 'given_name') {
-                        $(this).addClass('given_name');
-                    } else if ($(this).attr('name') === 'source_of_arrival') {
-                        $(this).addClass('source_of_arrival');
-                    } else if ($(this).attr('name') === 'mode_of_travel_id') {
-                        $(this).addClass('mode_of_travel_id');
+                    if ($(this).hasClass('given_name')) {
+                        $(this).removeClass('select2-hidden-accessible');
+                        $(this).next('.select2').remove();
+                        initializeSelect2(this); 
                     }
                 });
 
-                // Add a remove button to the cloned form
                 newAncestorForm.append(
                     '<div class="col-md-2"><button type="button" class="btn btn-danger remove-button" onclick="removeAncestorForm(this)">Remove</button></div>'
                 );
 
-                // Insert the cloned form before the button container
                 newAncestorForm.insertBefore($('#ancestor-forms .card-footer'));
 
-                // Re-initialize listeners for the new dropdown
                 initializeGivenNameListeners();
             }
 
-            // Function to remove an ancestor form
             window.removeAncestorForm = function(element) {
                 $(element).closest('.card-body').remove();
             }
