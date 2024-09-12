@@ -98,7 +98,7 @@
                                                 <div class="col-md-4">
                                                     <label class="form-control-label">Pioneer Name</label>
                                                     <input name="ancestor_given_name"
-                                                        value="{{ $ancestor->given_name }} {{ $ancestor->ancestor_surname }}"
+                                                        value="{{ $ancestor->ancestor_surname }} {{ $ancestor->given_name }}"
                                                         class="form-control" disabled>
                                                 </div>
                                                 <div class="col-md-4">
