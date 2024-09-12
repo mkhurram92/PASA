@@ -63,6 +63,8 @@ class SubscribeMemberController extends Controller
             'additionalInfo',
             'contact',
             'address',
+            'address.state',
+            'address.country', 
             'title',
             'ancestors.mode_of_travel.ship'
         ])->get();

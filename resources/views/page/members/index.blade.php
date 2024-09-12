@@ -119,23 +119,23 @@
             <div class="row">
                 <div class="col-md-12 p-12">
                     @if ($errors->any() || session('error') || session('success'))
-                        <div class="card">
-                            <div class="card-body">
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        {{ $errors->first() }}
-                                    </div>
-                                @elseif(session('error'))
-                                    <div class="alert alert-danger">
-                                        {{ session('error') }}
-                                    </div>
-                                @elseif(session('success'))
-                                    <div class="alert alert-success">
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
+                    <div class="card">
+                        <div class="card-body">
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
                             </div>
+                            @elseif(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                            @elseif(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                            @endif
                         </div>
+                    </div>
                     @endif
                     <div class="card">
                         <div class="card-body p-2">
@@ -168,266 +168,344 @@
 <div id="crud"></div>
 
 @section('scripts')
-    <script>
-        function nullToEmptyString(value) {
-            return value === null ? '' : value;
-        }
+<script>
+    function nullToEmptyString(value) {
+        return value === null ? '' : value;
+    }
 
 
-        var membersData = <?php echo json_encode($members); ?>;
-        var membershipTypeOptions = <?php echo json_encode($membershipTypeOptions); ?>;
-        var membershipStatusOptions = <?php echo json_encode($membershipStatusOptions); ?>;
+    var membersData = <?php echo json_encode($members); ?>;
+    var membershipTypeOptions = <?php echo json_encode($membershipTypeOptions); ?>;
+    var membershipStatusOptions = <?php echo json_encode($membershipStatusOptions); ?>;
 
-        //Filter Ship Name - Year
-        membersData = membersData.map(member => {
-            member.shipNameYear = '';
+    //Filter Ship Name - Year
+    membersData = membersData.map(member => {
+        member.shipNameYear = '';
 
-            if (member.ancestors && member.ancestors.length > 0) {
-                let ancestor = member.ancestors[0];
+        if (member.ancestors && member.ancestors.length > 0) {
+            let ancestor = member.ancestors[0];
 
-                if ((ancestor.source_of_arrival == 1 || ancestor.source_of_arrival == 2) && ancestor
-                    .mode_of_travel) {
-                    let shipName = ancestor.mode_of_travel.ship ? ancestor.mode_of_travel.ship.name_of_ship : '';
-                    let year = ancestor.mode_of_travel.year;
-                    member.shipNameYear = `${shipName} - ${year}`;
-                }
-            }
-
-            if (member.journal === 0) {
-                member.journalValue = 'Email';
-            } else {
-                member.journalValue = 'Post';
-            }
-
-            return member;
-        });
-
-        function mergeDateFields(value, data, type, params, component) {
-            let year = data.additional_info.year_membership_approved || '';
-            let month = data.additional_info.month_membership_approved || '';
-            let day = data.additional_info.date_membership_approved || '';
-
-            if (year && month && day) {
-                if (month.length === 1) month = '0' + month;
-                if (day.length === 1) day = '0' + day;
-                return `${year}-${month}-${day}`;
-            } else if (year && month) {
-                if (month.length === 1) month = '0' + month;
-                return `${year}-${month}`;
-            } else if (year) {
-                return `${year}`;
-            } else {
-                return '';
+            if ((ancestor.source_of_arrival == 1 || ancestor.source_of_arrival == 2) && ancestor
+                .mode_of_travel) {
+                let shipName = ancestor.mode_of_travel.ship ? ancestor.mode_of_travel.ship.name_of_ship : '';
+                let year = ancestor.mode_of_travel.year;
+                member.shipNameYear = `${shipName} - ${year}`;
             }
         }
 
-        function mergeDateFields1(value, data, type, params, component) {
-            let year = data.additional_info.year_membership_end || '';
-            let month = data.additional_info.month_membership_end || '';
-            let day = data.additional_info.	date_membership_end || '';
-
-            if (year && month && day) {
-                if (month.length === 1) month = '0' + month;
-                if (day.length === 1) day = '0' + day;
-                return `${year}-${month}-${day}`;
-            } else if (year && month) {
-                if (month.length === 1) month = '0' + month;
-                return `${year}-${month}`;
-            } else if (year) {
-                return `${year}`;
-            } else {
-                return '';
-            }
+        if (member.journal === 0) {
+            member.journalValue = 'Email';
+        } else {
+            member.journalValue = 'Post';
         }
 
-        var table = new Tabulator("#members-table", {
-            data: membersData,
-            layout: "fitColumns",
-            columns: [{
-                    title: 'Membership No',
-                    field: 'additional_info.membership_number',
+        return member;
+    });
 
-                    hozAlign: "right",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    width: "8%",
-                    headerFilterPlaceholder: 'Filter by Membership No',
-                    mutator: nullToEmptyString
-                },
-                {
-                    title: 'Family Name',
-                    field: 'family_name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Family Name',
-                    mutator: nullToEmptyString
-                },
-                {
-                    title: 'Given Name/s',
-                    field: 'given_name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Given Name/s',
-                    mutator: nullToEmptyString
-                },
-                {
-                    title: 'Membership Type',
-                    field: 'subscription_plan.name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "select",
-                    headerFilterPlaceholder: 'Filter by Membership Type',
-                    headerFilterParams: {
-                        values: membershipTypeOptions
-                    },
-                    mutator: nullToEmptyString
-                },
-                {
-                    title: 'Membership Status',
-                    field: 'membership_status.name',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "select",
-                    headerFilterPlaceholder: 'Filter by Membership Status',
-                    headerFilterParams: {
-                        values: membershipStatusOptions
-                    },
-                    mutator: nullToEmptyString
-                },
-                {
-                    title: 'Journal',
-                    field: 'journalValue',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "select",
-                    headerFilterParams: {
-                        values: {
-                            "Email": "Email",
-                            "Post": "Post"
-                        }
-                    },
-                    headerFilterPlaceholder: 'Filter by Journal',
-                    mutator: nullToEmptyString
-                },
-                {
-                    title: 'Email Address',
-                    field: 'contact.email',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Email',
-                    mutator: nullToEmptyString
+    function mergeDateFields(value, data, type, params, component) {
+        let year = data.additional_info.year_membership_approved || '';
+        let month = data.additional_info.month_membership_approved || '';
+        let day = data.additional_info.date_membership_approved || '';
 
+        if (year && month && day) {
+            if (month.length === 1) month = '0' + month;
+            if (day.length === 1) day = '0' + day;
+            return `${year}-${month}-${day}`;
+        } else if (year && month) {
+            if (month.length === 1) month = '0' + month;
+            return `${year}-${month}`;
+        } else if (year) {
+            return `${year}`;
+        } else {
+            return '';
+        }
+    }
+
+    function mergeDateFields1(value, data, type, params, component) {
+        let year = data.additional_info.year_membership_end || '';
+        let month = data.additional_info.month_membership_end || '';
+        let day = data.additional_info.date_membership_end || '';
+
+        if (year && month && day) {
+            if (month.length === 1) month = '0' + month;
+            if (day.length === 1) day = '0' + day;
+            return `${year}-${month}-${day}`;
+        } else if (year && month) {
+            if (month.length === 1) month = '0' + month;
+            return `${year}-${month}`;
+        } else if (year) {
+            return `${year}`;
+        } else {
+            return '';
+        }
+    }
+
+    function volunteerYesNo(value, data, type, params, component) {
+        let volunteer = data.additional_info.volunteer;
+
+        if (volunteer === 1) {
+            return "Yes";
+        } else if (volunteer === 0) {
+            return "No";
+        } else {
+            return '';
+        }
+    }
+
+    function mergePhoneAndAreaCode(value, data, type, params, component) {
+        let areaCode = data.contact.area_code;
+        let phone = data.contact.phone;
+
+        if (areaCode && phone) {
+            return `(${areaCode}) ${phone}`; 
+        } else if (phone) {
+            return phone;
+        } else {
+            return ''; 
+        }
+    }
+
+    var table = new Tabulator("#members-table", {
+        data: membersData,
+        layout: "fitColumns",
+        columns: [{
+                title: 'Membership No',
+                field: 'additional_info.membership_number',
+
+                hozAlign: "right",
+                vertAlign: "middle",
+                headerFilter: "input",
+                width: "8%",
+                headerFilterPlaceholder: 'Filter by Membership No',
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Family Name',
+                field: 'family_name',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Family Name',
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Given Name/s',
+                field: 'given_name',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Given Name/s',
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Membership Type',
+                field: 'subscription_plan.name',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "select",
+                headerFilterPlaceholder: 'Filter by Membership Type',
+                headerFilterParams: {
+                    values: membershipTypeOptions
                 },
-                {
-                    title: 'Ship Name - Year',
-                    field: 'shipNameYear',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Ship Name - Year',
-                    mutator: nullToEmptyString
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Membership Status',
+                field: 'membership_status.name',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "select",
+                headerFilterPlaceholder: 'Filter by Membership Status',
+                headerFilterParams: {
+                    values: membershipStatusOptions
                 },
-                {
-                    title: 'Approval Date',
-                    field: 'additional_info.date_membership_approved',
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Filter by Ship Name - Year',
-                    mutator: mergeDateFields,
-                    visible: false,
-                    download: true
-                },
-                {
-                    title: 'Date Membership Ended',
-                    field: 'additional_info.date_membership_end',
-                    //hozAlign: "left",
-                    //vertAlign: "middle",
-                    //headerFilter: "input",
-                    //headerFilterPlaceholder: 'Filter by Ship Name - Year',
-                    mutator: mergeDateFields1,
-                    visible: false,
-                    download: true
-                },
-                {
-                    title: 'General Notes',
-                    field: 'additional_info.general_notes',
-                    //hozAlign: "left",
-                    //vertAlign: "middle",
-                   // headerFilter: "input",
-                    //headerFilterPlaceholder: 'Filter by Ship Name - Year',
-                   // mutator: mergeDateFields,
-                    visible: false,
-                    download: true,
-                    mutator: nullToEmptyString
-                },
-                {
-                    title: "Action",
-                    field: "actions",
-                    hozAlign: "center",
-                    download: false,
-                    vertAlign: "middle",
-                    width:"7%",
-                    formatter: function(cell, formatterParams, onRendered) {
-                        var id = cell.getData().id;
-                        return '<div class="button-container">' +
-                            '<button class="fa fa-eye view-button" onclick="redirectToView(' +
-                            id +
-                            ')"></button>' +
-                            '</div>';
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Journal',
+                field: 'journalValue',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "select",
+                headerFilterParams: {
+                    values: {
+                        "Email": "Email",
+                        "Post": "Post"
                     }
+                },
+                headerFilterPlaceholder: 'Filter by Journal',
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Email Address',
+                field: 'contact.email',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Email',
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Ship Name - Year',
+                field: 'shipNameYear',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Ship Name - Year',
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Approval Date',
+                field: 'additional_info.date_membership_approved',
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "input",
+                headerFilterPlaceholder: 'Filter by Ship Name - Year',
+                mutator: mergeDateFields,
+                visible: false,
+                download: true
+            },
+            {
+                title: 'Date Membership Ended',
+                field: 'additional_info.date_membership_end',
+                mutator: mergeDateFields1,
+                visible: false,
+                download: true
+            },
+            {
+                title: 'Address Line 1',
+                field: 'address.unit_no',
+                visible: false,
+                download: true,
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Address Line 2',
+                field: 'address.number_street',
+                visible: false,
+                download: true,
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'City / Town / Suburb',
+                field: 'address.suburb',
+                visible: false,
+                download: true,
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'State',
+                field: 'address.state.name',
+                visible: false,
+                download: true,
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Country',
+                field: 'address.country.name',
+                visible: false,
+                download: true,
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Postcode',
+                field: 'address.post_code',
+                visible: false,
+                download: true,
+                mutator: nullToEmptyString
+            },
+            {
+                title: 'Home Phone(Inc Area Code)',
+                field: 'contact.area_code',
+                mutator: mergePhoneAndAreaCode,
+                visible: false,
+                download: true,
+            },
+            {
+                title: 'Mobile Phone',
+                field: 'contact.mobile',
+                visible: false,
+                download: true,
+                mutator: nullToEmptyString
+            },
+            {
+                title: "Volunteer",
+                field: "additional_info.volunteer",
+                mutator: volunteerYesNo,
+                visible: false,
+                download: true
+            },
+            {
+                title: 'General Notes',
+                field: 'additional_info.general_notes',
+                visible: false,
+                download: true,
+                mutator: nullToEmptyString
+            },
+            {
+                title: "Action",
+                field: "actions",
+                hozAlign: "center",
+                download: false,
+                vertAlign: "middle",
+                width: "7%",
+                formatter: function(cell, formatterParams, onRendered) {
+                    var id = cell.getData().id;
+                    return '<div class="button-container">' +
+                        '<button class="fa fa-eye view-button" onclick="redirectToView(' +
+                        id +
+                        ')"></button>' +
+                        '</div>';
                 }
-            ],
-            pagination: "local",
-            paginationSize: 25,
-            placeholder: "No Data Available"
+            }
+        ],
+        pagination: "local",
+        paginationSize: 25,
+        placeholder: "No Data Available"
+    });
+
+    function redirectToView(id) {
+        var baseUrl = 'members/view-member/';
+        var url = baseUrl + id;
+        window.location.href = url;
+    }
+
+    // Add a reset button
+    var resetButton = document.getElementById("reset-button");
+
+    resetButton.addEventListener("click", function() {
+        table.clearFilter();
+        table.clearHeaderFilter();
+    });
+
+    $("#pageSizeDropdown").on("change", function() {
+        var selectedPageSize = parseInt($(this).val(), 10);
+        table.setPageSize(selectedPageSize);
+    });
+
+    function printData() {
+        table.print(false, true);
+    }
+    //trigger download of data.csv file
+    document.getElementById("download-csv").addEventListener("click", function() {
+        table.download("csv", "Member List.csv");
+    });
+
+    //trigger download of data.xlsx file
+    document.getElementById("download-xlsx").addEventListener("click", function() {
+        table.download("xlsx", "Member List.xlsx", {
+            sheetName: "Member List"
         });
+    });
 
-        function redirectToView(id) {
-            var baseUrl = 'members/view-member/';
-            var url = baseUrl + id;
-            window.location.href = url;
-        }
-
-        // Add a reset button
-        var resetButton = document.getElementById("reset-button");
-
-        resetButton.addEventListener("click", function() {
-            table.clearFilter();
-            table.clearHeaderFilter();
+    //trigger download of data.pdf file
+    document.getElementById("download-pdf").addEventListener("click", function() {
+        table.download("pdf", "Member List.pdf", {
+            orientation: "landscape",
+            title: "Member List",
         });
-
-        $("#pageSizeDropdown").on("change", function() {
-            var selectedPageSize = parseInt($(this).val(), 10);
-            table.setPageSize(selectedPageSize);
-        });
-
-        function printData() {
-            table.print(false, true);
-        }
-        //trigger download of data.csv file
-        document.getElementById("download-csv").addEventListener("click", function() {
-            table.download("csv", "Member List.csv");
-        });
-
-        //trigger download of data.xlsx file
-        document.getElementById("download-xlsx").addEventListener("click", function() {
-            table.download("xlsx", "Member List.xlsx", {
-                sheetName: "Member List"
-            });
-        });
-
-        //trigger download of data.pdf file
-        document.getElementById("download-pdf").addEventListener("click", function() {
-            table.download("pdf", "Member List.pdf", {
-                orientation: "landscape",
-                title: "Member List",
-            });
-        });
-    </script>
+    });
+</script>
 @endsection
 
 <!-- app-content end-->
