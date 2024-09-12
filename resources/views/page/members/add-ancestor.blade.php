@@ -81,8 +81,8 @@
                                                             data-source="{{ $ancestor->sourceOfArrival->name ?? '' }}"
                                                             data-ship-year="{{ $ancestor->mode_of_travel->year_of_arrival ?? '' }}"
                                                             data-ship-name="{{ $ancestor->mode_of_travel->ship->name_of_ship ?? '' }}">
-                                                            {{ $ancestor->given_name }}
                                                             {{ $ancestor->ancestor_surname }}
+                                                            {{ $ancestor->given_name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
