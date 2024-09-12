@@ -322,9 +322,6 @@
             {
                 title: "Birth Date",
                 field: "date_of_birth_combined",
-                hozAlign: "left",
-                vertAlign: "middle",
-                headerFilter: "input",
                 mutator: function(value, data, type, params, component) {
                     let date = data.date_of_birth ? String(data.date_of_birth).padStart(2, '0') : "";
                     let month = data.month_of_birth ? String(data.month_of_birth).padStart(2, '0') : "";
@@ -343,7 +340,9 @@
                     } else {
                         return "";
                     }
-                }
+                },
+                visible: false,
+                download: true
             },
             {
                 title: 'Membership Type',
