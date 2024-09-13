@@ -31,6 +31,7 @@ class AncestorDataController extends Controller
     public function index(AncestorDataDataTable $request)
     {
         $user = auth()->user();
+
         $memberId = $user->member_id;
 
         $state = States::orderBy('id', 'asc')->pluck('name')->toArray();
@@ -66,7 +67,7 @@ class AncestorDataController extends Controller
             ])->get();
         } else {
             $ancestorIds = DB::table('member_ancestor')
-                ->where('member_id', $memberId) 
+                ->where('member_id', $memberId)
                 ->pluck('ancestor_id')
                 ->toArray();
 
@@ -169,7 +170,7 @@ class AncestorDataController extends Controller
     private function saveAncestorSpouse($ancestorData, $request)
     {
         try {
-            Log::info('Saving ancestor spouse data', $request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
+            //Log::info('Saving ancestor spouse data', $request->only(['marriage_date', 'marriage_place', 'spouse_place_of_birth', 'spouse_place_of_death', 'spouse_family_name', 'spouse_given_name', 'spouse_birth_date', 'spouse_death_date']));
 
             $ancestorSpouse = new AncestorSpouse();
             $ancestorSpouse->ancestor_id = $ancestorData->id;
@@ -178,7 +179,7 @@ class AncestorDataController extends Controller
 
             //Log::info('Ancestor spouse data saved successfully', ['ancestor_spouse_id' => $ancestorSpouse->id]);
         } catch (\Exception $e) {
-            Log::error('Error saving ancestor spouse data: ' . $e->getMessage());
+            //Log::error('Error saving ancestor spouse data: ' . $e->getMessage());
             throw $e; // Rethrow the exception to trigger a rollback
         }
     }
