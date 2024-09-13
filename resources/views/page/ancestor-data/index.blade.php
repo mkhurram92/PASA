@@ -100,11 +100,11 @@
                      <h3 class="page-title">Ancestors</h3>
                  </div>
                  @if (auth()->user()->role_id == 1)
-                 <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="{{ route('ancestor-data.create') }}" id="add-record">
-                         <i class="fa fa-plus-circle" style="font-size:24px;"></i>
-                     </a>
-                 </div>
+                     <div class="card-header d-flex justify-content-between align-items-center">
+                         <a class="btn btn-primary" href="{{ route('ancestor-data.create') }}" id="add-record">
+                             <i class="fa fa-plus-circle" style="font-size:24px;"></i>
+                         </a>
+                     </div>
                  @endif
              </div>
              <div class="row">
@@ -131,18 +131,20 @@
                      <div class="card">
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
-                                 Show <select style="padding:10px;" id="pageSizeDropdown">
-                                     <option value="1000000">ALL</option>
-                                     <option value="25">25</option>
-                                     <option value="50">50</option>
-                                     <option value="100">100</option>
-                                 </select>
-                                 <button class="custom-button" type="button" id="printTable"
-                                     onclick="printData()">Print</button>
-                                 <button class="custom-button" id="download-csv">Download CSV</button>
-                                 <button class="custom-button" id="download-xlsx">Download EXCEL</button>
-                                 <button class="custom-button" id="download-pdf">Download PDF</button>
-                                 <button class="custom-button" id="reset-button">Reset Filter</button>
+                                 @if (auth()->user()->role_id == 1)
+                                     Show <select style="padding:10px;" id="pageSizeDropdown">
+                                         <option value="1000000">ALL</option>
+                                         <option value="25">25</option>
+                                         <option value="50">50</option>
+                                         <option value="100">100</option>
+                                     </select>
+                                     <button class="custom-button" type="button" id="printTable"
+                                         onclick="printData()">Print</button>
+                                     <button class="custom-button" id="download-csv">Download CSV</button>
+                                     <button class="custom-button" id="download-xlsx">Download EXCEL</button>
+                                     <button class="custom-button" id="download-pdf">Download PDF</button>
+                                     <button class="custom-button" id="reset-button">Reset Filter</button>
+                                 @endif
                              </div>
                              <div class="table-responsive">
                                  @if (isset($ancestor))
@@ -189,15 +191,14 @@
          var table = new Tabulator("#ancestor-data-table", {
              data: ancestorData,
              layout: "fitColumns",
-             columns: [
-                {
+             columns: [{
                      title: "Gender",
                      field: "gender.name",
-                     mutator: nullToEmptyString, 
+                     mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
-                {
+                 {
                      title: "Family Name",
                      field: "ancestor_surname",
                      hozAlign: "left",
@@ -218,9 +219,9 @@
                  {
                      title: "Preferred Name",
                      field: "maiden_surname",
-                     mutator: nullToEmptyString, 
+                     mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Mode of Travel",
@@ -285,16 +286,16 @@
                  {
                      title: "Birth Place",
                      field: "place_of_birth",
-                     mutator: nullToEmptyString, 
+                     mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Birth Details",
                      field: "notes.0.birth_details",
-                     mutator: nullToEmptyString, 
+                     mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Death Date",
@@ -319,36 +320,39 @@
                          }
                      },
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Death Place",
                      field: "place_of_death",
-                     mutator: nullToEmptyString, 
+                     mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Death Details",
                      field: "notes.0.death_details",
-                     mutator: nullToEmptyString, 
+                     mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "General Notes",
                      field: "notes.0.notes",
-                     mutator: nullToEmptyString, 
+                     mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Marriage Date",
                      field: "date_of_marriage_combined",
                      mutator: function(value, data, type, params, component) {
-                         let date = data.spouse_details.marriage_date ? String(data.spouse_details.marriage_date).padStart(2, '0') : "";
-                         let month = data.spouse_details.marriage_month ? String(data.spouse_details.marriage_month).padStart(2, '0') : "";
-                         let year = data.spouse_details.marriage_year ? String(data.spouse_details.marriage_year) : "";
+                         let date = data.spouse_details.marriage_date ? String(data.spouse_details
+                             .marriage_date).padStart(2, '0') : "";
+                         let month = data.spouse_details.marriage_month ? String(data.spouse_details
+                             .marriage_month).padStart(2, '0') : "";
+                         let year = data.spouse_details.marriage_year ? String(data.spouse_details
+                             .marriage_year) : "";
 
                          if (year) {
                              if (month) {
@@ -365,8 +369,8 @@
                          }
                      },
                      download: true,
-                     visible:false
-                 },          
+                     visible: false
+                 },
                  {
                      title: "Spouse Family Name",
                      field: "spouse_details.spouse_family_name",
@@ -389,9 +393,12 @@
                      title: "Spouse Birth Date",
                      field: "spouse_date_of_birth_combined",
                      mutator: function(value, data, type, params, component) {
-                         let date = data.spouse_details.spouse_birth_date ? String(data.spouse_details.marriage_date).padStart(2, '0') : "";
-                         let month = data.spouse_details.spouse_birth_month ? String(data.spouse_details.spouse_birth_month).padStart(2, '0') : "";
-                         let year = data.spouse_details.spouse_birth_year ? String(data.spouse_details.spouse_birth_year) : "";
+                         let date = data.spouse_details.spouse_birth_date ? String(data.spouse_details
+                             .marriage_date).padStart(2, '0') : "";
+                         let month = data.spouse_details.spouse_birth_month ? String(data.spouse_details
+                             .spouse_birth_month).padStart(2, '0') : "";
+                         let year = data.spouse_details.spouse_birth_year ? String(data.spouse_details
+                             .spouse_birth_year) : "";
 
                          if (year) {
                              if (month) {
@@ -408,22 +415,25 @@
                          }
                      },
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Spouse Birth Place",
                      field: "spouse_details.spouse_birth_place",
                      mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Spouse Death Date",
                      field: "spouse_date_of_death_combined",
                      mutator: function(value, data, type, params, component) {
-                         let date = data.spouse_details.spouse_death_date ? String(data.spouse_details.marriage_date).padStart(2, '0') : "";
-                         let month = data.spouse_details.spouse_death_month ? String(data.spouse_details.spouse_death_month).padStart(2, '0') : "";
-                         let year = data.spouse_details.spouse_death_year ? String(data.spouse_details.spouse_death_year) : "";
+                         let date = data.spouse_details.spouse_death_date ? String(data.spouse_details
+                             .marriage_date).padStart(2, '0') : "";
+                         let month = data.spouse_details.spouse_death_month ? String(data.spouse_details
+                             .spouse_death_month).padStart(2, '0') : "";
+                         let year = data.spouse_details.spouse_death_year ? String(data.spouse_details
+                             .spouse_death_year) : "";
 
                          if (year) {
                              if (month) {
@@ -440,14 +450,14 @@
                          }
                      },
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Spouse Death Place",
                      field: "spouse_details.spouse_death_place",
                      mutator: nullToEmptyString,
                      download: true,
-                     visible:false
+                     visible: false
                  },
                  {
                      title: "Action",
