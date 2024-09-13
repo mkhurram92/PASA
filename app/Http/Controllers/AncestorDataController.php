@@ -30,6 +30,9 @@ class AncestorDataController extends Controller
      */
     public function index(AncestorDataDataTable $request)
     {
+        $user = auth()->user();
+        $memberId = $user->member_id;
+
         $state = States::orderBy('id', 'asc')->pluck('name')->toArray();
         array_unshift($state, '');
 
@@ -47,10 +50,39 @@ class AncestorDataController extends Controller
 
         $source_of_arrivals = SourceOfArrival::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($source_of_arrivals, '');
-        
-        $ancestor = AncestorData::with('occupation_relation', 'Gender', 'Ships', 'departureCountry', 'state', 'sourceOfArrival', 'spouse_details', 'mode_of_travel.ship', 'notes')->get();
 
-        //dd($ancestor);
+        // If the user has role_id = 1 (e.g., admin), show all ancestors
+        if ($user->role_id == 1) {
+            $ancestor = AncestorData::with([
+                'occupation_relation',
+                'Gender',
+                'Ships',
+                'departureCountry',
+                'state',
+                'sourceOfArrival',
+                'spouse_details',
+                'mode_of_travel.ship',
+                'notes'
+            ])->get();
+        } else {
+            $ancestorIds = DB::table('member_ancestor')
+                ->where('member_id', $memberId) 
+                ->pluck('ancestor_id')
+                ->toArray();
+
+            $ancestor = AncestorData::with([
+                'occupation_relation',
+                'Gender',
+                'Ships',
+                'departureCountry',
+                'state',
+                'sourceOfArrival',
+                'spouse_details',
+                'mode_of_travel.ship',
+                'notes'
+            ])->whereIn('id', $ancestorIds)
+                ->get();
+        }
 
         return $request->render('page.ancestor-data.index', compact('ancestor', 'state', 'occupation', 'gender_name', 'country', 'ship', 'source_of_arrivals'));
     }

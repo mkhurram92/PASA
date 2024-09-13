@@ -99,11 +99,13 @@
                  <div class="page-leftheader">
                      <h3 class="page-title">Ancestors</h3>
                  </div>
+                 @if (auth()->user()->role_id == 1)
                  <div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary" href="{{ route('ancestor-data.create') }}" id="add-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                      </a>
                  </div>
+                 @endif
              </div>
              <div class="row">
                  <div class="col-md-12 p-12">

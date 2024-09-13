@@ -34,9 +34,11 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Pioneer Ancestor Details</h3>
                             <div>
+                                @if (auth()->user()->role_id == 1)
                                 <a class="btn btn-success mr-2" href="{{ url()->current() }}/edit">
                                     <i class="pe-7s-pen btn-icon-wrapper" style="font-size:20px;"> Edit</i>
                                 </a>
+                                @endif
                                 <a class="btn btn-info" href="{{ route('ancestor-data.index') }}">
                                     <i class="fa fa-arrow-circle-left" style="font-size:20px;"> Back</i>
                                 </a>
