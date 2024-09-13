@@ -75,7 +75,7 @@
                                                 <label class="col-md-4 form-label">Pioneer's Family Name<span
                                                         class="text-danger"> *</span></label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control uppercase" type="text"
+                                                    <input class="form-control" type="text"
                                                         placeholder="Pioneer's Family Name" name="ancestor_surname">
                                                 </div>
                                             </div>

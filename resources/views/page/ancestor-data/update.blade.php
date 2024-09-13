@@ -88,7 +88,7 @@
                                                 <label class="col-md-4 form-label">Pioneer's Family Name<span
                                                         class="text-danger"> *</span></label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control uppercase" id="ancestor_surname"
+                                                    <input class="form-control" id="ancestor_surname"
                                                         type="text" placeholder="Pioneer's Family Name"
                                                         value="{{ $ancestor?->ancestor_surname }}"
                                                         name="ancestor_surname">
