@@ -85,10 +85,8 @@
                                         </a>
                                 </div>
                             </div>
-
                             <div class="card-body p-0">
                                 <div class="card-body">
-
                                     <div class="row">
                                         @csrf
                                         <div class="col-lg-6">
@@ -308,6 +306,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
+                                            
                                             <label class="col-md-4 form-label">Membership Type </label>
                                             <div class="col-md-8">
                                                 <select name="member_type_id" class="form-control form-select select2"

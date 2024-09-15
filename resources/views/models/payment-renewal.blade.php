@@ -25,20 +25,37 @@
     .modal-body .form-label,
     .modal-body .form-check-label {
         text-align: left;
-        /* Align text to the left */
         width: 100%;
-        /* Ensure full-width alignment */
         margin: 0;
-        /* Remove any default margins */
     }
-    .cash-amount{
+
+    .cash-amount {
         text-align: left;
     }
+
+    .eft-details {
+        padding: 15px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: #ffffff;
+        margin-bottom: 20px;
+        font-size: 16px;
+        text-align: left;
+    }
+
+    .eft-details h6 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .eft-details p {
+        margin: 5px 0;
+    }
 </style>
+
 <!-- Payment Renewal Modal -->
-<div class="modal fade" id="paymentRenewalModal" tabindex="-1" role="dialog" aria-labelledby="paymentRenewalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="paymentRenewalModal" tabindex="-1" role="dialog" aria-labelledby="paymentRenewalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <!-- Modal header -->
             <div class="modal-header">
@@ -46,9 +63,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Modal body -->
-            <div class="modal-body text-center">
+            <div class="modal-body text-center" style="font-size: 16px;">
                 <p>Price: $<span id="selectedPriceField"></span></p><br>
                 <p>Please choose your preferred payment method:</p>
+
+                <!-- EFT Details -->
+                <div class="eft-details">
+                    <h5>Direct Debit (EFT) payments: </h5>
+                    <p><strong>Account Name:</strong> Pioneers SA</p>
+                    <p><strong>BSB No.:</strong> 105900</p>
+                    <p><strong>Account No.:</strong> 950067040</p>
+                    <p><strong>Description:</strong> Payment code, member number & name (required information)</p>
+                </div>
+
+                <!-- Payment Options -->
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="paymentMethod" id="cashOption" value="cash">
                     <label class="form-check-label" for="cashOption">
@@ -56,13 +84,14 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="onlineOption"
-                        value="online">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="onlineOption" value="online">
                     <label class="form-check-label" for="onlineOption">
                         Online
                     </label>
                 </div>
-                <div class="mb-3" id="cashFields" style="display: none;margin-top: 20px;">
+
+                <!-- Cash Fields -->
+                <div class="mb-3" id="cashFields" style="display: none; margin-top: 20px;">
                     <div class="form-group">
                         <label for="cash-amount" class="form-label">Amount to Pay:</label>
                         <input type="text" id="cash-amount" class="form-control" placeholder="Enter amount">
@@ -89,31 +118,26 @@
                     <!-- Billing Address -->
                     <div class="mb-3">
                         <label for="billing-address" class="form-label">Billing Address</label>
-                        <input type="text" id="billing-address" class="form-control" placeholder="Street Address"
-                            autocomplete="address-line1">
+                        <input type="text" id="billing-address" class="form-control" placeholder="Street Address" autocomplete="address-line1">
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="billing-city" class="form-label">City</label>
-                            <input type="text" id="billing-city" class="form-control" placeholder="City"
-                                autocomplete="address-level2">
+                            <input type="text" id="billing-city" class="form-control" placeholder="City" autocomplete="address-level2">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="billing-state" class="form-label">State</label>
-                            <input type="text" id="billing-state" class="form-control" placeholder="State"
-                                autocomplete="address-level1">
+                            <input type="text" id="billing-state" class="form-control" placeholder="State" autocomplete="address-level1">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="billing-postal" class="form-label">Postal Code</label>
-                            <input type="text" id="billing-postal" class="form-control" placeholder="Postal Code"
-                                autocomplete="postal-code">
+                            <input type="text" id="billing-postal" class="form-control" placeholder="Postal Code" autocomplete="postal-code">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="billing-country" class="form-label">Country</label>
-                            <input type="text" id="billing-country" class="form-control" placeholder="Country"
-                                autocomplete="country">
+                            <input type="text" id="billing-country" class="form-control" placeholder="Country" autocomplete="country">
                         </div>
                     </div>
                 </div>

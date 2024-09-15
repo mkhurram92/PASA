@@ -55,9 +55,9 @@
                             <h3 class="card-title">Member Personal Details</h3>
                             <div>
                                 @if ($showRenewButton)
-                                <a class="btn btn-primary mr-2" href="#" id="renewButton">
-                                    <i class="fa fa-refresh" style="font-size:20px;"> Renew</i>
-                                </a>
+                                    <a class="btn btn-primary mr-2" href="#" id="renewButton" >
+                                        <i class="fa fa-refresh" style="font-size:20px;"></i> Renew
+                                    </a>
                                 @endif
 
                                 @if (auth()->user()->role_id == 1)
@@ -531,6 +531,8 @@
 @include('plugins.select2')
 @include('models.payment-renewal')
 <script>
+    var userRoleId = @json(Auth::user()->role_id);
+
     document.addEventListener('DOMContentLoaded', function() {
     var renewButton = document.getElementById('renewButton');
     if (renewButton) {
@@ -544,6 +546,13 @@
             var selectedPrice = (journalStatus === 'Emailed') ? emailPrice : postPrice;
             document.getElementById('selectedPriceField').innerText = selectedPrice;
 
+            if (userRoleId == 2) {
+                var cashOptionContainer = document.querySelector('input#cashOption').closest('.form-check');
+                    if (cashOptionContainer) {
+                        cashOptionContainer.style.display = 'none';
+                    }
+            }
+            
             var paymentModal = new bootstrap.Modal(document.getElementById('paymentRenewalModal'));
             paymentModal.show();
         });

@@ -36,24 +36,24 @@
 
                 <!-- Show Dashboard only if Admin is logged in -->
                 @if ($isAdmin)
-                <li class="slide">
-                    <a class="side-menu__item  @if (Route::is('index')) active @endif" data-bs-toggle="slide"
-                        href="{{ route('index') }}">
-                        <i class="fa fa-dashboard fa-2x mx-3"></i>
-                        <span class="side-menu__label">Dashboard</span>
-                    </a>
-                </li>
+                    <li class="slide">
+                        <a class="side-menu__item  @if (Route::is('index')) active @endif" data-bs-toggle="slide"
+                            href="{{ route('index') }}">
+                            <i class="fa fa-dashboard fa-2x mx-3"></i>
+                            <span class="side-menu__label">Dashboard</span>
+                        </a>
+                    </li>
                 @endif
 
                 <!-- Show Member View (Name Profile Details) only if user is logged in and not an Admin -->
                 @if (!$isAdmin && auth()->check())
-                <li class="slide">
-                    <a class="side-menu__item  @if (Route::is('members.view-member', ['id' => $user->member_id])) active @endif"
-                        data-bs-toggle="slide" href="{{ route('members.view-member', ['id' => $user->member_id]) }}">
-                        <i class="fa fa-user fa-2x mx-3"></i>
-                        <span class="side-menu__label">Profile</span>
-                    </a>
-                </li>
+                    <li class="slide">
+                        <a class="side-menu__item  @if (Route::is('members.view-member', ['id' => $user->member_id])) active @endif"
+                            data-bs-toggle="slide" href="{{ route('members.view-member', ['id' => $user->member_id]) }}">
+                            <i class="fa fa-user fa-2x mx-3"></i>
+                            <span class="side-menu__label">Profile</span>
+                        </a>
+                    </li>
                 <li class="slide">
                     <a class="side-menu__item @if (Route::is('ancestor-data.index')) active @endif"
                     data-bs-toggle="sub-slide" href="{{ route('ancestor-data.index') }}">
