@@ -73,7 +73,7 @@
                     <p><strong>Account Name:</strong> Pioneers SA</p>
                     <p><strong>BSB No.:</strong> 105900</p>
                     <p><strong>Account No.:</strong> 950067040</p>
-                    <p><strong>Description:</strong> Payment code, member number & name (required information)</p>
+                    <!--<p><strong>Description:</strong> Payment code, member number & name (required information)</p>-->
                 </div>
 
                 <!-- Payment Options -->
