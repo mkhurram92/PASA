@@ -208,6 +208,21 @@ class AncestorDataController extends Controller
      */
     public function show($ancestorData)
     {
+        $user = auth()->user();
+
+        if ($user->role_id != 1) {
+            // Check if the ancestor belongs to the current user by querying the member_ancestor table
+            $isRelated = DB::table('member_ancestor')
+                ->where('member_id', $user->member_id)
+                ->where('ancestor_id', $ancestorData)
+                ->exists();
+    
+            if (!$isRelated) {
+                // Redirect the user to their own member page with an error message
+                return back()->with('error', 'You are not authorized to view this member\'s details.');
+            }
+        }
+
         $ancestor = AncestorData::with(
             [
                 'gender',
