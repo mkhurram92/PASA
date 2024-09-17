@@ -16,7 +16,6 @@
                                 <input type="hidden" id="stripe_key" value="{{ env('STRIPE_KEY') }}">
                                 <div id="wizard2">
                                     @include('page.junior-member-form-wizard.account')
-                                    @include('page.junior-member-form-wizard.siblings')
                                     @include('page.junior-member-form-wizard.payment')
                                 </div>
                             </form>
@@ -42,7 +41,7 @@
                 </select>
             </div>
             <div class="col-md-4 my-2">
-                <label class="form-control-label">Date of Birth:</label>
+                <label class="form-control-label">Birth Date:</label>
                 <input class="form-control" id="date_of_birth" name="sibling[date_of_birth][]"
                     value="{{ old('date_of_birth') }}" placeholder="Enter Date of Birth" required="" type="date">
             </div>

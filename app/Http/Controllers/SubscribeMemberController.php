@@ -28,6 +28,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreMemberRequest;
 use App\Models\AncestorData;
+use App\Models\MemberJunior;
 use App\Models\SubscriptionPlan;
 use App\Models\MemberPedigree;
 use Illuminate\Support\Facades\Log;
@@ -64,7 +65,7 @@ class SubscribeMemberController extends Controller
             'contact',
             'address',
             'address.state',
-            'address.country', 
+            'address.country',
             'title',
             'ancestors.mode_of_travel.ship'
         ])->get();
@@ -589,6 +590,22 @@ class SubscribeMemberController extends Controller
         }
 
         return view('page.members.view-ancestor', compact('member', 'ancestors'));
+    }
+
+    public function viewJuniors($id)
+    {
+        $user = auth()->user();
+
+        // Authorization check: ensure the user can only view their own juniors, unless they are an admin
+        if ($user->role_id != 1 && $user->member_id != $id) {
+            // Redirect to the user's own juniors page with a flash message
+            return redirect()->route('members.view-junior', ['id' => $user->member_id])
+                ->with('error', 'You are not authorized to view this member\'s juniors.');
+        }
+
+        $juniors = MemberJunior::where('member_id', $id)->get();
+
+        return view('page.members.view-junior', compact('juniors'));
     }
 
     public function addAncestor($id)

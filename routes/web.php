@@ -123,6 +123,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('members/updateAncestors/{id}', [SubscribeMemberController::class, 'updateAncestors'])->name('members.updateAncestors');
     Route::get('/getModeOfTravelDate/{id}', [SubscribeMemberController::class, 'getModeOfTravelDate']);
 
+    //Junior Member
+    Route::get('/members/view-junior/{id}', [SubscribeMemberController::class, 'viewJuniors'])->name('members.view-junior');
+
     //Member Renewal
     Route::post('/update-renewal-date', [SubscribeMemberController::class, 'updateRenewalDate'])->name('update.renewal.date');
 
@@ -205,5 +208,4 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route to handle the Profit and Loss report generation
     Route::get('/report/{type}', [ReportController::class, 'show'])->name('report.show');
-
 });

@@ -68,6 +68,13 @@
                         <span class="side-menu__label">Pedigree</span>
                     </a>
                 </li>
+                <!--<li class="slide">
+                    <a class="side-menu__item  @if (Route::is('members.view-junior', ['id' => $user->member_id])) active @endif"
+                        data-bs-toggle="slide" href="{{ route('members.view-junior', ['id' => $user->member_id]) }}">
+                        <i class="fa fa-user-o fa-2x mx-3"></i>
+                        <span class="side-menu__label">Juniors</span>
+                    </a>
+                </li>-->
                 @endif
 
                 <li class="slide">
