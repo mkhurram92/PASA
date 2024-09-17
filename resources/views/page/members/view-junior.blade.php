@@ -11,7 +11,7 @@
             <!-- Page header -->
             <div class="page-header">
                 <div class="page-leftheader">
-                    <h4 class="page-title"></h4>
+                    <h4 class="page-title">Member's Juniors</h4>
                 </div>
             </div>
             <!-- End Page header -->
@@ -32,11 +32,6 @@
                                 {{ session('success') }}
                             </div>
                         @endif
-
-                        <div class="card-header justify-content-between">
-                            <h3 class="card-title">Member's Juniors</h3>
-                        </div>
-
                         <!-- Junior Tabulator Table -->
                         <div class="table-responsive">
                             <div id="juniors-table"></div>
