@@ -56,6 +56,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fa fa-user card-custom-icon text-purple icon-dropshadow-purple"
+                                style="font-size: 4rem"></i>
+                            <p class="mb-2">Approved Users</p>
+                            <h2 class="font-weight-bold mb-1" id="total_users">{{ $numberOfUsers }}</h2>
+                        </div>
+                    </div>
+                </div>
             </div>
             @endif
         </div>

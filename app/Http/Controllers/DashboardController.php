@@ -39,10 +39,14 @@ class DashboardController extends Controller
         $ancestors = AncestorData::all();
         $numberOfAncestors = count($ancestors);
 
+        $users = User::all();
+        $numberOfUsers = count($users);
+
+
         $incomeTransactions = Transaction::where('transaction_type_id', 1)->sum('amount');
         $expenseTransactions = Transaction::where('transaction_type_id', 2)->sum('amount');
 
-        return view('page.dashbord.dashbord', compact('numberOfMembers', 'numberOfAncestors', 'incomeTransactions', 'expenseTransactions'));
+        return view('page.dashbord.dashbord', compact('numberOfMembers', 'numberOfAncestors', 'numberOfUsers', 'incomeTransactions', 'expenseTransactions'));
     }
 
     /**

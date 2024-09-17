@@ -240,6 +240,7 @@
                      field: "ship_name_year",
                      hozAlign: "left",
                      vertAlign: "middle",
+                     headerFilterPlaceholder: 'Search by Ship Name - Year',
                      headerFilter: "input",
                      mutator: function(value, data, type, params, component) {
                          if (data.mode_of_travel) {
@@ -262,6 +263,7 @@
                      field: "date_of_birth_combined",
                      hozAlign: "left",
                      vertAlign: "middle",
+                     headerFilterPlaceholder: 'Search by Birth Date',
                      headerFilter: "input",
                      mutator: function(value, data, type, params, component) {
                          let date = data.date_of_birth ? String(data.date_of_birth).padStart(2, '0') : "";
