@@ -1,58 +1,3 @@
-<style>
-    #stripeFields .form-control {
-        margin-bottom: 15px;
-    }
-
-    #card-element {
-        padding: 10px 12px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        background-color: #fff;
-        width: 100%;
-    }
-
-    .form-control.StripeElement {
-        height: auto;
-        padding: 10px;
-    }
-
-    #stripeFields .form-label {
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .modal-body p,
-    .modal-body .form-label,
-    .modal-body .form-check-label {
-        text-align: left;
-        width: 100%;
-        margin: 0;
-    }
-
-    .cash-amount {
-        text-align: left;
-    }
-
-    .eft-details {
-        padding: 15px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        background-color: #ffffff;
-        margin-bottom: 20px;
-        font-size: 16px;
-        text-align: left;
-    }
-
-    .eft-details h6 {
-        margin-top: 0;
-        margin-bottom: 10px;
-    }
-
-    .eft-details p {
-        margin: 5px 0;
-    }
-</style>
-
 <!-- Payment Renewal Modal -->
 <div class="modal fade" id="paymentRenewalModal" tabindex="-1" role="dialog" aria-labelledby="paymentRenewalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -63,18 +8,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- Modal body -->
-            <div class="modal-body text-center" style="font-size: 16px;">
+            <div class="modal-body" style="font-size: 16px;">
                 <p>Price: $<span id="selectedPriceField"></span></p><br>
                 <p>Please choose your preferred payment method:</p>
-
-                <!-- EFT Details -->
-                <div class="eft-details">
-                    <h5>Direct Debit (EFT) payments: </h5>
-                    <p><strong>Account Name:</strong> Pioneers SA</p>
-                    <p><strong>BSB No.:</strong> 105900</p>
-                    <p><strong>Account No.:</strong> 950067040</p>
-                    <!--<p><strong>Description:</strong> Payment code, member number & name (required information)</p>-->
-                </div>
 
                 <!-- Payment Options -->
                 <div class="form-check">
@@ -89,6 +25,19 @@
                         Online
                     </label>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="eftOption" value="eft">
+                    <label class="form-check-label" for="eftOption">
+                        Direct Debit (EFT)
+                    </label>
+                </div>
+
+                <!-- EFT Details (Hidden by default) -->
+                <div class="eft-details" id="eftDetails" style="display: none; margin-top: 20px;">
+                    <strong>Account Name:</strong> Pioneers SA <br>
+                    <strong>BSB No.:</strong> 105900 <br>
+                    <strong>Account No.:</strong> 950067040
+                </div>
 
                 <!-- Cash Fields -->
                 <div class="mb-3" id="cashFields" style="display: none; margin-top: 20px;">
@@ -100,13 +49,11 @@
 
                 <!-- Stripe Elements (Hidden by default) -->
                 <div id="stripeFields" style="display: none; margin-top: 20px;">
-                    <!-- Cardholder Name -->
                     <div class="mb-3">
                         <label for="cardholder-name" class="form-label">Cardholder Name</label>
                         <input type="text" id="cardholder-name" class="form-control" placeholder="Name on Card">
                     </div>
                     <input type="hidden" id="stripe-amount" name="amount">
-                    <!-- Card Number -->
                     <div class="mb-3">
                         <label for="card-element" class="form-label">Credit or Debit Card Number</label>
                         <div id="card-element" class="form-control">
@@ -114,8 +61,6 @@
                         </div>
                         <div id="card-errors" role="alert" style="color: red; margin-top: 10px;"></div>
                     </div>
-
-                    <!-- Billing Address -->
                     <div class="mb-3">
                         <label for="billing-address" class="form-label">Billing Address</label>
                         <input type="text" id="billing-address" class="form-control" placeholder="Street Address" autocomplete="address-line1">
@@ -150,3 +95,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+    const cashFields = document.getElementById('cashFields');
+    const stripeFields = document.getElementById('stripeFields');
+    const eftDetails = document.getElementById('eftDetails');
+
+    paymentMethodRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            cashFields.style.display = 'none';
+            stripeFields.style.display = 'none';
+            eftDetails.style.display = 'none';
+
+            if (radio.value === 'online') {
+                stripeFields.style.display = 'block';
+            } else if (radio.value === 'eft') {
+                eftDetails.style.display = 'block';
+            }
+        });
+    });
+</script>
