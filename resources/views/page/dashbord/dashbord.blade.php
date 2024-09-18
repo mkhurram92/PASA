@@ -79,7 +79,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <i class="fa fa-ship card-custom-icon text-primary icon-dropshadow-primary"
+                            <i class="fa-solid fa-ship card-custom-icon text-primary icon-dropshadow-primary"
                                 style="font-size: 4rem"></i>
                             <p class="mb-2">Ship Records</p>
                             <h2 class="font-weight-bold mb-1" id="total_customers">{{ $numberOfShips }}</h2>
