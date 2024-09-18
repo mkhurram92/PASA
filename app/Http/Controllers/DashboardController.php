@@ -15,6 +15,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\MembershipType;
 use App\Models\MembershipStatus;
+use App\Models\ModeOfArrivals;
 use App\Models\Transaction;
 use App\Models\SubscriptionPlan;
 
@@ -42,11 +43,13 @@ class DashboardController extends Controller
         $users = User::all();
         $numberOfUsers = count($users);
 
+        $journey = ModeOfArrivals::all();
+        $numberOfJourney = count($journey);
 
         $incomeTransactions = Transaction::where('transaction_type_id', 1)->sum('amount');
         $expenseTransactions = Transaction::where('transaction_type_id', 2)->sum('amount');
 
-        return view('page.dashbord.dashbord', compact('numberOfMembers', 'numberOfAncestors', 'numberOfUsers', 'incomeTransactions', 'expenseTransactions'));
+        return view('page.dashbord.dashbord', compact('numberOfMembers', 'numberOfAncestors', 'numberOfUsers', 'numberOfJourney', 'incomeTransactions', 'expenseTransactions'));
     }
 
     /**
