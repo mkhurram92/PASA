@@ -69,9 +69,9 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <i class="fa fa-users card-custom-icon text-primary icon-dropshadow-primary"
+                            <i class="fa fa-ship card-custom-icon text-info icon-dropshadow-info"
                                 style="font-size: 4rem"></i>
-                            <p class="mb-2">Total Journeys</p>
+                            <p class="mb-2">Recorded Journeys</p>
                             <h2 class="font-weight-bold mb-1" id="total_customers">{{ $numberOfJourney }}</h2>
                         </div>
                     </div>
