@@ -121,7 +121,7 @@ class DashboardController extends Controller
         //
     }
 
-    function profile(Request $request)
+    /**function profile(Request $request)
     {
         $user = auth()->user();
         //$member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
@@ -152,14 +152,14 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
         //$member = Member::with(['partner_member', 'pedigree', 'ancestor'])->where("email", $user->email)->first();
-        $member = Member::with(['partner_member', 'pedigree', 'ancestor', 'contact'])
+        $member = Member::with(['contact'])
             ->whereHas('contact', function ($query) use ($user) {
                 $query->where('email', $user->email);
             })
             ->first();
         $member_id = $member?->id;
-        $juniors = MemberJunior::with(['withGender', 'withSubscription'])->where("member_id", $member_id)->whereNull("member_junior_id")->latest()->get();
-        return view("page.profile.juniors", compact('juniors'));
+        $juniors = MemberJunior::with(['withGender', 'withSubscription'])->where("member_id", $member_id)->get();
+        return view("page.members.view-junior", compact('juniors'));
     }
 
     function partner()
@@ -176,5 +176,5 @@ class DashboardController extends Controller
         $genders = Gender::get();
         $states = States::get();
         return view("page.profile.partner", compact('member', 'genders', 'states'));
-    }
+    }**/
 }
