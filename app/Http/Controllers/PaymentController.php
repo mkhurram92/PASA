@@ -253,17 +253,14 @@ class PaymentController extends Controller
 
     public static function createPaymentIntentJunior(array $user, $level)
     {
+        dd($user, $level);
         try {
             Stripe::setApiKey(env('STRIPE_SECRET'));
-            $stripe = new \Stripe\StripeClient(env("STRIPE_SECRET"));
-            $amount = $user['preferred_delivery_price'];
+            $amount = $user['preferred_delivery_price'] * 100; // Convert to cents
 
-            // search for client in stripe api
-            // $customer = $stripe->customers->search([
-            //     'query' => "email:'".$user['email']."' AND username:'".$user['username']."'",
-            // ]);
             $address = $user['address']['address'];
             $state = States::where("name", $address['state'])->value("code");
+
             $customerDetails = [
                 'description' => $level . ' Member.',
                 'name' => $user['given_name'],
@@ -273,50 +270,41 @@ class PaymentController extends Controller
                     "line1" => $address['line1'],
                     "line2" => $address['line2'],
                     "postal_code" => $address['postal_code'],
-                    "state" => $state
-                ]
+                    "state" => $state,
+                ],
             ];
-            //$customer = $stripe->customers->create($customerDetails);
-            Transaction::create([
-                'transaction_type_id' => 1,
-                'gl_code_id' => 85,
-                'account_id' => 3,
-                'amount' => $amount,
-                'description' => 'New Applicant'
-            ]);
-            // create payment intent
+
+            // Optional: Create a customer if needed
+            // $customer = $stripe->customers->create($customerDetails);
+
+            // Create payment intent
             $res = $stripe->paymentIntents->create([
-                'amount' => $amount * 100,
+                'amount' => $amount,
                 'currency' => 'aud',
                 'automatic_payment_methods' => [
                     'enabled' => true,
                 ],
                 "description" => "Junior Registration: " . $user['given_name'],
-                //"customer" => $customer->id,
+                // "customer" => $customer->id, // Uncomment if creating a customer
                 "metadata" => [
                     'name' => $user['given_name'],
                     "member_id" => auth()->id(),
                     "dob" => $user['date_of_birth'],
                     "gender" => Gender::find($user['gender'])->value("name"),
                     'level' => $level,
-                    // "order_id" => $order_id
                 ]
             ]);
-            Subscription::create([
-                "payment_intent_id" => $res?->id,
-                "amount" => $amount,
-                "created_by" => auth()->id(),
-                "member_type" => "JUNIOR",
-                "payment_method" => "CARD",
-                "status" => "PENDING",
-                'meta_description' => $customerDetails
-            ]);
-            return $res?->client_secret;
+
+            // Log the response for debugging
+            Log::info('Payment Intent Created: ', ['response' => $res]);
+
+            return $res->client_secret; // Make sure this is not null
         } catch (Exception $e) {
-            dd($e->getMessage());
+            Log::error('Payment Intent Creation Error: ' . $e->getMessage());
             return false;
         }
     }
+
 
     public static function createPaymentIntentPrimary(array $user, $level = "PRIMARY")
     {

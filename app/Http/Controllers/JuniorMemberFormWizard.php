@@ -6,6 +6,7 @@ use App\Mail\JuniorAddEmail;
 use App\Models\Gender;
 use App\Models\Member;
 use App\Models\MemberJunior;
+use App\Models\MembersContact;
 use App\Models\Subscription;
 use App\Models\SubscriptionPlan;
 use Illuminate\Http\Request;
@@ -25,10 +26,10 @@ class JuniorMemberFormWizard extends Controller
             $needToValidate = [
                 'given_name' => 'required',
                 'family_name' => 'required',
-                'preferred_name' => 'required',
+                'preferred_name' => 'nullable',
                 'date_of_birth' => 'nullable',
                 'gender' => 'required|exists:genders,id',
-                "sibling.name.*" => 'required'
+                "sibling.name.*" => 'nullable'
             ];
             $validator = Validator::make($values, $needToValidate);
             if ($validator->fails()) {
@@ -46,7 +47,7 @@ class JuniorMemberFormWizard extends Controller
                     []
                 );
                 if ($payment->status == "succeeded") {
-                    $loggedInMember = Member::where("email", auth()->user()->email)->first();
+                    $loggedInMember = MembersContact::where("email", auth()->user()->email)->first();
                     if ($loggedInMember) {
                         $Member = MemberJunior::create([
                             "given_name" => $values['given_name'],
@@ -54,43 +55,12 @@ class JuniorMemberFormWizard extends Controller
                             "preferred_name" => $values['preferred_name'],
                             'date_of_birth' => !empty($values['date_of_birth']) ? date('Y-m-d', strtotime($values['date_of_birth'])) : null,
                             "gender" => $values['gender'],
-                            "an_adult" => true,
                             "member_id" => $loggedInMember->id
                         ]);
-                        if (
-                            isset($values['sibling'])
-                            && $Member?->id
-                            && !empty($values['sibling'])
-                            && is_array($values['sibling'])
-                            && isset($values['sibling']['name'])
-                            && isset($values['sibling']['gender'])
-                            && count($values['sibling']['name']) == count($values['sibling']['gender'])
-                        ) {
-                            foreach ($values['sibling']['name'] as $index => $name) {
-                                $gender = $values['sibling']['gender'][$index];
-                                $date_of_birth = $values['sibling']['date_of_birth'][$index];
-                                if (!empty(trim($name)) && !empty(trim($gender))) {
-                                    MemberJunior::create([
-                                        'given_name' => $name,
-                                        'gender' => $gender,
-                                        'date_of_birth' => !empty($date_of_birth) ? date('Y-m-d', strtotime($date_of_birth)) : null,
-                                        'member_id' => $loggedInMember->id,
-                                        'member_junior_id' => $Member->id,
-                                    ]);
-                                }
-                            }
-                        }
+
                         if ($Member?->id) {
                             $startDate = date("Y-m-d H:i:s", $payment->created);
-                            $endDate = date("Y-m-d H:i:s", strtotime("+1 years", $payment->created));
-                            Subscription::where("payment_intent_id", $payment_intent_id)->where("created_by", auth()->id())->update([
-                                "start_date" => $startDate,
-                                "end_date" => $endDate,
-                                "user_id" => $Member?->id,
-                                "stripe_payment_id" => $payment->id,
-                                "status" => "SUCCESS",
-                                "stripe_response" => $payment->status
-                            ]);
+                            $endDate = date("Y-m-d H:i:s", strtotime("+1 years", $payment->created));                            
                         }
                         $Member['name'] = $loggedInMember->given_name;
                         // Mail::to($loggedInMember->email)->send(new JuniorAddEmail($Member));
@@ -98,10 +68,6 @@ class JuniorMemberFormWizard extends Controller
                     }
                     return response()->json(['error' => "Member not found"]);
                 }
-                Subscription::where("payment_intent_id", $payment_intent_id)->where("created_by", auth()->id())->update([
-                    "status" => "FAILED",
-                    "stripe_response" => $payment->status
-                ]);
                 return response()->json(['error' => "Payment failed"]);
             }
             $res = ['success' => "Step validated"];

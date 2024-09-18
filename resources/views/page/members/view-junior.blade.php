@@ -87,6 +87,11 @@
                 <div class="page-leftheader">
                     <h3 class="page-title">Member's Juniors</h3>
                 </div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary" href="{{ route('JuniorForm') }}" >
+                        <i class="fa fa-plus-circle" style="font-size:24px;"></i>
+                    </a>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12 col-lg-12">
@@ -144,6 +149,7 @@
     var table = new Tabulator("#juniors-table", {
         data: juniorsData,
         layout: "fitColumns",
+        maxHeight:"100%",
         columns: [{
                 title: "Given Name",
                 field: "given_name",
@@ -166,7 +172,7 @@
                 title: "Birth Date",
                 field: "date_of_birth",
                 headerFilter: "input",
-                headerFilterPlaceholder: 'Search by Preferred Name'
+                headerFilterPlaceholder: 'Search by Birth Date'
 
             },
             {

@@ -31,8 +31,3 @@
 
     </div>
 </section>
-<script>
-    window.addEventListener("DOMContentLoaded", function() {
-
-    })
-</script>

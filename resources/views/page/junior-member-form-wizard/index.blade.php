@@ -24,28 +24,6 @@
                 </div>
             </div>
         </div>
-        <div id="clone" style="display: none">
-            <div class="col-md-4 my-2">
-                <label class="form-control-label">Sibling {count} Name: <span class="tx-danger">*</span></label>
-                <input class="form-control" id="sibling_{count}_name" name="sibling[name][]" value=""
-                    placeholder="Enter sibling name" required="" type="text">
-            </div>
-            <div class="col-md-4 my-2">
-                <label class="form-control-label">Gender: <span class="tx-danger">*</span></label>
-                <select name="sibling[gender][]" class="form-control form-select select2" id="gender{count}">
-                    @forelse ($genders as $gender)
-                        <option value="{{ $gender->id }}">{{ Str::ucfirst($gender->name) }}</option>
-                    @empty
-                        <option value="">Select option</option>
-                    @endforelse
-                </select>
-            </div>
-            <div class="col-md-4 my-2">
-                <label class="form-control-label">Birth Date:</label>
-                <input class="form-control" id="date_of_birth" name="sibling[date_of_birth][]"
-                    value="{{ old('date_of_birth') }}" placeholder="Enter Date of Birth" required="" type="date">
-            </div>
-        </div>
     </div>
 </div>
 @section('scripts')

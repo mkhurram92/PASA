@@ -1,8 +1,8 @@
-<h3>Account</h3>
+<h3>Siblings</h3>
 <section>
     <div class="row" id="sibling_clone">
         <div class="col-md-12 d-flex justify-content-between">
-            <h3>Sibling Details</h3>
+            <h3 class="card-title"> Siblings Information</h3>
             <button class="btn btn-primary" id="addSibling">Add Sibling</button>
         </div>
         <div class="col-md-4 my-2">
