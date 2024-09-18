@@ -603,7 +603,7 @@ class SubscribeMemberController extends Controller
                 ->with('error', 'You are not authorized to view this member\'s juniors.');
         }
 
-        $juniors = MemberJunior::where('member_id', $id)->get();
+        $juniors = MemberJunior::with('withGender')->where('member_id', $id)->get();
 
         return view('page.members.view-junior', compact('juniors'));
     }
