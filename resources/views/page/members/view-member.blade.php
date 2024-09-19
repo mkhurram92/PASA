@@ -635,15 +635,17 @@
             });
         } else if (cashOption.checked) {
             callCashPaymentRoute(selectedPrice);
+        } else if(eftOption.checked){
+            confirmEftPayment(selectedPrice);
         } else {
-            Swal.fire({
-                title: 'No Payment Method Selected',
-                text: 'Please select a payment method.',
-                icon: 'warning',
-                confirmButtonText: 'OK'
-            });
-        }
-    });
+                Swal.fire({
+                    title: 'No Payment Method Selected',
+                    text: 'Please select a payment method.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
 
     //Stripe Payment
     function processPayment(token, amount) {
@@ -711,6 +713,47 @@
                     text: error,
                     icon: 'error',
                     confirmButtonText: 'OK'
+                });
+            }
+        });
+    }
+
+    function confirmEftPayment(amount) {
+        Swal.fire({
+            title: 'Bank Transfer',
+            text: 'Confirm if you receive payment.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '{{ route('payment.eft') }}',
+                    type: 'POST',
+                    data: {
+                        amount: amount,
+                        _token: '{{ csrf_token() }}',
+                        memberId: '{{ $member->id }}',
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            updateRenewalDate();
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: response.message,
+                                icon: 'error'
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred while processing your request.',
+                            icon: 'error'
+                        });
+                    }
                 });
             }
         });

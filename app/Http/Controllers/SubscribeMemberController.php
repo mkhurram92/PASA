@@ -464,11 +464,9 @@ class SubscribeMemberController extends Controller
 
     public function editPedigree($id)
     {
-        $user = auth()->user(); // Get the logged-in user
+        $user = auth()->user();
 
-        // Check if the user is trying to access their own member ID, or they are admin
         if ($user->role_id != 1 && $user->member_id != $id) {
-            // If the user is not an admin and tries to access another member's page, redirect to their own view-pedigree page
             return redirect()->route('members.view-pedigree', ['id' => $user->member_id])
                 ->with('error', 'You are not authorized to edit the pedigree for this member.');
         }
@@ -533,11 +531,9 @@ class SubscribeMemberController extends Controller
 
     public function addPedigree($id)
     {
-        $user = auth()->user(); // Get the logged-in user
+        $user = auth()->user();
 
-        // Check if the user is trying to access their own member ID, or they are admin
         if ($user->role_id != 1 && $user->member_id != $id) {
-            // If the user is not an admin and tries to access another member's page
             return redirect()->route('members.view-pedigree', ['id' => $user->member_id])
                 ->with('error', 'You are not authorized to add pedigrees for this member.');
         }
@@ -575,9 +571,7 @@ class SubscribeMemberController extends Controller
     {
         $user = auth()->user();
 
-        // Authorization check: ensure the user can only view their own ancestors, unless they are an admin
         if ($user->role_id != 1 && $user->member_id != $id) {
-            // Redirect to the user's own ancestors page with a flash message
             return redirect()->route('members.view-ancestor', ['id' => $user->member_id])
                 ->with('error', 'You are not authorized to view this member\'s ancestors.');
         }
@@ -596,9 +590,7 @@ class SubscribeMemberController extends Controller
     {
         $user = auth()->user();
 
-        // Authorization check: ensure the user can only view their own juniors, unless they are an admin
         if ($user->role_id != 1 && $user->member_id != $id) {
-            // Redirect to the user's own juniors page with a flash message
             return redirect()->route('members.view-junior', ['id' => $user->member_id])
                 ->with('error', 'You are not authorized to view this member\'s juniors.');
         }
@@ -610,27 +602,21 @@ class SubscribeMemberController extends Controller
 
     public function addAncestor($id)
     {
-        $user = auth()->user(); // Get the logged-in user
+        $user = auth()->user();
 
-        // Check if the user is trying to access their own member ID, or they are admin
         if ($user->role_id != 1 && $user->member_id != $id) {
-            // If the user is not an admin and tries to access another member's page
             return redirect()->route('members.view-ancestor', ['id' => $user->member_id])
                 ->with('error', 'You are not authorized to add ancestors for this member.');
         }
 
-        // Find the member by the provided ID
         $member = Member::find($id);
 
-        // Check if the member exists
         if (!$member) {
             return redirect()->back()->with('error', 'Member not found.');
         }
 
-        // Retrieve the ancestors' data
         $ancestors = AncestorData::with(['sourceOfArrival', 'mode_of_travel'])->get();
 
-        // If everything is valid, show the add ancestor page for the member
         return view('page.members.add-ancestor', compact('member', 'ancestors'));
     }
 

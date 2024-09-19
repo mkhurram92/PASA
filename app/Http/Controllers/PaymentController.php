@@ -502,4 +502,40 @@ class PaymentController extends Controller
             ], 500);
         }
     }
+
+    public function eftPayment(Request $request)
+    {
+        $amount = $request->input('amount');
+        $memberId = $request->memberId;
+
+        $member = Member::findOrFail($memberId);
+
+        $description = "EFT Payment for";
+
+        if (!empty($member->family_name)) {
+            $description .= " {$member->family_name}";
+        }
+
+        if (!empty($member->given_name)) {
+            $description .= " {$member->given_name}";
+        }
+
+        if (!empty($member->additionalInfo->membership_number)) {
+            $description .= ". Membership No. {$member->additionalInfo->membership_number}";
+        }
+
+        try {
+            Transaction::createAndProcessTransaction(1, 1, 2, $amount, $description, $memberId);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'EFT payment processed successfully.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to process EFT payment. ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }

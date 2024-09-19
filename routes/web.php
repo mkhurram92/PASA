@@ -166,6 +166,9 @@ Route::group(['middleware' => ['auth']], function () {
     //Cash Payment
     Route::post('/payment/cash', [PaymentController::class, 'cashPayment'])->name('payment.cash');
 
+    //Cash Payment
+    Route::post('/payment/eft-payment', [PaymentController::class, 'eftPayment'])->name('payment.eft');
+
     // add junior
     Route::get('/membership/junior', [JuniorMemberFormWizard::class, "JuniorMemberFormWizard"])->name('JuniorForm');
     Route::post('/membership/junior', [JuniorMemberFormWizard::class, "JuniorMemberFormWizard"])->name('submitJuniorMembershipAccount');
