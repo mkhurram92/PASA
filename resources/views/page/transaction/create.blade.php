@@ -81,9 +81,7 @@
                                         <i class="fa fa-arrow-circle-left" style="font-size:20px;"></i> Back
                                     </a>
                                 </div>
-                            </div>
-                            
-                                                       
+                            </div>          
                             <div class="card-body p-0">
                                 <div class="card-body">
                                     <div class="row">
@@ -101,21 +99,6 @@
                                                     @endforeach
                                                 </div>
                                             </div>
-                                            <!-- Your existing Blade code for Parent G/L dropdown -->
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Account<span class="text-danger"></span></label>
-                                                <div class="col-md-8 custom-select-wrapper">
-                                                    <select name="parent_id" id="parent_id" class="custom-select">
-                                                        <option value=""></option>
-                                                        @foreach ($parentGlCodes as $parentGlCode)
-                                                        <option value="{{ $parentGlCode->id }}">
-                                                            {{ $parentGlCode->name }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
                                             <!-- Supplier dropdown -->
                                             <div class="mb-3 row" id="supplier-container" style="display: none;">
                                                 <label class="col-md-4 form-label">Supplier<span class="text-danger"></span></label>
@@ -166,6 +149,20 @@
                                                         @foreach ($memberships as $membership)
                                                         <option value="{{ $membership->id }}">
                                                             {{ $membership->membership_number }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!-- Your existing Blade code for Parent G/L dropdown -->
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Account<span class="text-danger"></span></label>
+                                                <div class="col-md-8 custom-select-wrapper">
+                                                    <select name="parent_id" id="parent_id" class="custom-select">
+                                                        <option value=""></option>
+                                                        @foreach ($parentGlCodes as $parentGlCode)
+                                                        <option value="{{ $parentGlCode->id }}">
+                                                            {{ $parentGlCode->name }}
                                                         </option>
                                                         @endforeach
                                                     </select>
