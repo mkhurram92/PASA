@@ -45,13 +45,13 @@
                         </li>
 
                         <!-- Finance Section -->
-                        <li class="slide {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent') ? 'is-expanded' : '' }}">
+                        <li class="slide {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent.index') ? 'is-expanded' : '' }}">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                                 <i class="fa fa-bank fa-2x mx-3"></i>
                                 <span class="side-menu__label">{{ __('Finance') }}</span>
                                 <i class="angle fe fe-chevron-right"></i>
                             </a>
-                            <ul class="slide-menu {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent') ? 'open' : '' }}">
+                            <ul class="slide-menu {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent.index') ? 'open' : '' }}">
                                 <li>
                                     <a class="sub-side-menu__item mx-5 {{ request()->routeIs('transaction.index') ? 'active' : '' }}"
                                         href="{{ route('transaction.index') }}">
@@ -143,13 +143,13 @@
                         </li>
 
                         <!-- Reports Section -->
-                        <li class="slide {{ request()->routeIs('reports-list') ? 'is-expanded' : '' }}">
+                        <li class="slide {{ request()->routeIs('reports.index') ? 'is-expanded' : '' }}">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                                 <i class="fa fa-bar-chart-o fa-2x mx-3"></i>
                                 <span class="side-menu__label">{{ __('Reports') }}</span>
                                 <i class="angle fe fe-chevron-right"></i>
                             </a>
-                            <ul class="slide-menu {{ request()->routeIs('reports-list') ? 'open' : '' }}">
+                            <ul class="slide-menu {{ request()->routeIs('reports.index') ? 'open' : '' }}">
                                 <li>
                                     <a class="sub-side-menu__item mx-5 {{ request()->routeIs('reports.index') ? 'active' : '' }}"
                                         href="{{ route('reports.index') }}">
