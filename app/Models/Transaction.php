@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $table = 'transactions';
-    protected $fillable = ['amount', 'transaction_type_id', 'account_id', 'gl_code_id', 'description', 'member_id','customer_id', 'supplier_id'];
+    protected $fillable = ['amount', 'transaction_type_id', 'account_id', 'gl_code_id', 'description', 'member_id','customer_id', 'supplier_id', 'created_at'];
 
     public function glCodesParent()
     {

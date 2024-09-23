@@ -127,7 +127,7 @@
                                             </div>
                                             <!-- Paying for Member section -->
                                             <div class="mb-3 row" id="paying-for-member-container" style="display: none;">
-                                                <label class="col-md-4 form-label">Paying for Member<span class="text-danger"></span></label>
+                                                <label class="col-md-4 form-label">Paid By Member<span class="text-danger"></span></label>
                                                 <div class="col-md-8">
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="paying_for_member" id="paying_for_member_yes" value="yes">
@@ -186,6 +186,12 @@
                                                 <label class="col-md-4 form-label">Amount<span class="text-danger"></span></label>
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text" placeholder="Amount" value="0.00" id="amount" name="amount">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label class="col-md-4 form-label">Transaction Date<span class="text-danger"></span></label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" type="date" id="transaction_date" name="transaction_date" required>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -277,7 +283,11 @@
     });
 
     $(document).ready(function() {
-    // Handle transaction type change
+
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById('transaction_date').value = today;
+    
+        // Handle transaction type change
     $('input[name="transaction_type"]').on('change', function() {
         var selectedTransactionType = $('input[name="transaction_type"]:checked').val();
 

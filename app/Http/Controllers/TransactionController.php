@@ -148,6 +148,7 @@ class TransactionController extends Controller
                 'supplier_id' => $supplier_id,
                 'customer_id' => $customer_id,
                 'member_id' => $member_id,
+                'created_at' => $request->transaction_date,
             ]);
 
             DB::commit();
