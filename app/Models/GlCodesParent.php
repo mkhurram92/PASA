@@ -9,8 +9,8 @@ class GlCodesParent extends Model
     protected $table = 'gl_codes_parent';
     protected $fillable = ['id', 'name','description'];
 
-    public function glCodes()
+    public function transactions()
     {
-        return $this->hasMany(GlCode::class, 'parent_id');
+        return $this->hasMany(Transaction::class, 'parent_id');
     }
 }

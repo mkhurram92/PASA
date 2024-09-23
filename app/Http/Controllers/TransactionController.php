@@ -36,6 +36,8 @@ class TransactionController extends Controller
 
         $transaction = Transaction::with('account', 'transactionType', 'glCodesParent')->get();
 
+        //dd($transaction);
+
         return view('page.transaction.index', compact('transaction', 'gl_code_parent', 'transaction_type', 'account_type', 'suppliers', 'customers'));
     }
 

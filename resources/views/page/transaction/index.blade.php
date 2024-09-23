@@ -116,7 +116,7 @@
                                      <option value="50">50</option>
                                      <option value="100">100</option>
                                  </select>
-                                 
+
                                  <button class="custom-button" type="button" id="printTable"
                                      onclick="printData()">Print</button>
                                  <button class="custom-button" id="download-csv">Download CSV</button>
@@ -133,165 +133,169 @@
      </div>
  </div>
  @section('scripts')
-     <script>
-         var gl_Codes = <?php echo json_encode($transaction); ?>;
-         var gl_code_parent = <?php echo json_encode($gl_code_parent); ?>;
-         var transaction_type = <?php echo json_encode($transaction_type); ?>;
-         var account_type = <?php echo json_encode($account_type); ?>;
+ <script>
+     var transaction = <?php echo json_encode($transaction); ?>;
+     var gl_code_parent = <?php echo json_encode($gl_code_parent); ?>;
+     var transaction_type = <?php echo json_encode($transaction_type); ?>;
+     var account_type = <?php echo json_encode($account_type); ?>;
 
-         var table = new Tabulator("#transaction-table", {
-             data: gl_Codes,
-             layout: "fitColumns",
-             columns: [{
-                     title: "Account",
-                     field: "gl_code_parent.name",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Filter by Account',
-                     headerFilterParams: {
-                         values: gl_code_parent
-                     }
-                 },                 
-                 {
-                     title: "Type",
-                     field: "transaction_type.name",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Filter by Transaction Type',
-                     headerFilterParams: {
-                         values: transaction_type
-                     },
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var transaction_type = cell.getValue();
+     var table = new Tabulator("#transaction-table", {
+         data: transaction,
+         layout: "fitColumns",
+         columns: [{
+                title: "Account",
+                field: "transaction.glCodesParent.name", // Correctly reference the relationship
+                hozAlign: "left",
+                vertAlign: "middle",
+                headerFilter: "select",
+                headerFilterPlaceholder: 'Filter by Account',
+                headerFilterParams: {
+                    values: gl_code_parent // Dropdown filter values
+                },
+                formatter: function(cell, formatterParams, onRendered) {
+                    var gl_code_parent = cell.getData().glCodesParent;
+                    return gl_code_parent ? gl_code_parent.name : '';
+                }
+             },
+             {
+                 title: "Type",
+                 field: "transaction_type.name",
+                 hozAlign: "left",
+                 vertAlign: "middle",
+                 headerFilter: "select",
+                 headerFilterPlaceholder: 'Filter by Transaction Type',
+                 headerFilterParams: {
+                     values: transaction_type
+                 },
+                 formatter: function(cell, formatterParams, onRendered) {
+                     var transaction_type = cell.getValue();
 
-                         var style = '';
-                         if (transaction_type === 'Income') {
-                             style = 'color: green;';
-                         } else if (transaction_type === 'Expenditure') {
-                             style = 'color: red;';
-                         }
-                         var formattedValue = '<span style="' + style + '">' + transaction_type + '</span>';
+                     var style = '';
+                     if (transaction_type === 'Income') {
+                         style = 'color: green;';
+                     } else if (transaction_type === 'Expenditure') {
+                         style = 'color: red;';
+                     }
+                     var formattedValue = '<span style="' + style + '">' + transaction_type + '</span>';
 
-                         return formattedValue;
-                     }
-                 },
-                 {
-                     title: "Amount",
-                     field: "amount",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Amount',
-                     formatter: "money",
-                     formatterParams: {
-                         decimal: ".",
-                         thousand: ",",
-                         symbol: "$",
-                         symbolAfter: false,
-                         precision: 2
-                     }
-                 },
-                 {
-                     title: "Account",
-                     field: "account.name",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Filter by Transaction Account',
-                     headerFilterParams: {
-                         values: account_type
-                     }
-                 },
-                 {
-                     title: "Transaction Date",
-                     field: "created_at",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Creation Date',
-                     formatter: function(cell) {
-                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD HH:mm:ss');
-                         return formattedDate;
-                     }
-                 },
-                 {
-                     title: "Description",
-                     field: "description",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Description',
-                 },
-                 {
-                     title: "Action",
-                     field: "actions",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     width: "8%",
-                     download: false,
-                     print: false,
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var id = cell.getData().id;
-
-                         return '<div class="button-container">' +
-                             '<button class="fa fa-eye view-button" onclick="redirectToView(' +
-                             id +
-                             ')"> </button>' +
-                             '</div>';
-                     }
+                     return formattedValue;
                  }
+             },
+             {
+                 title: "Amount",
+                 field: "amount",
+                 hozAlign: "left",
+                 vertAlign: "middle",
+                 headerFilter: "input",
+                 headerFilterPlaceholder: 'Search by Amount',
+                 formatter: "money",
+                 formatterParams: {
+                     decimal: ".",
+                     thousand: ",",
+                     symbol: "$",
+                     symbolAfter: false,
+                     precision: 2
+                 }
+             },
+             {
+                 title: "Account",
+                 field: "account.name",
+                 hozAlign: "left",
+                 vertAlign: "middle",
+                 headerFilter: "select",
+                 headerFilterPlaceholder: 'Filter by Transaction Account',
+                 headerFilterParams: {
+                     values: account_type
+                 }
+             },
+             {
+                 title: "Transaction Date",
+                 field: "created_at",
+                 hozAlign: "left",
+                 vertAlign: "middle",
+                 headerFilter: "input",
+                 headerFilterPlaceholder: 'Search by Creation Date',
+                 formatter: function(cell) {
+                     var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD HH:mm:ss');
+                     return formattedDate;
+                 }
+             },
+             {
+                 title: "Description",
+                 field: "description",
+                 hozAlign: "left",
+                 vertAlign: "middle",
+                 headerFilter: "input",
+                 headerFilterPlaceholder: 'Search by Description',
+             },
+             {
+                 title: "Action",
+                 field: "actions",
+                 hozAlign: "center",
+                 vertAlign: "middle",
+                 width: "8%",
+                 download: false,
+                 print: false,
+                 formatter: function(cell, formatterParams, onRendered) {
+                     var id = cell.getData().id;
 
-             ],
-             pagination: 'local',
-             paginationSize: 20,
-             placeholder: "No Data Available",
-             initialSort: [{
-                 column: "created_at",
-                 dir: "desc"
-             }]
+                     return '<div class="button-container">' +
+                         '<button class="fa fa-eye view-button" onclick="redirectToView(' +
+                         id +
+                         ')"> </button>' +
+                         '</div>';
+                 }
+             }
+
+         ],
+         pagination: 'local',
+         paginationSize: 20,
+         placeholder: "No Data Available",
+         initialSort: [{
+             column: "created_at",
+             dir: "desc"
+         }]
+     });
+     // Add a reset button
+     var resetButton = document.getElementById("reset-button");
+
+     resetButton.addEventListener("click", function() {
+         table.clearFilter();
+         table.clearHeaderFilter();
+     });
+
+     $("#pageSizeDropdown").on("change", function() {
+         var selectedPageSize = parseInt($(this).val(), 25);
+         table.setPageSize(selectedPageSize);
+     });
+
+     function printData() {
+         table.print(false, true);
+     }
+     //trigger download of data.csv file
+     document.getElementById("download-csv").addEventListener("click", function() {
+         table.download("csv", "Transaction List.csv");
+     });
+
+     //trigger download of data.xlsx file
+     document.getElementById("download-xlsx").addEventListener("click", function() {
+         table.download("xlsx", "Transaction List.xlsx", {
+             sheetName: "PASA01"
          });
-         // Add a reset button
-         var resetButton = document.getElementById("reset-button");
+     });
 
-         resetButton.addEventListener("click", function() {
-             table.clearFilter();
-             table.clearHeaderFilter();
+     //trigger download of data.pdf file
+     document.getElementById("download-pdf").addEventListener("click", function() {
+         table.download("pdf", "Transaction List.pdf", {
+             orientation: "landscape",
+             title: "Transaction List",
          });
+     });
 
-         $("#pageSizeDropdown").on("change", function() {
-             var selectedPageSize = parseInt($(this).val(), 25);
-             table.setPageSize(selectedPageSize);
-         });
-
-         function printData() {
-             table.print(false, true);
-         }
-         //trigger download of data.csv file
-         document.getElementById("download-csv").addEventListener("click", function() {
-             table.download("csv", "Transaction List.csv");
-         });
-
-         //trigger download of data.xlsx file
-         document.getElementById("download-xlsx").addEventListener("click", function() {
-             table.download("xlsx", "Transaction List.xlsx", {
-                 sheetName: "PASA01"
-             });
-         });
-
-         //trigger download of data.pdf file
-         document.getElementById("download-pdf").addEventListener("click", function() {
-             table.download("pdf", "Transaction List.pdf", {
-                 orientation: "landscape",
-                 title: "Transaction List",
-             });
-         });
-
-         function redirectToView(id) {
-             var currentPath = window.location.pathname;
-             window.location.href = currentPath + '/' + id;
-         }
-     </script>
+     function redirectToView(id) {
+         var currentPath = window.location.pathname;
+         window.location.href = currentPath + '/' + id;
+     }
+ </script>
  @endsection
  @include('layout.footer')
