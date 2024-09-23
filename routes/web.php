@@ -41,6 +41,7 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\MembershipStatusController;
 use App\Http\Controllers\SubscriptionPlanController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\authentications\ForgotPassword;
 use App\Http\Controllers\AncestorLocalTravelDetailController;
 use App\Http\Controllers\authentications\NewPasswordController;
@@ -147,6 +148,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('occupations', OccupationController::class);
     Route::resource('rigs', RigController::class);
     Route::resource('suppliers', SupplierController::class);
+    Route::resource('customer', CustomerController::class);
     Route::resource('ancestor-data', AncestorDataController::class);
     Route::resource('ancestor-local-travel-details', AncestorLocalTravelDetailController::class);
     Route::resource('members-contacts', MembersContactController::class);
