@@ -174,7 +174,7 @@
                                 'subscription-plans.index',
                                 'cities.index',
                                 'membership-status.index',
-                                'supplier-list'
+                                'suppliers.index', 'customer.index'
                             ) ? 'is-expanded' : '' }}">
                             <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                                 <i class="fa fa-gears fa-2x mx-3"></i>
@@ -193,7 +193,7 @@
                                     'ship.index',
                                     'subscription-plans.index',
                                     'membership-status.index',
-                                    'supplier-list'
+                                    'suppliers.index', 'customer.index',
                                 ) ? 'open' : '' }}">
                                 <li>
                                     <a class="sub-side-menu__item mx-5 {{ request()->routeIs('user.index') ? 'active' : '' }}"
