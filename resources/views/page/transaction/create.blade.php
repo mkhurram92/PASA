@@ -142,7 +142,7 @@
                                             </div>
                                             <!-- Membership Number dropdown -->
                                             <div class="mb-3 row" id="membership-number-container" style="display: none;">
-                                                <label class="col-md-4 form-label">Select Membership Number<span class="text-danger"></span></label>
+                                                <label class="col-md-4 form-label">Membership Number<span class="text-danger"></span></label>
                                                 <div class="col-md-8 custom-select-wrapper">
                                                     <select name="membership_number" id="membership_number" class="custom-select">
                                                         <option value=""></option>

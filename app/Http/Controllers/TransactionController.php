@@ -187,17 +187,17 @@ class TransactionController extends Controller
     public function edit(Transaction $transaction)
     {
         $transactionType = TransactionType::OrderBy('name')->get();
-
         $parentGlCodes = GlCodesParent::OrderBy('name')->get();
-
-        $subGlCodes = GlCode::OrderBy('name')->get();
-
         $accounts = Account::OrderBy('name')->get();
+        $suppliers = Supplier::OrderBy('name')->get();
+        $customers = Customer::OrderBy('name')->get();
+        $memberships = AdditionalMemberInfos::OrderBy('membership_number')->get();
 
-        return view('page.transaction.edit', compact('transaction', 'parentGlCodes', 'subGlCodes', 'transactionType', 'accounts'));
+        return view('page.transaction.edit', compact('transaction', 'parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
     }
 
-    public function update(Request $request, Transaction $transaction)
+
+    /*    public function update(Request $request, Transaction $transaction)
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
@@ -226,6 +226,59 @@ class TransactionController extends Controller
                 'success' => false,
                 'message' => 'An error occurred while updating the transaction.'
             ], 500);
+        }
+    }
+*/
+
+    public function update(Request $request, Transaction $transaction)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Initialize IDs to null
+            $member_id = null;
+            $supplier_id = null;
+            $customer_id = null;
+
+            // Determine the transaction type and handle accordingly
+            if ($request->transaction_type == '1') { // Income
+                if ($request->paying_for_member == 'yes' && $request->membership_number) {
+                    $membership = AdditionalMemberInfos::find($request->membership_number);
+                    $member_id = $membership ? $membership->member_id : null;
+                } elseif ($request->paying_for_member == 'no') {
+                    $customer_id = $request->customer_id;
+                }
+            } elseif ($request->transaction_type == '2') { // Expenditure
+                $supplier_id = $request->supplier_id;
+            }
+
+            // Update the transaction with only the relevant fields
+            $transaction->update([
+                'transaction_type_id' => $request->transaction_type,
+                'gl_code_id' => $request->parent_id,
+                'account_id' => $request->account_type,
+                'amount' => $request->amount,
+                'description' => $request->description,
+                'supplier_id' => $supplier_id,
+                'customer_id' => $customer_id,
+                'member_id' => $member_id,
+                'created_at' => $request->transaction_date,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaction Updated Successfully",
+                "redirectTo" => route("transaction.index")
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ]);
         }
     }
 
