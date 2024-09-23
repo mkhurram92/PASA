@@ -73,12 +73,17 @@
                             @csrf
                             <div class="card-header justify-content-between">
                                 <h3 class="card-title">Add a Transaction</h3>
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-primary btn-block" id="submitBtn">
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-primary" id="submitBtn">
                                         Save Transaction
                                     </button>
+                                    <a class="btn btn-info ml-3" href="{{ route('transaction.index') }}">
+                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"></i> Back
+                                    </a>
                                 </div>
                             </div>
+                            
+                                                       
                             <div class="card-body p-0">
                                 <div class="card-body">
                                     <div class="row">
