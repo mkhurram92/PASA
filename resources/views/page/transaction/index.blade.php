@@ -111,12 +111,11 @@
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                     <option value="1000000">ALL</option>
                                      <option value="25">25</option>
                                      <option value="50">50</option>
                                      <option value="100">100</option>
+                                     <option value="1000000">ALL</option>
                                  </select>
-
                                  <button class="custom-button" type="button" id="printTable"
                                      onclick="printData()">Print</button>
                                  <button class="custom-button" id="download-csv">Download CSV</button>

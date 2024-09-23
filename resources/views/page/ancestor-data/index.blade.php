@@ -133,10 +133,10 @@
                              <div class="tabulator-toolbar">
                                  @if (auth()->user()->role_id == 1)
                                      Show <select style="padding:10px;" id="pageSizeDropdown">
-                                         <option value="1000000">ALL</option>
                                          <option value="25">25</option>
                                          <option value="50">50</option>
                                          <option value="100">100</option>
+                                         <option value="1000000">ALL</option>
                                      </select>
                                      <button class="custom-button" type="button" id="printTable"
                                          onclick="printData()">Print</button>
