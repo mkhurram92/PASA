@@ -172,6 +172,9 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::with(
             [
+                'membership',
+                'customer',
+                'supplier',
                 'account',
                 'transactionType',
                 'glCodesParent'

@@ -72,14 +72,17 @@
                             action="{{ route('transaction.update', $transaction->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-                            <div class="card-header justify-content-between">
+                            <div class="card-header d-flex justify-content-between align-items-center">
                                 <h3 class="card-title">Edit Transaction</h3>
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-primary btn-block" id="submitBtn">
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-primary mr-2" id="submitBtn">
                                         Update Transaction
                                     </button>
+                                    <a class="btn btn-info" href="{{ url()->previous() }}">
+                                        <i class="fa fa-arrow-circle-left" style="font-size:20px;"></i> Back
+                                    </a>
                                 </div>
-                            </div>
+                            </div>                                                      
                             <div class="card-body p-0">
                                 <div class="card-body">
                                     <div class="row">
@@ -104,32 +107,15 @@
                                             </div>
                                             <!-- Parent G/L Dropdown -->
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Parent G/L</label>
+                                                <label class="col-md-4 form-label">Account</label>
                                                 <div class="col-md-8 custom-select-wrapper">
                                                     <select name="parent_id" id="parent_id" class="custom-select"
                                                         onchange="updateSubGlCodes()">
-                                                        <option value="">Select a Parent G/L</option>
+                                                        <option value="">Select an Account</option>
                                                         @foreach ($parentGlCodes as $parentGlCode)
                                                             <option value="{{ $parentGlCode->id }}"
                                                                 {{ isset($transaction->glCode->parent_id) && (int) $transaction->glCode->parent_id === (int) $parentGlCode->id ? 'selected' : '' }}>
                                                                 {{ $parentGlCode->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <!-- Sub G/L Dropdown -->
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Sub G/L</label>
-                                                <div class="col-md-8 custom-select-wrapper">
-                                                    <select name="gl_code_id" id="subGlCodes" class="custom-select"
-                                                        onchange="updateParentGl()">
-                                                        <option value="">Select a Sub G/L</option>
-                                                        @foreach ($subGlCodes as $subGlCode)
-                                                            <option value="{{ $subGlCode->id }}"
-                                                                {{ (int) $transaction->gl_code_id === (int) $subGlCode->id ? 'selected' : '' }}>
-                                                                {{ $subGlCode->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>

@@ -18,11 +18,24 @@ class Transaction extends Model
     {
         return $this->belongsTo(Account::class, 'account_id');
     }
+
     public function transactionType()
     {
         return $this->belongsTo(TransactionType::class, 'transaction_type_id');
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+    public function membership()
+    {
+        return $this->belongsTo(AdditionalMemberInfos::class, 'member_id');
+    }
     public static function createAndProcessTransaction($transactionType, $glCodeId, $accountId, $amount, $description, $memberId)
     {
         $transaction = self::create([
