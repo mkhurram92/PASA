@@ -93,10 +93,8 @@
                                             <label class="col-md-4 form-label">Parent G/L<span class="text-danger"></span></label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" value="{{ optional(optional($transaction->glCode)->glCodesParent)->name ?? 'No Parent G/L' }}" disabled readonly>
-
                                             </div>
                                         </div>
-
                                         <!-- Sub G/L dropdown -->
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Sub G/L<span class="text-danger"></span></label>

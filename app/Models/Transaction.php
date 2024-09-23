@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $table = 'transactions';
-    protected $fillable = ['amount', 'transaction_type_id', 'account_id', 'gl_code_id', 'description', 'member_id'];
+    protected $fillable = ['amount', 'transaction_type_id', 'account_id', 'gl_code_id', 'description', 'member_id','customer_id', 'supplier_id'];
 
-    public function glCode()
+    public function glCodesParent()
     {
-        return $this->belongsTo(GlCode::class, 'gl_code_id');
+        return $this->belongsTo(GlCodesParent::class, 'parent_id');
     }
     public function account()
     {

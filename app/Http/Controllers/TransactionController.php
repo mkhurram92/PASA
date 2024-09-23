@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\AdditionalMemberInfos;
 use App\Models\GlCode;
 use App\Models\GlCodesParent;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\TransactionType;
+use App\Models\Supplier;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -19,18 +22,21 @@ class TransactionController extends Controller
         $gl_code_parent = GlCodesParent::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($gl_code_parent, '');
 
-        $gl_code_sub = GlCode::orderBy('name', 'asc')->pluck('name')->toArray();
-        array_unshift($gl_code_sub, '');
-
         $transaction_type = TransactionType::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($transaction_type, '');
 
         $account_type = Account::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($account_type, '');
 
-        $transaction = Transaction::with('glCode', 'account', 'transactionType', 'glCode.glCodesParent')->get();
+        $suppliers = Supplier::orderBy('name', 'asc')->pluck('name')->toArray();
+        array_unshift($suppliers, '');
 
-        return view('page.transaction.index', compact('transaction', 'gl_code_parent', 'gl_code_sub', 'transaction_type', 'account_type'));
+        $customers = Customer::orderBy('name', 'asc')->pluck('name')->toArray();
+        array_unshift($customers, '');
+
+        $transaction = Transaction::with('account', 'transactionType', 'glCodesParent')->get();
+
+        return view('page.transaction.index', compact('transaction', 'gl_code_parent', 'transaction_type', 'account_type', 'suppliers', 'customers'));
     }
 
     public function create()
@@ -39,14 +45,18 @@ class TransactionController extends Controller
 
         $parentGlCodes = GlCodesParent::OrderBy('name', 'asc')->get();
 
-        $subGlCodes = GlCode::OrderBy('name', 'asc')->get();
-
         $accounts = Account::OrderBy('name', 'asc')->get();
 
-        return view('page.transaction.create', compact('parentGlCodes', 'subGlCodes', 'transactionType', 'accounts'));
+        $suppliers = Supplier::OrderBy('name', 'asc')->get();
+
+        $customers = Customer::OrderBy('name', 'asc')->get();
+
+        $memberships = AdditionalMemberInfos::OrderBy('membership_number', 'asc')->get();
+
+        return view('page.transaction.create', compact('parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
     }
 
-    public function store(Request $request)
+    /*    public function store(Request $request)
     {
         try {
             // Start a database transaction
@@ -55,7 +65,6 @@ class TransactionController extends Controller
             $rules = [
                 'transaction_type' => 'required',
                 'parent_id' => 'required|exists:gl_codes_parent,id',
-                'subGlCodes' => 'required',
                 'account_type' => 'required|exists:accounts,id',
                 'amount' => 'required|numeric',
             ];
@@ -63,8 +72,7 @@ class TransactionController extends Controller
             // Custom validation messages
             $messages = [
                 'transaction_type' => 'Transaction type is required',
-                'parent_id' => 'Parent GL is required',
-                'subGlCodes' => 'Sub GL is required',
+                'parent_id' => 'Account is required',
                 'account_type' => 'Transaction account is required',
                 'amount' => 'Amount field is required',
             ];
@@ -80,24 +88,14 @@ class TransactionController extends Controller
             // Create a new Transaction instance
             $transaction = new Transaction([
                 'transaction_type_id' => $request->input('transaction_type'),
-                //'parent_id' => $request->input('parent_id'),
-                'gl_code_id' => $request->input('subGlCodes'),
+                'gl_code_id' => $request->input('parent_id'),
+                //'gl_code_id' => $request->input('subGlCodes'),
                 'account_id' => $request->input('account_type'),
                 'amount' => $request->input('amount'),
                 'description' => $request->input('description')
             ]);
 
             $transaction->save();
-
-            $account = Account::find($request->input('account_type'));
-            if ($request->input('transaction_type') == 1) {
-                // Income (credit)
-                $account->balance += $request->input('amount');
-            } elseif ($request->input('transaction_type') == 2) {
-                // Expenditure (debit)
-                $account->balance -= $request->input('amount');
-            }
-            $account->save();
 
             // Commit the database transaction
             DB::commit();
@@ -117,15 +115,65 @@ class TransactionController extends Controller
             ]);
         }
     }
+        */
+    public function store(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Initialize IDs to null
+            $member_id = null;
+            $supplier_id = null;
+            $customer_id = null;
+
+            // Determine the transaction type and handle accordingly
+            if ($request->transaction_type == '1') { // Income
+                if ($request->paying_for_member == 'yes' && $request->membership_number) {
+                    $membership = AdditionalMemberInfos::find($request->membership_number);
+                    $member_id = $membership ? $membership->member_id : null;
+                } elseif ($request->paying_for_member == 'no') {
+                    $customer_id = $request->customer_id;
+                }
+            } elseif ($request->transaction_type == '2') { // Expenditure
+                $supplier_id = $request->supplier_id;
+            }
+
+            // Create the transaction with only the relevant fields
+            $transaction = Transaction::create([
+                'transaction_type_id' => $request->transaction_type,
+                'gl_code_id' => $request->parent_id,
+                'account_id' => $request->account_type,
+                'amount' => $request->amount,
+                'description' => $request->description,
+                'supplier_id' => $supplier_id,
+                'customer_id' => $customer_id,
+                'member_id' => $member_id,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                "status" => true,
+                "message" => "Transaction Added Successfully",
+                "redirectTo" => route("transaction.index")
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
 
     public function show($transaction_id)
     {
         $transaction = Transaction::with(
             [
-                'glCode',
                 'account',
                 'transactionType',
-                'glCode.glCodesParent'
+                'glCodesParent'
             ]
         )->find($transaction_id);
 

@@ -98,9 +98,9 @@
                                             </div>
                                             <!-- Your existing Blade code for Parent G/L dropdown -->
                                             <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Parent G/L<span class="text-danger"></span></label>
+                                                <label class="col-md-4 form-label">Account<span class="text-danger"></span></label>
                                                 <div class="col-md-8 custom-select-wrapper">
-                                                    <select name="parent_id" id="parent_id" class="custom-select" onchange="updateSubGlCodes()">
+                                                    <select name="parent_id" id="parent_id" class="custom-select">
                                                         <option value=""></option>
                                                         @foreach ($parentGlCodes as $parentGlCode)
                                                         <option value="{{ $parentGlCode->id }}">
@@ -111,13 +111,58 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Sub G/L dropdown -->
-                                            <div class="mb-3 row">
-                                                <label class="col-md-4 form-label">Sub G/L<span class="text-danger"></span></label>
+                                            <!-- Supplier dropdown -->
+                                            <div class="mb-3 row" id="supplier-container" style="display: none;">
+                                                <label class="col-md-4 form-label">Supplier<span class="text-danger"></span></label>
                                                 <div class="col-md-8 custom-select-wrapper">
-                                                    <select name="subGlCodes" id="subGlCodes" class="custom-select">
+                                                    <select name="supplier_id" id="supplier_id" class="custom-select">
                                                         <option value=""></option>
-                                                        <!-- Options will be dynamically populated using JavaScript -->
+                                                        @foreach ($suppliers as $supplier)
+                                                        <option value="{{ $supplier->id }}">
+                                                            {{ $supplier->name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!-- Paying for Member section -->
+                                            <div class="mb-3 row" id="paying-for-member-container" style="display: none;">
+                                                <label class="col-md-4 form-label">Paying for Member<span class="text-danger"></span></label>
+                                                <div class="col-md-8">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="paying_for_member" id="paying_for_member_yes" value="yes">
+                                                        <label class="form-check-label" for="paying_for_member_yes">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="paying_for_member" id="paying_for_member_no" value="no">
+                                                        <label class="form-check-label" for="paying_for_member_no">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row" id="customer-list-container" style="display: none;">
+                                                <label class="col-md-4 form-label">Select Customer<span class="text-danger"></span></label>
+                                                <div class="col-md-8 custom-select-wrapper">
+                                                    <select name="customer_id" id="customer_id" class="custom-select">
+                                                        <option value=""></option>
+                                                        @foreach ($customers as $customer)
+                                                        <option value="{{ $customer->id }}">
+                                                            {{ $customer->name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!-- Membership Number dropdown -->
+                                            <div class="mb-3 row" id="membership-number-container" style="display: none;">
+                                                <label class="col-md-4 form-label">Select Membership Number<span class="text-danger"></span></label>
+                                                <div class="col-md-8 custom-select-wrapper">
+                                                    <select name="membership_number" id="membership_number" class="custom-select">
+                                                        <option value=""></option>
+                                                        @foreach ($memberships as $membership)
+                                                        <option value="{{ $membership->id }}">
+                                                            {{ $membership->membership_number }}
+                                                        </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -232,37 +277,88 @@
     });
 
     $(document).ready(function() {
-        $('#amount').on('input', function() {
-            // Allow digits and a single dot
-            $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+    // Handle transaction type change
+    $('input[name="transaction_type"]').on('change', function() {
+        var selectedTransactionType = $('input[name="transaction_type"]:checked').val();
 
-            // Ensure there's only one dot
-            if ($(this).val().split('.').length > 2) {
-                var parts = $(this).val().split('.');
-                $(this).val(parts[0] + '.' + parts.slice(1).join(''));
-            }
-        });
+        // Assuming '2' is the ID for Expenditure and '1' is the ID for Income
+        if (selectedTransactionType == '2') { // Expenditure
+            $('#supplier-container').show();
+            $('#paying-for-member-container').hide();
+            $('#customer-list-container').hide();
+            $('#membership-number-container').hide();
+
+            // Clear Income-related fields only
+            $('#membership_id').val(''); // Clear membership
+            $('#customer_id').val(''); // Clear customer
+
+        } else if (selectedTransactionType == '1') { // Income
+            $('#paying-for-member-container').show();
+            $('#supplier-container').hide();
+
+            // Clear Expenditure-related fields only
+            $('#supplier_id').val(''); // Clear supplier
+
+            // Trigger the paying-for-member change event to show/hide related fields
+            $('input[name="paying_for_member"]:checked').trigger('change');
+        } else {
+            // If no transaction type is selected, clear all relevant fields and hide everything
+            $('#supplier-container').hide();
+            $('#paying-for-member-container').hide();
+            $('#customer-list-container').hide();
+            $('#membership-number-container').hide();
+
+            $('#membership_id').val(''); // Clear membership
+            $('#customer_id').val(''); // Clear customer
+            $('#supplier_id').val(''); // Clear supplier
+        }
     });
 
-    function updateSubGlCodes() {
-        var parentId = document.getElementById('parent_id').value;
-        var subGlCodesDropdown = document.getElementById('subGlCodes');
+    // Handle paying for member change
+    $('input[name="paying_for_member"]').on('change', function() {
+        var selectedPayingForMember = $('input[name="paying_for_member"]:checked').val();
 
-        // Clear existing options
-        subGlCodesDropdown.innerHTML = '<option value=""></option>';
+        if (selectedPayingForMember == 'yes') { // Paying for Member
+            $('#membership-number-container').show();
+            $('#customer-list-container').hide();
 
-        // Populate options based on the selected Parent G/L
-        @foreach ($subGlCodes as $subGlCode)
-            if ({{ $subGlCode->glCodesParent->id }} == parentId) {
-                var option = document.createElement('option');
-                option.value = {{ $subGlCode->id }};
-                option.text = '{{ $subGlCode->name }}';
-                subGlCodesDropdown.add(option);
-            }
-        @endforeach
-    }
+            // Clear customer fields when paying for member
+            $('#customer_id').val(''); // Clear customer
+        } else if (selectedPayingForMember == 'no') { // Not Paying for Member
+            $('#membership-number-container').hide();
+            $('#customer-list-container').show();
+
+            // Clear membership fields when not paying for member
+            $('#membership_id').val(''); // Clear membership
+            $('#member_id').val(''); // Clear member
+        } else {
+            // If no selection is made, clear all and hide containers
+            $('#membership-number-container').hide();
+            $('#customer-list-container').hide();
+
+            $('#membership_id').val(''); // Clear membership
+            $('#customer_id').val(''); // Clear customer
+        }
+    });
+
+    $('#amount').on('input', function() {
+        // Allow digits and a single dot
+        $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+
+        // Ensure there's only one dot
+        if ($(this).val().split('.').length > 2) {
+            var parts = $(this).val().split('.');
+            $(this).val(parts[0] + '.' + parts.slice(1).join(''));
+        }
+    });
+
+    // Trigger change event on page load to set the initial state
+    $('input[name="transaction_type"]:checked').trigger('change');
+    $('input[name="paying_for_member"]:checked').trigger('change');
+});
 
 </script>
+
 @endsection
 
 @include('layout.footer')

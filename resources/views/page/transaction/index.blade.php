@@ -136,7 +136,6 @@
      <script>
          var gl_Codes = <?php echo json_encode($transaction); ?>;
          var gl_code_parent = <?php echo json_encode($gl_code_parent); ?>;
-         var gl_code_sub = <?php echo json_encode($gl_code_sub); ?>;
          var transaction_type = <?php echo json_encode($transaction_type); ?>;
          var account_type = <?php echo json_encode($account_type); ?>;
 
@@ -144,27 +143,16 @@
              data: gl_Codes,
              layout: "fitColumns",
              columns: [{
-                     title: "Parent G/L",
-                     field: "gl_code.gl_codes_parent.name",
+                     title: "Account",
+                     field: "gl_code_parent.name",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
-                     headerFilterPlaceholder: 'Filter by Parent Account',
+                     headerFilterPlaceholder: 'Filter by Account',
                      headerFilterParams: {
                          values: gl_code_parent
                      }
-                 },
-                 {
-                     title: "Sub G/L",
-                     field: "gl_code.name",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Filter by Sub Account',
-                     headerFilterParams: {
-                         values: gl_code_sub
-                     }
-                 },
+                 },                 
                  {
                      title: "Type",
                      field: "transaction_type.name",

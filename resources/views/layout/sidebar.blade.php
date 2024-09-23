@@ -107,14 +107,14 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('finance-list')
+                            <!--@can('finance-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('gl-codes.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('gl-codes.index') }}">
                                         <span class="sub-side-menu__label">Sub GL List</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan-->
                             @can('finance-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('accounts.index')) active @endif"
@@ -220,7 +220,7 @@
                 @endcanany
                 @canany(['title-list', 'user-list', 'states-list', 'ports-list', 'counties-list', 'occupations-list',
                     'rigs-list', 'ships-list', 'role-list', 'source-of-arrival-list', 'cities-list',
-                    'subscription-plans-list', 'membership-status-list', 'gl_codes-list'])
+                    'subscription-plans-list', 'membership-status-list', 'gl_codes-list','supplier-list'])
                     <li class="slide @if (Route::is(
                             'title.index',
                             'user.index',
@@ -234,7 +234,7 @@
                             'source-of-arrivals.index',
                             'subscription-plans.index',
                             'cities.index',
-                            'membership-status.index')) is-expanded @endif">
+                            'membership-status.index', 'supplier-list')) is-expanded @endif">
                         <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                             <i class="fa fa-gears fa-2x mx-3"></i>
                             <span class="side-menu__label">Settings</span><i class="angle fe fe-chevron-right"></i></a>
@@ -249,7 +249,7 @@
                                 'rigs.index',
                                 'ship.index',
                                 'subscription-plans.index',
-                                'membership-status.index')) open @endif">
+                                'membership-status.index', 'supplier-list')) open @endif">
                             @can('user-list')
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('user.index')) active @endif"
@@ -311,6 +311,14 @@
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('rigs.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('rigs.index') }}">
                                         <span class="sub-side-menu__label">Rigs</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('supplier-list')
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item mx-5 @if (Route::is('suppliers.index')) active @endif"
+                                        data-bs-toggle="sub-slide" href="{{ route('suppliers.index') }}">
+                                        <span class="sub-side-menu__label">Suppliers</span>
                                     </a>
                                 </li>
                             @endcan

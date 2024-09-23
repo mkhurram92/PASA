@@ -13,6 +13,7 @@
 
  @include('layout.header')
  @include('layout.sidebar')
+ <!-- app-content start-->
  <div class="app-content main-content">
      <style>
          .tabulator-toolbar {
@@ -54,7 +55,7 @@
              height: 45px;
              border: none;
              border-radius: 5px;
-             background-color: #3498db;
+             background-color: #0d6efd;
              color: white;
              cursor: pointer;
          }
@@ -97,35 +98,55 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">Account List</h3>
+                     <h3 class="page-title">Suppliers</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="javascript:void(0)" id="create-parentglcode-record">
+                     <a class="btn btn-primary" href="javascript:void(0)" id="create-supplier-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                      </a>
                  </div>
              </div>
              <div class="row">
                  <div class="col-md-12 p-12">
+                     @if ($errors->any() || session('error') || session('success'))
+                     <div class="card">
+                         <div class="card-body">
+                             @if ($errors->any())
+                             <div class="alert alert-danger">
+                                 {{ $errors->first() }}
+                             </div>
+                             @elseif(session('error'))
+                             <div class="alert alert-danger">
+                                 {{ session('error') }}
+                             </div>
+                             @elseif(session('success'))
+                             <div class="alert alert-success">
+                                 {{ session('success') }}
+                             </div>
+                             @endif
+                         </div>
+                     </div>
+                     @endif
                      <div class="card">
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                 <option value="25">25</option>
+                                     <option value="25">25</option>
                                      <option value="50">50</option>
                                      <option value="100">100</option>
                                      <option value="1000000">ALL</option>
                                  </select>
                                  <label style="padding: 10px;" for="date-range">Date Range:</label>
                                  <input style="padding: 10px 20px;" type="text" id="date-range">
-                                 <button class="custom-button" type="button" id="printTable"
-                                     onclick="printData()">Print</button>
+                                 <button class="custom-button" type="button" id="printTable" onclick="printData()">Print</button>
                                  <button class="custom-button" id="download-csv">Download CSV</button>
                                  <button class="custom-button" id="download-xlsx">Download EXCEL</button>
                                  <button class="custom-button" id="download-pdf">Download PDF</button>
                                  <button class="custom-button" id="reset-button">Reset Filter</button>
                              </div>
-                             <div id="gl-code-table"></div>
+                             <div class="table-responsive">
+                                 <div id="suppliers-table"></div>
+                             </div>
                          </div>
                      </div>
                  </div>
@@ -133,96 +154,99 @@
          </div>
      </div>
  </div>
+ <!-- MODAL EFFECTS -->
  <div id="crud"></div>
+ @include('plugins.select2')
  @section('scripts')
-     <script>
-         var gl_Codes = @json($glCodesParents);
+ <script>
+     var myData = @json($suppliers);
 
-         var table = new Tabulator("#gl-code-table", {
-             data: gl_Codes,
-             layout: "fitColumns",
-             columns: [{
-                     title: "ID",
-                     field: "id",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input"
-                 },
-                 {
-                     title: "Account Name",
-                     field: "name",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input"
-                 },
-                 {
-                     title: "Description",
-                     field: "description",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input"
-                 },
-                 {
-                     title: "Created Date",
-                     field: "created_at",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     formatter: function(cell) {
-                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD HH:mm:ss');
-                         return formattedDate;
-                     }
-                 },
-                 {
-                     title: "Action",
-                     field: "actions",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     width: "8%",
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var id = cell.getData().id;
+     var table = new Tabulator("#suppliers-table", {
+         data: myData,
+         layout: "fitColumns",
+         columns: [
+             {
+                 title: 'Supplier Name',
+                 field: 'name',
+                 headerFilter: 'input',
+                 hozAlign: 'center',
+                 vertAlign: "middle",
+                 headerFilterPlaceholder: 'Search by Supplier Name'
+             },
+             {
+                 title: "Action",
+                 field: "actions",
+                 hozAlign: "center",
+                 vertAlign: "middle",
+                 width: "8%",
+                 formatter: function(cell, formatterParams, onRendered) {
+                     var id = cell.getData().id;
 
-                         // Add buttons for each row
-                         return '<div class="button-container">' +
-                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
-                             '"> View</button>' +
-                             //'<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
-                             '</div>';
-                     }
+                     // Add buttons for each row
+                     return '<div class="button-container">' +
+                         '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                         '"></button>' +
+                         '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
+                         '</div>';
                  }
-             ],
-             initialSort: [{
-                 column: "created_at",
-                 dir: "desc"
-             }]
-         });
-
-         $('#create-parentglcode-record').click(function() {
-             $.get("{{ route('gl-codes-parent.create') }}", form => {
-                 $('#crud').html(form.html);
-                 $('#crud').find(".modal").modal('show');
-             });
-         });
-
-         // Attach the event listener directly to the table element
-         document.getElementById('gl-code-table').addEventListener("click", function(e) {
-             if (e.target.classList.contains("view-button")) {
-                 var parentId = e.target.getAttribute("data-id");
-                 openViewModal(parentId);
-             } else if (e.target.classList.contains("edit-button")) {
-                 var parentId = e.target.getAttribute("data-id");
-                 openUpdateModal(parentId);
              }
-         });
+         ],
+         pagination: 'local',
+         paginationSize: 10,
+         placeholder: "No Data Available"
+     });
 
-         // Function to open the view modal
-         function openViewModal(parentId) {
-             $.get("{{ route('gl-codes-parent.show', ['gl_codes_parent' => '__parentId__']) }}".replace('__parentId__',
-                 parentId), function(response) {
-                 $('#crud').html(response.html);
-                 $('#crud').find(".modal").modal('show');
-             });
+     $('#create-supplier-record').click(function() {
+         $.get("{{ route('suppliers.create') }}", form => {
+             $('#crud').html(form.html);
+             $('#crud').find(".modal").modal('show');
+         });
+     });
+
+     // Attach the event listener directly to the table element
+     document.getElementById('suppliers-table').addEventListener("click", function(e) {
+         if (e.target.classList.contains("view-button")) {
+             var supplierId = e.target.getAttribute("data-id");
+             openViewModal(supplierId);
+         } else if (e.target.classList.contains("edit-button")) {
+             var supplierId = e.target.getAttribute("data-id");
+             openUpdateModal(supplierId);
          }
-     </script>
+     });
+
+     function openUpdateModal(supplierId) {
+         $.get("{{ route('suppliers.edit', ['supplier' => '__supplierId__']) }}".replace('__supplierId__', supplierId), function(response) {
+             $('#crud').html(response.html);
+             $('#crud').find(".modal").modal('show');
+         });
+     }
+
+     // Function to open the view modal
+     function openViewModal(supplierId) {
+         $.get("{{ route('suppliers.show', ['supplier' => '__supplier__']) }}".replace('__supplier__', supplierId), function(response) {
+             $('#crud').html(response.html);
+             $('#crudModel').modal('show');
+         });
+     }
+
+     function printData() {
+         table.print(false, true);
+     }
+
+     // Add a reset button
+     var resetButton = document.getElementById("reset-button");
+
+     resetButton.addEventListener("click", function() {
+         table.clearFilter();
+         table.clearHeaderFilter();
+     });
+
+     $("#pageSizeDropdown").on("change", function() {
+         var selectedPageSize = parseInt($(this).val(), 10);
+         table.setPageSize(selectedPageSize);
+     });
+
+</script>
  @endsection
+ <!-- app-content end-->
  @include('layout.footer')
