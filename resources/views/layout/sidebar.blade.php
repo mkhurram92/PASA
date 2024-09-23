@@ -68,13 +68,13 @@
                         <span class="side-menu__label">Pedigree</span>
                     </a>
                 </li>
-                <li class="slide">
+                <!--<li class="slide">
                     <a class="side-menu__item  @if (Route::is('members.view-junior', ['id' => $user->member_id])) active @endif"
                         data-bs-toggle="slide" href="{{ route('members.view-junior', ['id' => $user->member_id]) }}">
                         <i class="fa fa-child fa-2x mx-3"></i>
                         <span class="side-menu__label">Juniors</span>
                     </a>
-                </li>
+                </li>-->
                 @endif
 
                 <li class="slide">
@@ -103,7 +103,7 @@
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item mx-5 @if (Route::is('gl-codes-parent.index')) active @endif"
                                         data-bs-toggle="sub-slide" href="{{ route('gl-codes-parent.index') }}">
-                                        <span class="sub-side-menu__label">Parent GL List</span>
+                                        <span class="sub-side-menu__label">Account</span>
                                     </a>
                                 </li>
                             @endcan
