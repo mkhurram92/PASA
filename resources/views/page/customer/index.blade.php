@@ -101,7 +101,7 @@
                      <h3 class="page-title">Customers</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="javascript:void(0)" id="create-supplier-record">
+                     <a class="btn btn-primary" href="javascript:void(0)" id="create-customer-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                      </a>
                  </div>
@@ -109,23 +109,23 @@
              <div class="row">
                  <div class="col-md-12 p-12">
                      @if ($errors->any() || session('error') || session('success'))
-                     <div class="card">
-                         <div class="card-body">
-                             @if ($errors->any())
-                             <div class="alert alert-danger">
-                                 {{ $errors->first() }}
+                         <div class="card">
+                             <div class="card-body">
+                                 @if ($errors->any())
+                                     <div class="alert alert-danger">
+                                         {{ $errors->first() }}
+                                     </div>
+                                 @elseif(session('error'))
+                                     <div class="alert alert-danger">
+                                         {{ session('error') }}
+                                     </div>
+                                 @elseif(session('success'))
+                                     <div class="alert alert-success">
+                                         {{ session('success') }}
+                                     </div>
+                                 @endif
                              </div>
-                             @elseif(session('error'))
-                             <div class="alert alert-danger">
-                                 {{ session('error') }}
-                             </div>
-                             @elseif(session('success'))
-                             <div class="alert alert-success">
-                                 {{ session('success') }}
-                             </div>
-                             @endif
                          </div>
-                     </div>
                      @endif
                      <div class="card">
                          <div class="card-body p-2">
@@ -138,7 +138,8 @@
                                  </select>
                                  <label style="padding: 10px;" for="date-range">Date Range:</label>
                                  <input style="padding: 10px 20px;" type="text" id="date-range">
-                                 <button class="custom-button" type="button" id="printTable" onclick="printData()">Print</button>
+                                 <button class="custom-button" type="button" id="printTable"
+                                     onclick="printData()">Print</button>
                                  <button class="custom-button" id="download-csv">Download CSV</button>
                                  <button class="custom-button" id="download-xlsx">Download EXCEL</button>
                                  <button class="custom-button" id="download-pdf">Download PDF</button>
@@ -158,45 +159,78 @@
  <div id="crud"></div>
  @include('plugins.select2')
  @section('scripts')
- <script>
-     var myData = @json($customers);
+     <script>
+         var myData = @json($customers);
 
-     var table = new Tabulator("#customers-table", {
-         data: myData,
-         layout: "fitColumns",
-         columns: [
-             {
-                 title: 'Customer Name',
-                 field: 'name',
-                 headerFilter: 'input',
-                 hozAlign: 'center',
-                 vertAlign: "middle",
-                 headerFilterPlaceholder: 'Search by Supplier Name'
-             },
-             {
-                 title: "Action",
-                 field: "actions",
-                 hozAlign: "center",
-                 vertAlign: "middle",
-                 width: "8%",
-                 formatter: function(cell, formatterParams, onRendered) {
-                     var id = cell.getData().id;
+         var table = new Tabulator("#customers-table", {
+             data: myData,
+             layout: "fitColumns",
+             columns: [{
+                     title: 'Customer Name',
+                     field: 'name',
+                     headerFilter: 'input',
+                     hozAlign: 'center',
+                     vertAlign: "middle",
+                     headerFilterPlaceholder: 'Search by Supplier Name'
+                 },
+                 {
+                     title: "Action",
+                     field: "actions",
+                     hozAlign: "center",
+                     vertAlign: "middle",
+                     width: "8%",
+                     formatter: function(cell, formatterParams, onRendered) {
+                         var id = cell.getData().id;
 
-                     // Add buttons for each row
-                     return '<div class="button-container">' +
-                         '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
-                         '"></button>' +
-                         '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
-                         '</div>';
+                         // Add buttons for each row
+                         return '<div class="button-container">' +
+                             '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                             '"></button>' +
+                             '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
+                             '</div>';
+                     }
                  }
-             }
-         ],
-         pagination: 'local',
-         paginationSize: 10,
-         placeholder: "No Data Available"
-     });
+             ],
+             pagination: 'local',
+             paginationSize: 10,
+             placeholder: "No Data Available"
+         });
 
-</script>
+         $('#create-customer-record').click(function() {
+             $.get("{{ route('customer.create') }}", form => {
+                 $('#crud').html(form.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         });
+
+         // Attach the event listener directly to the table element
+         document.getElementById('customers-table').addEventListener("click", function(e) {
+             if (e.target.classList.contains("view-button")) {
+                 var customerId = e.target.getAttribute("data-id");
+                 openViewModal(customerId);
+             } else if (e.target.classList.contains("edit-button")) {
+                 var customerId = e.target.getAttribute("data-id");
+                 openUpdateModal(customerId);
+             }
+         });
+
+         function openUpdateModal(customerId) {
+             $.get("{{ route('customer.edit', ['customer' => '__customerId__']) }}".replace('__customerId__', customerId),
+                 function(response) {
+                     $('#crud').html(response.html);
+                     $('#crud').find(".modal").modal('show');
+                 });
+         }
+
+         // Function to open the view modal
+         function openViewModal(customerId) {
+             $.get("{{ route('customer.show', ['customer' => '__customer__']) }}".replace('__customer__', customerId),
+                 function(response) {
+                     $('#crud').html(response.html);
+                     $('#crudModel').modal('show');
+                 });
+         }
+     </script>
  @endsection
  <!-- app-content end-->
  @include('layout.footer')
