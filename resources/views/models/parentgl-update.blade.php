@@ -9,17 +9,19 @@
             </div>
             <div class="modal-body">
                 <form id="crudForm" name="crudForm" class="form-horizontal"
-                    action="{{ route('gl-codes-parent.store') }}" method="POST">
+                    action="{{ route('gl-codes-parent.update', ['gl_codes_parent' => $glCodesParent?->id]) }}"
+                    method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="form-group">
                         <label for="name" class="control-label">Account Name</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            placeholder="Enter Account Name" value="" required="">
+                            placeholder="Enter Account Name" value="{{ $glCodesParent?->name }}" required="">
                     </div>
                     <div class="form-group">
                         <label for="name" class="control-label">Description</label>
                         <input type="text" class="form-control" id="description" name="description"
-                            placeholder="Enter Description" value="" required="">
+                            placeholder="Enter Description" value="{{ $glCodesParent?->description }}" required="">
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">

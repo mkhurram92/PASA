@@ -111,7 +111,7 @@
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
                                  Show <select style="padding:10px;" id="pageSizeDropdown">
-                                 <option value="25">25</option>
+                                     <option value="25">25</option>
                                      <option value="50">50</option>
                                      <option value="100">100</option>
                                      <option value="1000000">ALL</option>
@@ -186,7 +186,7 @@
                          return '<div class="button-container">' +
                              '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
                              '"></button>' +
-                             //'<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
+                             '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
                              '</div>';
                      }
                  }
@@ -214,6 +214,14 @@
                  openUpdateModal(parentId);
              }
          });
+
+         function openUpdateModal(parentId) {
+             $.get("{{ route('gl-codes-parent.edit', ['gl_codes_parent' => '__parentId__']) }}".replace('__parentId__',
+                 parentId), function(response) {
+                 $('#crud').html(response.html);
+                 $('#crud').find(".modal").modal('show');
+             });
+         }
 
          // Function to open the view modal
          function openViewModal(parentId) {

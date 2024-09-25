@@ -11,7 +11,7 @@ class GlCodesParentController extends Controller
     public function index()
     {
         $glCodesParents = GlCodesParent::get();
-        
+
         return view('page.gl-codes-parent.index', compact('glCodesParents'));
     }
 
@@ -40,7 +40,7 @@ class GlCodesParentController extends Controller
         // Validate input data
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'description' =>'nullable'
+            'description' => 'nullable'
             // ... other validation rules
         ]);
 
@@ -61,25 +61,35 @@ class GlCodesParentController extends Controller
     public function edit($id)
     {
         $glCodesParent = GlCodesParent::findOrFail($id);
-        return view('gl-codes-parent.edit', compact('glCodesParent'));
+        //return view('gl-codes-parent.edit', compact('glCodesParent'));
+
+        $html = view("models.parentgl-update", compact('glCodesParent'))->render();
+        return response()->json(["status" => true, "html" => $html]);
     }
 
     // Update a record in the database
     public function update(Request $request, $id)
     {
-        // Validate input data
+        // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            // ... other validation rules
+            'description' => 'nullable|max:1000',
         ]);
 
-        // Update the GlCodesParent instance
+        // Find the record by its ID
         $glCodesParent = GlCodesParent::findOrFail($id);
+
+        // Update the record with the validated data
         $glCodesParent->update($validatedData);
 
-        // Redirect to the index page or show success message
-        return redirect()->route('gl-codes-parent.index');
+        // Return a JSON response indicating success
+        return response()->json([
+            'status' => true,
+            'message' => 'Record updated successfully',
+            'redirectTo' => route('gl-codes-parent.index')
+        ]);
     }
+
 
     // Delete a record
     public function destroy($id)
