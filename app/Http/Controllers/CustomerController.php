@@ -24,7 +24,8 @@ class CustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
         $customer = Customer::create($request->validated());
-        return response()->json(["status" => true, "message" => "Customer created"]);
+        return response()->json(["status" => true, "message" => "Customer created", "redirectTo" => route("customer.index")]);
+
     }
 
     public function show(Customer $customer)
@@ -42,7 +43,6 @@ class CustomerController extends Controller
     public function update(UpdateCustomerRequest $request, $customer)
     {
         $customer = Customer::find($customer)->update($request->validated());
-        return response()->json(["status" => true, "message" => "Customer Updated"]);
+        return response()->json(["status" => true, "message" => "Customer Updated", "redirectTo" => route("customer.index")]);
     }
-
 }

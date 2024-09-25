@@ -25,7 +25,7 @@ class SupplierController extends Controller
     public function store(StoreSupplierRequest $request)
     {
         $supplier = Supplier::create($request->validated());
-        return response()->json(["status" => true, "message" => "Supplier created"]);
+        return response()->json(["status" => true, "message" => "Supplier created", "redirectTo" => route("suppliers.index")]);
     }
 
     public function show(Supplier $supplier)
@@ -41,6 +41,6 @@ class SupplierController extends Controller
     public function update(UpdateSupplierRequest $request, $rig)
     {
         $supplier = Supplier::find($rig)->update($request->validated());
-        return response()->json(["status" => true, "message" => "Supplier Updated"]);
+        return response()->json(["status" => true, "message" => "Supplier Updated", "redirectTo" => route("suppliers.index")]);
     }
 }

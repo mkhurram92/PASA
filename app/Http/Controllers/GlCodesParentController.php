@@ -51,7 +51,7 @@ class GlCodesParentController extends Controller
         //return redirect()->route('gl-codes-parent.index');
         return response()->json([
             "status" => true,
-            "message" => "Parent G/L Added Successfully",
+            "message" => "Account Added Successfully",
             //"redirectTo" => url("gl-codes")
             "redirectTo" => route("gl-codes-parent.index")
         ]);
