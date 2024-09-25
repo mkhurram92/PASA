@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modelHeading">Add Parent G/L</h4>
+                <h4 class="modal-title" id="modelHeading">Add an Account</h4>
                 <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span
                         aria-hidden="true">&times;</span></button>
 
@@ -12,7 +12,7 @@
                     action="{{ route('gl-codes-parent.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="name" class="control-label">Parent G/L Name</label>
+                        <label for="name" class="control-label">Account Name</label>
                         <input type="text" class="form-control" id="name" name="name"
                             placeholder="Enter Parent GL Name" value="" required="">
                     </div>
