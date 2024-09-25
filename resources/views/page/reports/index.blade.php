@@ -66,7 +66,6 @@
                                     <label for="report_type" class="form-label">Report Type</label>
                                     <select name="report_type" id="report_type" class="form-control">
                                         <option>Select Report</option>
-                                        <option value="profit-and-loss">Profit and Loss Statement</option>
                                         <option value="income-and-expenditure">Income and Expenditure Statement</option>
                                         <option value="balance-sheet">Balance Sheet</option>
                                     </select>

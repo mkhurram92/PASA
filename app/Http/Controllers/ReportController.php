@@ -19,7 +19,7 @@ class ReportController extends Controller
     public function show($type, Request $request)
     {
         switch ($type) {
-            case 'profit-and-loss':
+            case 'income-and-expenditure':
                 return $this->profitAndLoss($request);
             default:
                 abort(404);
@@ -45,14 +45,20 @@ class ReportController extends Controller
     {
         $query = Transaction::select(
             'gl_codes_parent.name as parent_gl_code_name',
-            'gl_codes.name as gl_code_name',
-            DB::raw('SUM(CASE WHEN transactions.transaction_type_id = ' . $incomeTypeId . ' THEN transactions.amount ELSE 0 END) as total_income'),
-            DB::raw('SUM(CASE WHEN transactions.transaction_type_id = ' . $expenditureTypeId . ' THEN transactions.amount ELSE 0 END) as total_expense')
+            'suppliers.name as supplier_name',
+            'customers.name as customer_name', // Assuming customer names are stored here
+            'transactions.amount',
+            'transactions.transaction_type_id',
+            'transactions.member_id',
+            'transactions.customer_id'
         )
-            ->join('gl_codes', 'transactions.gl_code_id', '=', 'gl_codes.id')
-            ->join('gl_codes_parent', 'gl_codes.parent_id', '=', 'gl_codes_parent.id')
-            ->groupBy('gl_codes_parent.name', 'gl_codes.name');
+            ->join('gl_codes_parent', 'transactions.gl_code_id', '=', 'gl_codes_parent.id')
+            ->leftJoin('suppliers', 'transactions.supplier_id', '=', 'suppliers.id')
+            ->leftJoin('customers', 'transactions.customer_id', '=', 'customers.id') // Join with customers table
+            ->groupBy('gl_codes_parent.name', 'suppliers.name', 'customers.name', 'transactions.amount', 'transactions.transaction_type_id', 'transactions.member_id', 'transactions.customer_id')
+            ->orderBy('gl_codes_parent.name', 'asc');
 
+        // Apply date filters
         if ($startDate && $endDate) {
             $query->whereBetween('transactions.created_at', [$startDate, $endDate . ' 23:59:59']);
         } elseif ($month && $year) {
@@ -62,13 +68,20 @@ class ReportController extends Controller
             $query->whereYear('transactions.created_at', $year);
         }
 
-        return $query->orderBy('gl_codes_parent.name', 'asc')->get();
+        // Fetch the data
+        $results = $query->get();
+
+        // Group by parent GL code
+        $groupedResults = $results->groupBy('parent_gl_code_name');
+
+        return $groupedResults;
     }
+
 
     private function generatePDF($reportData)
     {
-        $pdf = Pdf::loadView('page.reports.profit_and_loss', compact('reportData'));
-        return $pdf->stream('profit_and_loss_report.pdf');
+        $pdf = Pdf::loadView('page.reports.income-and-expenditure', compact('reportData'));
+        return $pdf->stream('income-and-expenditure.pdf');
     }
 
     // Example Income and Expenditure method
