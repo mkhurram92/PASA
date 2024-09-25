@@ -46,16 +46,18 @@ class ReportController extends Controller
         $query = Transaction::select(
             'gl_codes_parent.name as parent_gl_code_name',
             'suppliers.name as supplier_name',
-            'customers.name as customer_name', // Assuming customer names are stored here
+            'customers.name as customer_name', 
             'transactions.amount',
             'transactions.transaction_type_id',
             'transactions.member_id',
-            'transactions.customer_id'
+            'transactions.customer_id', 
+            'additional_member_info.membership_number as membership_number'
         )
             ->join('gl_codes_parent', 'transactions.gl_code_id', '=', 'gl_codes_parent.id')
             ->leftJoin('suppliers', 'transactions.supplier_id', '=', 'suppliers.id')
-            ->leftJoin('customers', 'transactions.customer_id', '=', 'customers.id') // Join with customers table
-            ->groupBy('gl_codes_parent.name', 'suppliers.name', 'customers.name', 'transactions.amount', 'transactions.transaction_type_id', 'transactions.member_id', 'transactions.customer_id')
+            ->leftJoin('customers', 'transactions.customer_id', '=', 'customers.id')
+            ->leftJoin('additional_member_info', 'transactions.member_id', '=', 'additional_member_info.member_id')
+            ->groupBy('membership_number', 'gl_codes_parent.name', 'suppliers.name', 'customers.name', 'transactions.amount', 'transactions.transaction_type_id', 'transactions.member_id', 'transactions.customer_id')
             ->orderBy('gl_codes_parent.name', 'asc');
 
         // Apply date filters

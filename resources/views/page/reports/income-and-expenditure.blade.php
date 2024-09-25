@@ -183,7 +183,7 @@
                                     <tr>
                                         <td class="supplier-indent">
                                             @if ($transaction->member_id)
-                                                Member
+                                            Membership No. {{ $transaction->membership_number ?? 'Unknown Member' }}
                                             @elseif ($transaction->customer_id)
                                                 {{ $transaction->customer_name ?? 'Unknown Customer' }}
                                             @else
