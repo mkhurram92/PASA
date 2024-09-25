@@ -198,7 +198,7 @@
                      }
                  },
                  {
-                     title: "Account",
+                     title: "Transaction Account",
                      field: "account.name",
                      hozAlign: "left",
                      vertAlign: "middle",
