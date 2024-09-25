@@ -11,12 +11,12 @@
                 <div class="form-group">
                     <label for="name" class="control-label">Account Name</label>
                     <input type="text" class="form-control" id="name" name="name"
-                        placeholder="Enter Parent GL Name" value="{{$gl_codes_parent?->name}}" readonly disabled>
+                        placeholder="Enter Account Name" value="{{$gl_codes_parent?->name}}" readonly disabled>
                 </div>
                 <div class="form-group">
                     <label for="name" class="control-label">Description</label>
                     <input type="text" class="form-control" id="name" name="name"
-                        placeholder="Enter Parent GL Name" value="{{$gl_codes_parent?->description}}" readonly disabled>
+                        placeholder="Enter Description" value="{{$gl_codes_parent?->description}}" readonly disabled>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">

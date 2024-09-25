@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label for="name" class="control-label">Account Name</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            placeholder="Enter Parent GL Name" value="" required="">
+                            placeholder="Enter Account Name" value="" required="">
                     </div>
                     <div class="form-group">
                         <label for="name" class="control-label">Description</label>
