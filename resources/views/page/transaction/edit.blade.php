@@ -104,7 +104,7 @@
                                                         <option value=""></option>
                                                         @foreach ($memberships as $membership)
                                                         <option value="{{ $membership->id }}" @if($transaction->member_id == $membership->member_id) selected @endif>
-                                                            {{ $membership->membership_number }} - {{ $membership->member->family_name }} {{ $membership->member->given_name }}
+                                                            {{ $membership->membership_number }}
                                                         </option>
                                                         @endforeach
                                                     </select>
