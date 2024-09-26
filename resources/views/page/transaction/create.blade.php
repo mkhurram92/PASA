@@ -148,7 +148,11 @@
                                                         <option value=""></option>
                                                         @foreach($memberships as $membership)
                                                         <option value="{{ $membership->membership_number }}">
-                                                            {{ $membership->membership_number }} - {{ $membership->member->family_name }} . {{ $membership->member->given_name }}
+                                                            @if($membership->membership_number)
+                                                                {{ $membership->membership_number }} - {{ $membership->member->family_name }} {{ $membership->member->given_name }}
+                                                            @else
+                                                                {{ $membership->member->family_name }} {{ $membership->member->given_name }}
+                                                            @endif
                                                         </option>
                                                         @endforeach
                                                     </select>
