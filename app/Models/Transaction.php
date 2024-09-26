@@ -36,6 +36,11 @@ class Transaction extends Model
     {
         return $this->belongsTo(AdditionalMemberInfos::class, 'member_id');
     }
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id');
+    }
+
     public static function createAndProcessTransaction($transactionType, $glCodeId, $accountId, $amount, $description, $memberId)
     {
         $transaction = self::create([

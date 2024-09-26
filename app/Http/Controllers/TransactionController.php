@@ -130,9 +130,8 @@ class TransactionController extends Controller
 
             // Determine the transaction type and handle accordingly
             if ($request->transaction_type == '1') { // Income
-                if ($request->paying_for_member == 'yes' && $request->membership_number) {
-                    $membership = AdditionalMemberInfos::find($request->membership_number);
-                    $member_id = $membership ? $membership->member_id : null;
+                if ($request->paying_for_member == 'yes') {
+                    $member_id = $request->member_id;
                 } elseif ($request->paying_for_member == 'no') {
                     $customer_id = $request->customer_id;
                 }
@@ -172,16 +171,34 @@ class TransactionController extends Controller
 
     public function show($transaction_id)
     {
-        $transaction = Transaction::with(
-            [
-                'membership.member',
-                'customer',
-                'supplier',
-                'account',
-                'transactionType',
-                'glCodesParent'
-            ]
-        )->find($transaction_id);
+        // Load all necessary relationships, including member and additionalInfo
+        $transaction = Transaction::with([
+            'member.additionalInfo',
+            'customer',
+            'supplier',
+            'account',
+            'transactionType',
+            'glCodesParent'
+        ])->find($transaction_id);
+
+        if ($transaction) {
+            // Handle member-related information
+            if ($transaction->member) {
+                $member = $transaction->member;
+
+                // Get membership number from additionalinfo
+                $membershipNumber = $member->additionalInfo->membership_number ?? null;
+
+                // Get member's name
+                $memberName = $member->family_name . ' ' . $member->given_name;
+
+                // Combine membership number with name if available, otherwise just use name
+                $transaction->member_info = $membershipNumber ? "$membershipNumber - $memberName" : $memberName;
+            } else {
+                $transaction->member_info = null;
+            }
+
+        }
 
         return view('page.transaction.view', compact('transaction'));
     }

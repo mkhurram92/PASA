@@ -147,7 +147,7 @@
                                                     <select name="membership_number" id="membership_number" class="custom-select">
                                                         <option value=""></option>
                                                         @foreach($memberships as $membership)
-                                                        <option value="{{ $membership->membership_number }}">
+                                                        <option value="{{ $membership->membership_number }}" data-member-id="{{ $membership->member_id }}">
                                                             @if($membership->membership_number)
                                                                 {{ $membership->membership_number }} - {{ $membership->member->family_name }} {{ $membership->member->given_name }}
                                                             @else
@@ -157,6 +157,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                <input type="hidden" name="member_id" id="member_id">
                                             </div>
                                             <!-- Your existing Blade code for Parent G/L dropdown -->
                                             <div class="mb-3 row">
@@ -223,6 +224,12 @@
 <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
 <script>
+        document.getElementById('membership_number').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var memberId = selectedOption.getAttribute('data-member-id');
+        document.getElementById('member_id').value = memberId;
+    });
+
     document.getElementById('submitBtn').addEventListener('click', function(event) {
         event.preventDefault();
         $.ajax({

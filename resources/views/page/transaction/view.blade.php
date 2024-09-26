@@ -118,11 +118,10 @@
                                             @if ($transaction->member_id)
                                                 <!-- Membership Number dropdown -->
                                                 <div class="mb-3 row" id="membership-number-container">
-                                                    <label class="col-md-4 form-label">Membership Number<span
-                                                            class="text-danger"></span></label>
+                                                    <label class="col-md-4 form-label">Membership Info<span class="text-danger"></span></label>
                                                     <div class="col-md-8 custom-select-wrapper">
                                                         <input type="text" class="form-control"
-                                                            value="{{ optional($transaction->membership)->membership_number }}"
+                                                            value="{{ $transaction->member_info }}"
                                                             disabled readonly>
                                                     </div>
                                                 </div>
