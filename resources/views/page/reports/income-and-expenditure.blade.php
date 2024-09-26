@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Income and Expenditure Report</title>
+    <title>Income and Expense Statement</title>
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
@@ -140,7 +140,7 @@
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
             <h3>23 Leigh Street, Adelaide 5000</h3>
-            <h3>Income and Expenses Statement</h3>
+            <h3>Income and Expense Statement</h3>
 
             @if (request('start_date') && request('end_date'))
                 <p>From : {{ request('start_date') }} To : {{ request('end_date') }}</p>
