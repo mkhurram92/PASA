@@ -7,7 +7,7 @@
     <title>Income and Expenditure Report</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             background-color: #fff;
             color: #000;
             margin: 0;
@@ -143,11 +143,11 @@
             <h3>Income and Expenditure</h3>
 
             @if (request('start_date') && request('end_date'))
-            <p>From: {{ request('start_date') }} To: {{ request('end_date') }}</p>
+                <p>From: {{ request('start_date') }} To: {{ request('end_date') }}</p>
             @elseif(request('month') && request('year'))
-            <p>Month: {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
+                <p>Month: {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
             @elseif(request('year'))
-            <p>Year: {{ request('year') }}</p>
+                <p>Year: {{ request('year') }}</p>
             @endif
         </div>
 
@@ -203,7 +203,7 @@
         </div>
 
         <!-- Expenditure Section -->
-        <h2>Expenditure</h2>
+        <h2>Expenses</h2>
         <div class="table-container">
             <table>
                 <thead>
@@ -256,7 +256,7 @@
         <!-- Net Profit/Loss Calculation -->
         <div class="net-profit-loss">
             @php
-            $netProfitLoss = $totalIncome - $totalExpense;
+                $netProfitLoss = $totalIncome - $totalExpense;
             @endphp
             <strong>Net Surplus/Loss: ${{ number_format($netProfitLoss, 2) }}</strong>
         </div>
