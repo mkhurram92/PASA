@@ -51,7 +51,9 @@ class TransactionController extends Controller
 
         $customers = Customer::OrderBy('name', 'asc')->get();
 
-        $memberships = AdditionalMemberInfos::OrderBy('membership_number', 'asc')->get();
+        $memberships = AdditionalMemberInfos::with('member')
+            ->orderBy('membership_number', 'asc')
+            ->get();
 
         return view('page.transaction.create', compact('parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
     }
@@ -172,7 +174,7 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::with(
             [
-                'membership',
+                'membership.member',
                 'customer',
                 'supplier',
                 'account',
@@ -186,12 +188,16 @@ class TransactionController extends Controller
 
     public function edit(Transaction $transaction)
     {
-        $transactionType = TransactionType::OrderBy('name')->get();
-        $parentGlCodes = GlCodesParent::OrderBy('name')->get();
-        $accounts = Account::OrderBy('name')->get();
-        $suppliers = Supplier::OrderBy('name')->get();
-        $customers = Customer::OrderBy('name')->get();
-        $memberships = AdditionalMemberInfos::OrderBy('membership_number')->get();
+        $transactionType = TransactionType::orderBy('name')->get();
+        $parentGlCodes = GlCodesParent::orderBy('name')->get();
+        $accounts = Account::orderBy('name')->get();
+        $suppliers = Supplier::orderBy('name')->get();
+        $customers = Customer::orderBy('name')->get();
+
+        // Fetch memberships with the related member's name and membership number
+        $memberships = AdditionalMemberInfos::with('member')
+            ->orderBy('membership_number')
+            ->get();
 
         return view('page.transaction.edit', compact('transaction', 'parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
     }

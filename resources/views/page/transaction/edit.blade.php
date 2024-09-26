@@ -103,9 +103,13 @@
                                                     <select name="membership_number" id="membership_number" class="custom-select form-control">
                                                         <option value=""></option>
                                                         @foreach ($memberships as $membership)
-                                                        <option value="{{ $membership->id }}" @if($transaction->member_id == $membership->member_id) selected @endif>
-                                                            {{ $membership->membership_number }}
-                                                        </option>
+                                                            <option value="{{ $membership->id }}" @if($transaction->member_id == $membership->member_id) selected @endif>
+                                                                @if($membership->membership_number)
+                                                                    {{ $membership->membership_number }} - {{ $membership->member->family_name }} {{ $membership->member->given_name }}
+                                                                @else
+                                                                    {{ $membership->member->family_name }} {{ $membership->member->given_name }}
+                                                                @endif
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>

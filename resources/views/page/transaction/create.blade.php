@@ -81,7 +81,7 @@
                                         <i class="fa fa-arrow-circle-left" style="font-size:20px;"></i> Back
                                     </a>
                                 </div>
-                            </div>          
+                            </div>
                             <div class="card-body p-0">
                                 <div class="card-body">
                                     <div class="row">
@@ -146,9 +146,9 @@
                                                 <div class="col-md-8 custom-select-wrapper">
                                                     <select name="membership_number" id="membership_number" class="custom-select">
                                                         <option value=""></option>
-                                                        @foreach ($memberships as $membership)
-                                                        <option value="{{ $membership->id }}">
-                                                            {{ $membership->membership_number }}
+                                                        @foreach($memberships as $membership)
+                                                        <option value="{{ $membership->membership_number }}">
+                                                            {{ $membership->membership_number }} - {{ $membership->member->family_name }} . {{ $membership->member->given_name }}
                                                         </option>
                                                         @endforeach
                                                     </select>
@@ -288,87 +288,86 @@
 
         var today = new Date().toISOString().split('T')[0];
         document.getElementById('transaction_date').value = today;
-    
+
         // Handle transaction type change
-    $('input[name="transaction_type"]').on('change', function() {
-        var selectedTransactionType = $('input[name="transaction_type"]:checked').val();
+        $('input[name="transaction_type"]').on('change', function() {
+            var selectedTransactionType = $('input[name="transaction_type"]:checked').val();
 
-        // Assuming '2' is the ID for Expenditure and '1' is the ID for Income
-        if (selectedTransactionType == '2') { // Expenditure
-            $('#supplier-container').show();
-            $('#paying-for-member-container').hide();
-            $('#customer-list-container').hide();
-            $('#membership-number-container').hide();
+            // Assuming '2' is the ID for Expenditure and '1' is the ID for Income
+            if (selectedTransactionType == '2') { // Expenditure
+                $('#supplier-container').show();
+                $('#paying-for-member-container').hide();
+                $('#customer-list-container').hide();
+                $('#membership-number-container').hide();
 
-            // Clear Income-related fields only
-            $('#membership_id').val(''); // Clear membership
-            $('#customer_id').val(''); // Clear customer
+                // Clear Income-related fields only
+                $('#membership_id').val(''); // Clear membership
+                $('#customer_id').val(''); // Clear customer
 
-        } else if (selectedTransactionType == '1') { // Income
-            $('#paying-for-member-container').show();
-            $('#supplier-container').hide();
+            } else if (selectedTransactionType == '1') { // Income
+                $('#paying-for-member-container').show();
+                $('#supplier-container').hide();
 
-            // Clear Expenditure-related fields only
-            $('#supplier_id').val(''); // Clear supplier
+                // Clear Expenditure-related fields only
+                $('#supplier_id').val(''); // Clear supplier
 
-            // Trigger the paying-for-member change event to show/hide related fields
-            $('input[name="paying_for_member"]:checked').trigger('change');
-        } else {
-            // If no transaction type is selected, clear all relevant fields and hide everything
-            $('#supplier-container').hide();
-            $('#paying-for-member-container').hide();
-            $('#customer-list-container').hide();
-            $('#membership-number-container').hide();
+                // Trigger the paying-for-member change event to show/hide related fields
+                $('input[name="paying_for_member"]:checked').trigger('change');
+            } else {
+                // If no transaction type is selected, clear all relevant fields and hide everything
+                $('#supplier-container').hide();
+                $('#paying-for-member-container').hide();
+                $('#customer-list-container').hide();
+                $('#membership-number-container').hide();
 
-            $('#membership_id').val(''); // Clear membership
-            $('#customer_id').val(''); // Clear customer
-            $('#supplier_id').val(''); // Clear supplier
-        }
+                $('#membership_id').val(''); // Clear membership
+                $('#customer_id').val(''); // Clear customer
+                $('#supplier_id').val(''); // Clear supplier
+            }
+        });
+
+        // Handle paying for member change
+        $('input[name="paying_for_member"]').on('change', function() {
+            var selectedPayingForMember = $('input[name="paying_for_member"]:checked').val();
+
+            if (selectedPayingForMember == 'yes') { // Paying for Member
+                $('#membership-number-container').show();
+                $('#customer-list-container').hide();
+
+                // Clear customer fields when paying for member
+                $('#customer_id').val(''); // Clear customer
+            } else if (selectedPayingForMember == 'no') { // Not Paying for Member
+                $('#membership-number-container').hide();
+                $('#customer-list-container').show();
+
+                // Clear membership fields when not paying for member
+                $('#membership_id').val(''); // Clear membership
+                $('#member_id').val(''); // Clear member
+            } else {
+                // If no selection is made, clear all and hide containers
+                $('#membership-number-container').hide();
+                $('#customer-list-container').hide();
+
+                $('#membership_id').val(''); // Clear membership
+                $('#customer_id').val(''); // Clear customer
+            }
+        });
+
+        $('#amount').on('input', function() {
+            // Allow digits and a single dot
+            $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+
+            // Ensure there's only one dot
+            if ($(this).val().split('.').length > 2) {
+                var parts = $(this).val().split('.');
+                $(this).val(parts[0] + '.' + parts.slice(1).join(''));
+            }
+        });
+
+        // Trigger change event on page load to set the initial state
+        $('input[name="transaction_type"]:checked').trigger('change');
+        $('input[name="paying_for_member"]:checked').trigger('change');
     });
-
-    // Handle paying for member change
-    $('input[name="paying_for_member"]').on('change', function() {
-        var selectedPayingForMember = $('input[name="paying_for_member"]:checked').val();
-
-        if (selectedPayingForMember == 'yes') { // Paying for Member
-            $('#membership-number-container').show();
-            $('#customer-list-container').hide();
-
-            // Clear customer fields when paying for member
-            $('#customer_id').val(''); // Clear customer
-        } else if (selectedPayingForMember == 'no') { // Not Paying for Member
-            $('#membership-number-container').hide();
-            $('#customer-list-container').show();
-
-            // Clear membership fields when not paying for member
-            $('#membership_id').val(''); // Clear membership
-            $('#member_id').val(''); // Clear member
-        } else {
-            // If no selection is made, clear all and hide containers
-            $('#membership-number-container').hide();
-            $('#customer-list-container').hide();
-
-            $('#membership_id').val(''); // Clear membership
-            $('#customer_id').val(''); // Clear customer
-        }
-    });
-
-    $('#amount').on('input', function() {
-        // Allow digits and a single dot
-        $(this).val($(this).val().replace(/[^0-9.]/g, ''));
-
-        // Ensure there's only one dot
-        if ($(this).val().split('.').length > 2) {
-            var parts = $(this).val().split('.');
-            $(this).val(parts[0] + '.' + parts.slice(1).join(''));
-        }
-    });
-
-    // Trigger change event on page load to set the initial state
-    $('input[name="transaction_type"]:checked').trigger('change');
-    $('input[name="paying_for_member"]:checked').trigger('change');
-});
-
 </script>
 
 @endsection

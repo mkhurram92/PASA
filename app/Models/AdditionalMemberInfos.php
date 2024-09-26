@@ -46,6 +46,12 @@ class AdditionalMemberInfos extends Model
         }
 
         return null;
+        
     }
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id', 'id');
+    }
+
 
 }
