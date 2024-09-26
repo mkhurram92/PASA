@@ -139,20 +139,20 @@
         <!-- Header Section -->
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
-            <h4>23 Leigh Street, Adelaide 5000</h4>
-            <h3>Income and Expenditure</h3>
+            <h3>23 Leigh Street, Adelaide 5000</h3>
+            <h3>Income and Expenses Statement</h3>
 
             @if (request('start_date') && request('end_date'))
-                <p>From: {{ request('start_date') }} To: {{ request('end_date') }}</p>
+                <p>From : {{ request('start_date') }} To : {{ request('end_date') }}</p>
             @elseif(request('month') && request('year'))
-                <p>Month: {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
+                <p>Month : {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
             @elseif(request('year'))
-                <p>Year: {{ request('year') }}</p>
+                <p>Year : {{ request('year') }}</p>
             @endif
         </div>
 
         <!-- Income Section -->
-        <h2>Income</h2>
+        <h3>Income</h3>
         <div class="table-container">
             <table>
                 <thead>
