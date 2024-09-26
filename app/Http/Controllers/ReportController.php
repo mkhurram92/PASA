@@ -46,18 +46,19 @@ class ReportController extends Controller
         $query = Transaction::select(
             'gl_codes_parent.name as parent_gl_code_name',
             'suppliers.name as supplier_name',
-            'customers.name as customer_name', 
+            'customers.name as customer_name',
             'transactions.amount',
             'transactions.transaction_type_id',
             'transactions.member_id',
-            'transactions.customer_id', 
-            'additional_member_info.membership_number as membership_number'
+            'transactions.customer_id',
+            DB::raw("IFNULL(CONCAT(additional_member_info.membership_number, ' - ', members.family_name, ' ' , members.given_name), CONCAT(members.family_name, ' ' , members.given_name)) as membership_and_name")
         )
             ->join('gl_codes_parent', 'transactions.gl_code_id', '=', 'gl_codes_parent.id')
             ->leftJoin('suppliers', 'transactions.supplier_id', '=', 'suppliers.id')
             ->leftJoin('customers', 'transactions.customer_id', '=', 'customers.id')
-            ->leftJoin('additional_member_info', 'transactions.member_id', '=', 'additional_member_info.member_id')
-            ->groupBy('membership_number', 'gl_codes_parent.name', 'suppliers.name', 'customers.name', 'transactions.amount', 'transactions.transaction_type_id', 'transactions.member_id', 'transactions.customer_id')
+            ->leftJoin('members', 'transactions.member_id', '=', 'members.id')
+            ->leftJoin('additional_member_info', 'members.id', '=', 'additional_member_info.member_id')
+            ->groupBy('membership_and_name', 'gl_codes_parent.name', 'suppliers.name', 'customers.name', 'transactions.amount', 'transactions.transaction_type_id', 'transactions.member_id', 'transactions.customer_id')
             ->orderBy('gl_codes_parent.name', 'asc');
 
         // Apply date filters

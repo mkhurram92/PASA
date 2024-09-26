@@ -128,11 +128,11 @@
             <h3>Income and Expenditure</h3>
 
             @if (request('start_date') && request('end_date'))
-                <p>From: {{ request('start_date') }} To: {{ request('end_date') }}</p>
+            <p>From: {{ request('start_date') }} To: {{ request('end_date') }}</p>
             @elseif(request('month') && request('year'))
-                <p>Month: {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
+            <p>Month: {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
             @elseif(request('year'))
-                <p>Year: {{ request('year') }}</p>
+            <p>Year: {{ request('year') }}</p>
             @endif
         </div>
 
@@ -149,67 +149,66 @@
                 </thead>
                 <tbody>
                     @php
-                        $totalIncome = 0;
+                    $totalIncome = 0;
                     @endphp
 
                     @foreach ($reportData as $parentGlCode => $transactions)
-                        @php
-                            $parentTotalIncome = 0;
-                            $hasIncome = false;
-                        @endphp
+                    @php
+                    $parentTotalIncome = 0;
+                    $hasIncome = false;
+                    @endphp
 
-                        <!-- Filter transactions to see if there is any income -->
-                        @foreach ($transactions as $transaction)
-                            @if ($transaction->transaction_type_id == 1)
-                                @php
-                                    $hasIncome = true;
-                                    break;
-                                @endphp
+                    <!-- Filter transactions to see if there is any income -->
+                    @foreach ($transactions as $transaction)
+                    @if ($transaction->transaction_type_id == 1)
+                    @php
+                    $hasIncome = true;
+                    break;
+                    @endphp
+                    @endif
+                    @endforeach
+
+                    <!-- Display only if there is income -->
+                    @if ($hasIncome)
+                    <!-- Display the Account Name (Parent GL Code) -->
+                    <tr>
+                        <td><strong>{{ $parentGlCode }}</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <!-- List each member/customer and their respective amounts under the account -->
+                    @foreach ($transactions as $transaction)
+                    @if ($transaction->transaction_type_id == 1)
+                    <tr>
+                        <td class="supplier-indent">
+                            @if ($transaction->member_id)
+                            {{ $transaction->membership_and_name ?? 'Unknown Member' }}
+                            @elseif ($transaction->customer_id)
+                            {{ $transaction->customer_name ?? 'Unknown Customer' }}
+                            @else
+                            Unknown Source
                             @endif
-                        @endforeach
+                        </td>
+                        <td>${{ number_format($transaction->amount, 2) }}</td>
+                        <td>${{ number_format($transaction->amount, 2) }}</td>
+                    </tr>
+                    @php
+                    $parentTotalIncome += $transaction->amount;
+                    $totalIncome += $transaction->amount;
+                    @endphp
+                    @endif
+                    @endforeach
 
-                        <!-- Display only if there is income -->
-                        @if ($hasIncome)
-                            <!-- Display the Account Name (Parent GL Code) -->
-                            <tr>
-                                <td><strong>{{ $parentGlCode }}</strong></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-
-                            <!-- List each member/customer and their respective amounts under the account -->
-                            @foreach ($transactions as $transaction)
-                                @if ($transaction->transaction_type_id == 1)
-                                    <tr>
-                                        <td class="supplier-indent">
-                                            @if ($transaction->member_id)
-                                            Membership No. {{ $transaction->membership_number ?? 'Unknown Member' }}
-                                            @elseif ($transaction->customer_id)
-                                                {{ $transaction->customer_name ?? 'Unknown Customer' }}
-                                            @else
-                                                Unknown Source
-                                            @endif
-                                        </td>
-                                        <td>${{ number_format($transaction->amount, 2) }}</td>
-                                        <td>${{ number_format($transaction->amount, 2) }}</td>
-                                    </tr>
-                                    @php
-                                        $parentTotalIncome += $transaction->amount;
-                                        $totalIncome += $transaction->amount;
-                                    @endphp
-                                @endif
-                            @endforeach
-
-                            <!-- Optionally, show the total income for each parent GL Code if desired -->
-                            @if ($parentTotalIncome > 0)
-                                <tr>
-                                    <td class="left-align"><strong>Total for {{ $parentGlCode }}</strong></td>
-                                    <td class="left-align"><strong>${{ number_format($parentTotalIncome, 2) }}</strong>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            @endif
-                        @endif
+                    <!-- Optionally, show the total income for each parent GL Code if desired -->
+                    @if ($parentTotalIncome > 0)
+                    <tr>
+                        <td class="left-align"><strong>Total for {{ $parentGlCode }}</strong></td>
+                        <td class="left-align"><strong>${{ number_format($parentTotalIncome, 2) }}</strong></td>
+                        <td></td>
+                    </tr>
+                    @endif
+                    @endif
                     @endforeach
 
                     <!-- Grand Total Income -->
@@ -221,6 +220,7 @@
                 </tbody>
             </table>
         </div>
+
 
         <!-- Expenditure Section -->
         <h2>Expenditure</h2>
@@ -235,60 +235,61 @@
                 </thead>
                 <tbody>
                     @php
-                        $totalExpense = 0;
+                    $totalExpense = 0;
                     @endphp
 
                     @foreach ($reportData as $parentGlCode => $transactions)
-                        @php
-                            $parentTotalExpense = 0;
-                            $hasExpense = false;
-                        @endphp
+                    @php
+                    $parentTotalExpense = 0;
+                    $hasExpense = false;
+                    @endphp
 
-                        <!-- Filter transactions to see if there is any expense -->
-                        @foreach ($transactions as $transaction)
-                            @if ($transaction->transaction_type_id == 2)
-                                @php
-                                    $hasExpense = true;
-                                    break; // Exit loop once expense is found
-                                @endphp
-                            @endif
-                        @endforeach
-                        <!-- Display only if there is expense -->
-                        @if ($hasExpense)
-                            <!-- Display the Account Name (Parent GL Code) -->
-                            <tr>
-                                <td><strong>{{ $parentGlCode }}</strong></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                    <!-- Filter transactions to see if there is any expense -->
+                    @foreach ($transactions as $transaction)
+                    @if ($transaction->transaction_type_id == 2)
+                    @php
+                    $hasExpense = true;
+                    break;
+                    @endphp
+                    @endif
+                    @endforeach
+                    <!-- Display only if there is expense -->
+                    @if ($hasExpense)
+                    <!-- Display the Account Name (Parent GL Code) -->
+                    <tr>
+                        <td><strong>{{ $parentGlCode }}</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
 
-                            <!-- List each supplier and their respective amounts under the account -->
-                            @foreach ($transactions as $transaction)
-                                @if ($transaction->transaction_type_id == 2)
-                                    <tr>
-                                        <td class="supplier-indent">
-                                            {{ $transaction->supplier_name ?? 'Unknown Supplier' }}
-                                        </td>
-                                        <td>${{ number_format($transaction->amount, 2) }}</td>
-                                        <td>${{ number_format($transaction->amount, 2) }}</td>
-                                    </tr>
-                                    @php
-                                        $parentTotalExpense += $transaction->amount;
-                                        $totalExpense += $transaction->amount;
-                                    @endphp
-                                @endif
-                            @endforeach
+                    <!-- List each supplier and their respective amounts under the account -->
+                    @foreach ($transactions as $transaction)
+                    @if ($transaction->transaction_type_id == 2)
+                    <tr>
+                        <td class="supplier-indent">
+                            {{ $transaction->supplier_name ?? 'Unknown Supplier' }}
+                        </td>
+                        <td>${{ number_format($transaction->amount, 2) }}</td>
+                        <td>${{ number_format($transaction->amount, 2) }}</td>
+                    </tr>
+                    @php
+                    $parentTotalExpense += $transaction->amount;
+                    $totalExpense += $transaction->amount;
+                    @endphp
+                    @endif
+                    @endforeach
 
-                            <!-- Optionally, show the total expense for each parent GL Code if desired -->
-                            @if ($parentTotalExpense > 0)
-                                <tr>
-                                    <td class="left-align"><strong>Total for {{ $parentGlCode }}</strong></td>
-                                    <td class="left-align">
-                                        <strong>${{ number_format($parentTotalExpense, 2) }}</strong></td>
-                                    <td></td>
-                                </tr>
-                            @endif
-                        @endif
+                    <!-- Optionally, show the total expense for each parent GL Code if desired -->
+                    @if ($parentTotalExpense > 0)
+                    <tr>
+                        <td class="left-align"><strong>Total for {{ $parentGlCode }}</strong></td>
+                        <td class="left-align">
+                            <strong>${{ number_format($parentTotalExpense, 2) }}</strong>
+                        </td>
+                        <td></td>
+                    </tr>
+                    @endif
+                    @endif
                     @endforeach
 
                     <!-- Grand Total Expense -->
@@ -304,7 +305,7 @@
         <!-- Net Profit/Loss Calculation -->
         <div class="net-profit-loss">
             @php
-                $netProfitLoss = $totalIncome - $totalExpense;
+            $netProfitLoss = $totalIncome - $totalExpense;
             @endphp
             <strong>Net Surplus/Loss: ${{ number_format($netProfitLoss, 2) }}</strong>
         </div>
