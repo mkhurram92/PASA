@@ -130,7 +130,7 @@
              columns: [{
                      title: "Account",
                      field: "gl_codes_parent.name",
-                     hozAlign: "left",
+                     hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Account'
@@ -138,7 +138,7 @@
                  {
                      title: "Amount",
                      field: "amount",
-                     hozAlign: "left",
+                     hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Amount',
@@ -154,7 +154,7 @@
                  {
                      title: "Payment Method",
                      field: "account.name",
-                     hozAlign: "left",
+                     hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "select",
                      headerFilterPlaceholder: 'Filter by Payment Method',
@@ -165,7 +165,7 @@
                  {
                      title: "Transaction Date",
                      field: "created_at",
-                     hozAlign: "left",
+                     hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Creation Date',
@@ -177,7 +177,7 @@
                  {
                      title: "Description",
                      field: "description",
-                     hozAlign: "left",
+                     hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Description',
