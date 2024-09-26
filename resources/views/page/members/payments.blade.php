@@ -132,15 +132,8 @@
                      field: "gl_codes_parent.name",
                      hozAlign: "left",
                      vertAlign: "middle",
-                     headerFilter: "select",
-                     headerFilterPlaceholder: 'Filter by Account',
-                     headerFilterParams: {
-                         values: gl_code_parent
-                     },
-                     formatter: function(cell, formatterParams, onRendered) {
-                         var gl_code_parent = cell.getData().gl_codes_parent;
-                         return gl_code_parent ? gl_code_parent.name : 'No Parent';
-                     }
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Account'
                  },
                  {
                      title: "Amount",
@@ -159,12 +152,12 @@
                      }
                  },
                  {
-                     title: "Transaction Account",
+                     title: "Payment Method",
                      field: "account.name",
                      hozAlign: "left",
                      vertAlign: "middle",
                      headerFilter: "select",
-                     headerFilterPlaceholder: 'Filter by Transaction Account',
+                     headerFilterPlaceholder: 'Filter by Payment Method',
                      headerFilterParams: {
                          values: account_type
                      }
