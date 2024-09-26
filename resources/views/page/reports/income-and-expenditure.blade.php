@@ -185,7 +185,7 @@
                         <!-- Display the Account Name (Parent GL Code) and Total Income -->
                         @if ($parentTotalIncome > 0)
                             <tr>
-                                <td>{{ $parentGlCode }}</td>
+                                <td class="supplier-indent">{{ $parentGlCode }}</td>
                                 <td>${{ number_format($parentTotalIncome, 2) }}</td>
                                 <td></td>
                             </tr>
@@ -236,7 +236,7 @@
                         <!-- Display the Account Name (Parent GL Code) and Total Expense -->
                         @if ($parentTotalExpense > 0)
                             <tr>
-                                <td>{{ $parentGlCode }}</td>
+                                <td class="supplier-indent">{{ $parentGlCode }}</td>
                                 <td>${{ number_format($parentTotalExpense, 2) }}</td>
                                 <td></td>
                             </tr>
