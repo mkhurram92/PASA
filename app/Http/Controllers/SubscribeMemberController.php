@@ -40,6 +40,11 @@ use App\Models\ModeOfArrivals;
 use App\Models\Transaction;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use App\Models\GlCodesParent;
+use App\Models\TransactionType;
+use App\Models\Supplier;
+use App\Models\Customer;
+use App\Models\Account;
 
 class SubscribeMemberController extends Controller
 {
@@ -717,5 +722,25 @@ class SubscribeMemberController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'An error occurred while updating the renewal date.']);
         }
+    }
+
+    public function members_index()
+    {
+        // Get the logged-in member's ID
+        $memberId = auth()->user()->member_id;
+
+        // Fetch dropdown data
+        $gl_code_parent = GlCodesParent::orderBy('name', 'asc')->pluck('name')->toArray();
+        array_unshift($gl_code_parent, '');
+
+        $account_type = Account::orderBy('name', 'asc')->pluck('name')->toArray();
+        array_unshift($account_type, '');
+
+        // Filter transactions to only show those that belong to the logged-in member
+        $transaction = Transaction::with('account', 'transactionType', 'glCodesParent')
+            ->where('member_id', $memberId)
+            ->get();
+
+        return view('page.members.payments', compact('transaction', 'gl_code_parent', 'account_type'));
     }
 }

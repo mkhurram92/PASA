@@ -310,10 +310,10 @@
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('payment.list') ? 'active' : '' }}"
-                        href="{{ route('payment.list') }}">
+                    <a class="side-menu__item {{ request()->routeIs('transaction.members_index') ? 'active' : '' }}"
+                        href="{{ route('transaction.members_index') }}">
                         <i class="fa fa-money fa-2x mx-3"></i>
-                        <span class="side-menu__label">{{ __('Stripe Payments') }}</span>
+                        <span class="side-menu__label">{{ __('Transactions') }}</span>
                     </a>
                 </li>
                 @endif

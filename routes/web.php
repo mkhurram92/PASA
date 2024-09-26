@@ -125,6 +125,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('members/updateAncestors/{id}', [SubscribeMemberController::class, 'updateAncestors'])->name('members.updateAncestors');
     Route::get('/getModeOfTravelDate/{id}', [SubscribeMemberController::class, 'getModeOfTravelDate']);
 
+    Route::get('members/payment', [SubscribeMemberController::class, 'members_index'])->name('transaction.members_index');
+
     //Junior Member
     Route::get('/members/view-junior/{id}', [SubscribeMemberController::class, 'viewJuniors'])->name('members.view-junior');
 

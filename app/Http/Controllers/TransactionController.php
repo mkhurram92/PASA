@@ -39,6 +39,7 @@ class TransactionController extends Controller
         return view('page.transaction.index', compact('transaction', 'gl_code_parent', 'transaction_type', 'account_type', 'suppliers', 'customers'));
     }
 
+    
     public function create()
     {
         $transactionType = TransactionType::OrderBy('name', 'asc')->get();
