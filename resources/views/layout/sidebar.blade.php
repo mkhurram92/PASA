@@ -48,7 +48,13 @@
                         <span class="side-menu__label">{{ __('Dashboard') }}</span>
                     </a>
                 </li>
-
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('payment.list') ? 'active' : '' }}"
+                        href="{{ route('payment.list') }}">
+                        <i class="fa fa-money fa-2x mx-3"></i>
+                        <span class="side-menu__label">{{ __('Stripe Payments') }}</span>
+                    </a>
+                </li>
                 <!-- Finance Section -->
                 <li class="slide {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent.index') ? 'is-expanded' : '' }}">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">

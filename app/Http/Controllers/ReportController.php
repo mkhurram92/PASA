@@ -28,7 +28,7 @@ class ReportController extends Controller
 
     public function profitAndLoss(Request $request)
     {
-        
+        return $this->generatePDF(['data' => []]);
     }
 
     private function getIncomeExpenditureData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year)
