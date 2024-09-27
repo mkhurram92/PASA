@@ -152,7 +152,7 @@
         </div>
 
         <!-- Income Section -->
-        <h3>Income</h3>
+        <h2>Income</h2>
         <div class="table-container">
             <table>
                 <thead>
@@ -249,16 +249,17 @@
                         <td class="left-align"><strong>${{ number_format($totalExpense, 2) }}</strong></td>
                         <td></td>
                     </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr>@php
+                        $netProfitLoss = $totalIncome - $totalExpense;
+                    @endphp
+                        <th class="left-align">Net Surplus/Loss</th>
+                        <th class="left-align">${{ number_format($netProfitLoss, 2) }}</th>
+                        <th class="left-align">$0.00</th>
+                    </tr>
                 </tbody>
             </table>
-        </div>
-
-        <!-- Net Profit/Loss Calculation -->
-        <div class="net-profit-loss">
-            @php
-                $netProfitLoss = $totalIncome - $totalExpense;
-            @endphp
-            <strong>Net Surplus/Loss: ${{ number_format($netProfitLoss, 2) }}</strong>
         </div>
     </div>
 </body>

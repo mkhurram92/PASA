@@ -93,11 +93,18 @@
 
 <script>
     document.getElementById('previewButton').addEventListener('click', function() {
+        var reportType = document.getElementById('report_type').value;
+
+        // Check if report type is selected
+        if (reportType === '' || reportType === 'Select Report') {
+            alert('Please select a report type.');
+            return;
+        }
+
         var month = document.getElementById('month').value;
         var year = document.getElementById('year').value;
         var startDate = document.getElementById('start_date').value;
         var endDate = document.getElementById('end_date').value;
-        var reportType = document.getElementById('report_type').value;
 
         var url = "{{ route('report.show', ':report_type') }}".replace(':report_type', reportType);
         var params = [];
@@ -113,6 +120,7 @@
 
         window.open(url, '_blank');
     });
+
 
     // Clear Filters Button Logic
     document.getElementById('clearFiltersButton').addEventListener('click', function() {
