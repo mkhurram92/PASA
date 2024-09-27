@@ -196,7 +196,7 @@
                     <tr class="total-row">
                         <td class="left-align"><strong>Total Income</strong></td>
                         <td class="left-align"><strong>${{ number_format($totalIncome, 2) }}</strong></td>
-                        <td></td>
+                        <td class="left-align"><strong>$0.00</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -247,7 +247,7 @@
                     <tr class="total-row">
                         <td class="left-align"><strong>Total Expense</strong></td>
                         <td class="left-align"><strong>${{ number_format($totalExpense, 2) }}</strong></td>
-                        <td></td>
+                        <td class="left-align"><strong>$0.00</strong></td>
                     </tr>
                     <tr></tr>
                     <tr></tr>

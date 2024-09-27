@@ -20,7 +20,7 @@ class ReportController extends Controller
     {
         switch ($type) {
             case 'income-and-expenditure':
-                return $this->profitAndLoss($request);
+                return $this->incomeAndExpenditure($request);
             default:
                 abort(404);
         }
@@ -28,20 +28,10 @@ class ReportController extends Controller
 
     public function profitAndLoss(Request $request)
     {
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
-        $month = $request->input('month');
-        $year = $request->input('year');
-
-        $incomeTypeId = TransactionType::where('name', 'Income')->value('id');
-        $expenditureTypeId = TransactionType::where('name', 'Expenditure')->value('id');
-
-        $reportData = $this->getProfitAndLossData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year);
-
-        return $this->generatePDF($reportData);
+        
     }
 
-    private function getProfitAndLossData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year)
+    private function getIncomeExpenditureData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year)
     {
         $query = Transaction::select(
             'gl_codes_parent.name as parent_gl_code_name',
@@ -80,24 +70,29 @@ class ReportController extends Controller
         return $groupedResults;
     }
 
-
     private function generatePDF($reportData)
     {
         $pdf = Pdf::loadView('page.reports.income-and-expenditure', compact('reportData'));
         return $pdf->stream('income-and-expenditure.pdf');
     }
 
-    // Example Income and Expenditure method
     private function incomeAndExpenditure(Request $request)
     {
-        // Placeholder logic for now
-        return $this->generatePDF(['data' => []]);
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $incomeTypeId = TransactionType::where('name', 'Income')->value('id');
+        $expenditureTypeId = TransactionType::where('name', 'Expenditure')->value('id');
+
+        $reportData = $this->getIncomeExpenditureData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year);
+
+        return $this->generatePDF($reportData);
     }
 
-    // Example Balance Sheet method
     private function balanceSheet(Request $request)
     {
-        // Placeholder logic for the Balance Sheet report
         return $this->generatePDF(['data' => []]);
     }
 }
