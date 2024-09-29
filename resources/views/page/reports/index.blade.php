@@ -67,7 +67,7 @@
                                     <select name="report_type" id="report_type" class="form-control">
                                         <option>Select Report</option>
                                         <option value="income-and-expenditure">Income and Expenditure Statement</option>
-                                        <option value="balance-sheet">Balance Sheet</option>
+                                        <option value="balance-sheet">Accounts List</option>
                                     </select>
                                 </div>
                             </div>

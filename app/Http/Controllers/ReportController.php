@@ -21,6 +21,10 @@ class ReportController extends Controller
         switch ($type) {
             case 'income-and-expenditure':
                 return $this->incomeAndExpenditure($request);
+            case 'accounts-list':
+                return $this->accountsList($request);
+            case 'balance-sheet':
+                return $this->balanceSheet($request);
             default:
                 abort(404);
         }
@@ -89,6 +93,11 @@ class ReportController extends Controller
         $reportData = $this->getIncomeExpenditureData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year);
 
         return $this->generatePDF($reportData);
+    }
+
+    private function accountsList(Request $request)
+    {
+        return $this->generatePDF(['data' => []]);
     }
 
     private function balanceSheet(Request $request)
