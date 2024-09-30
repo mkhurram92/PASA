@@ -34,7 +34,9 @@ class TransactionController extends Controller
         $customers = Customer::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($customers, '');
 
-        $transaction = Transaction::with('account', 'transactionType', 'glCodesParent')->get();
+        $transaction = Transaction::with('account', 'transactionType', 'glCodesParent')
+        ->orderBy('created_at', 'desc')->get();
+
 
         return view('page.transaction.index', compact('transaction', 'gl_code_parent', 'transaction_type', 'account_type', 'suppliers', 'customers'));
     }
