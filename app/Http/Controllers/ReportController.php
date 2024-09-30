@@ -94,13 +94,12 @@ class ReportController extends Controller
         $endDate = $request->input('end_date');
         $month = $request->input('month');
         $year = $request->input('year');
-        $accountId = $request->input('bank_account');  // Make sure bank account is passed
+        $accountId = $request->input('bank_account'); 
 
         if (empty($accountId)) {
             return back()->with('error', 'Please select a bank account.');
         }
 
-        // Fetch the report data for the bank register, including the account name
         $reportData = $this->getBankRegisterData($startDate, $endDate, $month, $year, $accountId);
 
         // Generate and return the PDF
@@ -127,8 +126,8 @@ class ReportController extends Controller
             'transactions.transaction_type_id',
             'transactions.account_id'
         )
-            ->where('account_id', $accountId) // Filter by the selected bank account
-            ->orderBy('created_at', 'asc');  // Order by date
+            ->where('account_id', $accountId) 
+            ->orderBy('created_at', 'asc'); 
 
         // Apply date filters
         if ($startDate && $endDate) {
@@ -151,7 +150,7 @@ class ReportController extends Controller
             } elseif ($transaction->transaction_type_id == 2) { // Expense
                 $balance -= $transaction->amount;
             }
-            $transaction->balance = $balance; // Append running balance to each transaction
+            $transaction->balance = $balance; 
         }
 
         // Return the transactions along with the account name
