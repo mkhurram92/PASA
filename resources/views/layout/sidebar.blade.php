@@ -56,7 +56,8 @@
                     </a>
                 </li>
                 <!-- Finance Section -->
-                <li class="slide {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent.index') ? 'is-expanded' : '' }}">
+                <li class="slide {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent.index',
+                                'suppliers.index', 'customer.index') ? 'is-expanded' : '' }}">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                         <i class="fa fa-bank fa-2x mx-3"></i>
                         <span class="side-menu__label">{{ __('Finance') }}</span>
@@ -197,8 +198,7 @@
                                 'source-of-arrivals.index',
                                 'subscription-plans.index',
                                 'cities.index',
-                                'membership-status.index',
-                                'suppliers.index', 'customer.index'
+                                'membership-status.index'
                             ) ? 'is-expanded' : '' }}">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                         <i class="fa fa-gears fa-2x mx-3"></i>
