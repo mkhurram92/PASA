@@ -81,6 +81,19 @@
                                 <span class="sub-side-menu__label">{{ __('Account List') }}</span>
                             </a>
                         </li>
+                        
+                        <li>
+                            <a class="sub-side-menu__item mx-5 {{ request()->routeIs('suppliers.index') ? 'active' : '' }}"
+                                href="{{ route('suppliers.index') }}">
+                                <span class="sub-side-menu__label">{{ __('Suppliers') }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="sub-side-menu__item mx-5 {{ request()->routeIs('customer.index') ? 'active' : '' }}"
+                                href="{{ route('customer.index') }}">
+                                <span class="sub-side-menu__label">{{ __('Customers') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -252,18 +265,6 @@
                             <a class="sub-side-menu__item mx-5 {{ request()->routeIs('rigs.index') ? 'active' : '' }}"
                                 href="{{ route('rigs.index') }}">
                                 <span class="sub-side-menu__label">{{ __('Rigs') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="sub-side-menu__item mx-5 {{ request()->routeIs('suppliers.index') ? 'active' : '' }}"
-                                href="{{ route('suppliers.index') }}">
-                                <span class="sub-side-menu__label">{{ __('Suppliers') }}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="sub-side-menu__item mx-5 {{ request()->routeIs('customer.index') ? 'active' : '' }}"
-                                href="{{ route('customer.index') }}">
-                                <span class="sub-side-menu__label">{{ __('Customers') }}</span>
                             </a>
                         </li>
                         <li>
