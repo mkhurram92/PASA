@@ -116,8 +116,7 @@
                                      <option value="100">100</option>
                                      <option value="1000000">ALL</option>
                                  </select>
-                                 <label style="padding: 10px;" for="date-range">Date Range:</label>
-                                 <input style="padding: 10px 20px;" type="text" id="date-range">
+                                 
                                  <button class="custom-button" type="button" id="printTable"
                                      onclick="printData()">Print</button>
                                  <button class="custom-button" id="download-csv">Download CSV</button>
