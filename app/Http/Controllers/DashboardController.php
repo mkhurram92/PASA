@@ -50,10 +50,7 @@ class DashboardController extends Controller
         $ships = Ship::all();
         $numberOfShips = count($ships);
 
-        $incomeTransactions = Transaction::where('transaction_type_id', 1)->sum('amount');
-        $expenseTransactions = Transaction::where('transaction_type_id', 2)->sum('amount');
-
-        return view('page.dashbord.dashbord', compact('numberOfMembers', 'numberOfAncestors', 'numberOfUsers', 'numberOfJourney', 'numberOfShips', 'incomeTransactions', 'expenseTransactions'));
+        return view('page.dashbord.dashbord', compact('numberOfMembers', 'numberOfAncestors', 'numberOfUsers', 'numberOfJourney', 'numberOfShips'));
     }
 
     /**
