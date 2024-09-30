@@ -161,15 +161,11 @@
                      headerFilter: "input"
                  },
                  {
-                     title: "Created Date",
-                     field: "created_at",
+                     title: "Opening Balance",
+                     field: "0",
                      hozAlign: "center",
                      vertAlign: "middle",
-                     headerFilter: "input",
-                     formatter: function(cell) {
-                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD');
-                         return formattedDate;
-                     }
+                     headerFilter: "input"
                  },
                  {
                      title: "Action",
