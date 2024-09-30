@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GlCodesParent;
+use App\Models\AccountType;
 
 use Illuminate\Http\Request;
 
@@ -10,25 +11,31 @@ class GlCodesParentController extends Controller
 {
     public function index()
     {
-        $glCodesParents = GlCodesParent::get();
+        $glCodesParents = GlCodesParent::with('accountType')->get();
 
         return view('page.gl-codes-parent.index', compact('glCodesParents'));
     }
 
     // Show a single record
+
     public function show(GlCodesParent $gl_codes_parent)
     {
-        //$glCodesParent = GlCodesParent::findOrFail($id);
-        //return view('gl-codes-parent.show', compact('glCodesParent'));
+        // Load the related AccountType for the gl_codes_parent
+        $gl_codes_parent->load('accountType');
 
+        // Render the view with the gl_codes_parent and its related accountType
         $html = view("models.parentgl-view", compact('gl_codes_parent'))->render();
+
         return response()->json(["status" => true, "html" => $html]);
     }
 
     // Create a new record (show the form)
     public function create()
     {
-        $html = view("models.parentgl-create")->render();
+        $accountTypes = AccountType::all();
+
+        $html = view("models.parentgl-create", ['accountTypes' => $accountTypes])->render();
+
         return response()->json(["status" => true, "html" => $html]);
 
         //return view('gl_codes_parent.create');
@@ -37,22 +44,19 @@ class GlCodesParentController extends Controller
     // Store a new record in the database
     public function store(Request $request)
     {
-        // Validate input data
+        // Validate input data, including account_type_id
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'description' => 'nullable'
-            // ... other validation rules
+            'account_type_id' => 'required|exists:account_types,id'
         ]);
 
-        // Create a new GlCodesParent instance
+        // Create a new GlCodesParent instance, including account_type_id
         GlCodesParent::create($validatedData);
 
-        // Redirect to the index page or show success message
-        //return redirect()->route('gl-codes-parent.index');
+        // Return success message with a redirect to the index page
         return response()->json([
             "status" => true,
             "message" => "Account Added Successfully",
-            //"redirectTo" => url("gl-codes")
             "redirectTo" => route("gl-codes-parent.index")
         ]);
     }
@@ -61,19 +65,22 @@ class GlCodesParentController extends Controller
     public function edit($id)
     {
         $glCodesParent = GlCodesParent::findOrFail($id);
-        //return view('gl-codes-parent.edit', compact('glCodesParent'));
+        $accountTypes = AccountType::all(); // Get all account types
 
-        $html = view("models.parentgl-update", compact('glCodesParent'))->render();
+        // Render the view with the form pre-filled, including the account types
+        $html = view("models.parentgl-update", compact('glCodesParent', 'accountTypes'))->render();
+
         return response()->json(["status" => true, "html" => $html]);
     }
 
     // Update a record in the database
     public function update(Request $request, $id)
     {
-        // Validate the incoming request data
+        // Validate the incoming request data, including account_type_id
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'nullable|max:1000',
+            'account_type_id' => 'required|exists:account_types,id'
         ]);
 
         // Find the record by its ID
@@ -89,7 +96,6 @@ class GlCodesParentController extends Controller
             'redirectTo' => route('gl-codes-parent.index')
         ]);
     }
-
 
     // Delete a record
     public function destroy($id)

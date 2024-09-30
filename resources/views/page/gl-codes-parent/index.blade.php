@@ -154,8 +154,8 @@
                      headerFilter: "input"
                  },
                  {
-                     title: "Description",
-                     field: "description",
+                     title: "Type",
+                     field: "account_type.name",
                      hozAlign: "center",
                      vertAlign: "middle",
                      headerFilter: "input"
