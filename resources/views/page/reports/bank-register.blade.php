@@ -111,7 +111,6 @@
                 <thead>
                     <tr>
                         <th>ID#</th>
-                        <th>Type</th>
                         <th class="center-align">Date</th> <!-- Centered Date -->
                         <th>Memo/Payee</th>
                         <th class="right-align">Deposit</th>
@@ -123,7 +122,6 @@
                     @foreach ($reportData['transactions'] as $transaction)
                         <tr>
                             <td>{{ $transaction->id }}</td>
-                            <td>{{ $transaction->transaction_type_id == 1 ? 'CR' : 'CD' }}</td>
                             <td class="center-align">{{ \Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y') }}</td> <!-- Centered Date -->
                             <td></td>
                             <td class="right-align">
