@@ -217,4 +217,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route to handle the Profit and Loss report generation
     Route::get('/report/{type}', [ReportController::class, 'show'])->name('report.show');
+
+    // Route to Bank Accounts in report filter
+    Route::get('/get-bank-accounts', [ReportController::class, 'getBankAccounts'])->name('get.bank.accounts');
+
 });

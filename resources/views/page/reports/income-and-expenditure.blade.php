@@ -143,7 +143,7 @@
             <h3>Income and Expense Statement</h3>
 
             @if (request('start_date') && request('end_date'))
-                <p>From {{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to {{ \Carbon\Carbon::parse(request('end_date'))->format('d/m/Y') }}</p>
+                <p>{{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to {{ \Carbon\Carbon::parse(request('end_date'))->format('d/m/Y') }}</p>
             @elseif(request('month') && request('year'))
                 <p>Month : {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
             @elseif(request('year'))

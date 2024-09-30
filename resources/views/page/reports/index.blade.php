@@ -23,7 +23,7 @@
                                         @for ($m = 1; $m <= 12; $m++)
                                             <option value="{{ $m }}">{{ date('F', mktime(0, 0, 0, $m, 1)) }}
                                             </option>
-                                        @endfor
+                                            @endfor
                                     </select>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                     <select name="year" id="year" class="form-control">
                                         <option value="">Select Year</option>
                                         @for ($y = date('Y'); $y >= 2020; $y--)
-                                            <option value="{{ $y }}">{{ $y }}</option>
+                                        <option value="{{ $y }}">{{ $y }}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -66,8 +66,18 @@
                                     <label for="report_type" class="form-label">Report Type</label>
                                     <select name="report_type" id="report_type" class="form-control">
                                         <option>Select Report</option>
-                                        <option value="income-and-expenditure">Income and Expenditure Statement</option>
-                                        <option value="balance-sheet">Accounts List</option>
+                                        <option value="income-and-expenditure">Income and Expenditure</option>
+                                        <option value="bank-register">Bank Register</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Bank Accounts Dropdown (Initially hidden) -->
+                            <div class="col-md-3" id="bankAccountContainer" style="display: none;">
+                                <div class="form-group">
+                                    <label for="bank_account" class="form-label">Bank Account</label>
+                                    <select name="bank_account" id="bank_account" class="form-control">
+                                        <option value="">Select Bank Account</option>
                                     </select>
                                 </div>
                             </div>
@@ -92,15 +102,54 @@
 </div>
 
 <script>
+    // Event listener for Report Type Dropdown change
+    document.getElementById('report_type').addEventListener('change', function() {
+        var reportType = this.value;
+        var bankAccountContainer = document.getElementById('bankAccountContainer');
+        var bankAccountDropdown = document.getElementById('bank_account');
+
+        // Check if the selected report type is 'Bank Register'
+        if (reportType === 'bank-register') {
+            // Show the bank account dropdown
+            bankAccountContainer.style.display = 'block';
+
+            // Fetch bank accounts via AJAX
+            fetch("{{ route('get.bank.accounts') }}")
+                .then(response => response.json())
+                .then(data => {
+                    // Clear previous options
+                    bankAccountDropdown.innerHTML = '<option value="">Select Bank Account</option>';
+
+                    // Populate the bank accounts dropdown
+                    data.forEach(function(account) {
+                        var option = document.createElement('option');
+                        option.value = account.id;
+                        option.text = account.name;
+                        bankAccountDropdown.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching bank accounts:', error);
+                });
+        } else {
+            // Hide the bank account dropdown if not 'Bank Register'
+            bankAccountContainer.style.display = 'none';
+            bankAccountDropdown.innerHTML = '<option value="">Select Bank Account</option>';
+        }
+    });
+
+    // Event listener for Preview Button click
     document.getElementById('previewButton').addEventListener('click', function() {
         var reportType = document.getElementById('report_type').value;
+        var bankAccount = document.getElementById('bank_account').value;
 
-        // Check if report type is selected
-        if (reportType === '' || reportType === 'Select Report') {
-            alert('Please select a report type.');
-            return;
+        // Check if "Bank Register" is selected and ensure a bank account is selected
+        if (reportType === 'bank-register' && !bankAccount) {
+            alert('Please select a bank account for the Bank Register report.');
+            return; // Stop the report generation if a bank account is not selected
         }
 
+        // Proceed with generating the report
         var month = document.getElementById('month').value;
         var year = document.getElementById('year').value;
         var startDate = document.getElementById('start_date').value;
@@ -113,6 +162,7 @@
         if (year) params.push('year=' + encodeURIComponent(year));
         if (startDate) params.push('start_date=' + encodeURIComponent(startDate));
         if (endDate) params.push('end_date=' + encodeURIComponent(endDate));
+        if (bankAccount) params.push('bank_account=' + encodeURIComponent(bankAccount));
 
         if (params.length > 0) {
             url += '?' + params.join('&');
@@ -121,7 +171,6 @@
         window.open(url, '_blank');
     });
 
-
     // Clear Filters Button Logic
     document.getElementById('clearFiltersButton').addEventListener('click', function() {
         document.getElementById('month').value = '';
@@ -129,6 +178,8 @@
         document.getElementById('start_date').value = '';
         document.getElementById('end_date').value = '';
         document.getElementById('report_type').value = 'Select Report';
+        document.getElementById('bank_account').innerHTML = '<option value="">Select Bank Account</option>';
+        document.getElementById('bankAccountContainer').style.display = 'none';
     });
 </script>
 

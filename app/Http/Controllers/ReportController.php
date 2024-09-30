@@ -21,18 +21,11 @@ class ReportController extends Controller
         switch ($type) {
             case 'income-and-expenditure':
                 return $this->incomeAndExpenditure($request);
-            case 'accounts-list':
-                return $this->accountsList($request);
-            case 'balance-sheet':
-                return $this->balanceSheet($request);
+            case 'bank-register':
+                return $this->bankRegister($request);
             default:
                 abort(404);
         }
-    }
-
-    public function profitAndLoss(Request $request)
-    {
-        return $this->generatePDF(['data' => []]);
     }
 
     private function getIncomeExpenditureData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year)
@@ -74,10 +67,10 @@ class ReportController extends Controller
         return $groupedResults;
     }
 
-    private function generatePDF($reportData)
+    private function generatePDF($reportData, $viewPath, $fileName = 'report.pdf')
     {
-        $pdf = Pdf::loadView('page.reports.income-and-expenditure', compact('reportData'));
-        return $pdf->stream('income-and-expenditure.pdf');
+        $pdf = Pdf::loadView($viewPath, compact('reportData'));
+        return $pdf->stream($fileName);
     }
 
     private function incomeAndExpenditure(Request $request)
@@ -92,16 +85,88 @@ class ReportController extends Controller
 
         $reportData = $this->getIncomeExpenditureData($incomeTypeId, $expenditureTypeId, $startDate, $endDate, $month, $year);
 
-        return $this->generatePDF($reportData);
+        return $this->generatePDF($reportData, 'page.reports.income-and-expenditure', 'income-and-expenditure.pdf');
     }
 
-    private function accountsList(Request $request)
+    private function bankRegister(Request $request)
     {
-        return $this->generatePDF(['data' => []]);
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $month = $request->input('month');
+        $year = $request->input('year');
+        $accountId = $request->input('bank_account');  // Make sure bank account is passed
+
+        if (empty($accountId)) {
+            return back()->with('error', 'Please select a bank account.');
+        }
+
+        // Fetch the report data for the bank register, including the account name
+        $reportData = $this->getBankRegisterData($startDate, $endDate, $month, $year, $accountId);
+
+        // Generate and return the PDF
+        return $this->generatePDF($reportData, 'page.reports.bank-register', 'bank-register.pdf');
     }
 
-    private function balanceSheet(Request $request)
+    private function getBankRegisterData($startDate, $endDate, $month, $year, $accountId)
     {
-        return $this->generatePDF(['data' => []]);
+        // Fetch the bank account name
+        $account = DB::table('accounts')
+            ->where('id', $accountId)
+            ->first();
+
+        if (!$account) {
+            return back()->with('error', 'Invalid bank account selected.');
+        }
+
+        // Start with the basic query for fetching transactions for the selected account
+        $query = Transaction::select(
+            'transactions.id',
+            'transactions.created_at',
+            'transactions.description',
+            'transactions.amount',
+            'transactions.transaction_type_id',
+            'transactions.account_id'
+        )
+            ->where('account_id', $accountId) // Filter by the selected bank account
+            ->orderBy('created_at', 'asc');  // Order by date
+
+        // Apply date filters
+        if ($startDate && $endDate) {
+            $query->whereBetween('created_at', [$startDate, $endDate . ' 23:59:59']);
+        } elseif ($month && $year) {
+            $query->whereMonth('created_at', $month)
+                ->whereYear('created_at', $year);
+        } elseif ($year) {
+            $query->whereYear('created_at', $year);
+        }
+
+        // Fetch the transactions data
+        $transactions = $query->get();
+
+        // Initialize balance and process each transaction
+        $balance = 0;
+        foreach ($transactions as $transaction) {
+            if ($transaction->transaction_type_id == 1) { // Income
+                $balance += $transaction->amount;
+            } elseif ($transaction->transaction_type_id == 2) { // Expense
+                $balance -= $transaction->amount;
+            }
+            $transaction->balance = $balance; // Append running balance to each transaction
+        }
+
+        // Return the transactions along with the account name
+        return [
+            'transactions' => $transactions,
+            'account_name' => $account->name
+        ];
+    }
+
+    public function getBankAccounts()
+    {
+        // Fetch the list of bank accounts
+        $bankAccounts = DB::table('accounts')->select('id', 'name')->get();
+
+        // Return the data in JSON format
+        return response()->json($bankAccounts);
     }
 }
