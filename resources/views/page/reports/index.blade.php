@@ -68,6 +68,7 @@
                                         <option>Select Report</option>
                                         <option value="income-and-expenditure">Income and Expenditure</option>
                                         <option value="bank-register">Bank Register</option>
+                                        <option value="accounts-list">Accounts List</option>
                                     </select>
                                 </div>
                             </div>

@@ -49,6 +49,7 @@ use App\Http\Controllers\AncestorInternationalTravelDetailController;
 use App\Models\SubscribeMember;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RegisterController;
+use App\Models\GlCodesParent;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
@@ -220,5 +221,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Route to Bank Accounts in report filter
     Route::get('/get-bank-accounts', [ReportController::class, 'getBankAccounts'])->name('get.bank.accounts');
+    Route::get('/accounts-list', [ReportController::class, 'accountsList'])->name('accounts.list');
 
 });

@@ -14,4 +14,10 @@ class AccountType extends Model
     protected $fillable = ['name'];
 
     public $timestamps = false;
+
+    public function glCodesParent()
+    {
+        return $this->hasMany(GlCodesParent::class, 'account_type_id');
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GlCodesParent;
 use App\Models\Transaction;
 use App\Models\TransactionType;
 use Illuminate\Http\Request;
@@ -23,6 +24,8 @@ class ReportController extends Controller
                 return $this->incomeAndExpenditure($request);
             case 'bank-register':
                 return $this->bankRegister($request);
+            case 'accounts-list':
+                return $this->accountsList($request);
             default:
                 abort(404);
         }
@@ -164,7 +167,7 @@ class ReportController extends Controller
             'totalDeposits' => $totalDeposits,
             'totalWithdrawals' => $totalWithdrawals,
             'account_name' => $account->name,
-            'balance' => $balance 
+            'balance' => $balance
         ];
     }
 
@@ -175,5 +178,16 @@ class ReportController extends Controller
 
         // Return the data in JSON format
         return response()->json($bankAccounts);
+    }
+
+    private function accountsList(Request $request)
+    {
+        $accounts = GlCodesParent::with('accountType')->get();
+
+        //dd($accounts);
+
+        // Generate and return the PDF
+        return $this->generatePDF(['accounts' => $accounts], 'page.reports.accounts-list', 'accounts-list.pdf');
+        
     }
 }
