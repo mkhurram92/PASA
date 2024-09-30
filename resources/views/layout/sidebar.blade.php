@@ -79,7 +79,7 @@
                         <li>
                             <a class="sub-side-menu__item mx-5 {{ request()->routeIs('accounts.index') ? 'active' : '' }}"
                                 href="{{ route('accounts.index') }}">
-                                <span class="sub-side-menu__label">{{ __('Account List') }}</span>
+                                <span class="sub-side-menu__label">{{ __('Transaction Accounts') }}</span>
                             </a>
                         </li>
                         

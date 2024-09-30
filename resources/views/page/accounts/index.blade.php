@@ -97,7 +97,7 @@
          <div class="container-fluid main-container">
              <div class="page-header">
                  <div class="page-leftheader">
-                     <h3 class="page-title">Accounts</h3>
+                     <h3 class="page-title">Transaction Accounts</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
                      <a class="btn btn-primary" href="#" id="add-record">
