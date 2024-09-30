@@ -9,51 +9,38 @@ use Carbon\Carbon;
 
 class UpdateAccountBalances extends Command
 {
-    // The name and signature of the console command
     protected $signature = 'balances:update';
-
-    // The console command description
     protected $description = 'Update opening and closing balances for GL codes';
 
-    // Execute the console command
     public function handle()
     {
         // Get the financial year start and end
         [$financialYearStart, $financialYearEnd] = $this->getFinancialYear();
 
-        // Fetch all distinct gl_code_id (which acts as gl_codes_parent_id)
-        $codes = DB::table('transactions')
-            ->select('gl_code_id')
-            ->distinct()
-            ->whereNotNull('gl_code_id')
+        // Fetch all gl_codes_parent_id from the gl_codes_parent table
+        $codes = DB::table('gl_codes_parent')
+            ->select('id')  // Select all parent GL codes
             ->get();
 
         foreach ($codes as $code) {
-            $glCodeId = $code->gl_code_id;  // Treat gl_code_id as gl_codes_parent_id
+            $glCodesParentId = $code->id;
 
-            // Add logging to ensure we are getting valid gl_code_id
-            $this->info("Processing gl_code_id: " . $glCodeId);
+            // Calculate the opening balance (sum of all transactions before the financial year start)
+            $openingBalance = $this->calculateOpeningBalance($glCodesParentId, $financialYearStart);
 
-            // Skip if glCodeId is NULL or invalid
-            if (is_null($glCodeId)) {
-                $this->error("Skipping invalid GL code (gl_code_id is NULL).");
-                continue;
-            }
-
-            // Calculate opening and closing balances
-            $openingBalance = $this->calculateOpeningBalance($glCodeId, $financialYearStart);
-            $closingBalance = $this->calculateClosingBalance($glCodeId, $financialYearStart, $financialYearEnd);
+            // Calculate the closing balance (sum of all transactions within the financial year)
+            $closingBalance = $this->calculateClosingBalance($glCodesParentId, $financialYearStart, $financialYearEnd);
 
             // Insert or update the balance for each GL code (gl_codes_parent_id)
             AccountBalance::updateOrCreate(
                 [
-                    'gl_codes_parent_id' => $glCodeId,
+                    'gl_codes_parent_id' => $glCodesParentId,
                     'financial_year_start' => $financialYearStart->toDateString(),
                     'financial_year_end' => $financialYearEnd->toDateString(),
                 ],
                 [
-                    'opening_balance' => $openingBalance,
-                    'closing_balance' => $closingBalance,
+                    'opening_balance' => $openingBalance ?? 0,  // Set to 0 if no opening balance
+                    'closing_balance' => $closingBalance ?? 0,  // Set to 0 if no closing balance
                 ]
             );
         }
@@ -66,11 +53,9 @@ class UpdateAccountBalances extends Command
     {
         $currentDate = Carbon::now();
         if ($currentDate->month >= 7) {
-            // Financial year starts 1st July of the current year and ends 30th June next year
             $financialYearStart = Carbon::createFromDate($currentDate->year, 7, 1);
             $financialYearEnd = Carbon::createFromDate($currentDate->year + 1, 6, 30);
         } else {
-            // Financial year starts 1st July last year and ends 30th June this year
             $financialYearStart = Carbon::createFromDate($currentDate->year - 1, 7, 1);
             $financialYearEnd = Carbon::createFromDate($currentDate->year, 6, 30);
         }
@@ -78,19 +63,19 @@ class UpdateAccountBalances extends Command
     }
 
     // Helper method to calculate the opening balance
-    private function calculateOpeningBalance($glCodeId, $financialYearStart)
+    private function calculateOpeningBalance($glCodesParentId, $financialYearStart)
     {
         return DB::table('transactions')
-            ->where('gl_code_id', $glCodeId)
+            ->where('gl_code_id', $glCodesParentId)
             ->whereDate('created_at', '<', $financialYearStart)
             ->sum('amount');
     }
 
     // Helper method to calculate the closing balance
-    private function calculateClosingBalance($glCodeId, $financialYearStart, $financialYearEnd)
+    private function calculateClosingBalance($glCodesParentId, $financialYearStart, $financialYearEnd)
     {
         return DB::table('transactions')
-            ->where('gl_code_id', $glCodeId)
+            ->where('gl_code_id', $glCodesParentId)
             ->whereBetween('created_at', [$financialYearStart, $financialYearEnd])
             ->sum('amount');
     }
