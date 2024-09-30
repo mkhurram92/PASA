@@ -24,6 +24,22 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .header p {
+            margin: 2px 0;
+            font-size: 12px;
+        }
+        
         h1, h3 {
             color: #000;
             text-align: center;
@@ -62,6 +78,10 @@
             text-align: right;
         }
 
+        .center-align {
+            text-align: center;
+        }
+
         .total-row {
             font-weight: bold;
             background-color: #f7f7f7;
@@ -73,8 +93,9 @@
     <div class="container">
         <!-- Header Section -->
         <div class="header">
-        <h1>Pioneers Association of South Australia</h1>
+            <h1>Pioneers Association of South Australia</h1>
             <h3>23 Leigh Street, Adelaide 5000</h3>
+            <h3>Bank Register Report for {{ $reportData['account_name'] }}</h3>
             @if (request('start_date') && request('end_date'))
                 <p>{{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to {{ \Carbon\Carbon::parse(request('end_date'))->format('d/m/Y') }}</p>
             @elseif(request('month') && request('year'))
@@ -83,7 +104,6 @@
                 <p>Year : {{ request('year') }}</p>
             @endif
         </div>
-        <h3>Bank Register Report for {{ $reportData['account_name'] }}</h3>
 
         <!-- Transactions Table -->
         <div class="table-container">
@@ -92,7 +112,7 @@
                     <tr>
                         <th>ID#</th>
                         <th>Type</th>
-                        <th>Date</th>
+                        <th class="center-align">Date</th> <!-- Centered Date -->
                         <th>Memo/Payee</th>
                         <th class="right-align">Deposit</th>
                         <th class="right-align">Withdrawal</th>
@@ -104,7 +124,7 @@
                         <tr>
                             <td>{{ $transaction->id }}</td>
                             <td>{{ $transaction->transaction_type_id == 1 ? 'CR' : 'CD' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y') }}</td>
+                            <td class="center-align">{{ \Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y') }}</td> <!-- Centered Date -->
                             <td></td>
                             <td class="right-align">
                                 {{ $transaction->transaction_type_id == 1 ? number_format($transaction->amount, 2) : '' }}
