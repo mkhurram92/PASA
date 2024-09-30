@@ -39,8 +39,9 @@
             margin: 2px 0;
             font-size: 12px;
         }
-        
-        h1, h3 {
+
+        h1,
+        h3 {
             color: #000;
             text-align: center;
         }
@@ -56,7 +57,8 @@
             font-size: 12px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 3px 4px;
             text-align: left;
         }
@@ -97,7 +99,8 @@
             <h3>23 Leigh Street, Adelaide 5000</h3>
             <h3>Bank Register Report for {{ $reportData['account_name'] }}</h3>
             @if (request('start_date') && request('end_date'))
-                <p>{{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to {{ \Carbon\Carbon::parse(request('end_date'))->format('d/m/Y') }}</p>
+                <p>{{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to
+                    {{ \Carbon\Carbon::parse(request('end_date'))->format('d/m/Y') }}</p>
             @elseif(request('month') && request('year'))
                 <p>Month : {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
             @elseif(request('year'))
@@ -122,17 +125,27 @@
                     @foreach ($reportData['transactions'] as $transaction)
                         <tr>
                             <td>{{ $transaction->id }}</td>
-                            <td class="center-align">{{ \Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y') }}</td> <!-- Centered Date -->
+                            <td class="center-align">
+                                {{ \Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y') }}</td>
+                            <!-- Centered Date -->
                             <td></td>
                             <td class="right-align">
-                                {{ $transaction->transaction_type_id == 1 ? number_format($transaction->amount, 2) : '' }}
+                                {{ $transaction->transaction_type_id == 1 && !is_null($transaction->amount) ? '$' . number_format($transaction->amount, 2) : '' }}
                             </td>
                             <td class="right-align">
-                                {{ $transaction->transaction_type_id == 2 ? number_format($transaction->amount, 2) : '' }}
+                                {{ $transaction->transaction_type_id == 2 && !is_null($transaction->amount) ? '$' . number_format($transaction->amount, 2) : '' }}
                             </td>
-                            <td class="right-align">{{ number_format($transaction->balance, 2) }}</td>
+                            <td class="right-align">${{ number_format($transaction->balance, 2) }}</td>
                         </tr>
                     @endforeach
+                    <!-- Add Totals Row -->
+                    <tr class="total-row">
+                        <td colspan="3" class="right-align">Total</td>
+                        <td class="right-align">${{ number_format($reportData['totalDeposits'], 2) }}</td>
+                        <td class="right-align">${{ number_format($reportData['totalWithdrawals'], 2) }}</td>
+                        <td class="right-align">${{ number_format($reportData['balance'], 2) }}</td>
+                        <!-- Final balance -->
+                    </tr>
                 </tbody>
             </table>
         </div>

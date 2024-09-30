@@ -94,7 +94,7 @@ class ReportController extends Controller
         $endDate = $request->input('end_date');
         $month = $request->input('month');
         $year = $request->input('year');
-        $accountId = $request->input('bank_account'); 
+        $accountId = $request->input('bank_account');
 
         if (empty($accountId)) {
             return back()->with('error', 'Please select a bank account.');
@@ -126,8 +126,8 @@ class ReportController extends Controller
             'transactions.transaction_type_id',
             'transactions.account_id'
         )
-            ->where('account_id', $accountId) 
-            ->orderBy('created_at', 'asc'); 
+            ->where('account_id', $accountId) // Filter by the selected bank account
+            ->orderBy('created_at', 'asc');  // Order by date
 
         // Apply date filters
         if ($startDate && $endDate) {
@@ -142,21 +142,29 @@ class ReportController extends Controller
         // Fetch the transactions data
         $transactions = $query->get();
 
-        // Initialize balance and process each transaction
+        // Initialize totals and running balance
+        $totalDeposits = 0;
+        $totalWithdrawals = 0;
         $balance = 0;
+
         foreach ($transactions as $transaction) {
-            if ($transaction->transaction_type_id == 1) { // Income
+            if ($transaction->transaction_type_id == 1) { // Income (Deposit)
+                $totalDeposits += $transaction->amount;
                 $balance += $transaction->amount;
-            } elseif ($transaction->transaction_type_id == 2) { // Expense
+            } elseif ($transaction->transaction_type_id == 2) { // Expense (Withdrawal)
+                $totalWithdrawals += $transaction->amount;
                 $balance -= $transaction->amount;
             }
-            $transaction->balance = $balance; 
+            $transaction->balance = $balance; // Append running balance to each transaction
         }
 
-        // Return the transactions along with the account name
+        // Return the transactions along with the totals and account name
         return [
             'transactions' => $transactions,
-            'account_name' => $account->name
+            'totalDeposits' => $totalDeposits,
+            'totalWithdrawals' => $totalWithdrawals,
+            'account_name' => $account->name,
+            'balance' => $balance 
         ];
     }
 
