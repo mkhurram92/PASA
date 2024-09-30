@@ -180,14 +180,12 @@ class ReportController extends Controller
         return response()->json($bankAccounts);
     }
 
-    private function accountsList(Request $request)
+    public function accountsList(Request $request)
     {
+        // Fetch the accounts data
         $accounts = GlCodesParent::with('accountType')->get();
 
-        //dd($accounts);
-
-        // Generate and return the PDF
-        return $this->generatePDF(['accounts' => $accounts], 'page.reports.accounts-list', 'accounts-list.pdf');
-        
+        // Pass the data to the generatePDF method
+        return $this->generatePDF($accounts, 'page.reports.accounts-list', 'accounts-list.pdf');
     }
 }

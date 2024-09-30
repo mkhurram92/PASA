@@ -59,14 +59,16 @@
 
         th,
         td {
-            padding: 3px 4px;
-            text-align: left;
+            padding: 8px; /* Ensure equal padding */
+            text-align: left; /* Align text to the left for readability */
+            border-bottom: 1px solid #ddd; /* Add borders for better alignment */
         }
 
         th {
             background-color: #f7f7f7;
             color: #000;
             font-weight: bold;
+            text-align: left; /* Keep headers left-aligned */
         }
 
         tr:nth-child(even) {
@@ -75,6 +77,19 @@
 
         tr:hover {
             background-color: #f1f1f1;
+        }
+
+        /* Set proportional column widths */
+        th:nth-child(1), td:nth-child(1) {
+            width: 40%; /* 40% for Account Name */
+        }
+
+        th:nth-child(2), td:nth-child(2) {
+            width: 30%; /* 30% for Account Type */
+        }
+
+        th:nth-child(3), td:nth-child(3) {
+            width: 30%; /* 30% for Balance */
         }
     </style>
 </head>
@@ -92,23 +107,19 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Account</th>
-                        <th>Type</th>
+                        <th>Account Name</th>
+                        <th>Account Type</th>
+                        <th>Balance</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($accounts as $account)
-                        <tr>
-                            <td>{{ $account->name }}</td>
-                            <td>{{ $account->accountType->name ?? 'N/A' }}</td>
-                        </tr>
+                    @foreach ($reportData as $account)
+                    <tr>
+                        <td>{{ $account->name }}</td>
+                        <td>{{ $account->accountType ? $account->accountType->name : 'No Account Type' }}</td>
+                        <td>${{ number_format($account->balance, 2) }}</td> <!-- Format balance -->
+                    </tr>
                     @endforeach
-
-                    @if ($accounts->isEmpty())
-                        <tr>
-                            <td colspan="2" style="text-align:center;">No accounts found.</td>
-                        </tr>
-                    @endif
                 </tbody>
             </table>
         </div>

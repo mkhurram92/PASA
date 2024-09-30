@@ -73,7 +73,7 @@
                         <li>
                             <a class="sub-side-menu__item mx-5 {{ request()->routeIs('gl-codes-parent.index') ? 'active' : '' }}"
                                 href="{{ route('gl-codes-parent.index') }}">
-                                <span class="sub-side-menu__label">{{ __('Account') }}</span>
+                                <span class="sub-side-menu__label">{{ __('Accounts Lis') }}</span>
                             </a>
                         </li>
                         <li>
