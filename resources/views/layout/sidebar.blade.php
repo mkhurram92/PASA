@@ -56,18 +56,18 @@
                     </a>
                 </li>
                 <!-- Finance Section -->
-                <li class="slide {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent.index',
+                <li class="slide {{ request()->routeIs('accounts.index', 'transaction.index', 'gl-codes-parent.index',
                                 'suppliers.index', 'customer.index') ? 'is-expanded' : '' }}">
                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
                         <i class="fa fa-bank fa-2x mx-3"></i>
                         <span class="side-menu__label">{{ __('Finance') }}</span>
                         <i class="angle fe fe-chevron-right"></i>
                     </a>
-                    <ul class="slide-menu {{ request()->routeIs('gl-codes.create', 'gl-codes.index', 'transaction.index', 'gl-codes-parent.index') ? 'open' : '' }}">
+                    <ul class="slide-menu {{ request()->routeIs('accounts', 'transaction.index', 'gl-codes-parent.index') ? 'open' : '' }}">
                         <li>
                             <a class="sub-side-menu__item mx-5 {{ request()->routeIs('transaction.index') ? 'active' : '' }}"
                                 href="{{ route('transaction.index') }}">
-                                <span class="sub-side-menu__label">{{ __('Transaction') }}</span>
+                                <span class="sub-side-menu__label">{{ __('Transactions') }}</span>
                             </a>
                         </li>
                         <li>
