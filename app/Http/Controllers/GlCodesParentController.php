@@ -4,16 +4,58 @@ namespace App\Http\Controllers;
 
 use App\Models\GlCodesParent;
 use App\Models\AccountType;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
 
 class GlCodesParentController extends Controller
 {
+    //public function index()
+    //{
+    //    $glCodesParents = GlCodesParent::with('accountType')->get();
+
+    //    return view('page.gl-codes-parent.index', compact('glCodesParents'));
+    //}
+
     public function index()
     {
-        $glCodesParents = GlCodesParent::with('accountType')->get();
+        // Get the current financial year start and end as date strings (YYYY-MM-DD)
+        [$financialYearStart, $financialYearEnd] = $this->getFinancialYear(Carbon::now());
+
+        // Convert Carbon instances to date strings
+        $financialYearStart = $financialYearStart->toDateString();
+        $financialYearEnd = $financialYearEnd->toDateString();
+
+        // Fetch all GL codes with their account type and opening balances for the current financial year
+        $glCodesParents = GlCodesParent::with(['accountType', 'accountBalances' => function ($query) use ($financialYearStart, $financialYearEnd) {
+            $query->where('financial_year_start', $financialYearStart)
+                ->where('financial_year_end', $financialYearEnd);
+        }])->get()->map(function ($glCode) {
+            return [
+                'id' => $glCode->id,
+                'name' => $glCode->name,
+                'account_type' => optional($glCode->accountType)->name,
+                'opening_balance' => optional($glCode->accountBalances->first())->opening_balance ?? 0, 
+            ];
+        });
 
         return view('page.gl-codes-parent.index', compact('glCodesParents'));
+    }
+
+    private function getFinancialYear($date)
+    {
+        $date = Carbon::parse($date);
+
+        if ($date->month >= 7) {
+            $financialYearStart = Carbon::createFromDate($date->year, 7, 1);
+            $financialYearEnd = Carbon::createFromDate($date->year + 1, 6, 30);
+        } else {
+            $financialYearStart = Carbon::createFromDate($date->year - 1, 7, 1);
+            $financialYearEnd = Carbon::createFromDate($date->year, 6, 30);
+        }
+
+        return [$financialYearStart, $financialYearEnd];
     }
 
     // Show a single record
