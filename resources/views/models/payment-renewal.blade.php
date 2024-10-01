@@ -1,5 +1,6 @@
 <!-- Payment Renewal Modal -->
-<div class="modal fade" id="paymentRenewalModal" tabindex="-1" role="dialog" aria-labelledby="paymentRenewalLabel" aria-hidden="true">
+<div class="modal fade" id="paymentRenewalModal" tabindex="-1" role="dialog" aria-labelledby="paymentRenewalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <!-- Modal header -->
@@ -20,7 +21,8 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="onlineOption" value="online">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="onlineOption"
+                        value="online">
                     <label class="form-check-label" for="onlineOption">
                         Online
                     </label>
@@ -63,26 +65,31 @@
                     </div>
                     <div class="mb-3">
                         <label for="billing-address" class="form-label">Billing Address</label>
-                        <input type="text" id="billing-address" class="form-control" placeholder="Street Address" autocomplete="address-line1">
+                        <input type="text" id="billing-address" class="form-control" placeholder="Street Address"
+                            autocomplete="address-line1">
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="billing-city" class="form-label">City</label>
-                            <input type="text" id="billing-city" class="form-control" placeholder="City" autocomplete="address-level2">
+                            <input type="text" id="billing-city" class="form-control" placeholder="City"
+                                autocomplete="address-level2">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="billing-state" class="form-label">State</label>
-                            <input type="text" id="billing-state" class="form-control" placeholder="State" autocomplete="address-level1">
+                            <input type="text" id="billing-state" class="form-control" placeholder="State"
+                                autocomplete="address-level1">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="billing-postal" class="form-label">Postal Code</label>
-                            <input type="text" id="billing-postal" class="form-control" placeholder="Postal Code" autocomplete="postal-code">
+                            <input type="text" id="billing-postal" class="form-control" placeholder="Postal Code"
+                                autocomplete="postal-code">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="billing-country" class="form-label">Country</label>
-                            <input type="text" id="billing-country" class="form-control" placeholder="Country" autocomplete="country">
+                            <input type="text" id="billing-country" class="form-control" placeholder="Country"
+                                autocomplete="country">
                         </div>
                     </div>
                 </div>
@@ -101,6 +108,7 @@
     const cashFields = document.getElementById('cashFields');
     const stripeFields = document.getElementById('stripeFields');
     const eftDetails = document.getElementById('eftDetails');
+    const proceedButton = document.getElementById('submitPaymentMethod');
 
     paymentMethodRadios.forEach(radio => {
         radio.addEventListener('change', () => {
@@ -108,10 +116,18 @@
             stripeFields.style.display = 'none';
             eftDetails.style.display = 'none';
 
+            var userRole = {{ auth()->user()->role_id }};
+
             if (radio.value === 'online') {
                 stripeFields.style.display = 'block';
+                proceedButton.style.display = 'block';
             } else if (radio.value === 'eft') {
                 eftDetails.style.display = 'block';
+
+                // Hide the proceed button if the user's role is 2
+                if (userRole === 2) {
+                    proceedButton.style.display = 'none';
+                }
             }
         });
     });
