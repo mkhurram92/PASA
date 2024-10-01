@@ -101,7 +101,7 @@
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
             <h4>23 Leigh Street, Adelaide 5000</h4>
-            <h3>Accounts List</h3>
+            <h3>Accounts List as of {{ \Carbon\Carbon::parse(request('date'))->format('d/m/Y') }}</h3>
         </div>
 
         <div class="table-container">
