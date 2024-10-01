@@ -127,8 +127,12 @@ class ReportController extends Controller
             'transactions.description',
             'transactions.amount',
             'transactions.transaction_type_id',
-            'transactions.account_id'
+            'transactions.account_id',
+            'transactions.member_id',
+            'transactions.customer_id',
+            'transactions.supplier_id'
         )
+            ->with(['member', 'customer', 'supplier']) // Eager load relationships
             ->where('account_id', $accountId) // Filter by the selected bank account
             ->orderBy('created_at', 'asc');  // Order by date
 
@@ -158,6 +162,18 @@ class ReportController extends Controller
                 $totalWithdrawals += $transaction->amount;
                 $balance -= $transaction->amount;
             }
+
+            // Determine who is involved in the transaction
+            if ($transaction->transaction_type_id == 1 && $transaction->member_id) {
+                $transaction->party = optional($transaction->member)->family_name . ' ' . optional($transaction->member)->given_name; // Show member name
+            } elseif ($transaction->transaction_type_id == 1 && $transaction->customer_id) {
+                $transaction->party = optional($transaction->customer)->name; // Show customer name
+            } elseif ($transaction->transaction_type_id == 2 && $transaction->supplier_id) {
+                $transaction->party = optional($transaction->supplier)->name; // Show supplier name
+            } else {
+                $transaction->party = 'N/A'; // Default if no relevant party is found
+            }
+
             $transaction->balance = $balance; // Append running balance to each transaction
         }
 

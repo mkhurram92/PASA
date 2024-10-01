@@ -99,12 +99,13 @@
             <h3>23 Leigh Street, Adelaide 5000</h3>
             <h3>Bank Register Report for {{ $reportData['account_name'] }}</h3>
             @if (request('start_date') && request('end_date'))
-                <p>{{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to
-                    {{ \Carbon\Carbon::parse(request('end_date'))->format('d/m/Y') }}</p>
+            <p>{{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to
+                {{ \Carbon\Carbon::parse(request('end_date'))->format('d/m/Y') }}
+            </p>
             @elseif(request('month') && request('year'))
-                <p>Month : {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
+            <p>Month : {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
             @elseif(request('year'))
-                <p>Year : {{ request('year') }}</p>
+            <p>Year : {{ request('year') }}</p>
             @endif
         </div>
 
@@ -123,20 +124,21 @@
                 </thead>
                 <tbody>
                     @foreach ($reportData['transactions'] as $transaction)
-                        <tr>
-                            <td>{{ $transaction->id }}</td>
-                            <td class="center-align">
-                                {{ \Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y') }}</td>
-                            <!-- Centered Date -->
-                            <td></td>
-                            <td class="right-align">
-                                {{ $transaction->transaction_type_id == 1 && !is_null($transaction->amount) ? '$' . number_format($transaction->amount, 2) : '' }}
-                            </td>
-                            <td class="right-align">
-                                {{ $transaction->transaction_type_id == 2 && !is_null($transaction->amount) ? '$' . number_format($transaction->amount, 2) : '' }}
-                            </td>
-                            <td class="right-align">${{ number_format($transaction->balance, 2) }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ $transaction->id }}</td>
+                        <td class="center-align">
+                            {{ \Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y') }}
+                        </td>
+                        <!-- Centered Date -->
+                        <td>{{ $transaction->party }}</td>
+                        <td class="right-align">
+                            {{ $transaction->transaction_type_id == 1 && !is_null($transaction->amount) ? '$' . number_format($transaction->amount, 2) : '' }}
+                        </td>
+                        <td class="right-align">
+                            {{ $transaction->transaction_type_id == 2 && !is_null($transaction->amount) ? '$' . number_format($transaction->amount, 2) : '' }}
+                        </td>
+                        <td class="right-align">${{ number_format($transaction->balance, 2) }}</td>
+                    </tr>
                     @endforeach
                     <!-- Add Totals Row -->
                     <tr class="total-row">
