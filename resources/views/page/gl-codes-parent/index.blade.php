@@ -149,8 +149,15 @@
                  headerFilter: "input"
              },
              {
-                 title: "Account Name",
+                 title: "Account",
                  field: "name",
+                 hozAlign: "center",
+                 vertAlign: "middle",
+                 headerFilter: "input"
+             },
+             {
+                 title: "Type",
+                 field: "account_type",
                  hozAlign: "center",
                  vertAlign: "middle",
                  headerFilter: "input"
