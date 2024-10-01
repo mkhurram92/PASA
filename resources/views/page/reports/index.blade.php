@@ -14,52 +14,6 @@
                     <div class="card-body p-2">
                         <!-- First Row -->
                         <div class="row">
-                            <!-- Month Dropdown -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="month" class="form-label">Month</label>
-                                    <select name="month" id="month" class="form-control">
-                                        <option value="">Select Month</option>
-                                        @for ($m = 1; $m <= 12; $m++)
-                                            <option value="{{ $m }}">{{ date('F', mktime(0, 0, 0, $m, 1)) }}
-                                            </option>
-                                            @endfor
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Year Dropdown -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="year" class="form-label">Year</label>
-                                    <select name="year" id="year" class="form-control">
-                                        <option value="">Select Year</option>
-                                        @for ($y = date('Y'); $y >= 2020; $y--)
-                                        <option value="{{ $y }}">{{ $y }}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Start Date -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="start_date" class="form-label">Start Date</label>
-                                    <input type="date" name="start_date" id="start_date" class="form-control">
-                                </div>
-                            </div>
-
-                            <!-- End Date -->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="end_date" class="form-label">End Date</label>
-                                    <input type="date" name="end_date" id="end_date" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Second Row -->
-                        <div class="row">
                             <!-- Report Type Dropdown -->
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -83,6 +37,55 @@
                                 </div>
                             </div>
 
+                        </div>
+                        <!-- Second Row -->
+                        <div class="row">
+                            <!-- Year Dropdown -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="year" class="form-label">Year</label>
+                                    <select name="year" id="year" class="form-control">
+                                        <option value="">Select Year</option>
+                                        @for ($y = date('Y'); $y >= 2020; $y--)
+                                        <option value="{{ $y }}">{{ $y }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Month Dropdown -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="month" class="form-label">Month</label>
+                                    <select name="month" id="month" class="form-control">
+                                        <option value="">Select Month</option>
+                                        @for ($m = 1; $m <= 12; $m++)
+                                            <option value="{{ $m }}">{{ date('F', mktime(0, 0, 0, $m, 1)) }}
+                                            </option>
+                                            @endfor
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Start Date -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="start_date" class="form-label">Start Date</label>
+                                    <input type="date" name="start_date" id="start_date" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- End Date -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="end_date" class="form-label">End Date</label>
+                                    <input type="date" name="end_date" id="end_date" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third Row -->
+                        <div class="row">
                             <!-- Preview Button -->
                             <div class="col-md-3 d-flex align-items-end">
                                 <button type="button" id="previewButton" class="btn btn-primary w-100">Preview
