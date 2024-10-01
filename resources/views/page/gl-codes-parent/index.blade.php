@@ -146,28 +146,32 @@
                  field: "id",
                  hozAlign: "center",
                  vertAlign: "middle",
-                 headerFilter: "input"
+                 headerFilter: "input",
+                 headerFilterPlaceholder: 'Search by ID'
              },
              {
                  title: "Account",
                  field: "name",
                  hozAlign: "center",
                  vertAlign: "middle",
-                 headerFilter: "input"
+                 headerFilter: "input",
+                 headerFilterPlaceholder: 'Search by Account'
              },
              {
                  title: "Type",
                  field: "account_type",
                  hozAlign: "center",
                  vertAlign: "middle",
-                 headerFilter: "input"
+                 headerFilter: "input",
+                 headerFilterPlaceholder: 'Search by Type'
              },
              {
                  title: "Opening Balance",
-                 field: "opening_balance", // Change this from "0" to "opening_balance"
+                 field: "opening_balance",
                  hozAlign: "center",
                  vertAlign: "middle",
                  headerFilter: "input",
+                 headerFilterPlaceholder: 'Search by Opening Balance',
                  formatter: function(cell, formatterParams) {
                      // Ensure opening_balance is formatted properly or return 0.00
                      //return (cell.getValue() != null) ? parseFloat(cell.getValue()).toFixed(2) : "0.00";
