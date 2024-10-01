@@ -200,7 +200,9 @@
          initialSort: [{
              column: "created_at",
              dir: "desc"
-         }]
+         }],
+            pagination: 'local',
+            placeholder: "No Data Available"
      });
 
      $('#create-parentglcode-record').click(function() {
