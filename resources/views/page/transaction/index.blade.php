@@ -249,7 +249,6 @@
 
              ],
              pagination: 'local',
-             paginationSize: 20,
              placeholder: "No Data Available",
              initialSort: [{
                  column: "created_at",
