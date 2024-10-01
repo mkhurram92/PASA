@@ -86,6 +86,8 @@
 
                         <!-- Third Row -->
                         <div class="row">
+                            <div class="col-md-3 d-flex align-items-end"></div>
+                            <div class="col-md-3 d-flex align-items-end"></div>
                             <!-- Preview Button -->
                             <div class="col-md-3 d-flex align-items-end">
                                 <button type="button" id="previewButton" class="btn btn-primary w-100">Preview

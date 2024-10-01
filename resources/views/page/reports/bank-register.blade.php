@@ -29,21 +29,21 @@
             margin-bottom: 10px;
         }
 
-        .header h2 {
+        .header h1 {
             margin: 0;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
         }
 
-        .header p {
+        .header h4 {
             margin: 2px 0;
             font-size: 12px;
         }
 
-        h1,
-        h3 {
-            color: #000;
-            text-align: center;
+        .header h3 {
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
         }
 
         .table-container {
@@ -96,7 +96,7 @@
         <!-- Header Section -->
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
-            <h3>23 Leigh Street, Adelaide 5000</h3>
+            <h4>23 Leigh Street, Adelaide 5000</h4>
             <h3>Bank Register Report for {{ $reportData['account_name'] }}</h3>
             @if (request('start_date') && request('end_date'))
             <p>{{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to

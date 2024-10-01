@@ -7,7 +7,7 @@
     <title>Accounts List</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             background-color: #fff;
             color: #000;
             margin: 0;
@@ -59,16 +59,30 @@
 
         th,
         td {
-            padding: 8px; /* Ensure equal padding */
-            text-align: left; /* Align text to the left for readability */
-            border-bottom: 1px solid #ddd; /* Add borders for better alignment */
+            padding: 3px 4px;
+            text-align: left;
         }
 
         th {
             background-color: #f7f7f7;
             color: #000;
             font-weight: bold;
-            text-align: left; /* Keep headers left-aligned */
+        }
+
+        /* Set specific column widths */
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 40%;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 30%;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 30%;
         }
 
         tr:nth-child(even) {
@@ -77,19 +91,6 @@
 
         tr:hover {
             background-color: #f1f1f1;
-        }
-
-        /* Set proportional column widths */
-        th:nth-child(1), td:nth-child(1) {
-            width: 40%; /* 40% for Account Name */
-        }
-
-        th:nth-child(2), td:nth-child(2) {
-            width: 30%; /* 30% for Account Type */
-        }
-
-        th:nth-child(3), td:nth-child(3) {
-            width: 30%; /* 30% for Balance */
         }
     </style>
 </head>

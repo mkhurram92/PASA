@@ -29,33 +29,21 @@
             margin-bottom: 10px;
         }
 
-        .header h2 {
+        .header h1 {
             margin: 0;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
         }
 
-        .header p {
+        .header h4 {
             margin: 2px 0;
             font-size: 12px;
         }
 
-        h1 {
-            color: #000;
-            font-size: 18px;
+        .header h3 {
+            margin: 10px 0;
+            font-size: 16px;
             font-weight: bold;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            color: #000;
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 5px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 5px;
         }
 
         .table-container {
@@ -139,7 +127,7 @@
         <!-- Header Section -->
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
-            <h3>23 Leigh Street, Adelaide 5000</h3>
+            <h4>23 Leigh Street, Adelaide 5000</h4>
             <h3>Income and Expense Statement</h3>
 
             @if (request('start_date') && request('end_date'))
@@ -152,7 +140,7 @@
         </div>
 
         <!-- Income Section -->
-        <h2>Income</h2>
+        <h3>Income</h3>
         <div class="table-container">
             <table>
                 <thead>
@@ -203,7 +191,7 @@
         </div>
 
         <!-- Expenditure Section -->
-        <h2>Expenses</h2>
+        <h3>Expenses</h3>
         <div class="table-container">
             <table>
                 <thead>
