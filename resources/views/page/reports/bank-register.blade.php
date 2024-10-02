@@ -42,7 +42,7 @@
 
         .header h3 {
             margin: 10px 0;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
         }
 
@@ -96,7 +96,7 @@
         <!-- Header Section -->
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
-            <h4>23 Leigh Street, Adelaide 5000</h4>
+            <h3>23 Leigh Street, Adelaide 5000</h3>
             <h3>Bank Register Report for {{ $reportData['account_name'] }}</h3>
             @if (request('start_date') && request('end_date'))
             <p>{{ \Carbon\Carbon::parse(request('start_date'))->format('d/m/Y') }} to
@@ -115,7 +115,7 @@
                 <thead>
                     <tr>
                         <th>ID#</th>
-                        <th class="center-align">Date</th> <!-- Centered Date -->
+                        <th class="center-align">Date</th>
                         <th>Memo/Payee</th>
                         <th class="right-align">Deposit</th>
                         <th class="right-align">Withdrawal</th>

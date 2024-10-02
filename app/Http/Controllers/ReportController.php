@@ -112,7 +112,7 @@ class ReportController extends Controller
     private function getBankRegisterData($startDate, $endDate, $month, $year, $accountId)
     {
         // Fetch the bank account name
-        $account = DB::table('accounts')
+        $account = DB::table('gl_codes_parent')
             ->where('id', $accountId)
             ->first();
 
@@ -127,13 +127,13 @@ class ReportController extends Controller
             'transactions.description',
             'transactions.amount',
             'transactions.transaction_type_id',
-            'transactions.account_id',
+            'transactions.gl_code_id',
             'transactions.member_id',
             'transactions.customer_id',
             'transactions.supplier_id'
         )
             ->with(['member', 'customer', 'supplier']) // Eager load relationships
-            ->where('account_id', $accountId) // Filter by the selected bank account
+            ->where('gl_code_id', $accountId) // Filter by the selected bank account
             ->orderBy('created_at', 'asc');  // Order by date
 
         // Apply date filters
@@ -187,10 +187,22 @@ class ReportController extends Controller
         ];
     }
 
+    //public function getBankAccounts()
+    //{
+        // Fetch the list of bank accounts
+    //    $bankAccounts = DB::table('accounts')->select('id', 'name')->get();
+
+        // Return the data in JSON format
+    //    return response()->json($bankAccounts);
+    //}
+
     public function getBankAccounts()
     {
-        // Fetch the list of bank accounts
-        $bankAccounts = DB::table('accounts')->select('id', 'name')->get();
+        // Fetch the list of bank accounts where is_bank_account is true (1)
+        $bankAccounts = DB::table('gl_codes_parent')
+            ->select('id', 'name')
+            ->where('is_bank_account', 1) // Add where condition to filter bank accounts
+            ->get();
 
         // Return the data in JSON format
         return response()->json($bankAccounts);
