@@ -126,7 +126,11 @@
             // Show the bank account dropdown
             bankAccountContainer.style.display = 'block';
             accountsListDateContainer.style.display = 'none';
-
+            document.getElementById('month').disabled = false;
+            document.getElementById('year').disabled = false;
+            document.getElementById('start_date').disabled = false;
+            document.getElementById('end_date').disabled = false;
+            
             // Fetch and populate bank accounts via AJAX
             fetch("{{ route('get.bank.accounts') }}")
                 .then(response => response.json())
