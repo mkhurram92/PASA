@@ -23,6 +23,7 @@
                                         <option value="income-and-expenditure">Income and Expenditure</option>
                                         <option value="bank-register">Bank Register</option>
                                         <option value="accounts-list">Accounts List</option>
+                                        <option value="bank-reconciliation">Bank Reconciliation</option>
                                     </select>
                                 </div>
                             </div>
