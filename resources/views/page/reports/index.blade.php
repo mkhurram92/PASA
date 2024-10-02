@@ -93,7 +93,7 @@
 
                         <!-- Third Row -->
                         <div class="row">
-                           
+
                             <div class="col-md-3 d-flex align-items-end"></div>
                             <!-- Preview Button -->
                             <div class="col-md-3 d-flex align-items-end">
@@ -116,13 +116,14 @@
 
 <script>
     // Event listener for Report Type Dropdown change
+    // Event listener for Report Type Dropdown change
     document.getElementById('report_type').addEventListener('change', function() {
         var reportType = this.value;
         var bankAccountContainer = document.getElementById('bankAccountContainer');
         var accountsListDateContainer = document.getElementById('accountsListDateContainer');
 
-        // Check if the selected report type is 'Bank Register'
-        if (reportType === 'bank-register') {
+        // Check if the selected report type is 'Bank Register' or 'Bank Reconciliation'
+        if (reportType === 'bank-register' || reportType === 'bank-reconciliation') {
             // Show the bank account dropdown
             bankAccountContainer.style.display = 'block';
             accountsListDateContainer.style.display = 'none';
@@ -130,7 +131,7 @@
             document.getElementById('year').disabled = false;
             document.getElementById('start_date').disabled = false;
             document.getElementById('end_date').disabled = false;
-            
+
             // Fetch and populate bank accounts via AJAX
             fetch("{{ route('get.bank.accounts') }}")
                 .then(response => response.json())
@@ -165,6 +166,7 @@
             document.getElementById('end_date').disabled = false;
         }
     });
+
 
     // Event listener for Preview Button click
     document.getElementById('previewButton').addEventListener('click', function() {
