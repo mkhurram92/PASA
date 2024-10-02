@@ -133,13 +133,25 @@
  </div>
  @section('scripts')
      <script>
+
+        var transactionData = {!! json_encode($transaction->toArray()) !!};
+            
+            // Format the created_at field using moment.js before passing it to Tabulator
+            transactionData = transactionData.map(function(transaction) {
+                if (transaction.created_at) {
+                    // Use moment.js to format the date to YYYY-MM-DD
+                    transaction.created_at = moment(transaction.created_at).format('YYYY-MM-DD');
+                }
+                return transaction;
+            });
+
          //var transaction = <?php echo json_encode($transaction); ?>;
          var gl_code_parent = <?php echo json_encode($gl_code_parent); ?>;
          var transaction_type = <?php echo json_encode($transaction_type); ?>;
          var account_type = <?php echo json_encode($account_type); ?>;
 
          var table = new Tabulator("#transaction-table", {
-             data: {!! json_encode($transaction->toArray()) !!},
+             data: transactionData,
 
              layout: "fitColumns",
              columns: [{
@@ -209,16 +221,15 @@
                      }
                  },
                  {
-                     title: "Transaction Date",
-                     field: "created_at",
-                     hozAlign: "left",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     headerFilterPlaceholder: 'Search by Creation Date',
-                     formatter: function(cell) {
-                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD');
-                         return formattedDate;
-                     }
+                    title: "Transaction Date",
+                    field: "created_at", 
+                    hozAlign: "left",
+                    vertAlign: "middle",
+                    headerFilter: "input",
+                    headerFilterPlaceholder: 'Search by Creation Date',
+                    formatter: function(cell) {
+                        return cell.getValue();
+                    }
                  },
                  {
                      title: "Description",
