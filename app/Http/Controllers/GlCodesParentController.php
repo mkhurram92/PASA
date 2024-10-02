@@ -11,13 +11,6 @@ use Illuminate\Http\Request;
 
 class GlCodesParentController extends Controller
 {
-    //public function index()
-    //{
-    //    $glCodesParents = GlCodesParent::with('accountType')->get();
-
-    //    return view('page.gl-codes-parent.index', compact('glCodesParents'));
-    //}
-
     public function index()
     {
         // Get the current financial year start and end as date strings (YYYY-MM-DD)
@@ -36,7 +29,7 @@ class GlCodesParentController extends Controller
                 'id' => $glCode->id,
                 'name' => $glCode->name,
                 'account_type' => optional($glCode->accountType)->name,
-                'opening_balance' => optional($glCode->accountBalances->first())->opening_balance ?? 0, 
+                'opening_balance' => optional($glCode->accountBalances->first())->opening_balance ?? 0,
             ];
         });
 
@@ -58,14 +51,10 @@ class GlCodesParentController extends Controller
         return [$financialYearStart, $financialYearEnd];
     }
 
-    // Show a single record
-
     public function show(GlCodesParent $gl_codes_parent)
     {
-        // Load the related AccountType for the gl_codes_parent
         $gl_codes_parent->load('accountType');
 
-        // Render the view with the gl_codes_parent and its related accountType
         $html = view("models.parentgl-view", compact('gl_codes_parent'))->render();
 
         return response()->json(["status" => true, "html" => $html]);
@@ -80,19 +69,19 @@ class GlCodesParentController extends Controller
 
         return response()->json(["status" => true, "html" => $html]);
 
-        //return view('gl_codes_parent.create');
     }
 
     // Store a new record in the database
     public function store(Request $request)
     {
-        // Validate input data, including account_type_id
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'account_type_id' => 'required|exists:account_types,id'
+            'account_type_id' => 'required|exists:account_types,id',
+            'is_bank_account' => 'nullable|boolean',
         ]);
 
-        // Create a new GlCodesParent instance, including account_type_id
+        $validatedData['is_bank_account'] = $request->has('is_bank_account') ? 1 : 0;
+
         GlCodesParent::create($validatedData);
 
         // Return success message with a redirect to the index page
@@ -107,7 +96,7 @@ class GlCodesParentController extends Controller
     public function edit($id)
     {
         $glCodesParent = GlCodesParent::findOrFail($id);
-        $accountTypes = AccountType::all(); // Get all account types
+        $accountTypes = AccountType::all();
 
         // Render the view with the form pre-filled, including the account types
         $html = view("models.parentgl-update", compact('glCodesParent', 'accountTypes'))->render();
@@ -118,12 +107,15 @@ class GlCodesParentController extends Controller
     // Update a record in the database
     public function update(Request $request, $id)
     {
-        // Validate the incoming request data, including account_type_id
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'nullable|max:1000',
-            'account_type_id' => 'required|exists:account_types,id'
+            'account_type_id' => 'required|exists:account_types,id',
+            'is_bank_account' => 'nullable|boolean', 
         ]);
+
+        // Set the is_bank_account field to 1 or 0 based on if the checkbox is checked or not
+        $validatedData['is_bank_account'] = $request->has('is_bank_account') ? 1 : 0;
 
         // Find the record by its ID
         $glCodesParent = GlCodesParent::findOrFail($id);

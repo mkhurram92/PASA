@@ -15,11 +15,18 @@
                         placeholder="Enter Account Name" value="{{ $gl_codes_parent?->name }}" readonly disabled>
                 </div>
 
-                <!-- Account Type Field (if needed) -->
+                <!-- Account Type Field -->
                 <div class="form-group">
                     <label for="account_type" class="control-label">Account Type</label>
                     <input type="text" class="form-control" id="account_type" name="account_type"
                         placeholder="Account Type" value="{{ $gl_codes_parent?->accountType->name ?? 'N/A' }}" readonly disabled>
+                </div>
+
+                <!-- Is Bank Account Field -->
+                <div class="form-group">
+                    <label for="is_bank_account" class="control-label">Is Bank Account</label>
+                    <input type="text" class="form-control" id="is_bank_account" name="is_bank_account"
+                        value="{{ $gl_codes_parent?->is_bank_account ? 'Yes' : 'No' }}" readonly disabled>
                 </div>
 
                 <!-- Close Button -->

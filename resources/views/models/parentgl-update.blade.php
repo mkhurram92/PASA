@@ -35,11 +35,17 @@
                         </select>
                     </div>
 
+                    <!-- Is Bank Account Checkbox -->
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="is_bank_account" name="is_bank_account"
+                            value="1" {{ $glCodesParent->is_bank_account ? 'checked' : '' }}>
+                        <label class="form-check-label" for="is_bank_account">Is Bank Account</label>
+                    </div>
+
                     <!-- Save Button -->
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save
-                                changes</button>
+                            <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>
                             <button class="btn btn-light" data-bs-dismiss="modal" type="button">Close</button>
                         </div>
                     </div>

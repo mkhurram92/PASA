@@ -16,12 +16,6 @@
                         <input type="text" class="form-control" id="name" name="name"
                             placeholder="Enter Account Name" value="" required="">
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="description" class="control-label">Description</label>
-                        <input type="text" class="form-control" id="description" name="description"
-                            placeholder="Enter Description" value="" required="">
-                    </div>
-                    New Dropdown for Account Types -->
                     <div class="form-group">
                         <label for="account_type" class="control-label">Account Type</label>
                         <select class="form-control" id="account_type_id" name="account_type_id" required>
@@ -30,6 +24,10 @@
                                 <option value="{{ $accountType->id }}">{{ $accountType->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="is_bank_account" name="is_bank_account" value="1">
+                        <label class="form-check-label" for="is_bank_account">Is Bank Account</label>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
