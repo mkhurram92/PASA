@@ -24,6 +24,8 @@
                                         <option value="bank-register">Bank Register</option>
                                         <option value="accounts-list">Accounts List</option>
                                         <option value="bank-reconciliation">Bank Reconciliation</option>
+                                        <option value="balance-sheet">Balance Sheet</option>
+                                        <option value="trail-balance">Trail Balance</option>
                                     </select>
                                 </div>
                             </div>

@@ -27,6 +27,10 @@ class ReportController extends Controller
                 return $this->accountsList($request);
             case 'bank-reconciliation':
                 return $this->bankReconciliation($request);
+            case 'balance-sheet':
+                abort(404);
+            case 'trail-balance':
+                abort(404);
             default:
                 abort(404);
         }
@@ -190,10 +194,10 @@ class ReportController extends Controller
 
     //public function getBankAccounts()
     //{
-        // Fetch the list of bank accounts
+    // Fetch the list of bank accounts
     //    $bankAccounts = DB::table('accounts')->select('id', 'name')->get();
 
-        // Return the data in JSON format
+    // Return the data in JSON format
     //    return response()->json($bankAccounts);
     //}
 
@@ -313,5 +317,4 @@ class ReportController extends Controller
             'balance' => $balance
         ];
     }
-
 }
