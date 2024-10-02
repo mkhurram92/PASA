@@ -208,7 +208,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('accounts', AccountController::class);
     Route::resource('transaction_types', TransactionTypeController::class);
     Route::resource('assets', AssetController::class);
-    Route::resource('accounts', AccountController::class);
+    //Route::resource('accounts', AccountController::class);
 
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     Route::get('/getSubGlCodes/{parentId}', [TransactionController::class, 'getSubGlCodes']);

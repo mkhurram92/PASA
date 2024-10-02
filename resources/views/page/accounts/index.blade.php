@@ -100,84 +100,130 @@
                      <h3 class="page-title">Transaction Accounts</h3>
                  </div>
                  <div class="card-header d-flex justify-content-between align-items-center">
-                     <a class="btn btn-primary" href="#" id="add-record">
+                     <a class="btn btn-primary" href="javascript:void(0)" id="create-record">
                          <i class="fa fa-plus-circle" style="font-size:24px;"></i>
                      </a>
                  </div>
              </div>
-             <div class="row">
-                 <div class="col-md-12 p-12">
-                     <div class="card">
-                         <div class="card-body p-2">
-                             <div class="tabulator-toolbar">
-                                 Show <select style="padding:10px;" id="pageSizeDropdown">
+         </div>
+         <div class="row">
+             <div class="col-md-12 p-12">
+                 <div class="card">
+                     <div class="card-body p-2">
+                         <div class="tabulator-toolbar">
+                             Show <select style="padding:10px;" id="pageSizeDropdown">
                                  <option value="25">25</option>
-                                     <option value="50">50</option>
-                                     <option value="100">100</option>
-                                     <option value="1000000">ALL</option>
-                                 </select>
-                                 
-                                 <button class="custom-button" type="button" id="printTable"
-                                     onclick="printData()">Print</button>
-                                 <button class="custom-button" id="download-csv">Download CSV</button>
-                                 <button class="custom-button" id="download-xlsx">Download EXCEL</button>
-                                 <button class="custom-button" id="download-pdf">Download PDF</button>
-                                 <button class="custom-button" id="reset-button">Reset Filter</button>
-                             </div>
-                             <div id="accounts-table"></div>
+                                 <option value="50">50</option>
+                                 <option value="100">100</option>
+                                 <option value="1000000">ALL</option>
+                             </select>
+
+                             <button class="custom-button" type="button" id="printTable"
+                                 onclick="printData()">Print</button>
+                             <button class="custom-button" id="download-csv">Download CSV</button>
+                             <button class="custom-button" id="download-xlsx">Download EXCEL</button>
+                             <button class="custom-button" id="download-pdf">Download PDF</button>
+                             <button class="custom-button" id="reset-button">Reset Filter</button>
                          </div>
+                         <div id="accounts-table"></div>
                      </div>
                  </div>
              </div>
          </div>
      </div>
  </div>
+ </div>
  <div id="crud"></div>
  @section('scripts')
-     <script>
-         var account = @json($account);
+ <script>
+     var account = @json($account);
 
-         var table = new Tabulator("#accounts-table", {
-             data: account,
-             layout: "fitColumns",
-             columns: [{
-                     title: "ID",
-                     field: "id",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input"
-                 },
-                 {
-                     title: "Account Name",
-                     field: "name",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input"
-                 },
-                 {
-                     title: "Description",
-                     field: "description",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input"
-                 },
-                 {
-                     title: "Updated Date",
-                     field: "updated_at",
-                     hozAlign: "center",
-                     vertAlign: "middle",
-                     headerFilter: "input",
-                     formatter: function(cell) {
-                         var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD');
-                         return formattedDate;
-                     }
+     var table = new Tabulator("#accounts-table", {
+         data: account,
+         layout: "fitColumns",
+         columns: [{
+                 title: "ID",
+                 field: "id",
+                 hozAlign: "center",
+                 vertAlign: "middle",
+                 headerFilter: "input"
+             },
+             {
+                 title: "Account Name",
+                 field: "name",
+                 hozAlign: "center",
+                 vertAlign: "middle",
+                 headerFilter: "input"
+             },
+             {
+                 title: "Created at",
+                 field: "created_at",
+                 hozAlign: "center",
+                 vertAlign: "middle",
+                 headerFilter: "input",
+                 formatter: function(cell) {
+                     var formattedDate = moment(cell.getValue()).format('YYYY-MM-DD');
+                     return formattedDate;
                  }
-             ],
-             initialSort: [{
-                 column: "updated_at",
-                 dir: "desc"
-             }]
+             },
+             {
+                 title: "Action",
+                 field: "actions",
+                 hozAlign: "center",
+                 vertAlign: "middle",
+                 width: "8%",
+                 formatter: function(cell, formatterParams, onRendered) {
+                     var id = cell.getData().id;
+
+                     // Add buttons for each row
+                     return '<div class="button-container">' +
+                         '<button class="fa fa-eye view-button" id="view-record" data-id="' + id +
+                         '"></button>'+
+                         '<button class="fa fa-edit edit-button" data-id="' + id + '"></button>' +
+                         '</div>';
+                 }
+             }
+         ],
+         initialSort: [{
+             column: "created_at",
+             dir: "desc"
+         }]
+     });
+
+     $('#create-record').click(function() {
+         $.get("{{ route('accounts.create') }}", form => {
+             $('#crud').html(form.html);
+             $('#crud').find(".modal").modal('show');
          });
-     </script>
+     });
+
+     // Attach the event listener directly to the table element
+     document.getElementById('accounts-table').addEventListener("click", function(e) {
+         if (e.target.classList.contains("view-button")) {
+             var accountId = e.target.getAttribute("data-id");
+             openViewModal(accountId);
+         } else if (e.target.classList.contains("edit-button")) {
+             var accountId = e.target.getAttribute("data-id");
+             openUpdateModal(accountId);
+         }
+     });
+
+     // Function to open the view modal
+     function openViewModal(accountId) {
+         $.get("{{ route('accounts.show', ['account' => '__account__']) }}".replace('__account__', accountId), function(response) {
+             $('#crud').html(response.html);
+             $('#crudModelViewAccount').modal('show');
+         });
+     }
+
+     function openUpdateModal(accountId) {
+         $.get("{{ route('accounts.edit', ['account' => '__accountId__']) }}".replace('__accountId__', accountId), function(response) {
+             $('#crud').html(response.html);
+             $('#crud').find(".modal").modal('show');
+         });
+     }
+
+ </script>
+
  @endsection
  @include('layout.footer')
