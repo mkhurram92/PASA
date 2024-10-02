@@ -42,7 +42,7 @@
 
         .header h3 {
             margin: 10px 0;
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
         }
 
@@ -100,7 +100,7 @@
         <!-- Header Section -->
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
-            <h4>23 Leigh Street, Adelaide 5000</h4>
+            <h3>23 Leigh Street, Adelaide 5000</h3>
             <h3>Accounts List as of {{ \Carbon\Carbon::parse(request('date'))->format('d/m/Y') }}</h3>
         </div>
 
