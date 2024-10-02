@@ -103,9 +103,9 @@
                 {{ \Carbon\Carbon::parse(request('end_date'))->format('d/m/Y') }}
             </p>
             @elseif(request('month') && request('year'))
-            <p>Month : {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
+            <p>Month: {{ date('F', mktime(0, 0, 0, request('month'), 1)) }} {{ request('year') }}</p>
             @elseif(request('year'))
-            <p>Year : {{ request('year') }}</p>
+            <p>Year: {{ request('year') }}</p>
             @endif
         </div>
 

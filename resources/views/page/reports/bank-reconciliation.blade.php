@@ -7,7 +7,7 @@
     <title>Reconciliation Report</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             background-color: #fff;
             color: #000;
             margin: 0;
@@ -29,33 +29,21 @@
             margin-bottom: 10px;
         }
 
-        .header h2 {
+        .header h1 {
             margin: 0;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
         }
 
-        .header p {
+        .header h4 {
             margin: 2px 0;
             font-size: 12px;
         }
 
-        h1 {
-            color: #000;
-            font-size: 18px;
+        .header h3 {
+            margin: 10px 0;
+            font-size: 13px;
             font-weight: bold;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            color: #000;
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 5px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 5px;
         }
 
         .table-container {
@@ -115,7 +103,7 @@
         <!-- Header Section -->
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
-            <h4>23 Leigh Street, Adelaide 5000</h4>
+            <h3>23 Leigh Street, Adelaide 5000</h3>
             <h3>Reconciliation Report</h3>
 
             @if (request('start_date') && request('end_date'))
@@ -127,20 +115,26 @@
             @endif
         </div>
 
-        <!-- Income Section -->
-        <h2>Income</h2>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Date</th>
+                        <th>ID#</th>
+                        <th class="center-align">Date</th>
                         <th>Memo/Payee</th>
-                        <th>Deposit</th>
-                        <th>Widthdrawal</th>
+                        <th class="right-align">Deposit</th>
+                        <th class="right-align">Withdrawal</th>
+                        <th class="right-align">Balance</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    <tr class="total-row">
+                        <td colspan="3" class="right-align">Total</td>
+                        <td class="right-align">$0.00</td>
+                        <td class="right-align">$0.00</td>
+                        <td class="right-align">$0.00</td>
+                        <!-- Final balance -->
+                    </tr>
                 </tbody>
             </table>
         </div>
