@@ -124,13 +124,11 @@
                         <th>Memo/Payee</th>
                         <th class="right-align">Deposit</th>
                         <th class="right-align">Withdrawal</th>
-                        <th class="right-align">Balance</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="total-row">
                         <td colspan="3" class="right-align">Total</td>
-                        <td class="right-align">$0.00</td>
                         <td class="right-align">$0.00</td>
                         <td class="right-align">$0.00</td>
                         <!-- Final balance -->
