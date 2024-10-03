@@ -20,7 +20,7 @@ class UpdateNonRenewalStatus extends Command
 
     public function handle()
     {
-        Log::info('Cron Job Started.');
+        Log::info('Cron Job Started. Update member statuses based on expiry dates and renewal conditions');
 
         $today = now()->format('m-d'); // Get today's date in MM-DD format
 
@@ -56,8 +56,10 @@ class UpdateNonRenewalStatus extends Command
 
         if ($updatedRows > 0) {
             $this->info("Successfully updated {$updatedRows} members to Non-Financial status.");
+            Log::info("Successfully updated {$updatedRows} members to Non-Financial status.");
         } else {
             $this->info('No members found with Non-renewal status.');
+            Log::info('No members found with Non-renewal status.');
         }
     }
 
@@ -86,8 +88,10 @@ class UpdateNonRenewalStatus extends Command
 
         if ($updatedRows > 0) {
             $this->info("Successfully updated {$updatedRows} members to Non-renewal status.");
+            Log::info("Successfully updated {$updatedRows} members to Non-renewal status.");
         } else {
             $this->info('No expired active members found.');
+            Log::info('No expired active members found.');
         }
     }
 }
