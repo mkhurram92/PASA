@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\Models\AccountBalance;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class UpdateAccountBalances extends Command
 {
@@ -14,6 +15,7 @@ class UpdateAccountBalances extends Command
 
     public function handle()
     {
+        Log::info('UpdateAccountBalances command started.');
         // Get the financial year start and end
         [$financialYearStart, $financialYearEnd] = $this->getFinancialYear();
 

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class UpdateNonRenewalStatus extends Command
 {
@@ -19,6 +20,8 @@ class UpdateNonRenewalStatus extends Command
 
     public function handle()
     {
+        Log::info('Cron Job Started.');
+
         $today = now()->format('m-d'); // Get today's date in MM-DD format
 
         if ($today === '10-01') {
@@ -29,6 +32,7 @@ class UpdateNonRenewalStatus extends Command
             $this->markExpiredAsNonRenewal();
         } else {
             $this->info('This command is only meant to run on 1st July and 1st October.');
+            Log::info('This command is only meant to run on 1st July and 1st October.');
         }
 
         return 0;
