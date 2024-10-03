@@ -277,6 +277,7 @@
         document.getElementById('membership_number').addEventListener('change', function() {
             var selectedOption = this.options[this.selectedIndex];
             var memberId = selectedOption.getAttribute('data-member-id');
+            console.log('Selected Member ID:', memberId);
             document.getElementById('member_id').value = memberId;
         });
 

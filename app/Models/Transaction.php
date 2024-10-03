@@ -68,4 +68,21 @@ class Transaction extends Model
 
         return $transaction;
     }
+
+    public function getRelatedNameAttribute()
+    {
+        if ($this->transaction_type_id == 2 && $this->supplier_id) {
+            return $this->supplier->name; // Return Supplier name if it's an expense
+        }
+
+        if ($this->transaction_type_id == 1 && $this->member_id) {
+            return $this->member->family_name . ' ' . $this->member->given_name; // Return Member name if it's income and member_id is set
+        }
+
+        if ($this->transaction_type_id == 1 && $this->customer_id) {
+            return $this->customer->name; // Return Customer name if it's income and customer_id is set
+        }
+
+        return null; // Return null if none of the conditions are met
+    }
 }

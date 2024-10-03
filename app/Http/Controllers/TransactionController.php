@@ -34,11 +34,16 @@ class TransactionController extends Controller
         $customers = Customer::orderBy('name', 'asc')->pluck('name')->toArray();
         array_unshift($customers, '');
 
-        $transaction = Transaction::with('account', 'transactionType', 'glCodesParent')
-        ->orderBy('created_at', 'desc')->get();
+        $transactions = Transaction::with(['account', 'transactionType', 'glCodesParent', 'supplier', 'customer', 'member'])
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->map(function ($transaction) {
+            $transaction->related_name = $transaction->related_name; // Automatically compute the related name
+            return $transaction;
+        });
 
 
-        return view('page.transaction.index', compact('transaction', 'gl_code_parent', 'transaction_type', 'account_type', 'suppliers', 'customers'));
+        return view('page.transaction.index', compact('transactions', 'gl_code_parent', 'transaction_type', 'account_type', 'suppliers', 'customers'));
     }
 
     
@@ -61,66 +66,7 @@ class TransactionController extends Controller
         return view('page.transaction.create', compact('parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
     }
 
-    /*    public function store(Request $request)
-    {
-        try {
-            // Start a database transaction
-            DB::beginTransaction();
-
-            $rules = [
-                'transaction_type' => 'required',
-                'parent_id' => 'required|exists:gl_codes_parent,id',
-                'account_type' => 'required|exists:accounts,id',
-                'amount' => 'required|numeric',
-            ];
-
-            // Custom validation messages
-            $messages = [
-                'transaction_type' => 'Transaction type is required',
-                'parent_id' => 'Account is required',
-                'account_type' => 'Transaction account is required',
-                'amount' => 'Amount field is required',
-            ];
-
-            // Validate the request
-            $validator = Validator::make($request->all(), $rules, $messages);
-
-            // Check if validation fails
-            if ($validator->fails()) {
-                throw new \Exception($validator->errors()->first());
-            }
-
-            // Create a new Transaction instance
-            $transaction = new Transaction([
-                'transaction_type_id' => $request->input('transaction_type'),
-                'gl_code_id' => $request->input('parent_id'),
-                //'gl_code_id' => $request->input('subGlCodes'),
-                'account_id' => $request->input('account_type'),
-                'amount' => $request->input('amount'),
-                'description' => $request->input('description')
-            ]);
-
-            $transaction->save();
-
-            // Commit the database transaction
-            DB::commit();
-
-            return response()->json([
-                "status" => true,
-                "message" => "Transaction Added Successfully",
-                "redirectTo" => route("transaction.index")
-            ]);
-        } catch (\Exception $e) {
-            // Rollback the database transaction on error
-            DB::rollBack();
-
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-        */
+   
     public function store(Request $request)
     {
         try {
@@ -221,41 +167,7 @@ class TransactionController extends Controller
 
         return view('page.transaction.edit', compact('transaction', 'parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
     }
-
-
-    /*    public function update(Request $request, Transaction $transaction)
-    {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'transaction_type_id' => 'required|integer|exists:transaction_types,id',
-            'gl_code_id' => 'required|integer|exists:gl_codes,id',
-            'account_id' => 'required|integer|exists:accounts,id',
-            'amount' => 'required|numeric|min:0',
-            'description' => 'nullable|string|max:255',
-        ]);
-
-        try {
-            // Update the transaction with validated data
-            $transaction->update($validatedData);
-
-            // Return a JSON response for AJAX
-            return response()->json([
-                'success' => true,
-                'message' => 'Transaction updated successfully!'
-            ]);
-        } catch (\Exception $e) {
-            // Log the error for debugging
-            //Log::error('Error updating transaction: ' . $e->getMessage());
-
-            // Return a JSON response with an error
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while updating the transaction.'
-            ], 500);
-        }
-    }
-*/
-
+    
     public function update(Request $request, Transaction $transaction)
     {
         try {

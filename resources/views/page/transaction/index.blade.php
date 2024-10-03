@@ -149,7 +149,7 @@
              dateFormat: "Y-m-d"
          });
 
-         var transactionData = {!! json_encode($transaction->toArray()) !!};
+         var transactionData = {!! json_encode($transactions->toArray()) !!};
          
          // Format the created_at field using moment.js before passing it to Tabulator
          transactionData = transactionData.map(function(transaction) {
@@ -241,6 +241,17 @@
                          return cell.getValue();
                      }
                  },
+                 {
+                    title: "Payee Name", // Display the related name in the table
+                    field: "related_name",
+                    hozAlign: "left",
+                    vertAlign: "middle",
+                    headerFilter: "input",
+                    headerFilterPlaceholder: 'Filter by Name',
+                    formatter: function(cell, formatterParams, onRendered) {
+                        return cell.getValue() || 'N/A'; // Show N/A if no name is available
+                    }
+                },
                  {
                      title: "Description",
                      field: "description",
