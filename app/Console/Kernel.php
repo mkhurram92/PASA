@@ -15,7 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // Run the balances:update command on 1st July each year
+        $schedule->command('balances:update')->yearlyOn(7, 1);
+
+        // Command to update Non-Renewal and Non-Financial statuses daily
         $schedule->command('members:update-status')->daily();
     }
 
@@ -26,7 +29,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
