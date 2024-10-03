@@ -77,11 +77,19 @@ class User extends Authenticatable
     {
         if ($this->member && $this->member->additionalInfo) {
             $membershipEndDate = $this->member->additionalInfo->membershipEndDate;
-            return $membershipEndDate && $membershipEndDate->isPast();
+
+            if ($membershipEndDate) {
+                // Add a 3-month grace period
+                $gracePeriodEndDate = $membershipEndDate->copy()->addMonths(3);
+
+                // Check if the current date is past the grace period
+                return now()->greaterThan($gracePeriodEndDate);
+            }
         }
 
         return false;
     }
+
     public function member()
     {
         return $this->belongsTo(Member::class, 'member_id');
