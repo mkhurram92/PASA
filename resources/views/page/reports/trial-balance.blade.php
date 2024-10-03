@@ -114,7 +114,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="center-align">Account</th>
+                        <th class="left-align">Account</th>
                         <th class="right-align">Debit</th>
                         <th class="right-align">Credit</th>
                         <th class="right-align">YTD Debit</th>
