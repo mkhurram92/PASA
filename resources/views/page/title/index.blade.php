@@ -217,7 +217,7 @@
                  }
              ],
              pagination: 'local',
-             paginationSize: 10,
+             paginationSize: 25,
              placeholder: "No Data Available"
          });
 
@@ -269,7 +269,7 @@
          });
 
          $("#pageSizeDropdown").on("change", function() {
-             var selectedPageSize = parseInt($(this).val(), 10);
+             var selectedPageSize = parseInt($(this).val(), 25);
              table.setPageSize(selectedPageSize);
          });
 
