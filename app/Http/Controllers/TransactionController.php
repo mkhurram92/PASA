@@ -35,18 +35,17 @@ class TransactionController extends Controller
         array_unshift($customers, '');
 
         $transactions = Transaction::with(['account', 'transactionType', 'glCodesParent', 'supplier', 'customer', 'member'])
-        ->orderBy('created_at', 'desc')
-        ->get()
-        ->map(function ($transaction) {
-            $transaction->related_name = $transaction->related_name; // Automatically compute the related name
-            return $transaction;
-        });
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($transaction) {
+                $transaction->related_name = $transaction->related_name; // Automatically compute the related name
+                return $transaction;
+            });
 
 
         return view('page.transaction.index', compact('transactions', 'gl_code_parent', 'transaction_type', 'account_type', 'suppliers', 'customers'));
     }
 
-    
     public function create()
     {
         $transactionType = TransactionType::OrderBy('name', 'asc')->get();
@@ -66,7 +65,6 @@ class TransactionController extends Controller
         return view('page.transaction.create', compact('parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
     }
 
-   
     public function store(Request $request)
     {
         try {
@@ -80,14 +78,15 @@ class TransactionController extends Controller
             // Determine the transaction type and handle accordingly
             if ($request->transaction_type == '1') { // Income
                 if ($request->paying_for_member == 'yes') {
-                    $member_id = $request->member_id;
+                    $membership = AdditionalMemberInfos::find($request->membership_number);
+                    $member_id = $membership ? $membership->member_id : null;
                 } elseif ($request->paying_for_member == 'no') {
                     $customer_id = $request->customer_id;
                 }
             } elseif ($request->transaction_type == '2') { // Expenditure
                 $supplier_id = $request->supplier_id;
             }
-
+            
             // Create the transaction with only the relevant fields
             $transaction = Transaction::create([
                 'transaction_type_id' => $request->transaction_type,
@@ -146,7 +145,6 @@ class TransactionController extends Controller
             } else {
                 $transaction->member_info = null;
             }
-
         }
 
         return view('page.transaction.view', compact('transaction'));
@@ -167,7 +165,7 @@ class TransactionController extends Controller
 
         return view('page.transaction.edit', compact('transaction', 'parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
     }
-    
+
     public function update(Request $request, Transaction $transaction)
     {
         try {

@@ -139,6 +139,9 @@
 
  @section('scripts')
      <script>
+        function nullToEmptyString(value) {
+                return value === null ? '' : value;
+            }
 
          // Initializing Flatpickr for date range filtering
          flatpickr("#start-date", {
@@ -242,15 +245,16 @@
                      }
                  },
                  {
-                    title: "Payee Name", // Display the related name in the table
+                    title: "Payee Name", 
                     field: "related_name",
                     hozAlign: "left",
                     vertAlign: "middle",
                     headerFilter: "input",
                     headerFilterPlaceholder: 'Filter by Name',
                     formatter: function(cell, formatterParams, onRendered) {
-                        return cell.getValue() || 'N/A'; // Show N/A if no name is available
-                    }
+                        return cell.getValue() || 'N/A';
+                    },                    
+                    mutator: nullToEmptyString
                 },
                  {
                      title: "Description",
@@ -259,6 +263,7 @@
                      vertAlign: "middle",
                      headerFilter: "input",
                      headerFilterPlaceholder: 'Search by Description',
+                     mutator: nullToEmptyString
                  },
                  {
                      title: "Action",
