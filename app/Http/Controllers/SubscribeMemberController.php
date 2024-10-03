@@ -281,6 +281,8 @@ class SubscribeMemberController extends Controller
 
     public function memberDetailUpdate(Request $request, $id)
     {
+        //Log::info(auth()->user()->role_id);
+        $user = auth()->user();
 
         $needToValidate = [
             'title' => 'required',
@@ -352,38 +354,40 @@ class SubscribeMemberController extends Controller
             'area_code' => $request->area_code,
         ]);
 
-        AdditionalMemberInfos::updateOrCreate(['member_id' => $member->id], [
-            'member_id' => $member->id,
-            'membership_number' => $request->membership_number,
-            'general_notes' => $request->general_notes,
-            'end_status_notes' => $request->end_status_notes,
-            'partner_member' => (int)$request->partner_member,
-            'volunteer' => (int)$request->volunteer,
-            'volunteer_skills_working' => $request->volunteer_skills_working,
-            'registration_form_received' => (int)$request->registration_form_received,
-            'signed_agreement' => (int)$request->signed_agreement,
-            'key_holder' => (int)$request->key_holder,
-            'key_held' => $request->key_held,
-            //'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
-            'date_membership_end' => !empty($request->date_membership_end) ? $request->date_membership_end : null,
-            'month_membership_end' => !empty($request->month_membership_end) ? $request->month_membership_end : null,
-            'year_membership_end' => !empty($request->year_membership_end) ? $request->year_membership_end : null,
-            //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
-            'date_membership_approved' => !empty($request->date_membership_approved) ? $request->date_membership_approved : null,
-            'month_membership_approved' => !empty($request->month_membership_approved) ? $request->month_membership_approved : null,
-            'year_membership_approved' => !empty($request->year_membership_approved) ? $request->year_membership_approved : null,
-        ]);
-
-        $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
-        if ($volunteerEnable && $volunteerEnable->volunteer == 1) {
-            VolunteerDetail::updateOrCreate(['member_id' => $member->id], [
+        if ($user->role_id == 1) {
+            AdditionalMemberInfos::updateOrCreate(['member_id' => $member->id], [
                 'member_id' => $member->id,
-                'experience' => $request->experience,
-                'health_issues' => $request->health_issues,
-                'contact' => $request->contact,
-                'skills' => $request->skills,
-                'availability' => $request->availability
+                'membership_number' => $request->membership_number,
+                'general_notes' => $request->general_notes,
+                'end_status_notes' => $request->end_status_notes,
+                'partner_member' => (int)$request->partner_member,
+                'volunteer' => (int)$request->volunteer,
+                'volunteer_skills_working' => $request->volunteer_skills_working,
+                'registration_form_received' => (int)$request->registration_form_received,
+                'signed_agreement' => (int)$request->signed_agreement,
+                'key_holder' => (int)$request->key_holder,
+                'key_held' => $request->key_held,
+                //'date_membership_end' => !empty($request->date_membership_end) ? date('Y-m-d', strtotime($request->date_membership_end)) : null,
+                'date_membership_end' => !empty($request->date_membership_end) ? $request->date_membership_end : null,
+                'month_membership_end' => !empty($request->month_membership_end) ? $request->month_membership_end : null,
+                'year_membership_end' => !empty($request->year_membership_end) ? $request->year_membership_end : null,
+                //'date_membership_approved' => !empty($request->date_membership_approved) ? date('Y-m-d', strtotime($request->date_membership_approved)) : null
+                'date_membership_approved' => !empty($request->date_membership_approved) ? $request->date_membership_approved : null,
+                'month_membership_approved' => !empty($request->month_membership_approved) ? $request->month_membership_approved : null,
+                'year_membership_approved' => !empty($request->year_membership_approved) ? $request->year_membership_approved : null,
             ]);
+
+            $volunteerEnable = AdditionalMemberInfos::where('member_id', $member->id)->first();
+            if ($volunteerEnable && $volunteerEnable->volunteer == 1) {
+                VolunteerDetail::updateOrCreate(['member_id' => $member->id], [
+                    'member_id' => $member->id,
+                    'experience' => $request->experience,
+                    'health_issues' => $request->health_issues,
+                    'contact' => $request->contact,
+                    'skills' => $request->skills,
+                    'availability' => $request->availability
+                ]);
+            }
         }
 
         if ($oldEmail !== $newEmail && $newEmail) {

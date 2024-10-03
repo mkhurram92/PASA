@@ -144,7 +144,7 @@
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
                                                         placeholder="Enter Initials" value="{{ $member?->initials }}"
-                                                        name="initials">
+                                                        name="initials" {{ auth()->user()->role_id == 1 ? '' : 'readonly' }}>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -152,7 +152,7 @@
                                                 <div class="col-md-8">
                                                     <input class="form-control" type="text"
                                                         placeholder="Enter Post Nominal"
-                                                        value="{{ $member?->post_nominal }}" name="post_nominal">
+                                                        value="{{ $member?->post_nominal }}" name="post_nominal" {{ auth()->user()->role_id == 1 ? '' : 'readonly' }}>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -295,14 +295,14 @@
                                                 <input class="form-control" type="text"
                                                     placeholder="Membership Number"
                                                     value="{{ $member?->additionalInfo?->membership_number }}"
-                                                    name="membership_number">
+                                                    name="membership_number" {{ auth()->user()->role_id == 1 ? '' : 'readonly' }}>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label class="col-md-4 form-label">Username </label>
                                             <div class="col-md-8">
                                                 <input class="form-control" type="text" placeholder="User Name"
-                                                    value="{{ $member?->username }}" name="username">
+                                                    value="{{ $member?->username }}" name="username" {{ auth()->user()->role_id == 1 ? '' : 'readonly' }}>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -310,7 +310,7 @@
                                             <label class="col-md-4 form-label">Membership Type </label>
                                             <div class="col-md-8">
                                                 <select name="member_type_id" class="form-control form-select select2"
-                                                    id="member_type_id">
+                                                    id="member_type_id" {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}>
                                                     @forelse ($data['membership_types'] as $type)
                                                         <option value="{{ $type?->id }}"
                                                             @if ($type?->id == $member?->member_type_id) selected @endif>
@@ -328,7 +328,7 @@
                                             </label>
                                             <div class="col-md-8">
                                                 <select name="member_status_id"
-                                                    class="form-control form-select select2" id="member_status_id">
+                                                    class="form-control form-select select2" id="member_status_id" {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}>
                                                     @forelse ($data['membership_status'] as $status)
                                                         <option value="{{ $status?->id }}"
                                                             @if ($status?->id == $member?->member_status_id) selected @endif>
@@ -349,17 +349,17 @@
                                                     <div class="col-4 pr-1">
                                                         <input class="form-control"
                                                             value="{{ $member?->additionalInfo?->year_membership_approved }}"
-                                                            type="text" name="year_membership_approved">
+                                                            type="text" name="year_membership_approved" {{ auth()->user()->role_id == 1 ? '' : 'readonly' }}>
                                                     </div>
                                                     <div class="col-4 px-1">
                                                         <select class="form-control month-select"
                                                             id="month_membership_approved"
-                                                            name="month_membership_approved"></select>
+                                                            name="month_membership_approved" {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}></select>
                                                     </div>
                                                     <div class="col-4 px-1">
                                                         <select class="form-control day-select"
                                                             id="date_membership_approved"
-                                                            name="date_membership_approved"></select>
+                                                            name="date_membership_approved" {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}></select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -371,17 +371,17 @@
                                                     <div class="col-4 pr-1">
                                                         <input class="form-control"
                                                             value="{{ $member?->additionalInfo?->year_membership_end }}"
-                                                            type="text" name="year_membership_end">
+                                                            type="text" name="year_membership_end" {{ auth()->user()->role_id == 1 ? '' : 'readonly' }}>
                                                     </div>
                                                     <div class="col-4 px-1">
                                                         <select class="form-control month-select"
                                                             id="month_membership_end"
-                                                            name="month_membership_end"></select>
+                                                            name="month_membership_end" {{ auth()->user()->role_id == 1 ? '' : 'disabled' }} ></select>
                                                     </div>
                                                     <div class="col-4 px-1">
                                                         <select class="form-control day-select"
                                                             id="date_membership_end"
-                                                            name="date_membership_end"></select>
+                                                            name="date_membership_end" {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}></select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -390,7 +390,7 @@
                                             <label class="col-md-4 form-label">End Status
                                                 Notes</label>
                                             <div class="col-md-8">
-                                                <textarea class="form-control" name="end_status_notes" rows="3" placeholder="End Status Notes">{{ $member?->additionalInfo?->end_status_notes }}</textarea>
+                                                <textarea class="form-control" name="end_status_notes" rows="3" placeholder="End Status Notes" {{ auth()->user()->role_id == 1 ? '' : 'readonly' }}>{{ $member?->additionalInfo?->end_status_notes }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -421,7 +421,7 @@
                                             <div class="col-md-6">
                                                 <input id="registration_form_received" type="checkbox"
                                                     class="checkbox-input" name="registration_form_received"
-                                                    value='1' @if ($member?->additionalInfo?->registration_form_received == 1) checked @endif>
+                                                    value='1' @if ($member?->additionalInfo?->registration_form_received == 1) checked @endif {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -431,7 +431,7 @@
                                             <div class="col-md-6">
                                                 <input id="signed_agreement" type="checkbox" class="checkbox-input"
                                                     name="signed_agreement" value='1'
-                                                    @if ($member?->additionalInfo?->signed_agreement == 1) checked @endif>
+                                                    @if ($member?->additionalInfo?->signed_agreement == 1) checked @endif {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
@@ -439,13 +439,13 @@
                                             <div class="col-md-8">
                                                 <input id="key_holder" type="checkbox" class="checkbox-input"
                                                     name="key_holder" value='1'
-                                                    @if ($member?->additionalInfo?->key_holder == 1) checked @endif>
+                                                    @if ($member?->additionalInfo?->key_holder == 1) checked @endif {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                         <div class="mb-3 row key_held" style="display: none;">
                                             <label class="col-md-4 form-label">Key Held</label>
                                             <div class="col-md-8">
-                                                <textarea class="form-control" name="key_held" rows="3" placeholder="Key Held">{{ $member?->additionalInfo?->key_held }}</textarea>
+                                                <textarea class="form-control" name="key_held" rows="3" placeholder="Key Held" {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}>{{ $member?->additionalInfo?->key_held }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -455,7 +455,7 @@
                                             <div class="col-md-8">
                                                 <input id="volunteer" type="checkbox" class="checkbox-input"
                                                     name="volunteer" value='1'
-                                                    @if ($member?->additionalInfo?->volunteer == 1) checked @endif>
+                                                    @if ($member?->additionalInfo?->volunteer == 1) checked @endif {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                     </div>
@@ -464,7 +464,7 @@
                                             <div class="mb-3 row">
                                                 <label class="col-md-4 form-label">Volunteer Experience</label>
                                                 <div class="col-md-12">
-                                                    <textarea class="form-control" name="experience" rows="10">{{ $member?->volunteerDetails?->experience }}</textarea>
+                                                    <textarea class="form-control" name="experience" rows="10" {{ auth()->user()->role_id == 1 ? '' : 'disabled' }}>{{ $member?->volunteerDetails?->experience }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
