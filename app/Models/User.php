@@ -69,7 +69,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if the user's account is expired.
+     * Check if the user's account is fully expired (past the grace period).
      *
      * @return bool
      */
@@ -82,8 +82,27 @@ class User extends Authenticatable
                 // Add a 3-month grace period
                 $gracePeriodEndDate = $membershipEndDate->copy()->addMonths(3);
 
-                // Check if the current date is past the grace period
+                // If the current date is beyond the grace period, account is expired
                 return now()->greaterThan($gracePeriodEndDate);
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the user is in the grace period.
+     *
+     * @return bool
+     */
+    public function inGracePeriod()
+    {
+        if ($this->member && $this->member->additionalInfo) {
+            $membershipEndDate = $this->member->additionalInfo->membershipEndDate;
+
+            if ($membershipEndDate) {
+                // Check if the user is past the membership end date but still within the 3-month grace period
+                return now()->greaterThan($membershipEndDate) && now()->lessThanOrEqualTo($membershipEndDate->copy()->addMonths(3));
             }
         }
 
