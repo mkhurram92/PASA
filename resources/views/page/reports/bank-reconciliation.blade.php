@@ -104,7 +104,7 @@
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
             <h3>23 Leigh Street, Adelaide 5000</h3>
-            <h3>Reconciliation Report</h3>
+            <h3>Bank Reconciliation Report</h3>
 
             @if (request('start_date') && request('end_date'))
                 <p>From: {{ request('start_date') }} To: {{ request('end_date') }}</p>

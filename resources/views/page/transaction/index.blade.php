@@ -110,14 +110,19 @@
                      <div class="card">
                          <div class="card-body p-2">
                              <div class="tabulator-toolbar">
-                                 Show <select style="padding:10px;" id="pageSizeDropdown">
+                                 Show 
+                                 <select style="padding:10px;" id="pageSizeDropdown">
                                      <option value="25">25</option>
                                      <option value="50">50</option>
                                      <option value="100">100</option>
                                      <option value="1000000">ALL</option>
                                  </select>
-                                 <button class="custom-button" type="button" id="printTable"
-                                     onclick="printData()">Print</button>
+                                 <label style="padding: 10px;" for="start-date">Start Date:</label>
+                                 <input style="padding: 10px 20px;" type="text" id="start-date" placeholder="YYYY-MM-DD">
+                                 <label style="padding: 10px;" for="end-date">End Date:</label>
+                                 <input style="padding: 10px 20px;" type="text" id="end-date" placeholder="YYYY-MM-DD">
+                                 <button class="custom-button" id="apply-date-filter">Apply Date Filter</button>
+                                 <button class="custom-button" id="printTable" onclick="printData()">Print</button>
                                  <button class="custom-button" id="download-csv">Download CSV</button>
                                  <button class="custom-button" id="download-xlsx">Download EXCEL</button>
                                  <button class="custom-button" id="download-pdf">Download PDF</button>
@@ -131,30 +136,38 @@
          </div>
      </div>
  </div>
+
  @section('scripts')
      <script>
 
-        var transactionData = {!! json_encode($transaction->toArray()) !!};
-            
-            // Format the created_at field using moment.js before passing it to Tabulator
-            transactionData = transactionData.map(function(transaction) {
-                if (transaction.created_at) {
-                    // Use moment.js to format the date to YYYY-MM-DD
-                    transaction.created_at = moment(transaction.created_at).format('YYYY-MM-DD');
-                }
-                return transaction;
-            });
+         // Initializing Flatpickr for date range filtering
+         flatpickr("#start-date", {
+             dateFormat: "Y-m-d"
+         });
 
-         //var transaction = <?php echo json_encode($transaction); ?>;
+         flatpickr("#end-date", {
+             dateFormat: "Y-m-d"
+         });
+
+         var transactionData = {!! json_encode($transaction->toArray()) !!};
+         
+         // Format the created_at field using moment.js before passing it to Tabulator
+         transactionData = transactionData.map(function(transaction) {
+             if (transaction.created_at) {
+                 transaction.created_at = moment(transaction.created_at).format('YYYY-MM-DD');
+             }
+             return transaction;
+         });
+
          var gl_code_parent = <?php echo json_encode($gl_code_parent); ?>;
          var transaction_type = <?php echo json_encode($transaction_type); ?>;
          var account_type = <?php echo json_encode($account_type); ?>;
 
          var table = new Tabulator("#transaction-table", {
              data: transactionData,
-
              layout: "fitColumns",
-             columns: [{
+             columns: [
+                 {
                      title: "Account",
                      field: "gl_codes_parent.name",
                      hozAlign: "left",
@@ -181,16 +194,13 @@
                      },
                      formatter: function(cell, formatterParams, onRendered) {
                          var transaction_type = cell.getValue();
-
                          var style = '';
                          if (transaction_type === 'Income') {
                              style = 'color: green;';
                          } else if (transaction_type === 'Expenditure') {
                              style = 'color: red;';
                          }
-                         var formattedValue = '<span style="' + style + '">' + transaction_type + '</span>';
-
-                         return formattedValue;
+                         return '<span style="' + style + '">' + transaction_type + '</span>';
                      }
                  },
                  {
@@ -221,15 +231,15 @@
                      }
                  },
                  {
-                    title: "Transaction Date",
-                    field: "created_at", 
-                    hozAlign: "left",
-                    vertAlign: "middle",
-                    headerFilter: "input",
-                    headerFilterPlaceholder: 'Search by Creation Date',
-                    formatter: function(cell) {
-                        return cell.getValue();
-                    }
+                     title: "Transaction Date",
+                     field: "created_at",
+                     hozAlign: "left",
+                     vertAlign: "middle",
+                     headerFilter: "input",
+                     headerFilterPlaceholder: 'Search by Creation Date',
+                     formatter: function(cell) {
+                         return cell.getValue();
+                     }
                  },
                  {
                      title: "Description",
@@ -249,7 +259,6 @@
                      print: false,
                      formatter: function(cell, formatterParams, onRendered) {
                          var id = cell.getData().id;
-
                          return '<div class="button-container">' +
                              '<button class="fa fa-eye view-button" onclick="redirectToView(' +
                              id +
@@ -257,19 +266,36 @@
                              '</div>';
                      }
                  }
-
              ],
              pagination: 'local',
              placeholder: "No Data Available",
-             initialSort: [{
-                 column: "created_at",
-                 dir: "desc"
-             }]
+             initialSort: [{ column: "created_at", dir: "desc" }]
          });
-         // Add a reset button
-         var resetButton = document.getElementById("reset-button");
 
+         // Date range filter logic
+         document.getElementById("apply-date-filter").addEventListener("click", function() {
+             var startDate = document.getElementById("start-date").value;
+             var endDate = document.getElementById("end-date").value;
+
+             if (startDate && endDate) {
+                 table.setFilter([
+                     { field: "created_at", type: ">=", value: startDate },
+                     { field: "created_at", type: "<=", value: endDate }
+                 ]);
+             } else if (startDate) {
+                 table.setFilter("created_at", ">=", startDate);
+             } else if (endDate) {
+                 table.setFilter("created_at", "<=", endDate);
+             } else {
+                 table.clearFilter();
+             }
+         });
+
+         // Add reset button functionality to clear filters
+         var resetButton = document.getElementById("reset-button");
          resetButton.addEventListener("click", function() {
+             document.getElementById("start-date").value = "";
+             document.getElementById("end-date").value = "";
              table.clearFilter();
              table.clearHeaderFilter();
          });
