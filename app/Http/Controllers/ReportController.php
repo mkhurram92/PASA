@@ -28,9 +28,9 @@ class ReportController extends Controller
             case 'bank-reconciliation':
                 return $this->bankReconciliation($request);
             case 'balance-sheet':
-                abort(404);
+                return $this->balanceSheet($request);
             case 'trail-balance':
-                abort(404);
+                return $this->trialBalance($request);
             default:
                 abort(404);
         }
@@ -315,6 +315,96 @@ class ReportController extends Controller
             'totalWithdrawals' => $totalWithdrawals,
             'account_name' => $account->name,
             'balance' => $balance
+        ];
+    }
+
+    private function balanceSheet(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $month = $request->input('month');
+        $year = $request->input('year');
+        $accountId = $request->input('bank_account');
+
+        $reportData = $this->getbalanceSheetData($startDate, $endDate, $month, $year, $accountId);
+
+        // Generate and return the PDF
+        return $this->generatePDF('', 'page.reports.balance-sheet', 'balance-sheet.pdf');
+    }
+
+    private function getbalanceSheetData($startDate, $endDate, $month, $year, $accountId) {}
+
+    private function trialBalance(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $month = $request->input('month');
+        $year = $request->input('year');
+        $accountId = $request->input('bank_account');
+
+        //if (empty($accountId)) {
+        //    return back()->with('error', 'Please select a bank account.');
+        //}
+
+        $reportData = $this->gettrialBalanceData($startDate, $endDate, $month, $year, $accountId);
+
+        // Generate and return the PDF
+        return $this->generatePDF($reportData, 'page.reports.trial-balance', 'trial-balance.pdf');
+    }
+    private function gettrialBalanceData($startDate, $endDate, $month, $year, $accountId)
+    {
+        // Initialize query for retrieving the relevant accounts
+        $accounts = DB::table('gl_codes_parent')
+            ->select('gl_codes_parent.id', 'gl_codes_parent.name', 'gl_codes_parent.account_type_id', 'at.name as account_type')
+            ->leftJoin('account_types as at', 'gl_codes_parent.account_type_id', '=', 'at.id')
+            ->get();
+
+        // Initialize transactions query
+        $transactionsQuery = DB::table('transactions')
+            ->select(
+                'gl_code_id',
+                DB::raw('SUM(CASE WHEN transaction_type_id = 1 THEN amount ELSE 0 END) as debits'),
+                DB::raw('SUM(CASE WHEN transaction_type_id = 2 THEN amount ELSE 0 END) as credits')
+            )
+            ->whereIn('gl_code_id', $accounts->pluck('id'));
+
+        // Apply date filters if provided
+        if ($startDate && $endDate) {
+            $transactionsQuery->whereBetween('created_at', [$startDate, $endDate]);
+        } elseif ($month && $year) {
+            $transactionsQuery->whereYear('created_at', '=', $year)
+                ->whereMonth('created_at', '=', $month);
+        }
+
+        // If a specific bank account is provided, filter by account_id
+        if ($accountId) {
+            $transactionsQuery->where('account_id', $accountId);
+        }
+
+        $transactions = $transactionsQuery->groupBy('gl_code_id')->get();
+
+        // Map transactions to accounts
+        $trialBalanceData = $accounts->map(function ($account) use ($transactions) {
+            $accountTransactions = $transactions->firstWhere('gl_code_id', $account->id);
+            $debits = $accountTransactions ? $accountTransactions->debits : 0;
+            $credits = $accountTransactions ? $accountTransactions->credits : 0;
+
+            return [
+                'account_name' => $account->name,
+                'account_type' => $account->account_type,
+                'debits' => $debits,
+                'credits' => $credits,
+            ];
+        });
+
+        // Calculate totals
+        $totalDebits = $trialBalanceData->sum('debits');
+        $totalCredits = $trialBalanceData->sum('credits');
+
+        return [
+            'trialBalanceData' => $trialBalanceData,
+            'totalDebits' => $totalDebits,
+            'totalCredits' => $totalCredits,
         ];
     }
 }
