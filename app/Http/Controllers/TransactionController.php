@@ -59,7 +59,7 @@ class TransactionController extends Controller
         $customers = Customer::OrderBy('name', 'asc')->get();
 
         $memberships = AdditionalMemberInfos::with('member')
-            ->orderBy('membership_number', 'asc')
+            ->orderBy('member_id', 'asc')
             ->get();
 
         return view('page.transaction.create', compact('parentGlCodes', 'transactionType', 'accounts', 'suppliers', 'customers', 'memberships'));
@@ -78,8 +78,7 @@ class TransactionController extends Controller
             // Determine the transaction type and handle accordingly
             if ($request->transaction_type == '1') { // Income
                 if ($request->paying_for_member == 'yes') {
-                    $membership = AdditionalMemberInfos::find($request->membership_number);
-                    $member_id = $membership ? $membership->member_id : null;
+                    $member_id = $request->membership_number;
                 } elseif ($request->paying_for_member == 'no') {
                     $customer_id = $request->customer_id;
                 }
@@ -135,13 +134,13 @@ class TransactionController extends Controller
                 $member = $transaction->member;
 
                 // Get membership number from additionalinfo
-                $membershipNumber = $member->additionalInfo->membership_number ?? null;
+                $membershipNumber = $member->additionalInfo->member_id ?? null;
 
                 // Get member's name
                 $memberName = $member->family_name . ' ' . $member->given_name;
 
                 // Combine membership number with name if available, otherwise just use name
-                $transaction->member_info = $membershipNumber ? "$membershipNumber - $memberName" : $memberName;
+                $transaction->member_info = $membershipNumber ? "$memberName" : $memberName;
             } else {
                 $transaction->member_info = null;
             }
