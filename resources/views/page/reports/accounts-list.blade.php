@@ -121,13 +121,6 @@
                         <td>${{ number_format($account->balance, 2) }}</td> <!-- Format balance -->
                     </tr>
                     @endforeach
-                    <tr class="total-row">
-                        <td colspan="3" class="right-align">Total</td>
-                        <td class="right-align">${{ number_format($reportData['totalDeposits'], 2) }}</td>
-                        <td class="right-align">${{ number_format($reportData['totalWithdrawals'], 2) }}</td>
-                        <td class="right-align">${{ number_format($reportData['balance'], 2) }}</td>
-                        <!-- Final balance -->
-                    </tr>
                 </tbody>
             </table>
         </div>
