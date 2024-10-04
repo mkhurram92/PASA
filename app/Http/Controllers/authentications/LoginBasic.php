@@ -34,9 +34,9 @@ class LoginBasic extends Controller
             // Record login details
             LoginLog::create([
                 'user_id' => $user->id,
-                'ip_address' => $request->ip(),  // Capture IP address
-                'user_agent' => $request->header('User-Agent'),  // Capture user agent (browser)
-                'login_at' => now(),  // Capture login time
+                'ip_address' => $request->ip(), 
+                'user_agent' => $request->header('User-Agent'), 
+                'login_at' => now(), 
             ]);
 
             // Check if the user's account is fully expired
