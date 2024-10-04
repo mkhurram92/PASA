@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\LoginLog;
 
 class LoginBasic extends Controller
 {
@@ -29,6 +30,14 @@ class LoginBasic extends Controller
 
             // Ensure the member and additionalInfo relationships are loaded
             $user->load('member.additionalInfo');
+
+            // Record login details
+            LoginLog::create([
+                'user_id' => $user->id,
+                'ip_address' => $request->ip(),  // Capture IP address
+                'user_agent' => $request->header('User-Agent'),  // Capture user agent (browser)
+                'login_at' => now(),  // Capture login time
+            ]);
 
             // Check if the user's account is fully expired
             if ($user->isExpired()) {
