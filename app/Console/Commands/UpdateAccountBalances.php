@@ -15,7 +15,7 @@ class UpdateAccountBalances extends Command
 
     public function handle()
     {
-        Log::info('UpdateAccountBalances command started.');
+        Log::info('Updating opening and closing balances for all Accounts');
         // Get the financial year start and end
         [$financialYearStart, $financialYearEnd] = $this->getFinancialYear();
 
