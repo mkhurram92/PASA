@@ -153,8 +153,7 @@
             //console.log('Day Select2 initialized for element:', this, 'with value:', selectedValue);
         });
     }
-
-
+    
     function initShipSelect(element = null) {
         if (!element) {
             element = $("#ship_select2");
