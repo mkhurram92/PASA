@@ -112,7 +112,7 @@
     var table = new Tabulator("#login-log-table", {
         layout: "fitColumns",
         pagination: "local",
-        paginationSize: 10,
+        paginationSize: 25,
         columns: [{
                 title: "ID",
                 field: "id",

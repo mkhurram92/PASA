@@ -13,7 +13,7 @@ class LoginLogController extends Controller
      */
     public function index()
     {
-        return view('page.login_logs.index');
+        return view('page.user-login-logs.index');
     }
 
     /**
