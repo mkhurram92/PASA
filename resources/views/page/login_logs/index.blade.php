@@ -116,27 +116,32 @@
         columns: [{
                 title: "ID",
                 field: "id",
-                sorter: "number"
+                sorter: "number",
+                hozAlign: "center"
             },
             {
                 title: "User",
                 field: "user.email",
-                sorter: "string"
+                sorter: "string",
+                hozAlign: "center"
             },
             {
                 title: "IP Address",
                 field: "ip_address",
-                sorter: "string"
+                sorter: "string",
+                hozAlign: "center"
             },
             {
                 title: "User Agent",
                 field: "user_agent",
-                sorter: "string"
+                sorter: "string",
+                hozAlign: "center"
             },
             {
                 title: "Login Time",
                 field: "login_at",
-                sorter: "datetime"
+                sorter: "datetime",
+                hozAlign: "center"
             },
         ],
     });
