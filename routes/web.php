@@ -51,6 +51,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RegisterController;
 use App\Models\GlCodesParent;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\LoginLogController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -223,4 +225,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/get-bank-accounts', [ReportController::class, 'getBankAccounts'])->name('get.bank.accounts');
     Route::get('/accounts-list', [ReportController::class, 'accountsList'])->name('accounts.list');
 
+    Route::get('/login-logs', [LoginLogController::class, 'index'])->name('login.logs');
+    Route::get('/login-logs/data', [LoginLogController::class, 'data'])->name('login.logs.data');
 });
