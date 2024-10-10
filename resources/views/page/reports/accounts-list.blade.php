@@ -101,7 +101,8 @@
         <div class="header">
             <h1>Pioneers Association of South Australia</h1>
             <h3>23 Leigh Street, Adelaide 5000</h3>
-            <h3>Accounts List as of {{ \Carbon\Carbon::parse(request('date'))->format('d/m/Y') }}</h3>
+            <h3>Accounts List as of {{ \Carbon\Carbon::parse(request('accounts_list_date'))->format('d/m/Y') }}</h3>
+
         </div>
 
         <div class="table-container">
@@ -116,9 +117,9 @@
                 <tbody>
                     @foreach ($reportData as $account)
                     <tr>
-                        <td>{{ $account->name }}</td>
-                        <td>{{ $account->accountType ? $account->accountType->name : 'No Account Type' }}</td>
-                        <td>${{ number_format($account->balance, 2) }}</td> <!-- Format balance -->
+                        <td>{{ $account['account_name'] }}</td>
+                        <td>{{ $account['account_type'] ?? 'No Account Type' }}</td>
+                        <td>${{ number_format($account['current_balance'], 2) }}</td> <!-- Format balance -->
                     </tr>
                     @endforeach
                 </tbody>

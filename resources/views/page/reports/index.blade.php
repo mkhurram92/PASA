@@ -56,7 +56,7 @@
                                     <select name="year" id="year" class="form-control">
                                         <option value="">Select Year</option>
                                         @for ($y = date('Y'); $y >= 2020; $y--)
-                                            <option value="{{ $y }}">{{ $y }}</option>
+                                        <option value="{{ $y }}">{{ $y }}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -71,7 +71,7 @@
                                         @for ($m = 1; $m <= 12; $m++)
                                             <option value="{{ $m }}">{{ date('F', mktime(0, 0, 0, $m, 1)) }}
                                             </option>
-                                        @endfor
+                                            @endfor
                                     </select>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                             <div class="col-md-3 d-flex align-items-end"></div>
                             <!-- Preview Button -->
                             <div class="col-md-3 d-flex align-items-end">
-                                <button type="button" id="previewButton" class="btn btn-primary w-100">Preview
+                                <button type="submit" id="previewButton" class="btn btn-primary w-100">Preview
                                     Report</button>
                             </div>
 
@@ -117,7 +117,6 @@
 </div>
 
 <script>
-    // Event listener for Report Type Dropdown change
     // Event listener for Report Type Dropdown change
     document.getElementById('report_type').addEventListener('change', function() {
         var reportType = this.value;
@@ -178,7 +177,7 @@
         var year = document.getElementById('year').value;
         var startDate = document.getElementById('start_date').value;
         var endDate = document.getElementById('end_date').value;
-        var accountsListDate = document.getElementById('accounts_list_date').value;
+        var accountsListDate = document.getElementById('accounts_list_date').value; // Capturing the accounts list date
 
         // Validation: Ensure report type is selected
         if (!reportType || reportType === 'Select Report') {
@@ -222,12 +221,16 @@
         var url = "{{ route('report.show', ':report_type') }}".replace(':report_type', reportType);
         var params = [];
 
+        // Ensure accounts_list_date is used for the Accounts List report
+        if (reportType === 'accounts-list' && accountsListDate) {
+            params.push('accounts_list_date=' + encodeURIComponent(accountsListDate)); // Use 'accounts_list_date'
+        }
+
         if (month) params.push('month=' + encodeURIComponent(month));
         if (year) params.push('year=' + encodeURIComponent(year));
         if (startDate) params.push('start_date=' + encodeURIComponent(startDate));
         if (endDate) params.push('end_date=' + encodeURIComponent(endDate));
         if (bankAccount) params.push('bank_account=' + encodeURIComponent(bankAccount));
-        if (accountsListDate) params.push('date=' + encodeURIComponent(accountsListDate));
 
         if (params.length > 0) {
             url += '?' + params.join('&');

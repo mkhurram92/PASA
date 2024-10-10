@@ -8,6 +8,7 @@ use App\Models\TransactionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
@@ -192,15 +193,6 @@ class ReportController extends Controller
         ];
     }
 
-    //public function getBankAccounts()
-    //{
-    // Fetch the list of bank accounts
-    //    $bankAccounts = DB::table('accounts')->select('id', 'name')->get();
-
-    // Return the data in JSON format
-    //    return response()->json($bankAccounts);
-    //}
-
     public function getBankAccounts()
     {
         // Fetch the list of bank accounts where is_bank_account is true (1)
@@ -213,14 +205,57 @@ class ReportController extends Controller
         return response()->json($bankAccounts);
     }
 
+    //Accounts List Report
     public function accountsList(Request $request)
     {
-        // Fetch the accounts data
-        $accounts = GlCodesParent::with('accountType')->get();
 
-        // Pass the data to the generatePDF method
-        return $this->generatePDF($accounts, 'page.reports.accounts-list', 'accounts-list.pdf');
+        $accountsListDate = \Carbon\Carbon::parse($request->input('accounts_list_date'))->format('Y-m-d');
+        //$startDate = $request->input('accounts_list_date');
+        // Log the date being used for filtering
+
+        //Log::info('Generating Accounts List report for date: ' . $accountsListDate . $startDate);
+        // Fetch the accounts and their opening and closing balances
+        $accounts = GlCodesParent::with(['accountType', 'accountBalances' => function ($query) use ($accountsListDate) {
+            $query->where('financial_year_start', '<=', $accountsListDate)
+                ->where('financial_year_end', '>=', $accountsListDate);
+        }])
+            ->select('id', 'name', 'account_type_id')
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $reportData = $accounts->map(function ($account) use ($accountsListDate) {
+            $balanceData = $account->accountBalances->first();
+            $openingBalance = $balanceData ? $balanceData->opening_balance : 0;
+
+            // Fetch transactions up to the selected accounts_list_date
+            $transactions = Transaction::where('gl_code_id', $account->id)
+                ->where('created_at', '<=', $accountsListDate) // Only include transactions on or before the report date
+                ->get();
+
+            // Adjust the balance based on the transactions
+            $balanceChange = 0;
+            foreach ($transactions as $transaction) {
+                if ($transaction->transaction_type_id == 1) { // Income
+                    $balanceChange += $transaction->amount;
+                } elseif ($transaction->transaction_type_id == 2) { // Expense
+                    $balanceChange -= $transaction->amount;
+                }
+            }
+
+            // Calculate the current balance
+            $currentBalance = $openingBalance + $balanceChange;
+
+            return [
+                'account_name' => $account->name,
+                'account_type' => optional($account->accountType)->name,
+                'current_balance' => $currentBalance,
+            ];
+        });
+
+        // Send the data to the view
+        return $this->generatePDF($reportData, 'page.reports.accounts-list', 'accounts-list.pdf');
     }
+
 
     private function bankReconciliation(Request $request)
     {
@@ -229,10 +264,6 @@ class ReportController extends Controller
         $month = $request->input('month');
         $year = $request->input('year');
         $accountId = $request->input('bank_account');
-
-        //if (empty($accountId)) {
-        //    return back()->with('error', 'Please select a bank account.');
-        //}
 
         $reportData = $this->getbankReconciliationData($startDate, $endDate, $month, $year, $accountId);
 
