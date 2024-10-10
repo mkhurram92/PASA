@@ -178,7 +178,15 @@
                         <li>
                             <a class="sub-side-menu__item mx-5 {{ request()->routeIs('reports.index') ? 'active' : '' }}"
                                 href="{{ route('reports.index') }}">
-                                <span class="sub-side-menu__label">{{ __('List') }}</span>
+                                <span class="sub-side-menu__label">{{ __('Finance') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="slide-menu {{ request()->routeIs('sameship.index') ? 'open' : '' }}">
+                        <li>
+                            <a class="sub-side-menu__item mx-5 {{ request()->routeIs('sameship.index') ? 'active' : '' }}"
+                                href="{{ route('sameship.index') }}">
+                                <span class="sub-side-menu__label">{{ __('Sameship') }}</span>
                             </a>
                         </li>
                     </ul>

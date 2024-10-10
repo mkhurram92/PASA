@@ -52,7 +52,7 @@ use App\Http\Controllers\RegisterController;
 use App\Models\GlCodesParent;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\LoginLogController;
-
+use App\Http\Controllers\SameShipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -215,16 +215,21 @@ Route::group(['middleware' => ['auth']], function () {
     //Route::resource('gl_codes', GlCodeController::class)->only(['index']);
     Route::get('/getSubGlCodes/{parentId}', [TransactionController::class, 'getSubGlCodes']);
 
-    // Route to render the index page with the form
+    // Route to render the Reports page with the form
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
     // Route to handle the Profit and Loss report generation
     Route::get('/report/{type}', [ReportController::class, 'show'])->name('report.show');
 
+    //Route to Sameship report
+    Route::resource('sameship', SameShipController::class);
+    Route::get('/get-ancestors', [SameShipController::class, 'getAncestors'])->name('get.ancestors');
+        
     // Route to Bank Accounts in report filter
     Route::get('/get-bank-accounts', [ReportController::class, 'getBankAccounts'])->name('get.bank.accounts');
     Route::get('/accounts-list', [ReportController::class, 'accountsList'])->name('accounts.list');
 
     Route::get('/login-logs', [LoginLogController::class, 'index'])->name('login.logs');
     Route::get('/login-logs/data', [LoginLogController::class, 'data'])->name('login.logs.data');
+
 });

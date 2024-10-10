@@ -26,6 +26,7 @@
                                         <option value="bank-reconciliation">Bank Reconciliation</option>
                                         <option value="balance-sheet">Balance Sheet</option>
                                         <option value="trail-balance">Trail Balance</option>
+                                        <option value="trail-balance">Sameship Report</option>
                                     </select>
                                 </div>
                             </div>
