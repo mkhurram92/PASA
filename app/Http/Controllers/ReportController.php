@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -97,7 +98,7 @@ class ReportController extends Controller
         return $this->generatePDF($reportData, 'page.reports.income-and-expenditure', 'income-and-expenditure.pdf');
     }
 
-    private function bankRegister(Request $request)
+    public function bankRegister(Request $request)
     {
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
@@ -105,11 +106,18 @@ class ReportController extends Controller
         $year = $request->input('year');
         $accountId = $request->input('bank_account');
 
+        // Validate if a bank account is selected
         if (empty($accountId)) {
             return back()->with('error', 'Please select a bank account.');
         }
 
+        // Get the report data
         $reportData = $this->getBankRegisterData($startDate, $endDate, $month, $year, $accountId);
+
+        // If reportData is a redirect response (error), return it
+        if ($reportData instanceof \Illuminate\Http\RedirectResponse) {
+            return $reportData; // return the error redirect
+        }
 
         // Generate and return the PDF
         return $this->generatePDF($reportData, 'page.reports.bank-register', 'bank-register.pdf');
@@ -126,7 +134,28 @@ class ReportController extends Controller
             return back()->with('error', 'Invalid bank account selected.');
         }
 
-        // Start with the basic query for fetching transactions for the selected account
+        // Fetch opening balance from the account_balances table for the account
+        $openingBalanceQuery = DB::table('account_balances')
+            ->where('gl_codes_parent_id', $accountId);
+
+        // Apply date filter logic for the financial year
+        if ($startDate && $endDate) {
+            // If date range is selected, use the financial year start for balance before start date
+            $openingBalanceQuery->where('financial_year_start', '<=', $startDate);
+        } elseif ($month && $year) {
+            // For month and year filter, we use the year's financial year start as the opening balance reference
+            $startOfYear = Carbon::create($year, $month, 1);
+            $openingBalanceQuery->where('financial_year_start', '<=', $startOfYear);
+        } elseif ($year) {
+            // For year filter, we use the financial year start of that year
+            $startOfYear = Carbon::create($year, 7, 1); // Assuming financial year starts in July
+            $openingBalanceQuery->where('financial_year_start', '<=', $startOfYear);
+        }
+
+        // Get the opening balance
+        $openingBalance = $openingBalanceQuery->value('opening_balance') ?? 0;
+
+        // Fetch transactions for the selected account
         $query = Transaction::select(
             'transactions.id',
             'transactions.created_at',
@@ -139,10 +168,10 @@ class ReportController extends Controller
             'transactions.supplier_id'
         )
             ->with(['member', 'customer', 'supplier']) // Eager load relationships
-            ->where('gl_code_id', $accountId) // Filter by the selected bank account
-            ->orderBy('created_at', 'asc');  // Order by date
+            ->where('gl_code_id', $accountId)
+            ->orderBy('created_at', 'asc'); // Order by date
 
-        // Apply date filters
+        // Apply the same date range filtering as before
         if ($startDate && $endDate) {
             $query->whereBetween('created_at', [$startDate, $endDate . ' 23:59:59']);
         } elseif ($month && $year) {
@@ -152,13 +181,12 @@ class ReportController extends Controller
             $query->whereYear('created_at', $year);
         }
 
-        // Fetch the transactions data
         $transactions = $query->get();
 
-        // Initialize totals and running balance
+        // Initialize totals and running balance with the opening balance
         $totalDeposits = 0;
         $totalWithdrawals = 0;
-        $balance = 0;
+        $balance = $openingBalance;
 
         foreach ($transactions as $transaction) {
             if ($transaction->transaction_type_id == 1) { // Income (Deposit)
@@ -169,18 +197,19 @@ class ReportController extends Controller
                 $balance -= $transaction->amount;
             }
 
-            // Determine who is involved in the transaction
+            // Assign party info
             if ($transaction->transaction_type_id == 1 && $transaction->member_id) {
-                $transaction->party = optional($transaction->member)->family_name . ' ' . optional($transaction->member)->given_name; // Show member name
+                $transaction->party = optional($transaction->member)->family_name . ' ' . optional($transaction->member)->given_name;
             } elseif ($transaction->transaction_type_id == 1 && $transaction->customer_id) {
-                $transaction->party = optional($transaction->customer)->name; // Show customer name
+                $transaction->party = optional($transaction->customer)->name;
             } elseif ($transaction->transaction_type_id == 2 && $transaction->supplier_id) {
-                $transaction->party = optional($transaction->supplier)->name; // Show supplier name
+                $transaction->party = optional($transaction->supplier)->name;
             } else {
                 $transaction->party = 'N/A'; // Default if no relevant party is found
             }
 
-            $transaction->balance = $balance; // Append running balance to each transaction
+            // Append running balance to each transaction
+            $transaction->balance = $balance;
         }
 
         // Return the transactions along with the totals and account name
@@ -189,9 +218,11 @@ class ReportController extends Controller
             'totalDeposits' => $totalDeposits,
             'totalWithdrawals' => $totalWithdrawals,
             'account_name' => $account->name,
-            'balance' => $balance
+            'balance' => $balance, // Final balance after all transactions
+            'opening_balance' => $openingBalance, // Include the opening balance
         ];
     }
+
 
     public function getBankAccounts()
     {
@@ -255,7 +286,6 @@ class ReportController extends Controller
         // Send the data to the view
         return $this->generatePDF($reportData, 'page.reports.accounts-list', 'accounts-list.pdf');
     }
-
 
     private function bankReconciliation(Request $request)
     {
@@ -382,6 +412,7 @@ class ReportController extends Controller
         // Generate and return the PDF
         return $this->generatePDF($reportData, 'page.reports.trial-balance', 'trial-balance.pdf');
     }
+
     private function gettrialBalanceData($startDate, $endDate, $month, $year, $accountId)
     {
         // Initialize query for retrieving the relevant accounts

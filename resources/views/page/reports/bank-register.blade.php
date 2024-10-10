@@ -123,6 +123,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Display Opening Balance as the first row -->
+                    <tr>
+                        <td colspan="5" class="right-align"><strong>Opening Balance</strong></td>
+                        <td class="right-align"><strong>${{ number_format($reportData['opening_balance'], 2) }}</strong></td>
+                    </tr>
+
+                    <!-- Transaction Rows -->
                     @foreach ($reportData['transactions'] as $transaction)
                     <tr>
                         <td>{{ $transaction->id }}</td>
@@ -140,6 +147,7 @@
                         <td class="right-align">${{ number_format($transaction->balance, 2) }}</td>
                     </tr>
                     @endforeach
+
                     <!-- Add Totals Row -->
                     <tr class="total-row">
                         <td colspan="3" class="right-align">Total</td>
