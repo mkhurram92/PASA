@@ -115,12 +115,12 @@
         paginationSize: 25,
         columns: [{
                 title: "ID",
-                field: "id",
+                field: "user.id",
                 sorter: "number",
                 hozAlign: "center"
             },
             {
-                title: "User",
+                title: "Email",
                 field: "user.email",
                 sorter: "string",
                 hozAlign: "center"
