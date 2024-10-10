@@ -44,7 +44,7 @@
                         </div>
 
                         <!-- Display Selected Ship Name -->
-                        <h4 id="selectedShip" class="mt-4" style="text-align: center;"></h4>
+                        <h2 id="selectedShip" class="mt-4" style="text-align: center;"></h2>
 
                         <!-- Table to Display Ancestors Information -->
                         <div class="mt-4">
