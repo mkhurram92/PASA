@@ -36,9 +36,16 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- Display Selected Ship Name -->
-                            <h4 id="selectedShip" class="mt-4" style="text-align: center;"></h4>
+
+                            <!-- Generate Report Button -->
+                            <div class="col-md-3">
+                                <button type="button" id="generateReportButton" class="btn btn-primary w-100 mt-2">Generate Report</button>
+                            </div>
                         </div>
+
+                        <!-- Display Selected Ship Name -->
+                        <h4 id="selectedShip" class="mt-4" style="text-align: center;"></h4>
+
                         <!-- Table to Display Ancestors Information -->
                         <div class="mt-4">
                             <table id="reportTable" class="table table-bordered" style="text-align: center;">
@@ -72,11 +79,12 @@
             allowClear: true
         });
 
-        // Handle ship selection change
-        $('#ship').on('change', function() {
-            var selectedShip = $(this).find('option:selected').text();
-            $('#selectedShip').text(selectedShip ? 'Ship Name : ' + selectedShip : '');
-            var shipId = $(this).val();
+        // Handle the button click to generate report
+        $('#generateReportButton').on('click', function() {
+            var selectedShip = $('#ship').find('option:selected').text();
+            $('#selectedShip').text(selectedShip ? 'Ship Name: ' + selectedShip : '');
+
+            var shipId = $('#ship').val();
             if (shipId) {
                 $.ajax({
                     url: '{{ route('get.ancestors') }}',
@@ -91,29 +99,25 @@
                         // Populate the table
                         if (data.length) {
                             $.each(data, function(index, ancestor) {
-                                $('#reportTable tbody').append('<tr><td>' + ancestor
-                                    .ancestor_surname + ' ' + ancestor
-                                    .given_name + '</td>' +
-                                    '<td>' + (ancestor.gender == '1' ? 'Male' :
-                                        'Female') + '</td>' +
-                                    '<td>' + (ancestor.member_names ? ancestor
-                                        .member_names : ' ') + '</td></tr>'
-                                    ); // Displaying member names
+                                $('#reportTable tbody').append('<tr><td>' + ancestor.ancestor_surname + ' ' + ancestor.given_name + '</td>' +
+                                    '<td>' + (ancestor.gender == '1' ? 'Male' : 'Female') + '</td>' +
+                                    '<td>' + (ancestor.member_names ? ancestor.member_names : ' ') + '</td></tr>'
+                                ); // Displaying member names
                             });
                         } else {
                             $('#reportTable tbody').html(
                                 '<tr><td colspan="4" class="text-center">No Ancestors Found</td></tr>'
-                                );
+                            );
                         }
                     },
                     error: function(xhr, status, error) {
                         console.error('AJAX Error:', error);
-                        console.log(xhr
-                            .responseText);
+                        console.log(xhr.responseText);
                     }
                 });
             } else {
                 $('#reportTable tbody').empty();
+                alert('Please select a Ship to generate a report.');
             }
         });
     });
