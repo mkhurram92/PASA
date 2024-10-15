@@ -46,6 +46,11 @@
                         <!-- Display Selected Ship Name -->
                         <h3 id="selectedShip" class="mt-4" style="text-align: center;"></h3>
 
+                        <!-- Download Button -->
+                        <div class="mt-4">
+                            <button id="downloadBtn" class="btn btn-success w-10" style="display: none;">Download Excel</button>
+                        </div>
+
                         <!-- Table to Display Ancestors Information -->
                         <div class="mt-4">
                             <table id="reportTable" class="table table-bordered" style="text-align: left;">
@@ -70,7 +75,7 @@
 
 <!-- app-content end-->
 @include('layout.footer')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <!-- Initialize Select2 and AJAX for Ancestors -->
 <script>
     $(document).ready(function() {
@@ -104,10 +109,14 @@
                                     '<td>' + (ancestor.member_names ? ancestor.member_names : ' ') + '</td></tr>'
                                 ); // Displaying member names
                             });
+                            // Show download button when data is available
+                            $('#downloadBtn').show();
                         } else {
                             $('#reportTable tbody').html(
-                                '<tr><td colspan="4" class="text-center">No Ancestors Found</td></tr>'
+                                '<tr><td colspan="3" class="text-center">No Ancestors Found</td></tr>'
                             );
+                            // Hide download button if no data
+                            $('#downloadBtn').hide();
                         }
                     },
                     error: function(xhr, status, error) {
@@ -117,8 +126,15 @@
                 });
             } else {
                 $('#reportTable tbody').empty();
+                $('#downloadBtn').hide(); // Hide download button if no ship selected
                 alert('Please select a Ship to generate a report.');
             }
+        });
+
+        $('#downloadBtn').on('click', function () {
+            const table = document.getElementById('reportTable');
+            const workbook = XLSX.utils.table_to_book(table, { sheet: 'Sheet1' });
+            XLSX.writeFile(workbook, 'Sameship.xlsx');
         });
     });
 </script>

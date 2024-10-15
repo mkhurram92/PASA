@@ -52,4 +52,7 @@ class SameShipController extends Controller
         // Return the data as JSON
         return response()->json($ancestors);
     }
+    public function store(Request $request)
+    {
+    }
 }
