@@ -48,7 +48,7 @@
 
                         <!-- Table to Display Ancestors Information -->
                         <div class="mt-4">
-                            <table id="reportTable" class="table table-bordered" style="text-align: center;">
+                            <table id="reportTable" class="table table-bordered" style="text-align: left;">
                                 <thead>
                                     <tr>
                                         <th>Pioneer Name</th>
